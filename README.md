@@ -1,3 +1,3 @@
-# Employee of the month Plugin for Atlassian JIRA® 
+# Kitchen Duty Plugin for Atlassian JIRA® 
 
 This plugin demonstrates the usage of the Atlassian JIRA® 7.0 API for a very simple plugin

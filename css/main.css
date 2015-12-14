@@ -13,3 +13,30 @@
 .cs-header__product-logo {
 
 }
+
+
+.cs-headline {
+    margin-top:30px;
+}
+
+.cs-headline--m {
+    font-size:30px;
+    font-family: 'Open Sans', sans-serif;
+    border-bottom: 1px solid #1E9FCC;
+    margin-bottom:20px;
+}
+
+.cs-content {
+    font-family: 'Open Sans', sans-serif;
+    font-size:16px;
+}
+
+
+.cs-hidden {
+    display:none;
+}
+
+.cs-divider {
+    margin-top:40px;
+    border-color: #1E9FCC;
+}

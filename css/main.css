@@ -40,3 +40,14 @@
     margin-top:40px;
     border-color: #1E9FCC;
 }
+
+.cs-meme-container {
+    padding:30px;
+}
+
+.cs-notice-in-progress {
+    background-color: #ffa354;
+    padding:20px;
+    color:#fff;
+    font-weight:bold;
+}

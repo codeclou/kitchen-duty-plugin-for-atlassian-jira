@@ -51,3 +51,53 @@
     color:#fff;
     font-weight:bold;
 }
+
+.cs-license-container {
+    margin-top:100px;
+}
+
+
+.cs-list {
+
+}
+
+.cs-list__item {
+    margin-top:10px;
+}
+
+code {
+    color:#1E9FCC;
+}
+
+a {
+    color:#1E9FCC;
+}
+
+p {
+    line-height:1.6em;
+}
+
+
+
+.cs-shell {
+    padding: 10px 10px 10px 10px;
+    font-size: 90%;
+    font-family: Menlo, Menlo, Monaco, Consolas, "Courier New", monospace;
+    border-radius: 6px;
+    margin-top:0;
+    margin-bottom:10px;
+    color:#fff;
+    background-color: #303030;
+    width:100%;
+}
+.cs-shell:before {
+    content: '$> '
+}
+.cs-shell-output {
+    color: #afafaf;
+    background: transparent;
+    border:0px;
+    padding:0px;
+    margin:0px;
+    margin-top:10px;
+}

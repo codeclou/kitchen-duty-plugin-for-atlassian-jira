@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Menlo|Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="generated/bundle-80c00793.css" media="screen">
 
     <link rel="icon" href="./images/favicon-32.png" type="image/png" sizes="32x32"> 
@@ -39,7 +39,7 @@
             <p class="cs-notice-in-progress">NOTE: This document is work in progress. Once finished this notice is removed and the tutorial will be usable.</p>
 
 
-            <h2 class="cs-headline cs-headline--m">The kind of plugin we want build</h2>
+            <h2 class="cs-headline cs-headline--m">Which Problem should the plugin solve?</h2>
 
             <p>You probably use Atlassian JIRA already to master your agile projects with Scrum and Kanban.</p>
 
@@ -55,25 +55,120 @@
     </div>
 
 
+
+
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
+
+            <h2 class="cs-headline cs-headline--m">Desired Features</h2>
+
+            <p>Alright. The plugin should provide the following features.</p>
+
+            <ol class="cs-list">
+                <li class="cs-list__item">Page for Kitchen Duty planning
+                    <ul class="cs-list">
+                        <li class="cs-list__item">Setting of JIRA users for this weeks kitchen duty.</li>
+                        <li class="cs-list__item">The page is only accessible for JIRA administrators.</li>
+                    </ul>
+                </li>
+                <li class="cs-list__item">Overview Page for Kitchen Duty
+                    <ul class="cs-list">
+                        <li class="cs-list__item">Display of JIRA users who have kitchen duty this week.</li>
+                        <li class="cs-list__item">The page should be accessible for all users and via the top navigation</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h2 class="cs-headline cs-headline--m">Getting Started</h2>
+
+            <p>That sounds like some simple features to implement so let's get to it.</p>
+
+            <p>First install the <a href="https://developer.atlassian.com/docs/getting-started/set-up-the-atlassian-plugin-sdk-and-build-a-project">Atlassian SDK</a> and <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Oracle Java JDK 8</a> on your system.</p>
+
+            <p>After the installation all the <code>atlas-*</code> commands and <code>java</code> command should be on the <code>PATH</code> variable.</p>
+
+            <p>Let's do a <strong>short version check</strong> of the installed <strong>Atlassian SDK tools</strong>. I am using a Mac so the output will look a little different if you use another OS.</p>
+
+<div class="cs-shell">
+atlas-version<br><pre class="cs-shell-output">
+ATLAS Version:    6.1.0
+ATLAS Home:       /Applications/Atlassian/atlassian-plugin-sdk-6.1.0
+ATLAS Scripts:    /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/bin
+ATLAS Maven Home: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1
+AMPS Version:     6.1.2
+--------
+Executing: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1/bin/mvn --version -gs /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1/conf/settings.xml
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=256M; support was removed in 8.0
+Apache Maven 3.2.1 (ea8b2b07643dbb1b84b6d16e1f08391b666bc1e9; 2014-02-14T18:37:52+01:00)
+Maven home: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1
+Java version: 1.8.0_45, vendor: Oracle Corporation
+Java home: /Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/jre
+Default locale: de_DE, platform encoding: UTF-8
+OS name: "mac os x", version: "10.10.5", arch: "x86_64", family: "mac"
+</pre>
+</div><!--cs-shell-->
+
+            <p>Now check if <strong>Java is correctly installed</strong>.</p>
+
+<div class="cs-shell">
+java -version<br><pre class="cs-shell-output">
+java version "1.8.0_45"
+Java(TM) SE Runtime Environment (build 1.8.0_45-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
+</pre>
+</div><!--cs-shell-->
+
+            <p>Ok once you got all that set-up we can start.</p>
 
 
 
 
 
 
+            <h2 class="cs-headline cs-headline--m">Creating the Plugin Project</h2>
 
-            <h2 class="cs-headline cs-headline--m">License and Author</h2>
+            <p>We will now create the JIRA Plugin via the <a href="https://developer.atlassian.com/docs/developer-tools/working-with-the-sdk/command-reference/atlas-create-jira-plugin">Atlassian SDK command <code>atlas-create-jira-plugin</code></a>. Change to a folder where you want to create your Plugin.</p>
+            <p>You will be asked to specify a <code>groupId</code>, <code>artifactId</code>, <code>version</code> and <code>package</code>. You can see my choices below.</p>
+
+<div class="cs-shell">
+atlas-create-jira-plugin<br><pre class="cs-shell-output">
+...
+Define value for groupId: : com.comsysto
+Define value for artifactId: : kitchen-duty-plugin
+Define value for version:  1.0.0-SNAPSHOT: :
+Define value for package:  com.comsysto: : com.comsysto.kitchen.duty
+....
+Confirm
+Y
+...
+</pre>
+</div><!--cs-shell-->
+
+            <p>Now the command should have created a folder called like the <code>artifactId</code>, in our case <code>kitchen-duty-plugin</code>.</p>
+
+
+
+
+            <h2 class="cs-headline cs-headline--m">Next</h2>
+
+            <p class="cs-notice-in-progress">to be done.</p>
+
+
+
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 cs-license-container">
+
+            <hr class="cs-divider">
+
+            <strong>License and Author</strong>
             <p>
-              <strong>The project sources are free for personal and commercial use</strong> under the terms of the <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported (CC BY 3.0) License</a>.
-              The author is <a href="http://comsysto.com/">comSysto GmbH</a>.
-            </p>
-            <p>The <a href="https://thenounproject.com/term/dishwasher/29752/">dishes icon</a> in the logo is licensed under <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons Attribution 3.0 (CC BY 3.0 US) License</a></p>
-
-
-
-
+              The project sources are free for personal and commercial use under the terms of the <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 Unported (CC BY 3.0) License</a>.
+              The author is <a href="http://comsysto.com/">comSysto GmbH</a>. The <a href="https://thenounproject.com/term/dishwasher/29752/">dishes icon</a> in the logo is licensed under <a href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons Attribution 3.0 (CC BY 3.0 US) License</a></p>
 
             <hr class="cs-divider">
             <strong><a href="http://comsysto.com/imprint.html">Impressum</a></strong> ~ <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira">View project on GitHub</a>

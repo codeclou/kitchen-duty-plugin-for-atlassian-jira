@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.atlassian.jira:jira-api:7.0.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.10" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.atlassian.plugin:atlassian-spring-scanner-annotation:1.2.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.atlassian.plugin:atlassian-spring-scanner-runtime:1.2.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.atlassian.plugins:atlassian-plugins-osgi-testrunner:1.2.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.wink:wink-client:1.1.3-incubating" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.wink:wink-common:1.1.3-incubating" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.geronimo.specs:geronimo-annotation_1.1_spec:1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: javax.xml.bind:jaxb-api:2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.1.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: commons-io:commons-io:1.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.atlassian.upm:upm-api:2.15" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.ws.rs:jsr311-api:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.2.2-atlassian-1" level="project" />
+  </component>
+</module>

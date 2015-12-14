@@ -34,7 +34,7 @@
 
             <h2 class="cs-headline cs-headline--m">Introduction</h2>
 
-            <p>This tutorial will show you how to write a simple <strong>Plugin for Atlassian JIRA®</strong>. The tutorial will focus on JIRA® 7.0 and will guide you step by step.</p>
+            <p>This tutorial will show you <strong>how to write a simple Plugin for Atlassian JIRA®</strong>. The tutorial will focus on JIRA® 7.0 and will guide you step by step.</p>
 
             <p class="cs-notice-in-progress">NOTE: This document is work in progress. Once finished this notice is removed and the tutorial will be usable.</p>
 
@@ -121,8 +121,10 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
             <p>Ok once you got all that set-up we can start.</p>
 
 
-
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
 
 
             <h2 class="cs-headline cs-headline--m">Creating the Plugin Project</h2>
@@ -146,9 +148,40 @@ Y
 
             <p>Now the command should have created a folder called like the <code>artifactId</code>, in our case <code>kitchen-duty-plugin</code>.</p>
 
+        </div>
+        <div class="col-md-4">
+
+            <div class="cs-sidenote">
+                <div class="cs-sidenote__headline">
+                    How do JIRA Plugins work?
+                </div>
+                <div class="cs-sidenote__content">
+                    <div class="cs-sidenote__content-item">
+                        JIRA Plugins are OSGi modules.
+                    </div>
+                    <div class="cs-sidenote__content-item">
+                        JIRA starts an OSGi Service Plattform during startup (e.g. <a href="http://felix.apache.org/">Apache felix</a>).
+                    </div>
+                    <div class="cs-sidenote__content-item">
+                        By providing information in <code>atlassian-plugin.xml</code> and custom packaging via <code>atlas-package</code>
+                        the SDK builds an OSGi Plugin module in form of a <code>jar</code> file.
+                    </div>
+                    <div class="cs-sidenote__content-item">
+                        JIRA Plugins can therefore be installed into a running JIRA instance. Once installed they are executed on JIRA startup too.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
 
+
+
+
+    <div class="row">
+        <div class="col-md-12">
             <h2 class="cs-headline cs-headline--m">Next</h2>
 
             <p class="cs-notice-in-progress">to be done.</p>

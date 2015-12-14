@@ -101,3 +101,26 @@ p {
     margin:0px;
     margin-top:10px;
 }
+
+
+.cs-sidenote {
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color:#efefef;
+    padding:20px;
+}
+
+.cs-sidenote__headline {
+    font-size:20px;
+    padding-bottom:20px;
+}
+
+.cs-sidenote__content {
+
+}
+
+.cs-sidenote__content-item {
+    padding-top:10px;
+    border-top:1px solid #ccc;
+    padding-bottom:10px;
+}

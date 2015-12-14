@@ -1,0 +1,15 @@
+.cs-header {
+    background-color:#1E9FCC;
+}
+
+.cs-header__inner-container {
+    margin-top:30px;
+    margin-bottom:30px;
+}
+.cs-header__corporate-logo {
+    text-align:right;
+    padding-top:20px;
+}
+.cs-header__product-logo {
+
+}

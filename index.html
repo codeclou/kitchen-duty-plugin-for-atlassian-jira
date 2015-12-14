@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='https://fonts.googleapis.com/css?family=Menlo|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="generated/bundle-80c00793.css" media="screen">
 
     <link rel="icon" href="./images/favicon-32.png" type="image/png" sizes="32x32"> 
@@ -14,14 +15,17 @@
     <title>Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
 </head>
 <body>
-<div class="container-fluid cs-header">
+
+<div id="toc"></div>
+
+<div class="cs-header">
     <div class="container cs-header__inner-container">
         <div class="row">
             <div class="col-md-6 cs-product-logo">
                 <img src="./images/kitchen-duty-logo.svg">
                 <h1 class="cs-hidden">Kitchen Duty Plugin for Atlassian JIRA® by comSysto</h1>
             </div>
-            <div class="col-md-6 cs-header__corporate-logo">
+            <div class="col-md-6  cs-header__corporate-logo hidden-xs hidden-sm">
                 <a href="https://github.com/comsysto"><img src="./images/comsysto-logo.png" alt="comSysto"/></a>
             </div>
         </div>
@@ -30,7 +34,7 @@
 
 <div class="container  cs-content">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
 
             <h2 class="cs-headline cs-headline--m">Introduction</h2>
 
@@ -38,8 +42,12 @@
 
             <p class="cs-notice-in-progress">NOTE: This document is work in progress. Once finished this notice is removed and the tutorial will be usable.</p>
 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
 
-            <h2 class="cs-headline cs-headline--m">Which Problem should the plugin solve?</h2>
+            <h3 class="cs-headline cs-headline--s">Which Problem should the plugin solve?</h3>
 
             <p>You probably use Atlassian JIRA already to master your agile projects with Scrum and Kanban.</p>
 
@@ -48,19 +56,10 @@
             <p><strong>Why is the dish-washer full of dirty dishes but not turned on? Why are there no clean dishes?</strong></p>
 
             <p>These are the things we want to solve with our JIRA Plugin.</p>
-        </div>
-        <div class="col-md-4 cs-meme-container">
-            <img src="./images/memes/please-dishwasher.png" class="img-responsive">
-        </div>
-    </div>
 
 
 
-
-    <div class="row">
-        <div class="col-md-12">
-
-            <h2 class="cs-headline cs-headline--m">Desired Features</h2>
+            <h3 class="cs-headline cs-headline--s">Desired Features</h3>
 
             <p>Alright. The plugin should provide the following features.</p>
 
@@ -78,6 +77,19 @@
                     </ul>
                 </li>
             </ol>
+        </div>
+        <div class="col-md-3 cs-meme-container">
+            <img src="./images/memes/please-dishwasher.png" class="img-responsive">
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+
 
             <h2 class="cs-headline cs-headline--m">Getting Started</h2>
 
@@ -127,7 +139,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
         <div class="col-md-8">
 
 
-            <h2 class="cs-headline cs-headline--m">Creating the Plugin Project</h2>
+            <h2 class="cs-headline cs-headline--m">Step 0: Creating the Plugin Project</h2>
 
             <p>We will now create the JIRA Plugin via the <a href="https://developer.atlassian.com/docs/developer-tools/working-with-the-sdk/command-reference/atlas-create-jira-plugin">Atlassian SDK command <code>atlas-create-jira-plugin</code></a>. Change to a folder where you want to create your Plugin.</p>
             <p>You will be asked to specify a <code>groupId</code>, <code>artifactId</code>, <code>version</code> and <code>package</code>. You can see my choices below.</p>
@@ -157,7 +169,7 @@ Y
                 </div>
                 <div class="cs-sidenote__content">
                     <div class="cs-sidenote__content-item">
-                        JIRA Plugins are OSGi modules.
+                        JIRA Plugins are <a href="https://de.wikipedia.org/wiki/OSGi">OSGi</a> modules.
                     </div>
                     <div class="cs-sidenote__content-item">
                         JIRA starts an OSGi Service Plattform during startup (e.g. <a href="http://felix.apache.org/">Apache felix</a>).
@@ -182,7 +194,159 @@ Y
 
     <div class="row">
         <div class="col-md-12">
-            <h2 class="cs-headline cs-headline--m">Next</h2>
+
+
+            <h3 class="cs-headline cs-headline--s"> Open Project in Java IDE</h3>
+
+            <p>Use your favorite Java IDE to open the project. I use <a href="https://www.jetbrains.com/idea/">JetBrains IntelliJ IDEA</a> since it is just awesome. If you want to use Eclipse it is fine with me but all the screenshots will be done with IntelliJ.</p>
+
+            <p>Once you have it opened we need to create 3 files for better usage with git and to tell the IDE how we want our indentation.</p>
+
+            <p>Create <code>.editorconfig</code> and add statements for line endings, charset and tab indentation. Since IntelliJ is awesome <a href="http://EditorConfig.org">EditorConfig Plugin</a> is already installed. If you are using another IDE get the plugin now.</p>
+
+<pre>
+# EditorConfig is awesome: http://EditorConfig.org
+root = true
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+
+[*.html]
+indent_style = space
+indent_size = 4
+
+[*.js]
+indent_style = space
+indent_size = 4
+
+[*.css]
+indent_style = space
+indent_size = 4
+
+[*.xml]
+indent_style = space
+indent_size = 4
+
+[*.java]
+indent_style = space
+indent_size = 4
+
+[*.vm]
+indent_style = space
+indent_size = 4
+</pre>
+
+
+            <p>Create <code>.gitignore</code> and add ignore statements for files we do not want to commit.</p>
+
+<pre>
+.idea/
+*.iml
+*.log
+target/
+</pre>
+
+            <p>Create <code>.gitattributes</code> and set line endings to unix.</p>
+
+<pre>
+*.svg eol=lf
+*.html eol=lf
+*.js eol=lf
+*.css eol=lf
+*.scss eol=lf
+*.json eol=lf
+*.sh eol=lf
+*.yml eol=lf
+*.md eol=lf
+*.txt eol=lf
+*.java eol=lf
+*.properties  eol=lf
+*.xml eol=lf
+</pre>
+
+
+            <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+            <div class="alert alert-warning cs-warning" role="alert">
+                <i class="fa fa-exclamation-triangle fa-lg cs-warning__icon"></i>
+                The created base project has some minor flaws and some things are still missing before it can actually be build.
+            </div>
+
+
+            <p>Edit <code>pom.xml</code> and add line <code>&lt;version&gt;3.3&lt;/version&gt;</code> to <code>maven-compiler-plugin</code>.</p>
+
+<pre>
+&lt;plugin&gt;
+    &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+    &lt;version&gt;3.3&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;source&gt;1.7&lt;/source&gt;
+        &lt;target&gt;1.7&lt;/target&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</pre>
+
+            <p>Also add in the <code>pom.xml</code> right before the closing <code>&lt;/dependencies&gt;</code>.</p>
+
+<pre>
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.atlassian.sal&lt;/groupId&gt;
+        &lt;artifactId&gt;sal-api&lt;/artifactId&gt;
+        &lt;version&gt;3.0.3&lt;/version&gt;
+        &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</pre>
+
+
+            <p>Now open <strong>Preferences</strong> in IntelliJ and set the built-in maven of the SDK together with the <code>settings.xml</code></p>
+            <p>(Tip: By calling <code>atlas-version</code> all paths including home directory of SDK are printed)</p>
+
+            <p><img src="./images/doc/step-00-intellij-maven-install-settings.png" class="img-responsive" alt="Set maven home and maven settings.xml"></p>
+
+            <div class="cs-v-spacer"></div>
+
+            <p>Since we need the <code>ATLAS_HOME</code> environment variable to get maven inside IntelliJ to work we set that as well.</p>
+
+            <p><img src="./images/doc/step-00-intellij-maven-atlas-home.png" class="img-responsive" alt="Set ATLAS_HOME"></p>
+
+            <div class="cs-v-spacer"></div>
+
+            <p>Now you can click on the <strong>Maven-Tab</strong> on the right and click <strong>compile</strong> and you should have a successful build.</p>
+
+            <p><img src="./images/doc/step-00-intellij-maven-successful-compile.png" class="img-responsive" alt="Successful Maven Compile"></p>
+
+            <div class="cs-v-spacer"></div>
+
+            <p>If you do a <strong>Build</strong> &gt; <strong>Make Project</strong> now and open the <code>MyPluginComponentImpl.java</code> you should have no errors.</p>
+
+            <div class="cs-v-spacer"></div>
+
+            <div class="cs-tutorial-step-review">
+                <div class="cs-tutorial-step-review__headline">
+                    <strong>You have completed Step 0.</strong> Good Job! You can check out this steps solution on GitHub
+                </div>
+                <div class="cs-tutorial-step-review__link">
+                    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-00-kitchen-duty-plugin">
+                        https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-00-kitchen-duty-plugin
+                    </a>
+                </div>
+            </div>
+
+            <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+
+
+
+
+            <h2 class="cs-headline cs-headline--m">Step 1: Kitchen Duty planning Page </h2>
+
+            <p>Our base project is there and ...</p>
+
+
 
             <p class="cs-notice-in-progress">to be done.</p>
 
@@ -205,6 +369,9 @@ Y
 
             <hr class="cs-divider">
             <strong><a href="http://comsysto.com/imprint.html">Impressum</a></strong> ~ <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira">View project on GitHub</a>
+
+            <div class="cs-v-spacer"></div>
+
         </div>
     </div>
 </div>

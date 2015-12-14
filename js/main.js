@@ -1,1 +1,6 @@
-console.log('This would be the main JS file.');
+$(function() {
+    $('#toc').toc({
+        scrollToOffset: 110,
+        selectors: 'h2'
+    });
+});

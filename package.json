@@ -2,6 +2,8 @@
   "name": "kitchen-duty-plugin",
   "dependencies": {
     "bootstrap": "^3.3.6",
+    "jquery": "^2.1.4",
+    "toc": "https://github.com/jgallen23/toc/archive/0.3.2.tar.gz",
     "retina.js": "https://github.com/imulus/retinajs/archive/1.3.0.tar.gz"
   },
   "devDependencies": {
@@ -12,7 +14,7 @@
   "scripts": {
     "start": "ws --directory ./ --port 4000",
     "build": "npm run build:js && npm run build:css",
-    "build:js": "uglifyjs  -o ./generated/bundle-80c00793.js ./node_modules/retina.js/dist/retina.js  ./js/main.js ",
+    "build:js": "uglifyjs  -o ./generated/bundle-80c00793.js ./node_modules/retina.js/dist/retina.js  ./node_modules/jquery/dist/jquery.js  ./node_modules/toc/dist/toc.js ./js/main.js ",
     "build:css": "cleancss -o ./generated/bundle-80c00793.css  ./node_modules/bootstrap/dist/css/bootstrap.min.css  ./css/main.css"
   },
   "repository": {

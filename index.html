@@ -234,7 +234,7 @@ Y
                                 JIRA starts an OSGi Service Plattform during startup (e.g. <a href="http://felix.apache.org/">Apache felix</a>).
                             </div>
                             <div class="cs-sidenote__content-item">
-                                By providing information in <code>atlassian-plugin.xml</code> and custom packaging via <code>atlas-package</code>
+                                By providing information in <code>pom.xml</code> and custom packaging via <code>atlas-package</code>
                                 the SDK builds an OSGi Plugin module in form of a <code>jar</code> file.
                             </div>
                             <div class="cs-sidenote__content-item">
@@ -412,34 +412,125 @@ target/</code></pre>
 
                     <p>You can skip this chapter if you already know OSGi or if you are not interested in the deep internals of imports and exports beetween OSGi modules. The next Step of the tutorial will build on this knowledge.</p>
 
-                    <p>As you opened <code>MyPluginComponentImpl.java</code> already you might have seen some annotations that seem important.</p>
+                    <p>As you opened <code>MyPluginComponentImpl.java</code> already you might have seen some annotations like <code>@ExportAsService</code> and <code>@ComponentImport</code>.</p>
 
-                    <p>The ones that interest us the most are <code>@ExportAsService</code> and <code>@ComponentImport</code>.</p>
-
-                    <p>There is also an important is a passage of <code>maven-jira-plugin</code> in the <code>pom.xml</code> that contains the following lines.</p>
+                    <p>There is also an important passage of <code>maven-jira-plugin</code> in the <code>pom.xml</code> that contains the following lines.</p>
 
                     
-<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">plugin</span>&gt;</span>
-   ...
-   <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>maven-jira-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
-   ...
-   <span class="hljs-tag">&lt;<span class="hljs-title">instructions</span>&gt;</span>
-       <span class="hljs-tag">&lt;<span class="hljs-title">Atlassian-Plugin-Key</span>&gt;</span>${atlassian.plugin.key}<span class="hljs-tag">&lt;/<span class="hljs-title">Atlassian-Plugin-Key</span>&gt;</span>
-       <span class="hljs-tag">&lt;<span class="hljs-title">Export-Package</span>&gt;</span>
-           com.comsysto.kitchen.duty.api,
-       <span class="hljs-tag">&lt;/<span class="hljs-title">Export-Package</span>&gt;</span>
-       <span class="hljs-tag">&lt;<span class="hljs-title">Import-Package</span>&gt;</span>
-           org.springframework.osgi.*;resolution:="optional",
-           org.eclipse.gemini.blueprint.*;resolution:="optional",
-           *
-       <span class="hljs-tag">&lt;/<span class="hljs-title">Import-Package</span>&gt;</span>
-       <span class="hljs-tag">&lt;<span class="hljs-title">Spring-Context</span>&gt;</span>*<span class="hljs-tag">&lt;/<span class="hljs-title">Spring-Context</span>&gt;</span>
+<pre class="cs-code"><code class="hljs">...
+<span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>maven-jira-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+...
+<span class="hljs-tag">&lt;<span class="hljs-title">instructions</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Atlassian-Plugin-Key</span>&gt;</span>${atlassian.plugin.key}<span class="hljs-tag">&lt;/<span class="hljs-title">Atlassian-Plugin-Key</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Export-Package</span>&gt;</span>
+       com.comsysto.kitchen.duty.api,
+    <span class="hljs-tag">&lt;/<span class="hljs-title">Export-Package</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Import-Package</span>&gt;</span>
+       org.springframework.osgi.*;resolution:="optional",
+       org.eclipse.gemini.blueprint.*;resolution:="optional",
+       *
+   <span class="hljs-tag">&lt;/<span class="hljs-title">Import-Package</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">Spring-Context</span>&gt;</span>*<span class="hljs-tag">&lt;/<span class="hljs-title">Spring-Context</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">instructions</span>&gt;</span></code></pre>
 
 
-                    <p>We will now dive into unterstanding what all that means.</p>
+                    <p>
+                        We will now dive into unterstanding what all that means.
+                        First you should read the <a href="https://en.wikipedia.org/wiki/OSGi">Wikipedia Article on OSGi</a>.
+                    </p>
 
-                    <p class="cs-notice-in-progress">to be done.</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Services (OSGi)</strong></p>
+
+                            <p>
+                                Each bundle can publish and find interfaces and therefore use functionality from other bundles.
+                                JIRA itself is composed of some OSGi bundles itself. Therefore we need to tell the Atlassian SDK which JIRA interfaces we want to use (the OSGi framework then finds the right bundle for us automatically).
+                            </p>
+
+                            <p><strong>Life-Cycle (OSGi)</strong></p>
+
+                            <p>We can install, start and stop OSGi bundles during runtime. That means, while JIRA is running our plugin can be installed, started and stopped.</p>
+
+
+                            <p><strong>Bundles (OSGi)</strong></p>
+
+                            <p>Bundles (also called modules) only share Interfaces with other modules. You want to hide your implementation. The Atlassian SDK creates a <code>jar</code> file with
+                                a custom <code>MANIFEST.mf</code> from the <code>Import/Export-Package</code> instructions of <code>pom.xml</code>.</p>
+
+                        </div>
+                        <div class="col-md-4">
+                            <p>
+                                <a href="./images/drawings/00-mock-osgi-and-jira.jpg" data-lightbox="00-osgi" data-title="OSGi and JIRA">
+                                    <img src="./images/drawings/00-mock-osgi-and-jira.jpg" class="img-thumbnail img-responsive cs-tutorial-image" alt="OSGi and JIRA">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p>We run the package command, so that the jar file is build.</p>
+
+                    
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        atlas-package<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">...
+[INFO] Building jar: /Users/../kitchen-duty-plugin/target/kitchen-duty-plugin-<span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-package"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+                    <p>We can now inspect the <code>MANIFEST.mf</code> file (I have shortened it a little).</p>
+                    
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        cat target/classes/MANIFEST.md<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">Manifest-Version: <span class="hljs-number">1.0</span>
+Atlassian-Build-Date: <span class="hljs-number">2015</span>-<span class="hljs-number">12</span>-<span class="hljs-number">15</span>T18:<span class="hljs-number">43</span>:<span class="hljs-number">43</span>+<span class="hljs-number">0100</span>
+Atlassian-Plugin-Key: com.comsysto.kitchen-duty-plugin
+Bundle-Name: kitchen-duty-plugin
+Bundle-SymbolicName: com.comsysto.kitchen-duty-plugin
+Bundle-Vendor: comSysto
+Bundle-Version: <span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>.SNAPSHOT
+Export-Package: com.comsysto.kitchen.duty.api;version=<span class="hljs-string">"1.0.0"</span>
+Import-Package: org.springframework.osgi.service.exporter.support;resolution:=optional,
+org.springframework.osgi.service.importer.support;resolution:=optional,
+....
+Require-Capability: osgi.ee;filter:=<span class="hljs-string">"(&amp;(osgi.ee=JavaSE)(version=1.7))"</span>
+Spring-Context: *</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="cat target/classes/MANIFEST.md"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+                    <p>We see <code>Export-Package</code> and <code>Import-Package</code> statements with the values we expected from pom.xml and Annotations</p>
+
+
+                    <div class="alert alert-info cs-summary">
+                        <p class="cs-summary__headline"><i class="fa fa-lightbulb-o fa-lg"></i> Summary</p>
+                        <hr class="cs-summary__spacer">
+                        <p><strong>@ExportAsService</strong> is used to export our interface (e.g. <code>MyPluginComponent.java</code>) so that other OSGi bundles can use it as Spring Bean. Maybe you want to develop a base plugin and use its functionality from a second plugin, then you know now how to do it.</p>
+                        <hr class="cs-summary__spacer">
+                        <p><strong>@ComponentImport</strong> is used to import functionality from other OSGi bundles Spring Context such as JIRAs <code>ApplicationProperties</code>.</p>
+                        <hr class="cs-summary__spacer">
+                        <p>These annotations are used because JIRA uses <strong><a href="https://spring.io/">Spring</a> together with OSGi</strong> and these annotations help to make beans available as Spring Beans and to get them from the <strong>Spring Context</strong> (even if it is a spring context from other bundle).</p>
+                        <hr class="cs-summary__spacer">
+                        <p>If we want to do something low-level with OSGi imports and exports we can do that in the <strong>pom.xml</strong> with <code>&lt;Import-Package&gt;</code> and <code>&lt;Export-Package&gt;</code></p>
+                    </div>
+
+
+
+
+                    <p>
+                        If you want to dive even deeper into OSGi, watch the <a href="https://www.youtube.com/watch?v=BthwKfxATNE">Apache Felix Introduction Video</a>
+                        or do the <a href="http://felix.apache.org/documentation/tutorials-examples-and-presentations/apache-felix-osgi-tutorial.html">Apache Felix Tutorials</a>.
+                    </p>
 
 
                     <div class="cs-v-spacer cs-v-spacer--big"></div>

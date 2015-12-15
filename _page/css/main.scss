@@ -233,6 +233,19 @@ p {
     font-weight: 600;
     font-size:18px;
 }
+
+.cs-summary {
+    background-color: rgba(29, 163, 204, 0.07);
+    border-color: #1E9FCC;
+}
+.cs-summary__headline {
+    font-size:20px;
+}
+
+.cs-summary__spacer {
+    margin-top:12px;
+    margin-bottom:12px;
+}
 /* HIGHLIGHT.JS STYLES */
 
 .hljs {
@@ -287,3 +300,4 @@ p {
 #toc .toc-active a {
     color: #fff;
 }
+

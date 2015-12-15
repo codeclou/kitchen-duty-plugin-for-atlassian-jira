@@ -51,30 +51,49 @@
 
 
 
-                    <h3 class="cs-headline cs-headline--s">Desired Features</h3>
+                    <h3 class="cs-headline cs-headline--s">Desired Features as User Stories</h3>
 
-                    <p>Alright. The plugin should provide the following features.</p>
+                    <p>Since we know the problem now combinded with beeing master developers we came up pretty fast with some kick-ass mockups.
+                        That led us to the following user stories with acceptance criteria.</p>
 
-                    <ol class="cs-list">
-                        <li class="cs-list__item">Page for Kitchen Duty planning
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><span class="cs-special">Kitchen Duty Planning Page</span></p>
+                            <a href="./images/drawings/00-mock-kitchen-duty-planning-page.jpg" data-lightbox="user-stories" data-title="Kitchen Duty Planning Page Mockup">
+                                <img src="./images/drawings/00-mock-kitchen-duty-planning-page.jpg" class="img-responsive cs-image" alt="Kitchen Duty Planning Page Mockup">
+                            </a>
+
+                            <p><strong>User Story</strong></p>
+                            <p>As office-boss I want to assign people for kitchen duty on a weekly basis to improve the kitchens tidiness.</p>
+                            <p><strong>Acceptance Criteria</strong></p>
                             <ul class="cs-list">
-                                <li class="cs-list__item">Setting of JIRA users for this weeks kitchen duty.</li>
+                                <li class="cs-list__item">Setting one or more JIRA users for selected weeks' kitchen duty.</li>
                                 <li class="cs-list__item">The page is only accessible for JIRA administrators.</li>
                             </ul>
-                            <img src="./images/drawings/00-mock-kitchen-duty-planning-page.jpg" class="img-responsive">
 
-                        </li>
-                        <li class="cs-list__item">Overview Page for Kitchen Duty
+
+                        </div>
+                        <div class="col-md-6">
+                            <p><span class="cs-special">Kitchen Duty Overview Page</span></p>
+                            <a href="./images/drawings/00-mock-kitchen-duty-overview-page.jpg" data-lightbox="user-stories" data-title="Kitchen Duty Overview Page Mockup">
+                                <img src="./images/drawings/00-mock-kitchen-duty-overview-page.jpg" class="img-responsive cs-image" class="Kitchen Duty Overview Page Mockup">
+                            </a>
+                            <p><strong>User Story</strong></p>
+                            <p>As office-knave I want to see who is scheduled for this weeks kitchen duty to improve obedience.</p>
+                            <p><strong>Acceptance Criteria</strong></p>
                             <ul class="cs-list">
                                 <li class="cs-list__item">Display of JIRA users who have kitchen duty this week.</li>
-                                <li class="cs-list__item">The page should be accessible for all users and via the top navigation</li>
+                                <li class="cs-list__item">Show whole month in a calendar which is clickable to see future monthsk.</li>
+                                <li class="cs-list__item">The page should be accessible for all authenticated users.</li>
+                                <li class="cs-list__item">The page should have a navigation entry in the top navigation.</li>
+                                <li class="cs-list__item">(Stretch Goal: Add Button "when do I have kitchen duty" to jump to the month and week in the calender when the logged in JIRA user is scheduled for kitchen duty).</li>
                             </ul>
-                            <img src="./images/drawings/00-mock-kitchen-duty-overview-page.jpg" class="img-responsive">
-                        </li>
-                    </ol>
+
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-3 cs-meme-container hidden-xs hidden-sm">
-                    <img src="./images/drawings/sponge.jpg" class="img-responsive">
+                    <img src="./images/drawings/sponge_small.jpg" class="img-responsive">
                 </div>
             </div>
 
@@ -291,19 +310,31 @@
                     <p>Now open <strong>Preferences</strong> in IntelliJ and set the built-in maven of the SDK together with the <code>settings.xml</code></p>
                     <p>(Tip: By calling <code>atlas-version</code> all paths including home directory of SDK are printed)</p>
 
-                    <p><img src="./images/doc/step-00-intellij-maven-install-settings.png" class="img-responsive" alt="Set maven home and maven settings.xml"></p>
+                    <p>
+                        <a href="./images/doc/step-00-intellij-maven-install-settings.png" data-lightbox="00-step-intellij" data-title="Step 0 - Set maven home and maven settings.xml">
+                            <img src="./images/doc/step-00-intellij-maven-install-settings.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Set maven home and maven settings.xml">
+                        </a>
+                    </p>
 
                     <div class="cs-v-spacer"></div>
 
                     <p>Since we need the <code>ATLAS_HOME</code> environment variable to get maven inside IntelliJ to work we set that as well.</p>
 
-                    <p><img src="./images/doc/step-00-intellij-maven-atlas-home.png" class="img-responsive" alt="Set ATLAS_HOME"></p>
+                    <p>
+                        <a href="./images/doc/step-00-intellij-maven-atlas-home.png" data-lightbox="00-step-intellij" data-title="Step 0 - Set ATLAS_HOME variable">
+                            <img src="./images/doc/step-00-intellij-maven-atlas-home.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Set ATLAS_HOME variable">
+                        </a>
+                    </p>
 
                     <div class="cs-v-spacer"></div>
 
                     <p>Now you can click on the <strong>Maven-Tab</strong> on the right and click <strong>compile</strong> and you should have a successful build.</p>
 
-                    <p><img src="./images/doc/step-00-intellij-maven-successful-compile.png" class="img-responsive" alt="Successful Maven Compile"></p>
+                    <p>
+                        <a href="./images/doc/step-00-intellij-maven-successful-compile.png" data-lightbox="00-step-intellij" data-title="Step 0 - Successful Maven Compile">
+                            <img src="./images/doc/step-00-intellij-maven-successful-compile.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Successful Maven Compile">
+                        </a>
+                    </p>
 
                     <div class="cs-v-spacer"></div>
 
@@ -322,6 +353,44 @@
                         </div>
                     </div>
 
+
+
+
+
+                    <h3 class="cs-headline cs-headline--s">Further Reading: OSGi</h3>
+
+                    <p>You can skip this chapter if you already know OSGi or if you are not interested in the deep internals of imports and exports beetween OSGi modules. The next Step of the tutorial will build on this knowledge.</p>
+
+                    <p>As you opened <code>MyPluginComponentImpl.java</code> already you might have seen some annotations that seem important.</p>
+
+                    <p>The ones that interest us the most are <code>@ExportAsService</code> and <code>@ComponentImport</code>.</p>
+
+                    <p>There is also an important is a passage of <code>maven-jira-plugin</code> in the <code>pom.xml</code> that contains the following lines.</p>
+
+                    {{ csSource(lang='xml', source='
+                    |<plugin>
+                    |   ...
+                    |   <artifactId>maven-jira-plugin</artifactId>
+                    |   ...
+                    |   <instructions>
+                    |       <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
+                    |       <Export-Package>
+                    |           com.comsysto.kitchen.duty.api,
+                    |       </Export-Package>
+                    |       <Import-Package>
+                    |           org.springframework.osgi.*;resolution:="optional",
+                    |           org.eclipse.gemini.blueprint.*;resolution:="optional",
+                    |           *
+                    |       </Import-Package>
+                    |       <Spring-Context>*</Spring-Context>
+                    |</instructions>
+                    ') }}
+
+                    <p>We will now dive into unterstanding what all that means.</p>
+
+                    <p class="cs-notice-in-progress">to be done.</p>
+
+
                     <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
@@ -329,7 +398,11 @@
 
 
 
-                    <h2 class="cs-headline cs-headline--m">Step 1: Kitchen Duty planning Page </h2>
+
+
+
+
+                    <h2 class="cs-headline cs-headline--m">Step 1: Kitchen Duty Planning Page</h2>
 
                     <p>Our base project is there and ...</p>
 

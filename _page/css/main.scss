@@ -1,6 +1,7 @@
 @import '../../node_modules/bootstrap/dist/css/bootstrap';
 @import '../../node_modules/font-awesome/scss/font-awesome.scss';
 @import '../../node_modules/highlight.js/styles/railscasts';
+@import '../../node_modules/lightbox2/dist/css/lightbox';
 
 /* CS STYLES */
 
@@ -43,6 +44,8 @@ body{
 .cs-headline--s {
     font-size:20px;
     margin-bottom:30px;
+    border-bottom:1px solid #1E9FCC;
+    display:inline-block;
 }
 
 .cs-content {
@@ -96,9 +99,12 @@ p {
     line-height:1.6em;
 }
 
+.cs-image {
+    margin-bottom:15px;
+}
 
 .cs-shell {
-
+    margin-bottom:15px;
 }
 .cs-shell__inner {
     display:table-cell;
@@ -209,6 +215,9 @@ p {
     height:60px;
 }
 
+.cs-tutorial-image {
+    max-width:600px;
+}
 
 .cs-warning {
     border-color: #ffa354;
@@ -219,7 +228,11 @@ p {
     color:#ffa354;
 }
 
-
+.cs-special {
+    color:#1E9FCC;
+    font-weight: 600;
+    font-size:18px;
+}
 /* HIGHLIGHT.JS STYLES */
 
 .hljs {

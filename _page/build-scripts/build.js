@@ -61,6 +61,7 @@ var jsTaskOptions = {
         './node_modules/retina.js/dist/retina.js',
         './node_modules/toc/dist/toc.js',
         './node_modules/webcomponents.js/CustomElements.js',
+        './node_modules/bootstrap/dist/js/bootstrap.js',
         './_page/js/main.js'
     ]),
     jsBundle: buildDir + '/generated/bundle.js',

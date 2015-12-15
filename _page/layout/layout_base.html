@@ -19,17 +19,23 @@
     <script>var postLoadMethods = [];</script>
 </head>
 <body>
-
+<!-- MACROS START -->
 {% macro csShell(shellCmd, shellCmdOutput='') %}
-<cs-shell-container>
-    <cs-shell>
+<div class="cs-shell">
+    <div class="cs-shell__inner">
         {{shellCmd}}<br>
-        <cs-shell-output>{{shellCmdOutput}}</cs-shell-output>
-    </cs-shell>
-    <a class="cs-copy-clipboard" data-clipboard-text="{{shellCmd}}"><i class="fa fa-files-o"></i></a>
-</cs-shell-container>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">{{shellCmdOutput | formatSourceCode('bash') | safe }}</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="{{shellCmd}}"><i class="fa fa-files-o"></i></a>
+</div>
 {% endmacro %}
 
+{% macro csSource(lang='', source='') %}
+<pre class="cs-code"><code class="hljs">{{source | formatSourceCode(lang) | safe }}</code></pre>
+{% endmacro %}
+
+<!-- MACROS END -->
 
 {% block contentLayout %}
 content

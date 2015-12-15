@@ -1,5 +1,8 @@
-@import "../../node_modules/bootstrap/dist/css/bootstrap";
+@import '../../node_modules/bootstrap/dist/css/bootstrap';
 @import '../../node_modules/font-awesome/scss/font-awesome.scss';
+@import '../../node_modules/highlight.js/styles/railscasts';
+
+/* CS STYLES */
 
 body{
     padding-top:110px;
@@ -99,22 +102,26 @@ p {
 }
 
 
-
 .cs-shell {
+
+}
+.cs-shell__inner {
+    display:table-cell;
+    vertical-align: top;
     padding: 10px 10px 10px 10px;
     font-size: 90%;
     font-family: Menlo, Menlo, Monaco, Consolas, "Courier New", monospace;
-    border-radius: 6px;
+    border-radius: 10px;
     margin-top:0;
     margin-bottom:10px;
     color:#fff;
-    background-color: #303030;
+    background-color: #333;
     width:100%;
 }
-.cs-shell:before {
+.cs-shell__inner:before {
     content: '$> '
 }
-.cs-shell-output {
+.cs-shell__output {
     color: #afafaf;
     background: transparent;
     border:0px;
@@ -122,7 +129,28 @@ p {
     margin:0px;
     margin-top:10px;
 }
-
+.cs-shell__output-hljs {
+    padding:0;
+    margin:0;
+}
+.cs-shell__copy-clipboard {
+    cursor: pointer;
+    display:table-cell;
+    vertical-align: top;
+    color: #303030;
+    padding-left:0.5rem;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.cs-shell__copy-clipboard:active {
+    padding-top:0.1rem;
+    padding-left:0.6rem;
+    color:#7CBB00;
+}
 
 .cs-sidenote {
     border-radius: 6px;
@@ -196,6 +224,17 @@ p {
     color:#ffa354;
 }
 
+
+/* HIGHLIGHT.JS STYLES */
+
+.hljs {
+    background: #333;
+}
+.cs-code {
+    background: #333;
+    border:0;
+    border-radius: 10px;
+}
 
 /* THIRD PARTY TOC */
 #toc {

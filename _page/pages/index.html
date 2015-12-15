@@ -82,7 +82,6 @@
         <div class="col-md-12">
 
 
-
             <h2 class="cs-headline cs-headline--m">Getting Started</h2>
 
             <p>That sounds like some simple features to implement so let's get to it.</p>
@@ -93,34 +92,30 @@
 
             <p>Let's do a <strong>short version check</strong> of the installed <strong>Atlassian SDK tools</strong>. I am using a Mac so the output will look a little different if you use another OS.</p>
 
-<div class="cs-shell">
-atlas-version<br><pre class="cs-shell-output">
-ATLAS Version:    6.1.0
-ATLAS Home:       /Applications/Atlassian/atlassian-plugin-sdk-6.1.0
-ATLAS Scripts:    /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/bin
-ATLAS Maven Home: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1
-AMPS Version:     6.1.2
---------
-Executing: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1/bin/mvn --version -gs /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1/conf/settings.xml
-Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=256M; support was removed in 8.0
-Apache Maven 3.2.1 (ea8b2b07643dbb1b84b6d16e1f08391b666bc1e9; 2014-02-14T18:37:52+01:00)
-Maven home: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1
-Java version: 1.8.0_45, vendor: Oracle Corporation
-Java home: /Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/jre
-Default locale: de_DE, platform encoding: UTF-8
-OS name: "mac os x", version: "10.10.5", arch: "x86_64", family: "mac"
-</pre>
-</div><!--cs-shell-->
+            {{ csShell(shellCmd='atlas-version', shellCmdOutput='
+                |ATLAS Version:    6.1.0
+                |ATLAS Home:       /Applications/Atlassian/atlassian-plugin-sdk-6.1.0
+                |ATLAS Scripts:    /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/bin
+                |ATLAS Maven Home: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1
+                |AMPS Version:     6.1.2
+                |--------
+                |Executing: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1/bin/mvn --version -gs /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1/conf/settings.xml
+                |Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=256M; support was removed in 8.0
+                |Apache Maven 3.2.1 (ea8b2b07643dbb1b84b6d16e1f08391b666bc1e9; 2014-02-14T18:37:52+01:00)
+                |Maven home: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1
+                |Java version: 1.8.0_45, vendor: Oracle Corporation
+                |Java home: /Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/jre
+                |Default locale: de_DE, platform encoding: UTF-8
+                |OS name: "mac os x", version: "10.10.5", arch: "x86_64", family: "mac"
+            ') }}
 
             <p>Now check if <strong>Java is correctly installed</strong>.</p>
 
-<div class="cs-shell">
-java -version<br><pre class="cs-shell-output">
-java version "1.8.0_45"
-Java(TM) SE Runtime Environment (build 1.8.0_45-b14)
-Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
-</pre>
-</div><!--cs-shell-->
+            {{ csShell(shellCmd='java -version', shellCmdOutput='
+                |java version "1.8.0_45"
+                |Java(TM) SE Runtime Environment (build 1.8.0_45-b14)
+                |Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
+            ') }}
 
             <p>Ok once you got all that set-up we can start.</p>
 
@@ -136,19 +131,18 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
             <p>We will now create the JIRA Plugin via the <a href="https://developer.atlassian.com/docs/developer-tools/working-with-the-sdk/command-reference/atlas-create-jira-plugin">Atlassian SDK command <code>atlas-create-jira-plugin</code></a>. Change to a folder where you want to create your Plugin.</p>
             <p>You will be asked to specify a <code>groupId</code>, <code>artifactId</code>, <code>version</code> and <code>package</code>. You can see my choices below.</p>
 
-<div class="cs-shell">
-atlas-create-jira-plugin<br><pre class="cs-shell-output">
-...
-Define value for groupId: : com.comsysto
-Define value for artifactId: : kitchen-duty-plugin
-Define value for version:  1.0.0-SNAPSHOT: :
-Define value for package:  com.comsysto: : com.comsysto.kitchen.duty
-....
-Confirm
-Y
-...
-</pre>
-</div><!--cs-shell-->
+            {{ csShell(shellCmd='atlas-create-jira-plugin', shellCmdOutput='
+                |...
+                |Define value for groupId: : com.comsysto
+                |Define value for artifactId: : kitchen-duty-plugin
+                |Define value for version:  1.0.0-SNAPSHOT: :
+                |Define value for package:  com.comsysto: : com.comsysto.kitchen.duty
+                |....
+                |Confirm
+                |Y
+                |...
+            ') }}
+
 
             <p>Now the command should have created a folder called like the <code>artifactId</code>, in our case <code>kitchen-duty-plugin</code>.</p>
 
@@ -196,67 +190,65 @@ Y
 
             <p>Create <code>.editorconfig</code> and add statements for line endings, charset and tab indentation. Since IntelliJ is awesome <a href="http://EditorConfig.org">EditorConfig Plugin</a> is already installed. If you are using another IDE get the plugin now.</p>
 
-<pre>
-# EditorConfig is awesome: http://EditorConfig.org
-root = true
-[*]
-end_of_line = lf
-insert_final_newline = true
-charset = utf-8
-
-[*.html]
-indent_style = space
-indent_size = 4
-
-[*.js]
-indent_style = space
-indent_size = 4
-
-[*.css]
-indent_style = space
-indent_size = 4
-
-[*.xml]
-indent_style = space
-indent_size = 4
-
-[*.java]
-indent_style = space
-indent_size = 4
-
-[*.vm]
-indent_style = space
-indent_size = 4
-</pre>
-
+            {{ csSource(lang='ini', source='
+                 |# EditorConfig is awesome: http://EditorConfig.org
+                 |root = true
+                 |[*]
+                 |end_of_line = lf
+                 |insert_final_newline = true
+                 |charset = utf-8
+                 |
+                 |[*.html]
+                 |indent_style = space
+                 |indent_size = 4
+                 |
+                 |[*.js]
+                 |indent_style = space
+                 |indent_size = 4
+                 |
+                 |[*.css]
+                 |indent_style = space
+                 |indent_size = 4
+                 |
+                 |[*.xml]
+                 |indent_style = space
+                 |indent_size = 4
+                 |
+                 |[*.java]
+                 |indent_style = space
+                 |indent_size = 4
+                 |
+                 |[*.vm]
+                 |indent_style = space
+                 |indent_size = 4
+            ') }}
 
             <p>Create <code>.gitignore</code> and add ignore statements for files we do not want to commit.</p>
 
-<pre>
-.idea/
-*.iml
-*.log
-target/
-</pre>
+            {{ csSource(lang='ini', source='
+                |.idea/
+                |*.iml
+                |*.log
+                |target/
+            ') }}
 
             <p>Create <code>.gitattributes</code> and set line endings to unix.</p>
 
-<pre>
-*.svg eol=lf
-*.html eol=lf
-*.js eol=lf
-*.css eol=lf
-*.scss eol=lf
-*.json eol=lf
-*.sh eol=lf
-*.yml eol=lf
-*.md eol=lf
-*.txt eol=lf
-*.java eol=lf
-*.properties  eol=lf
-*.xml eol=lf
-</pre>
-
+            {{ csSource(lang='ini', source='
+                |*.svg eol=lf
+                |*.html eol=lf
+                |*.js eol=lf
+                |*.css eol=lf
+                |*.scss eol=lf
+                |*.json eol=lf
+                |*.sh eol=lf
+                |*.yml eol=lf
+                |*.md eol=lf
+                |*.txt eol=lf
+                |*.java eol=lf
+                |*.properties  eol=lf
+                |*.xml eol=lf
+            ') }}
 
             <div class="cs-v-spacer cs-v-spacer--big"></div>
 
@@ -269,29 +261,29 @@ target/
 
             <p>Edit <code>pom.xml</code> and add line <code>&lt;version&gt;3.3&lt;/version&gt;</code> to <code>maven-compiler-plugin</code>.</p>
 
-<pre>
-&lt;plugin&gt;
-    &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-    &lt;version&gt;3.3&lt;/version&gt;
-    &lt;configuration&gt;
-        &lt;source&gt;1.7&lt;/source&gt;
-        &lt;target&gt;1.7&lt;/target&gt;
-    &lt;/configuration&gt;
-&lt;/plugin&gt;
-</pre>
+            {{ csSource(lang='xml', source='
+                |<plugin>
+                |    <artifactId>maven-compiler-plugin</artifactId>
+                |    <version>3.3</version>
+                |    <configuration>
+                |        <source>1.7</source>
+                |        <target>1.7</target>
+                |    </configuration>
+                |</plugin>
+            ') }}
 
-            <p>Also add in the <code>pom.xml</code> right before the closing <code>&lt;/dependencies&gt;</code>.</p>
+            <p>Also add in the <code>pom.xml</code> right before the closing <code></dependencies></code>.</p>
 
-<pre>
-    &lt;dependency&gt;
-        &lt;groupId&gt;com.atlassian.sal&lt;/groupId&gt;
-        &lt;artifactId&gt;sal-api&lt;/artifactId&gt;
-        &lt;version&gt;3.0.3&lt;/version&gt;
-        &lt;scope&gt;provided&lt;/scope&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</pre>
-
+            {{ csSource(lang='xml', source='
+                |   ...
+                |   <dependency>
+                |       <groupId>com.atlassian.sal</groupId>
+                |       <artifactId>sal-api</artifactId>
+                |       <version>3.0.3</version>
+                |       <scope>provided</scope>
+                |   </dependency>
+                |</dependencies>
+            ') }}
 
             <p>Now open <strong>Preferences</strong> in IntelliJ and set the built-in maven of the SDK together with the <code>settings.xml</code></p>
             <p>(Tip: By calling <code>atlas-version</code> all paths including home directory of SDK are printed)</p>

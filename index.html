@@ -21,9 +21,12 @@
     <script>var postLoadMethods = [];</script>
 </head>
 <body>
+<!-- MACROS START -->
 
 
 
+
+<!-- MACROS END -->
 
 
 
@@ -109,7 +112,6 @@
         <div class="col-md-12">
 
 
-
             <h2 class="cs-headline cs-headline--m">Getting Started</h2>
 
             <p>That sounds like some simple features to implement so let's get to it.</p>
@@ -120,34 +122,44 @@
 
             <p>Let's do a <strong>short version check</strong> of the installed <strong>Atlassian SDK tools</strong>. I am using a Mac so the output will look a little different if you use another OS.</p>
 
+            
 <div class="cs-shell">
-atlas-version<br><pre class="cs-shell-output">
-ATLAS Version:    6.1.0
-ATLAS Home:       /Applications/Atlassian/atlassian-plugin-sdk-6.1.0
-ATLAS Scripts:    /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/bin
-ATLAS Maven Home: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1
-AMPS Version:     6.1.2
+    <div class="cs-shell__inner">
+        atlas-version<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">ATLAS Version:    <span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>
+ATLAS Home:       /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>
+ATLAS Scripts:    /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/bin
+ATLAS Maven Home: /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/apache-maven-<span class="hljs-number">3.2</span>.<span class="hljs-number">1</span>
+AMPS Version:     <span class="hljs-number">6.1</span>.<span class="hljs-number">2</span>
 --------
-Executing: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1/bin/mvn --version -gs /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1/conf/settings.xml
-Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=256M; support was removed in 8.0
-Apache Maven 3.2.1 (ea8b2b07643dbb1b84b6d16e1f08391b666bc1e9; 2014-02-14T18:37:52+01:00)
-Maven home: /Applications/Atlassian/atlassian-plugin-sdk-6.1.0/apache-maven-3.2.1
-Java version: 1.8.0_45, vendor: Oracle Corporation
-Java home: /Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/jre
-Default locale: de_DE, platform encoding: UTF-8
-OS name: "mac os x", version: "10.10.5", arch: "x86_64", family: "mac"
-</pre>
-</div><!--cs-shell-->
+Executing: /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/apache-maven-<span class="hljs-number">3.2</span>.<span class="hljs-number">1</span>/bin/mvn --version -gs /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/apache-maven-<span class="hljs-number">3.2</span>.<span class="hljs-number">1</span>/conf/settings.xml
+Java HotSpot(TM) <span class="hljs-number">64</span>-Bit Server VM warning: ignoring option MaxPermSize=<span class="hljs-number">256</span>M; support was removed <span class="hljs-keyword">in</span> <span class="hljs-number">8.0</span>
+Apache Maven <span class="hljs-number">3.2</span>.<span class="hljs-number">1</span> (ea8b2b07643dbb1b84b6d16e1f08391b666bc1e9; <span class="hljs-number">2014</span>-<span class="hljs-number">02</span>-<span class="hljs-number">14</span>T18:<span class="hljs-number">37</span>:<span class="hljs-number">52</span>+<span class="hljs-number">01</span>:<span class="hljs-number">00</span>)
+Maven home: /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/apache-maven-<span class="hljs-number">3.2</span>.<span class="hljs-number">1</span>
+Java version: <span class="hljs-number">1.8</span>.<span class="hljs-number">0</span>_45, vendor: Oracle Corporation
+Java home: /Library/Java/JavaVirtualMachines/jdk1.<span class="hljs-number">8.0</span>_45.jdk/Contents/Home/jre
+Default locale: de_DE, platform encoding: UTF-<span class="hljs-number">8</span>
+OS name: <span class="hljs-string">"mac os x"</span>, version: <span class="hljs-string">"10.10.5"</span>, arch: <span class="hljs-string">"x86_64"</span>, family: <span class="hljs-string">"mac"</span></code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-version"><i class="fa fa-files-o"></i></a>
+</div>
+
 
             <p>Now check if <strong>Java is correctly installed</strong>.</p>
 
+            
 <div class="cs-shell">
-java -version<br><pre class="cs-shell-output">
-java version "1.8.0_45"
-Java(TM) SE Runtime Environment (build 1.8.0_45-b14)
-Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
-</pre>
-</div><!--cs-shell-->
+    <div class="cs-shell__inner">
+        java -version<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">java version <span class="hljs-string">"1.8.0_45"</span>
+Java(TM) SE Runtime Environment (build <span class="hljs-number">1.8</span>.<span class="hljs-number">0</span>_45-b14)
+Java HotSpot(TM) <span class="hljs-number">64</span>-Bit Server VM (build <span class="hljs-number">25.45</span>-b02, mixed mode)</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="java -version"><i class="fa fa-files-o"></i></a>
+</div>
+
 
             <p>Ok once you got all that set-up we can start.</p>
 
@@ -163,19 +175,25 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.45-b02, mixed mode)
             <p>We will now create the JIRA Plugin via the <a href="https://developer.atlassian.com/docs/developer-tools/working-with-the-sdk/command-reference/atlas-create-jira-plugin">Atlassian SDK command <code>atlas-create-jira-plugin</code></a>. Change to a folder where you want to create your Plugin.</p>
             <p>You will be asked to specify a <code>groupId</code>, <code>artifactId</code>, <code>version</code> and <code>package</code>. You can see my choices below.</p>
 
+            
 <div class="cs-shell">
-atlas-create-jira-plugin<br><pre class="cs-shell-output">
-...
-Define value for groupId: : com.comsysto
-Define value for artifactId: : kitchen-duty-plugin
-Define value for version:  1.0.0-SNAPSHOT: :
-Define value for package:  com.comsysto: : com.comsysto.kitchen.duty
+    <div class="cs-shell__inner">
+        atlas-create-jira-plugin<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">...
+Define value <span class="hljs-keyword">for</span> groupId: : com.comsysto
+Define value <span class="hljs-keyword">for</span> artifactId: : kitchen-duty-plugin
+Define value <span class="hljs-keyword">for</span> version:  <span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>-SNAPSHOT: :
+Define value <span class="hljs-keyword">for</span> package:  com.comsysto: : com.comsysto.kitchen.duty
 ....
 Confirm
 Y
-...
-</pre>
-</div><!--cs-shell-->
+...</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-create-jira-plugin"><i class="fa fa-files-o"></i></a>
+</div>
+
+
 
             <p>Now the command should have created a folder called like the <code>artifactId</code>, in our case <code>kitchen-duty-plugin</code>.</p>
 
@@ -223,53 +241,52 @@ Y
 
             <p>Create <code>.editorconfig</code> and add statements for line endings, charset and tab indentation. Since IntelliJ is awesome <a href="http://EditorConfig.org">EditorConfig Plugin</a> is already installed. If you are using another IDE get the plugin now.</p>
 
-<pre>
-# EditorConfig is awesome: http://EditorConfig.org
-root = true
-[*]
-end_of_line = lf
-insert_final_newline = true
-charset = utf-8
-
-[*.html]
-indent_style = space
-indent_size = 4
-
-[*.js]
-indent_style = space
-indent_size = 4
-
-[*.css]
-indent_style = space
-indent_size = 4
-
-[*.xml]
-indent_style = space
-indent_size = 4
-
-[*.java]
-indent_style = space
-indent_size = 4
-
-[*.vm]
-indent_style = space
-indent_size = 4
-</pre>
+            
+<pre class="cs-code"><code class="hljs"><span class="hljs-comment"># EditorConfig is awesome: http://EditorConfig.org</span>
+<span class="hljs-setting">root = <span class="hljs-value"><span class="hljs-keyword">true</span></span></span>
+<span class="hljs-title">[*]</span>
+<span class="hljs-setting">end_of_line = <span class="hljs-value">lf</span></span>
+<span class="hljs-setting">insert_final_newline = <span class="hljs-value"><span class="hljs-keyword">true</span></span></span>
+<span class="hljs-setting">charset = <span class="hljs-value">utf-<span class="hljs-number">8</span></span></span>
+<span class="hljs-title">
+[*.html]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span>
+<span class="hljs-title">
+[*.js]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span>
+<span class="hljs-title">
+[*.css]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span>
+<span class="hljs-title">
+[*.xml]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span>
+<span class="hljs-title">
+[*.java]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span>
+<span class="hljs-title">
+[*.vm]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span></code></pre>
 
 
             <p>Create <code>.gitignore</code> and add ignore statements for files we do not want to commit.</p>
 
-<pre>
-.idea/
+            
+<pre class="cs-code"><code class="hljs">.idea/
 *.iml
 *.log
-target/
-</pre>
+target/</code></pre>
+
 
             <p>Create <code>.gitattributes</code> and set line endings to unix.</p>
 
-<pre>
-*.svg eol=lf
+            
+<pre class="cs-code"><code class="hljs">*.svg eol=lf
 *.html eol=lf
 *.js eol=lf
 *.css eol=lf
@@ -281,8 +298,7 @@ target/
 *.txt eol=lf
 *.java eol=lf
 *.properties  eol=lf
-*.xml eol=lf
-</pre>
+*.xml eol=lf</code></pre>
 
 
             <div class="cs-v-spacer cs-v-spacer--big"></div>
@@ -296,28 +312,28 @@ target/
 
             <p>Edit <code>pom.xml</code> and add line <code>&lt;version&gt;3.3&lt;/version&gt;</code> to <code>maven-compiler-plugin</code>.</p>
 
-<pre>
-&lt;plugin&gt;
-    &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-    &lt;version&gt;3.3&lt;/version&gt;
-    &lt;configuration&gt;
-        &lt;source&gt;1.7&lt;/source&gt;
-        &lt;target&gt;1.7&lt;/target&gt;
-    &lt;/configuration&gt;
-&lt;/plugin&gt;
-</pre>
+            
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">plugin</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>maven-compiler-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>3.3<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">configuration</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">source</span>&gt;</span>1.7<span class="hljs-tag">&lt;/<span class="hljs-title">source</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">target</span>&gt;</span>1.7<span class="hljs-tag">&lt;/<span class="hljs-title">target</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">configuration</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">plugin</span>&gt;</span></code></pre>
 
-            <p>Also add in the <code>pom.xml</code> right before the closing <code>&lt;/dependencies&gt;</code>.</p>
 
-<pre>
-    &lt;dependency&gt;
-        &lt;groupId&gt;com.atlassian.sal&lt;/groupId&gt;
-        &lt;artifactId&gt;sal-api&lt;/artifactId&gt;
-        &lt;version&gt;3.0.3&lt;/version&gt;
-        &lt;scope&gt;provided&lt;/scope&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</pre>
+            <p>Also add in the <code>pom.xml</code> right before the closing <code></dependencies></code>.</p>
+
+            
+<pre class="cs-code"><code class="hljs">...
+   <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>com.atlassian.sal<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>sal-api<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>3.0.3<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependencies</span>&gt;</span></code></pre>
 
 
             <p>Now open <strong>Preferences</strong> in IntelliJ and set the built-in maven of the SDK together with the <code>settings.xml</code></p>

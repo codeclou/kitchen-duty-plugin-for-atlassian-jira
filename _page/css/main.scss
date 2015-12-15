@@ -6,7 +6,6 @@
 
 body{
     padding-top:110px;
-    padding-left:300px;
 }
 .cs-header {
     background-color:#1E9FCC;
@@ -15,14 +14,11 @@ body{
     left:0px;
     width:100%;
     z-index:500;
-    padding-left:300px;
     height:100px;
+    padding-top:15px;
+    padding-bottom:30px;
 }
 
-.cs-header__inner-container {
-    margin-top:15px;
-    margin-bottom:30px;
-}
 .cs-header__corporate-logo {
     text-align:right;
     padding-top:20px;
@@ -52,7 +48,6 @@ body{
 .cs-content {
     font-family: 'Open Sans', sans-serif;
     font-size:16px;
-    width:90%;
 }
 
 
@@ -238,14 +233,13 @@ p {
 
 /* THIRD PARTY TOC */
 #toc {
-    top: 100px;
-    left: 0px;
+    /*top: 100px;
+    left: 0px;*/
     height: 100%;
     position: fixed;
-    background: #333;
-    width: 250px;
+    background: transparent;
+
     padding-top: 20px;
-    color: #fff;
 }
 
 #toc ul {
@@ -256,11 +250,11 @@ p {
 
 #toc li {
     padding: 5px 10px;
-    border-bottom:1px solid #5d5d5d;
+    border-bottom:1px solid #efefef;
 }
 
 #toc a {
-    color: #fff;
+    color: #000;
     text-decoration: none;
     display: block;
 }
@@ -275,4 +269,8 @@ p {
 
 #toc .toc-active {
     background: #1E9FCC;
+}
+
+#toc .toc-active a {
+    color: #fff;
 }

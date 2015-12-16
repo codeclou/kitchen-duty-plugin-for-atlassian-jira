@@ -562,13 +562,58 @@
 
                     <p>Ok now we have <strong>selected the two frontend components</strong> we want to use and continue with <strong>server side components</strong>.</p>
 
+                    <div class="cs-v-spacer cs-v-spacer--small"></div>
+
+
+                    <div class="row">
+                        <div class="col-md-5">
+
+                            <h3 class="cs-headline cs-headline--s">Server Side Component Planning</h3>
+
+
+                            <p>The caffeine kicks in now and our spacey software-engineering mind is fully operational to <strong>design the server components</strong>.</p>
+
+                            <p>We could use a Servlet and simple MVC approach with lame JSP-style-pages and normal Request-Response-Cycle ...</p>
+
+                            <p>But since that is just lame we will do it with <strong>REST Resources</strong> and a simple view that has a lot of (ugly) JavaScript code to interact with the REST Resources.</p>
+
+                            <p>So after thinking about that a little we came up with the scheme on the right. (What is Webwork Action? We will learn about that soon.)</p>
 
 
 
+                        </div>
+                        <div class="col-md-5 col-md-offset-1 cs-tutorial-space-top-small">
+                            <p>
+                                <a href="./images/doc/01-mock-server-side-component-design.jpg" data-lightbox="01-step-server-side" data-title="Step 1 - Server Side Component Design">
+                                    <img src="./images/doc/01-mock-server-side-component-design.jpg" class="img-thumbnail img-responsive" alt="Step 1 - Server Side Component Design">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p><strong>Component Overview</strong></p>
+
+                    <ul>
+                        <li><p><strong>KitchenDutyPlanningWebworkAction</strong> is a basic &ldquo;Servlet&rdquo; that provides the actual Page to browse to and provides the HTML View and JavaScript.</p>
+                            <ul>
+                                <li><p><strong>JavaScript Controller</strong> contains a bunch of JS-Code to interact between the HTML-View and the REST-Resources.</p></li>
+                                <li><p><strong>HTML View</strong> is our template that provides basic HTML components for the JavaScript Controller to hook into.</p></li>
+                            </ul>
+                        </li>
+                        <li><p><strong>UserRestResource</strong> provides REST Resources for searching JIRA usernames via <a href="https://de.wikipedia.org/wiki/Java_API_for_XML_Web_Services" target="_blank">JAX-WS</a>.</p></li>
+                        <li><p><strong>KitchenDutyPlanningRestResource</strong> provides REST Resources for CRUD operations on the KitchenDutyPlanningModel via <a href="https://de.wikipedia.org/wiki/Java_API_for_XML_Web_Services" target="_blank">JAX-WS</a>.</p></li>
+                        <li><p><strong>KitchenDutyPlanningModel</strong> is our simple Pojo Model which we use to persist Data and also use as JSON representation in the JavaScript controller.</p></li>
+                    </ul>
 
 
+                    <h3 class="cs-headline cs-headline--s">Creating the KitchenDutyPlanningWebworkAction</h3>
 
+                    <p>You might say <em>&ldquo;WebworkAction? That came out of nowhere!&rdquo;</em> and you are right. I will introduce you to it, since this is one way to provide Pages inside JIRA in a nice way.</p>
 
+                    <p>You can read about <a href="https://developer.atlassian.com/jiradev/jira-platform/jira-architecture/jira-technical-overview/jira-webwork-actions">JIRA Webwork Action</a> or <a href="https://developer.atlassian.com/jiradev/jira-platform/building-jira-add-ons/jira-plugins2-overview/jira-plugin-module-types/webwork-plugin-module">Webwork plugin module</a>
+                    but you will also understand what is going on after my short introduction.</p>
+
+                    <p></p>
 
 
 

@@ -191,6 +191,9 @@ Java HotSpot(TM) <span class="hljs-number">64</span>-Bit Server VM (build <span 
             <div class="row">
                 <div class="col-md-8">
 
+<!-- ========================================================================================================== -->
+<!-- STEP 0 -->
+<!-- ========================================================================================================== -->
 
                     <h2 class="cs-headline cs-headline--m">Step 0: Creating the Plugin Project</h2>
 
@@ -345,7 +348,7 @@ target/</code></pre>
 <span class="hljs-tag">&lt;/<span class="hljs-title">plugin</span>&gt;</span></code></pre>
 
 
-                    <p>Also add in the <code>pom.xml</code> right before the closing <code></dependencies></code>.</p>
+                    <p>Also add in the <code>pom.xml</code> right before the closing <code>&lt;/dependencies&gt;</code>.</p>
 
                     
 <pre class="cs-code"><code class="hljs">...
@@ -537,22 +540,150 @@ Spring-Context: *</code></pre>
 
 
 
-
-
-
-
-
-
+<!-- ========================================================================================================== -->
+<!-- STEP 1 -->
+<!-- ========================================================================================================== -->
 
                     <h2 class="cs-headline cs-headline--m">Step 1: Kitchen Duty Planning Page</h2>
 
-                    <p>Our base project is there and ...</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
 
+                    <p>Our base project is compiling and now we want to takle our first User Story and <strong>implement the Kitchen Duty Planning page</strong>.</p>
+
+                    <p>But before we start the implementation we drink another coffee and get our brain up to software-architecture-design-speed, because we need to make some <strong>design decisions</strong> now.</p>
+
+
+                    <h3 class="cs-headline cs-headline--s">What does the Planning Page really need to do? </h3>
+
+                    <ul>
+                        <li>We need to be able to get a list of all JIRA usernames and make them selectable.</li>
+                        <li>We need some kind of calendar widget that is clickable and let's us select weeks.</li>
+                        <li>We need to be able to persist the information permanently into some kind of database storage.</li>
+                        <li>We need to be able to get stored users for a week, display and make them removable from the weeks schedule.</li>
+                    </ul>
+
+                    <p>
+                        Ok sounds like basic stuff we did a trillion times already in some other projects.
+                        But the question is, <strong>how do we do this the cool Atlassian way?</strong>
+                    </p>
+
+
+                </div>
+                <div class="col-md-3 cs-meme-container hidden-xs hidden-sm">
+                    <img src="./images/drawings/serious-thinking.png" class="img-responsive">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <h3 class="cs-headline cs-headline--s">Introducing Atlassian AUI</h3>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p>
+                                Most of you might know <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> and use it to build sweet responsive websites.
+                                Atlassian also has such a Framework that drives their Applications. It is called <strong><a href="https://docs.atlassian.com/aui/latest/"  target="_blank">Atlassian User Interface</a></strong> in short AUI.
+                            </p>
+
+                            <p>
+                                <a href="https://docs.atlassian.com/aui/latest/" target="_blank">
+                                    <img src="./images/doc/step-01-atlassian-aui-screenshot.png" class="img-thumbnail img-responsive" alt="Atlassian User Interface Screenshot">
+                                </a>
+                            </p>
+
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>Shooping List</strong></p>
+                            <ul>
+                                <li>
+                                    <p>
+                                        <a href="https://docs.atlassian.com/aui/latest/docs/auiselect2.html" target="_blank">
+                                            AUI Select 2 component for User Selection
+                                        </a>
+                                    </p>
+                                    <p><img src="./images/doc/step-01-aui-select2-demo.gif"
+                                            class="img-thumbnail img-responsive cs-tutorial-image"
+                                            alt="AUI select2 demo"></p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <a href="https://docs.atlassian.com/aui/latest/docs/date-picker.html" target="_blank">
+                                            AUI Datepicker component for Week Selection
+                                        </a>
+                                    </p>
+                                    <p><img src="./images/doc/step-01-aui-datepicker-demo.gif"
+                                            class="img-thumbnail img-responsive cs-tutorial-image"
+                                            alt="AUI select2 demo"></p>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </div>
+
+
+                    <p>Ok now we have <strong>selected the two frontend components</strong> we want to use and continue with <strong>server side components</strong>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="cs-v-spacer cs-v-spacer--big"></div>
+                    <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+                    <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+                    <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
                     <p class="cs-notice-in-progress">to be done.</p>
-
-
 
 
 

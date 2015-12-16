@@ -819,19 +819,42 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                         </a>
                     </p>
 
+                    <p>Now we change the <code>execute</code> Method to work with our view:</p>
+
+                    
+<pre class="cs-code"><code class="hljs"><span class="hljs-annotation">@Override</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">execute</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+   <span class="hljs-keyword">return</span> <span class="hljs-string">"kitchen-duty-planning-success"</span>;
+}</code></pre>
 
 
+                    <p>Now our view will be called when we browse to the Webactions URL which is simply <code>http://server/jira/secure/[WebWorkAlias].jspa</code> in our case <code>http://server/jira/secure/KitchenDutyPlanningWebworkAction.jspa</code>.</p>
+
+                    <p>We will now start JIRA wich will have our Plugin installed with the following command. (Go get another coffee, this will take some time to download dependencies)</p>
+
+                    
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        atlas-run<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">...
+[INFO] [talledLocalContainer] INFORMATION: Server startup <span class="hljs-keyword">in</span> <span class="hljs-number">37754</span> ms
+[INFO] [talledLocalContainer] Tomcat <span class="hljs-number">8</span>.x started on port [<span class="hljs-number">2990</span>]
+[INFO] jira started successfully <span class="hljs-keyword">in</span> <span class="hljs-number">59</span>s at http://localhost:<span class="hljs-number">2990</span>/jira
+[INFO] Type Ctrl-D to shutdown gracefully
+[INFO] Type Ctrl-C to <span class="hljs-built_in">exit</span></code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-run"><i class="fa fa-files-o"></i></a>
+</div>
 
 
+                    <p>Now browse to <a href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa</a> and you should see:</p>
 
-
-
-
-
-
-
-
-
+                    <p>
+                        <a href="./images/doc/step-01-atlas-run-jira-with-kitchen-duty-planning-webwork-action.png" data-lightbox="01-step-server-side" data-title="Step 1 - Success View of Kitchen Duty Planning Webwork Action">
+                            <img src="./images/doc/step-01-atlas-run-jira-with-kitchen-duty-planning-webwork-action.png" class="img-thumbnail img-responsive" alt="Step 1 - Success View of Kitchen Duty Planning Webwork Action">
+                        </a>
+                    </p>
 
 
 
@@ -849,12 +872,38 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                     <div class="cs-v-spacer cs-v-spacer--big"></div>
                     <div class="cs-v-spacer cs-v-spacer--big"></div>
 
+
+
+                    <div class="alert alert-info cs-summary">
+                        <p class="cs-summary__headline"><i class="fa fa-tree fa-lg"></i> That's it for 2015</p>
+                        <hr class="cs-summary__spacer">
+                        <p><strong>Continuing in 2016</strong> - We will continue this tutorial next year.</p>
+                        <hr class="cs-summary__spacer">
+                        <p>We will then tend to</p>
+                        <ul>
+                            <li><p>Creating REST Resources for UserSearch and KitchenDutyPlanningModel operations.</p></li>
+                            <li><p>Creating JavaScript Controller and HTML view with Atlassian AUI and interact with REST Resources.</p></li>
+                        </ul>
+                        <hr class="cs-summary__spacer">
+                        <p>Of course there will be more steps following after that. </p>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+                    <div class="cs-v-spacer cs-v-spacer--big"></div>
+
                     <div class="cs-v-spacer cs-v-spacer--big"></div>
 
                     <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
-                    <p class="cs-notice-in-progress">to be done.</p>
 
 
 

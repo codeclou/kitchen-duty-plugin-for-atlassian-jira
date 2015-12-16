@@ -649,8 +649,8 @@ Spring-Context: *</code></pre>
                         </div>
                         <div class="col-md-5 col-md-offset-1 cs-tutorial-space-top-small">
                             <p>
-                                <a href="./images/doc/01-mock-server-side-component-design.jpg" data-lightbox="01-step-server-side" data-title="Step 1 - Server Side Component Design">
-                                    <img src="./images/doc/01-mock-server-side-component-design.jpg" class="img-thumbnail img-responsive" alt="Step 1 - Server Side Component Design">
+                                <a href="./images/drawings/01-mock-server-side-component-design.jpg" data-lightbox="01-step-server-side" data-title="Step 1 - Server Side Component Design">
+                                    <img src="./images/drawings/01-mock-server-side-component-design.jpg" class="img-thumbnail img-responsive" alt="Step 1 - Server Side Component Design">
                                 </a>
                             </p>
                         </div>
@@ -678,20 +678,146 @@ Spring-Context: *</code></pre>
                     <p>You can read about <a href="https://developer.atlassian.com/jiradev/jira-platform/jira-architecture/jira-technical-overview/jira-webwork-actions">JIRA Webwork Action</a> or <a href="https://developer.atlassian.com/jiradev/jira-platform/building-jira-add-ons/jira-plugins2-overview/jira-plugin-module-types/webwork-plugin-module">Webwork plugin module</a>
                     but you will also understand what is going on after my short introduction.</p>
 
-                    <p></p>
+                    <p><strong>Introduction</strong></p>
+
+                    <ul>
+                        <li>
+                            <p>
+                                Basically <strong>Webwork Actions are Controllers</strong> (<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC paradigm</a>) that react to a certain URLs in JIRA.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                They <strong>handle Authentication</strong> (is user logged in?) <strong>and Authorisation</strong> (has user rights to view page?) easily.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                They let us <strong>define multiple Views</strong> (<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC paradigm</a>) for example an Error-View and a Success-View.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                They <strong>provide Template Renderer</strong> like Velocity which helps us to inject some variables into the View.
+                            </p>
+                        </li>
+                        <li>
+                            They are easily <strong>defined with some XML code</strong> in the <code>atlassian-plugin.xml</code> file <em>(we will learn later more about that)</em>.
+                        </li>
+                    </ul>
+
+                    <div class="cs-v-spacer cs-v-spacer--small"></div>
+
+
+                    <p>Ok now you know enough to get started. Open a terminal and change inside the directory of the plugin.</p>
+
+                    <p>We will again use the Atlassian SDK to generate the basic files for us. Type the command and choose <strong>31. Webwork Plugin</strong></p>
+
+                    
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        atlas-create-jira-plugin-module<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">Choose Plugin Module:
+<span class="hljs-number">1</span>:  Component Import
+<span class="hljs-number">2</span>:  Component
+<span class="hljs-number">3</span>:  Component Tab Panel
+...
+<span class="hljs-number">31</span>: Webwork Plugin
+...
+<span class="hljs-number">34</span>: Workflow Validator
+Choose a number (<span class="hljs-number">1</span>/<span class="hljs-number">2</span>/<span class="hljs-number">3</span>.../<span class="hljs-number">33</span>/<span class="hljs-number">34</span>): <span class="hljs-number">31</span>
+Enter Plugin Module Name My Webwork Module: : Kitchen Duty Planning Webwork Module
+Show Advanced Setup? (Y/y/N/n) N: : Y
+Module Key kitchen-duty-planning-webwork-module: :
+Module Description The Kitchen Duty Planning Webwork Module Plugin: :
+i18n Name Key kitchen-duty-planning-webwork-module.name: :
+i18n Description Key kitchen-duty-planning-webwork-module.description: :
+Enter Action Classname MyActionClass: : KitchenDutyPlanningWebworkAction
+Enter Package Name com.comsysto.jira.webwork: : com.comsysto.kitchen.duty.webwork
+Enter Alias KitchenDutyPlanningWebworkAction: :
+Enter View Name success: : kitchen-duty-planning-success
+Enter Template Path /templates/.../kitchen-duty-planning-success.vm: : /templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm
+Add Another View? (Y/y/N/n) N: : N
+Add Another Action? (Y/y/N/n) N: : N
+[INFO] Adding the following items to the project:
+[INFO]   [class: com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction]
+[INFO]   [class: ut.com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest]
+[INFO]   [dependency: org.apache.httpcomponents:httpclient]
+[INFO]   [dependency: org.mockito:mockito-all]
+[INFO]   [dependency: org.slf4j:slf4j-api]
+[INFO]   [module: webwork1]
+[INFO]   [resource: kitchen-duty-planning-success.vm]
+[INFO]   i18n strings: <span class="hljs-number">2</span>
+Add Another Plugin Module? (Y/y/N/n) N: : N
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: <span class="hljs-number">10</span>:<span class="hljs-number">53</span> min
+[INFO] Finished at: <span class="hljs-number">2015</span>-<span class="hljs-number">12</span>-<span class="hljs-number">16</span>T14:<span class="hljs-number">12</span>:<span class="hljs-number">07</span>+<span class="hljs-number">01</span>:<span class="hljs-number">00</span>
+[INFO] Final Memory: <span class="hljs-number">29</span>M/<span class="hljs-number">309</span>M
+[INFO] ------------------------------------------------------------------------</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-create-jira-plugin-module"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+                    <p>After we have done that we see that a lot of code and files have been generated. You can see all changes in this <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/162ed706c7f4be0356871a4a6f8bb6398b38854f">GitHub Commit 162ed706c7f4be0356871a4a6f8bb6398b38854f</a>.</p>
+
+                    <p>What is important for us are the following changes:</p>
+
+                    <ul>
+                        <li>
+                            <p><code>atlassian-plugin.xml</code> contains now the webwork definiton of our Action and View.</p>
+
+                            
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"Kitchen Duty Planning Webwork Module"</span> <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.name"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">description</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.description"</span>&gt;</span>The Kitchen Duty Planning Webwork Module Plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">actions</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">action</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction"</span> <span class="hljs-attribute">alias</span>=<span class="hljs-value">"KitchenDutyPlanningWebworkAction"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">view</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-planning-success"</span>&gt;</span>/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm<span class="hljs-tag">&lt;/<span class="hljs-title">view</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">action</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">actions</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">webwork1</span>&gt;</span></code></pre>
+
+                        </li>
+                        <li>
+                            <p><code>pom.xml</code> contains now needed dependencies.</p>
+
+                            
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>org.apache.httpcomponents<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>httpclient<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>4.1.1<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>org.slf4j<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>slf4j-api<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>1.6.6<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>org.mockito<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>mockito-all<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>1.8.5<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span></code></pre>
 
 
 
+                        </li>
+                    </ul>
 
 
+                    <p>You should be able to open the <code>KitchenDutyPlanningWebworkAction</code> in IntelliJ now.</p>
 
 
-
-
-
-
-
-
+                    <p>
+                        <a href="./images/doc/step-01-intellij-after-webwork-module-create.png" data-lightbox="01-step-server-side" data-title="Step 1 - IntelliJ after Webwork Module creation">
+                            <img src="./images/doc/step-01-intellij-after-webwork-module-create.png" class="img-thumbnail img-responsive" alt="Step 1 - IntelliJ after Webwork Module creation">
+                        </a>
+                    </p>
 
 
 

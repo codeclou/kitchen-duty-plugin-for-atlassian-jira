@@ -584,8 +584,8 @@
                         </div>
                         <div class="col-md-5 col-md-offset-1 cs-tutorial-space-top-small">
                             <p>
-                                <a href="./images/doc/01-mock-server-side-component-design.jpg" data-lightbox="01-step-server-side" data-title="Step 1 - Server Side Component Design">
-                                    <img src="./images/doc/01-mock-server-side-component-design.jpg" class="img-thumbnail img-responsive" alt="Step 1 - Server Side Component Design">
+                                <a href="./images/drawings/01-mock-server-side-component-design.jpg" data-lightbox="01-step-server-side" data-title="Step 1 - Server Side Component Design">
+                                    <img src="./images/drawings/01-mock-server-side-component-design.jpg" class="img-thumbnail img-responsive" alt="Step 1 - Server Side Component Design">
                                 </a>
                             </p>
                         </div>
@@ -613,20 +613,139 @@
                     <p>You can read about <a href="https://developer.atlassian.com/jiradev/jira-platform/jira-architecture/jira-technical-overview/jira-webwork-actions">JIRA Webwork Action</a> or <a href="https://developer.atlassian.com/jiradev/jira-platform/building-jira-add-ons/jira-plugins2-overview/jira-plugin-module-types/webwork-plugin-module">Webwork plugin module</a>
                     but you will also understand what is going on after my short introduction.</p>
 
-                    <p></p>
+                    <p><strong>Introduction</strong></p>
+
+                    <ul>
+                        <li>
+                            <p>
+                                Basically <strong>Webwork Actions are Controllers</strong> (<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC paradigm</a>) that react to a certain URLs in JIRA.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                They <strong>handle Authentication</strong> (is user logged in?) <strong>and Authorisation</strong> (has user rights to view page?) easily.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                They let us <strong>define multiple Views</strong> (<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC paradigm</a>) for example an Error-View and a Success-View.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                They <strong>provide Template Renderer</strong> like Velocity which helps us to inject some variables into the View.
+                            </p>
+                        </li>
+                        <li>
+                            They are easily <strong>defined with some XML code</strong> in the <code>atlassian-plugin.xml</code> file <em>(we will learn later more about that)</em>.
+                        </li>
+                    </ul>
+
+                    <div class="cs-v-spacer cs-v-spacer--small"></div>
 
 
+                    <p>Ok now you know enough to get started. Open a terminal and change inside the directory of the plugin.</p>
+
+                    <p>We will again use the Atlassian SDK to generate the basic files for us. Type the command and choose <strong>31. Webwork Plugin</strong></p>
+
+                    {{ csShell(shellCmd='atlas-create-jira-plugin-module', shellCmdOutput='
+                        |Choose Plugin Module:
+                        |1:  Component Import
+                        |2:  Component
+                        |3:  Component Tab Panel
+                        |...
+                        |31: Webwork Plugin
+                        |...
+                        |34: Workflow Validator
+                        |Choose a number (1/2/3.../33/34): 31
+                        |Enter Plugin Module Name My Webwork Module: : Kitchen Duty Planning Webwork Module
+                        |Show Advanced Setup? (Y/y/N/n) N: : Y
+                        |Module Key kitchen-duty-planning-webwork-module: :
+                        |Module Description The Kitchen Duty Planning Webwork Module Plugin: :
+                        |i18n Name Key kitchen-duty-planning-webwork-module.name: :
+                        |i18n Description Key kitchen-duty-planning-webwork-module.description: :
+                        |Enter Action Classname MyActionClass: : KitchenDutyPlanningWebworkAction
+                        |Enter Package Name com.comsysto.jira.webwork: : com.comsysto.kitchen.duty.webwork
+                        |Enter Alias KitchenDutyPlanningWebworkAction: :
+                        |Enter View Name success: : kitchen-duty-planning-success
+                        |Enter Template Path /templates/.../kitchen-duty-planning-success.vm: : /templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm
+                        |Add Another View? (Y/y/N/n) N: : N
+                        |Add Another Action? (Y/y/N/n) N: : N
+                        |[INFO] Adding the following items to the project:
+                        |[INFO]   [class: com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction]
+                        |[INFO]   [class: ut.com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest]
+                        |[INFO]   [dependency: org.apache.httpcomponents:httpclient]
+                        |[INFO]   [dependency: org.mockito:mockito-all]
+                        |[INFO]   [dependency: org.slf4j:slf4j-api]
+                        |[INFO]   [module: webwork1]
+                        |[INFO]   [resource: kitchen-duty-planning-success.vm]
+                        |[INFO]   i18n strings: 2
+                        |Add Another Plugin Module? (Y/y/N/n) N: : N
+                        |[INFO] ------------------------------------------------------------------------
+                        |[INFO] BUILD SUCCESS
+                        |[INFO] ------------------------------------------------------------------------
+                        |[INFO] Total time: 10:53 min
+                        |[INFO] Finished at: 2015-12-16T14:12:07+01:00
+                        |[INFO] Final Memory: 29M/309M
+                        |[INFO] ------------------------------------------------------------------------
+                    ') }}
+
+                    <p>After we have done that we see that a lot of code and files have been generated. You can see all changes in this <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/162ed706c7f4be0356871a4a6f8bb6398b38854f">GitHub Commit 162ed706c7f4be0356871a4a6f8bb6398b38854f</a>.</p>
+
+                    <p>What is important for us are the following changes:</p>
+
+                    <ul>
+                        <li>
+                            <p><code>atlassian-plugin.xml</code> contains now the webwork definiton of our Action and View.</p>
+
+                            {{ csSource(lang='xml', source='
+                                |  <webwork1 key="kitchen-duty-planning-webwork-module" name="Kitchen Duty Planning Webwork Module" i18n-name-key="kitchen-duty-planning-webwork-module.name">
+                                |    <description key="kitchen-duty-planning-webwork-module.description">The Kitchen Duty Planning Webwork Module Plugin</description>
+                                |    <actions>
+                                |      <action name="com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction" alias="KitchenDutyPlanningWebworkAction">
+                                |        <view name="kitchen-duty-planning-success">/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm</view>
+                                |      </action>
+                                |    </actions>
+                                |  </webwork1>
+                            ') }}
+                        </li>
+                        <li>
+                            <p><code>pom.xml</code> contains now needed dependencies.</p>
+
+                            {{ csSource(lang='xml', source='
+                                |<dependency>
+                                |   <groupId>org.apache.httpcomponents</groupId>
+                                |   <artifactId>httpclient</artifactId>
+                                |   <version>4.1.1</version>
+                                |   <scope>test</scope>
+                                |</dependency>
+                                |<dependency>
+                                |   <groupId>org.slf4j</groupId>
+                                |   <artifactId>slf4j-api</artifactId>
+                                |   <version>1.6.6</version>
+                                |   <scope>provided</scope>
+                                |</dependency>
+                                |<dependency>
+                                |   <groupId>org.mockito</groupId>
+                                |   <artifactId>mockito-all</artifactId>
+                                |   <version>1.8.5</version>
+                                |   <scope>test</scope>
+                                |</dependency>
+                            ') }}
 
 
+                        </li>
+                    </ul>
 
 
+                    <p>You should be able to open the <code>KitchenDutyPlanningWebworkAction</code> in IntelliJ now.</p>
 
 
-
-
-
-
-
+                    <p>
+                        <a href="./images/doc/step-01-intellij-after-webwork-module-create.png" data-lightbox="01-step-server-side" data-title="Step 1 - IntelliJ after Webwork Module creation">
+                            <img src="./images/doc/step-01-intellij-after-webwork-module-create.png" class="img-thumbnail img-responsive" alt="Step 1 - IntelliJ after Webwork Module creation">
+                        </a>
+                    </p>
 
 
 

@@ -10,7 +10,6 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
 
     @Override
     public String execute() throws Exception {
-
-        return super.execute(); //returns SUCCESS
+        return "kitchen-duty-planning-success";
     }
 }

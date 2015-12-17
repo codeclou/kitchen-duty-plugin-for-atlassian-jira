@@ -30,9 +30,23 @@
                 <div class="col-md-12">
                     <h2 class="cs-headline cs-headline--m">Introduction</h2>
 
-                    <p>This tutorial will show you <strong>how to write a simple Plugin for Atlassian JIRA®</strong>. The tutorial will focus on JIRA® 7.0 and will guide you step by step.</p>
+                    <p>
+                        This tutorial will show you <strong>how to write a simple Plugin for <a href="https://www.atlassian.com/software/jira">Atlassian JIRA®</a></strong>.
+                        The tutorial will focus on JIRA® 7.0 and will guide you step by step.
+                        Note that we are developing a <strong>JIRA Plugin for Hosted JIRA instances only</strong>.
+                        If you are interessted in developing Plugins for JIRA Cloud you might want to check out <a href="https://developer.atlassian.com/static/connect/docs/latest/index.html">Atlassian Connect</a>.
 
-                    <p class="cs-notice-in-progress">NOTE: This document is work in progress. Once finished this notice is removed and the tutorial will be usable.</p>
+                    </p>
+
+                    <p><strong>Intended Audience</strong> - This tutorial implies that you are already have knowledge about <a href="https://en.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition">JavaEE software development</a> with <a href="https://maven.apache.org/">Apache Maven</a> at best with <a href="https://www.jetbrains.com/idea/">Jetbrains IntelliJ IDEA</a>.
+                    You will need no prior knowledge about JIRA development. But you should at least know what JIRA is and that it has a Plugin system to install external plugins.
+                    </p>
+
+                    <div class="alert alert-warning cs-warning" role="alert">
+                        <i class="fa fa-exclamation-triangle fa-lg cs-warning__icon"></i>
+                        <strong>This document is work in progress.</strong> It will steadily grow as time passes by. So it is up to you waiting for it to be completely finished, or if you want early-access and do the Steps that are available now.
+                        You can give us <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/issues">feedback via the Issue Tracker</a>.
+                    </div>
 
                 </div>
             </div>
@@ -180,14 +194,14 @@
                         </div>
                         <div class="cs-sidenote__content">
                             <div class="cs-sidenote__content-item">
-                                JIRA Plugins are <a href="https://de.wikipedia.org/wiki/OSGi">OSGi</a> modules.
+                                JIRA Plugins are <a href="https://de.wikipedia.org/wiki/OSGi">OSGi</a> bundles.
                             </div>
                             <div class="cs-sidenote__content-item">
                                 JIRA starts an OSGi Service Plattform during startup (e.g. <a href="http://felix.apache.org/">Apache felix</a>).
                             </div>
                             <div class="cs-sidenote__content-item">
                                 By providing information in <code>pom.xml</code> and custom packaging via <code>atlas-package</code>
-                                the SDK builds an OSGi Plugin module in form of a <code>jar</code> file.
+                                the SDK builds an OSGi Plugin bundle in form of a <code>jar</code> file.
                             </div>
                             <div class="cs-sidenote__content-item">
                                 JIRA Plugins can therefore be installed into a running JIRA instance. Once installed they are executed on JIRA startup too.
@@ -486,7 +500,7 @@
             <div class="row">
                 <div class="col-md-8">
 
-                    <p>Our base project is compiling and now we want to takle our first User Story and <strong>implement the Kitchen Duty Planning page</strong>.</p>
+                    <p>Our base project is compiling and now we want to tackle our first User Story and <strong>implement the Kitchen Duty Planning page</strong>.</p>
 
                     <p>But before we start the implementation we drink another coffee and get our brain up to software-architecture-design-speed, because we need to make some <strong>design decisions</strong> now.</p>
 
@@ -531,7 +545,7 @@
 
                         </div>
                         <div class="col-md-4">
-                            <p><strong>Shooping List</strong></p>
+                            <p><strong>Shopping List</strong></p>
                             <ul>
                                 <li>
                                     <p>

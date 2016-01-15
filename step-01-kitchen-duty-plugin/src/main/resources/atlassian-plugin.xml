@@ -18,7 +18,8 @@
     <resource type="download" name="images/" location="/images"/>
     <context>kitchen-duty-plugin</context>
   </web-resource>
-  <webwork1 key="kitchen-duty-planning-webwork-module" name="Kitchen Duty Planning Webwork Module" i18n-name-key="kitchen-duty-planning-webwork-module.name">
+  <webwork1 key="kitchen-duty-planning-webwork-module" name="Kitchen Duty Planning Webwork Module" i18n-name-key="kitchen-duty-planning-webwork-module.name"
+            roles-required="admin">
     <description key="kitchen-duty-planning-webwork-module.description">The Kitchen Duty Planning Webwork Module Plugin</description>
     <actions>
       <action name="com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction" alias="KitchenDutyPlanningWebworkAction">
@@ -26,4 +27,19 @@
       </action>
     </actions>
   </webwork1>
+  <web-section key="admin_kitchen_duty_planning_section"
+               name="admin_kitchen_duty_planning_section"
+               location="admin_plugins_menu"
+               weight="20"
+               i18n-name-key="kitchen-duty-plugin.admin.planning.page.web.section.name">
+    <label key="kitchen-duty-plugin.admin.planning.page.web.section.name" />
+  </web-section>
+  <web-item key="admin_kitchen_duty_planning_webitem"
+            name="admin_kitchen_duty_planning_webitem"
+            section="admin_plugins_menu/admin_kitchen_duty_planning_section"
+            weight="15"
+            i18n-name-key="kitchen-duty-plugin.admin.planning.page.web.item.name">
+    <label key="kitchen-duty-plugin.admin.planning.page.web.item.name" />
+    <link linkId="admin_kitchen_duty_planning_webitem_link">/secure/KitchenDutyPlanningWebworkAction.jspa</link>
+  </web-item>
 </atlassian-plugin>

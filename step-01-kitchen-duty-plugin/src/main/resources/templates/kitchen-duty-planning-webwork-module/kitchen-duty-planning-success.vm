@@ -1,1 +1,12 @@
-<h1>kitchen-duty-planning-success</h1>
+<html>
+<head>
+    <title>$i18n.getText("kitchen-duty-plugin.admin.planning.page.title")</title>
+    <meta name="decorator" content="atl.admin">
+    <meta name="tab" content="admin_plugins_menu/admin_kitchen_duty_planning_section">
+</head>
+<body>
+<h1>$i18n.getText("kitchen-duty-plugin.admin.planning.page.headline")</h1>
+
+<p>Now it looks nice :)</p>
+</body>
+</html>

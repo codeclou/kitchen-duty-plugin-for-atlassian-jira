@@ -423,7 +423,7 @@
                             <p><strong>Bundles (OSGi)</strong></p>
 
                             <p>Bundles (also called modules) only share Interfaces with other modules. You want to hide your implementation. The Atlassian SDK creates a <code>jar</code> file with
-                                a custom <code>MANIFEST.mf</code> from the <code>Import/Export-Package</code> instructions of <code>pom.xml</code>.</p>
+                                a custom <code>MANIFEST.mf</code> from the <code>Import/Export-Package</code> instructions of <code>pom.xml</code> and the <a href="https://bitbucket.org/atlassian/atlassian-spring-scanner/overview">Atlassian Spring Scanner Annotations e.g. <code>@ComponentImport</code></a>.</p>
 
                         </div>
                         <div class="col-md-6">
@@ -464,7 +464,6 @@
 
                     <p>We see <code>Export-Package</code> and <code>Import-Package</code> statements with the values we expected from pom.xml and Annotations</p>
 
-                    <div stlye="color:red;">TODO: Explain according to <a href="https://bitbucket.org/atlassian/atlassian-spring-scanner/overview">Atlassian Spring Scanner</a></a></div>
                     <div class="alert alert-info cs-summary">
                         <p class="cs-summary__headline"><i class="fa fa-lightbulb-o fa-lg"></i> Summary</p>
                         <hr class="cs-summary__spacer">
@@ -481,7 +480,7 @@
 
 
                     <p>
-                        If you want to dive even deeper into OSGi, watch the <a href="https://www.youtube.com/watch?v=BthwKfxATNE">Apache Felix Introduction Video</a>
+                        If you want to dive even deeper into OSGi and Atlassian read about <a href="https://bitbucket.org/atlassian/atlassian-spring-scanner/overview">Atlassian Spring Scanner</a>, watch the <a href="https://www.youtube.com/watch?v=BthwKfxATNE">Apache Felix Introduction Video</a>
                         or do the <a href="http://felix.apache.org/documentation/tutorials-examples-and-presentations/apache-felix-osgi-tutorial.html">Apache Felix Tutorials</a>.
                     </p>
 

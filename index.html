@@ -120,7 +120,7 @@
                         <div class="col-md-6">
                             <p><span class="cs-special">Kitchen Duty Overview Page</span></p>
                             <a href="./images/drawings/00-mock-kitchen-duty-overview-page_big.jpg" data-lightbox="user-stories" data-title="Kitchen Duty Overview Page Mockup">
-                                <img src="./images/drawings/00-mock-kitchen-duty-overview-page.jpg" class="img-responsive cs-image" class="Kitchen Duty Overview Page Mockup">
+                                <img src="./images/drawings/00-mock-kitchen-duty-overview-page.jpg" class="img-responsive cs-image" alt="Kitchen Duty Overview Page Mockup">
                             </a>
                             <p><strong>User Story</strong></p>
                             <p>As office-knave I want to see who is scheduled for this weeks kitchen duty to improve obedience.</p>
@@ -365,7 +365,8 @@ target/</code></pre>
                     <p>Also add in the <code>pom.xml</code> right before the closing <code>&lt;/dependencies&gt;</code>.</p>
 
                     
-<pre class="cs-code"><code class="hljs">...
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependencies</span>&gt;</span>
+   ...
    <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
        <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>com.atlassian.sal<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
        <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>sal-api<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
@@ -473,7 +474,7 @@ target/</code></pre>
                             <p><strong>Bundles (OSGi)</strong></p>
 
                             <p>Bundles (also called modules) only share Interfaces with other modules. You want to hide your implementation. The Atlassian SDK creates a <code>jar</code> file with
-                                a custom <code>MANIFEST.mf</code> from the <code>Import/Export-Package</code> instructions of <code>pom.xml</code>.</p>
+                                a custom <code>MANIFEST.mf</code> from the <code>Import/Export-Package</code> instructions of <code>pom.xml</code> and the <a href="https://bitbucket.org/atlassian/atlassian-spring-scanner/overview">Atlassian Spring Scanner Annotations e.g. <code>@ComponentImport</code></a>.</p>
 
                         </div>
                         <div class="col-md-6">
@@ -528,7 +529,6 @@ Spring-Context: *</code></pre>
 
                     <p>We see <code>Export-Package</code> and <code>Import-Package</code> statements with the values we expected from pom.xml and Annotations</p>
 
-
                     <div class="alert alert-info cs-summary">
                         <p class="cs-summary__headline"><i class="fa fa-lightbulb-o fa-lg"></i> Summary</p>
                         <hr class="cs-summary__spacer">
@@ -545,7 +545,7 @@ Spring-Context: *</code></pre>
 
 
                     <p>
-                        If you want to dive even deeper into OSGi, watch the <a href="https://www.youtube.com/watch?v=BthwKfxATNE">Apache Felix Introduction Video</a>
+                        If you want to dive even deeper into OSGi and Atlassian read about <a href="https://bitbucket.org/atlassian/atlassian-spring-scanner/overview">Atlassian Spring Scanner</a>, watch the <a href="https://www.youtube.com/watch?v=BthwKfxATNE">Apache Felix Introduction Video</a>
                         or do the <a href="http://felix.apache.org/documentation/tutorials-examples-and-presentations/apache-felix-osgi-tutorial.html">Apache Felix Tutorials</a>.
                     </p>
 

@@ -261,7 +261,9 @@ p {
     padding-top:30px;
 }
 
-/* THIRD PARTY TOC */
+
+/* TOC */
+
 #toc {
     /*top: 100px;
     left: 0px;*/
@@ -287,21 +289,35 @@ p {
     color: #000;
     text-decoration: none;
     display: block;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-#toc .toc-h2 {
+.toc-h2 {
     padding-left: 10px;
 }
 
-#toc .toc-h3 {
+.toc-h2-divider {
+    padding-left: 10px;
+    font-weight:bold;
+    color: #5b5b5b;
+    margin-top:30px;
+}
+
+.toc-h3 {
     padding-left: 20px;
 }
 
-#toc .toc-active {
+.toc-active {
     background: #1E9FCC;
 }
 
-#toc .toc-active a {
-    color: #fff;
+.toc-active a {
+    color: #fff !important;
 }
 

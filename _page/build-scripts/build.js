@@ -57,9 +57,10 @@ var jsTaskOptions = {
     jsFiles: glob.sync([
         './node_modules/clipboard/dist/clipboard.js',
         './node_modules/jquery/dist/jquery.js',
+        './node_modules/jquery.scrollto/jquery.scrollTo.js',
+        './node_modules/waypoints/lib/jquery.waypoints.js',
         './node_modules/lightbox2/dist/js/lightbox.js',
         './node_modules/retina.js/dist/retina.js',
-        './node_modules/toc/dist/toc.js',
         './node_modules/webcomponents.js/CustomElements.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './_page/js/main.js'

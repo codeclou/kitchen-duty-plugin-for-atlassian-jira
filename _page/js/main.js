@@ -17,10 +17,58 @@ var initClipboardJs = function () {
 };
 
 var initToc = function() {
-    $('#toc').toc({
-        scrollToOffset: 110,
-        selectors: 'h2'
+    _scrollToTocLinkByLocationHash();
+    _initTocWayPoints();
+    $('a[data-scroll-to]').click(function () {
+        _clickTocLink($(this).attr('data-scroll-to'));
     });
+};
+
+var _initTocWayPoints = function () {
+    $('[data-scroll-to-headline]').waypoint({
+        handler: function(direction) {
+            var anchor = this.element.getAttribute('data-scroll-to-headline');
+            if (direction === 'up') {
+                anchor = this.element.getAttribute('data-scroll-to-headline-previous');
+            }
+            console.log(direction);
+
+            _highlightToLink(anchor);
+            _updateLocationHashTocLink(anchor);
+        },
+        offset: '50%'
+    });
+};
+
+var _highlightToLink = function (anchor) {
+    $('a[data-scroll-to]').parent().removeClass('toc-active');
+    $('a[data-scroll-to="' + anchor + '"]').parent().addClass('toc-active');
+};
+
+var _scrollToTocLinkByLocationHash = function () {
+    if (_startsWith(location.hash, '#/')) {
+        var hashParts = location.hash.split('/');
+        var scrollto = null;
+        if (hashParts.indexOf('scrollto') !== -1) {
+            scrollto = hashParts[(hashParts.indexOf('scrollto') + 1)];
+        }
+        if (scrollto !== null) {
+            $.scrollTo('[data-scroll-to-headline="' + scrollto + '"]', {offset: -150, duration: 500});
+        }
+    }
+};
+
+var _updateLocationHashTocLink = function (anchor) {
+    history.pushState('kitchen-duty', '', '#' + '/scrollto/' + anchor);
+};
+
+var _clickTocLink = function (anchor) {
+    _updateLocationHashTocLink(anchor);
+    _scrollToTocLinkByLocationHash();
+};
+
+var _startsWith = function (string, prefix) {
+    return string.slice(0, prefix.length) == prefix;
 };
 
 $(function () {

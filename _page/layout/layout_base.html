@@ -35,6 +35,26 @@
 <pre class="cs-code"><code class="hljs">{{source | formatSourceCode(lang) | safe }}</code></pre>
 {% endmacro %}
 
+{% macro linkToAnchor(text) %}
+    {% set anchorName = csStringHelper().convertToAnchor(text) %}
+    <a data-scroll-to="{{ anchorName }}">{{ text }}</a>
+{% endmacro %}
+
+
+{% macro headline(text, size, textOfPreviousSection) %}
+    {# size: s, m, l #}
+    {% set anchorName = csStringHelper().convertToAnchor(text) %}
+    {% set anchorNameOfPreviousSection = csStringHelper().convertToAnchor(textOfPreviousSection) %}
+
+    <h2 class="cs-headline cs-headline--{{ size }} cs-headline--anchor"
+        data-scroll-to-headline="{{ anchorName }}"
+        data-scroll-to-headline-previous="{{ anchorNameOfPreviousSection }}">
+        {# <a class="cs-anchor" data-scroll-to-headline-link="{{ anchorName }}"></a> #}
+        {{ text }}
+    </h2>
+{% endmacro %}
+
+
 <!-- MACROS END -->
 
 {% block contentLayout %}

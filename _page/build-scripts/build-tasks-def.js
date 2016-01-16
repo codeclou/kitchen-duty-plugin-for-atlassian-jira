@@ -22,6 +22,7 @@ var fs = require('fs');
 
 var helpers = require('./build-helpers-def.js');
 var exports = module.exports = {};
+var csStringHelper = require('./csStringHelper.js').csStringHelper;
 
 
 // PRE
@@ -62,6 +63,7 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
         var env = nunjucks.configure(options.htmlLayoutSourceDir, {
             noCache: true
         });
+        env.addGlobal('csStringHelper', csStringHelper);
         env.addFilter('formatSourceCode', function(code, lang) {
             /*console.log(code);*/
             var ret = '';

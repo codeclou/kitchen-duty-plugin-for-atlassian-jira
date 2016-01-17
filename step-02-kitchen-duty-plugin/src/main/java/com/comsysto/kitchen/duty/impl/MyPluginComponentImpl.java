@@ -1,5 +1,6 @@
 package com.comsysto.kitchen.duty.impl;
 
+import com.atlassian.jira.bc.user.search.UserSearchService;
 import com.atlassian.plugin.spring.scanner.annotation.export.ExportAsService;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.atlassian.sal.api.ApplicationProperties;
@@ -14,6 +15,10 @@ public class MyPluginComponentImpl implements MyPluginComponent
 {
     @ComponentImport
     private final ApplicationProperties applicationProperties;
+
+
+    @ComponentImport
+    private UserSearchService userSearchService;
 
     @Inject
     public MyPluginComponentImpl(final ApplicationProperties applicationProperties)

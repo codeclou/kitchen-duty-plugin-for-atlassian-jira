@@ -1318,12 +1318,12 @@
                     </p>
 
                     <p>
-                        We will change the code of <strong><code>UserSearchResource.java</code></strong> to <strong>provide GET Endpoint to search usernames</strong>.
+                        We will change the code to <strong>provide GET Endpoint to search usernames</strong>.
                     </p>
 
                     <div class="row">
                         <div class="col-md-6">
-                            {{ csSource(lang='java', uniqueId='step2-usersearchresource', source='
+                            {{ csSource(lang='java', filename="UserSearchResource.java", uniqueId='step2-usersearchresource', source='
                                 |package com.comsysto.kitchen.duty.rest;
                                 |
                                 |import com.atlassian.jira.bc.user.search.UserSearchParams;
@@ -1401,18 +1401,39 @@
                         <div class="col-md-6">
 
                             <div class="list-group">
-                                <a class="list-group-item active">
+                                <a class="list-group-item">
                                     <span class="cs-source-point" data-number="1"></span>
-                                    Foo
+                                    Our REST Controller should be a Spring-Bean and get its dependencies autowired. Therefore provide the JSR annotation <code>@Named</code>
+                                    on classlevel.
                                 </a>
                                 <a class="list-group-item">
                                     <span class="cs-source-point" data-number="2"></span>
-                                    Bar
+                                    We want that all REST Endpoints of our REST Controller will have an URL-prefix <code>/user</code>, therefore we use the <code>@Path</code> annotation.
                                 </a>
                                 <a class="list-group-item">
-                                    <span class="cs-source-point" data-number="2"></span>
-                                    ...
+                                    <span class="cs-source-point" data-number="3"></span>
+                                    The <code>UserSearchService</code> is an JIRA Service which will provide us methods to search for users. This Servie needs to be imported from a foreign OSGi bundle, we will see about that later.
                                 </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="4"></span>
+                                    We use <code>@Inject</code> for constructor injection, so that our UserSeatchService will be injected by Spring on Bean creation.
+                                </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="5"></span>
+                                    We provide a default constructor just in case.
+                                </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="6"></span>
+                                    Since our user search Endpoint will be rather complex we want a simple health endpoint to test the REST API in an easy was.
+                                    Therefore we define a Method as <code>@GET</code> with <code>@Path("/health")</code> which produces JSON <code>@Produces({MediaType.APPLICATION_JSON})</code>.
+                                    This endpoint will be reachable via <code>http://localhost:2990/jira/rest/kitchenduty/1.0/user/health</code>.
+                                </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="7"></span>
+                                    The health endpoint will be reachable without authentication via <code>@AnonymousAllowed</code>.
+                                    So you can curl the URL easily and will get an <code>ok</code> as response.
+                                </a>
+
                             </div>
                         </div>
 

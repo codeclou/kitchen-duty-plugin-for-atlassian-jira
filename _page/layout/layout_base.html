@@ -31,7 +31,10 @@
 </div>
 {% endmacro %}
 
-{% macro csSource(lang='', source='', uniqueId='') %}
+{% macro csSource(lang='', source='', uniqueId='', filename='') %}
+    {% if filename %}
+        <div class="cs-code-filename">{{ filename }}</div>
+    {% endif %}
 <pre class="cs-code"><code class="hljs">{{source | formatSourceCode(lang, uniqueId) | safe }}</code></pre>
 {% endmacro %}
 

@@ -392,6 +392,7 @@ Y
                     <p>Create <code>.editorconfig</code> and add statements for line endings, charset and tab indentation. Since IntelliJ is awesome <a href="http://EditorConfig.org">EditorConfig Plugin</a> is already installed. If you are using another IDE get the plugin now.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-comment"># EditorConfig is awesome: http://EditorConfig.org</span>
 <span class="hljs-setting">root = <span class="hljs-value"><span class="hljs-keyword">true</span></span></span>
 <span class="hljs-title">[*]</span>
@@ -427,6 +428,7 @@ Y
                     <p>Create <code>.gitignore</code> and add ignore statements for files we do not want to commit.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs">.idea/
 *.iml
 *.log
@@ -436,6 +438,7 @@ target/</code></pre>
                     <p>Create <code>.gitattributes</code> and set line endings to unix.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs">*.svg eol=lf
 *.html eol=lf
 *.js eol=lf
@@ -463,6 +466,7 @@ target/</code></pre>
                     <p>Edit <code>pom.xml</code> and add line <code>&lt;version&gt;3.3&lt;/version&gt;</code> to <code>maven-compiler-plugin</code>.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">plugin</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>maven-compiler-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>3.3<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
@@ -476,6 +480,7 @@ target/</code></pre>
                     <p>Also add in the <code>pom.xml</code> right before the closing <code>&lt;/dependencies&gt;</code>.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependencies</span>&gt;</span>
    ...
    <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
@@ -546,6 +551,7 @@ target/</code></pre>
                     <p>There is also an important passage of <code>maven-jira-plugin</code> in the <code>pom.xml</code> that contains the following lines.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs">...
 <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>maven-jira-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
 ...
@@ -939,6 +945,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                             <p><code>atlassian-plugin.xml</code> contains now the webwork definiton of our Action and View.</p>
 
                             
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"Kitchen Duty Planning Webwork Module"</span> <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.name"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">description</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.description"</span>&gt;</span>The Kitchen Duty Planning Webwork Module Plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">actions</span>&gt;</span>
@@ -953,6 +960,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                             <p><code>pom.xml</code> contains now needed dependencies.</p>
 
                             
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
    <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>org.apache.httpcomponents<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
    <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>httpclient<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
@@ -990,6 +998,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                     <p>Now we change the <code>execute</code> Method to work with our view:</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-annotation">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">execute</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
    <span class="hljs-keyword">return</span> <span class="hljs-string">"kitchen-duty-planning-success"</span>;
@@ -1052,6 +1061,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                     <p>Edit the <strong><code>kitchen-duty-planning-success.vm</code></strong> which resides in <code>src/main/resources/templates/kitchen-duty-planning-webwork-module/</code> like this.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Planning Page - Kitchen Duty Plugin<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
@@ -1117,6 +1127,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                     <p>You might need another coffee because here comes the code for the <code>atlassian-plugin.xml</code> which resides in <code>src/main/resources/</code></p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">atlassian-plugin</span>&gt;</span>
 ...
   <span class="hljs-tag">&lt;<span class="hljs-title">web-section</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"admin_kitchen_duty_planning_section"</span>
@@ -1170,6 +1181,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                     <p>Since we heard about <strong>i18n</strong> now we need to define our values in the language file <code>kitchen-duty-plugin.properties</code>.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"># websection/webitems
 kitchen-duty-plugin.admin.planning.page.web.section.name = Kitchen Duty Plugin
 kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pre>
@@ -1210,6 +1222,7 @@ kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pr
                     <p>So let's get to action, we will change our html code using <code>i18n.getText("i18n.key")</code> which is a velocity helper to render the i18n value for a given key.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>$i18n.getText("kitchen-duty-plugin.admin.planning.page.title")<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
@@ -1226,6 +1239,7 @@ kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pr
                     <p>Now we need to add the translations to the <code>kitchen-duty-plugin.properties</code> file and we are done internationalising our page.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"># kitchen-duty-planning-success.vm
 kitchen-duty-plugin.admin.planning.page.headline = Kitchen Duty Plugin - Planning Page
 kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plugin</code></pre>
@@ -1239,6 +1253,7 @@ kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plu
                         <code>atlassian-plugin.xml</code> to enforce administrator only authorization.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module"</span>
           <span class="hljs-attribute">...</span>
           <span class="hljs-attribute">roles-required</span>=<span class="hljs-value">"admin"</span>&gt;</span></code></pre>
@@ -1421,6 +1436,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
                     <p>The <code>pom.xml</code> has these new lines which are quite self explanatory. If you want to read everything in detail read the <a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/rest-api-development/rest-plugin-module" target="_blank">REST Plugin Module documentation</a>.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>servlet-api<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
@@ -1461,6 +1477,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
                     <p><code>package</code> will enable Component Scan (which I think is redundant, but doesn't hurt).</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">rest</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"Kitchen Duty Resources"</span>
       <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-plugin.rest.resources.name"</span>
       <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-resources"</span>
@@ -1474,6 +1491,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
                     <p>You already know <code>i18n-name-key</code> and the other attributes from the Webwork Action and therefore are not wondering that there are some new i18n key/value pairs inside <code>kitchen-duty-plugin.properties</code>.</p>
 
                     
+    
 <pre class="cs-code"><code class="hljs">kitchen-duty-plugin.rest.resources.name=Kitchen Duty Resources
 kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</code></pre>
 
@@ -1487,12 +1505,15 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
                     </p>
 
                     <p>
-                        We will change the code of <strong><code>UserSearchResource.java</code></strong> to <strong>provide GET Endpoint to search usernames</strong>.
+                        We will change the code to <strong>provide GET Endpoint to search usernames</strong>.
                     </p>
 
                     <div class="row">
                         <div class="col-md-6">
                             
+    
+        <div class="cs-code-filename">UserSearchResource.java</div>
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchParams;
@@ -1570,18 +1591,39 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
                         <div class="col-md-6">
 
                             <div class="list-group">
-                                <a class="list-group-item active">
+                                <a class="list-group-item">
                                     <span class="cs-source-point" data-number="1"></span>
-                                    Foo
+                                    Our REST Controller should be a Spring-Bean and get its dependencies autowired. Therefore provide the JSR annotation <code>@Named</code>
+                                    on classlevel.
                                 </a>
                                 <a class="list-group-item">
                                     <span class="cs-source-point" data-number="2"></span>
-                                    Bar
+                                    We want that all REST Endpoints of our REST Controller will have an URL-prefix <code>/user</code>, therefore we use the <code>@Path</code> annotation.
                                 </a>
                                 <a class="list-group-item">
-                                    <span class="cs-source-point" data-number="2"></span>
-                                    ...
+                                    <span class="cs-source-point" data-number="3"></span>
+                                    The <code>UserSearchService</code> is an JIRA Service which will provide us methods to search for users. This Servie needs to be imported from a foreign OSGi bundle, we will see about that later.
                                 </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="4"></span>
+                                    We use <code>@Inject</code> for constructor injection, so that our UserSeatchService will be injected by Spring on Bean creation.
+                                </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="5"></span>
+                                    We provide a default constructor just in case.
+                                </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="6"></span>
+                                    Since our user search Endpoint will be rather complex we want a simple health endpoint to test the REST API in an easy was.
+                                    Therefore we define a Method as <code>@GET</code> with <code>@Path("/health")</code> which produces JSON <code>@Produces({MediaType.APPLICATION_JSON})</code>.
+                                    This endpoint will be reachable via <code>http://localhost:2990/jira/rest/kitchenduty/1.0/user/health</code>.
+                                </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="7"></span>
+                                    The health endpoint will be reachable without authentication via <code>@AnonymousAllowed</code>.
+                                    So you can curl the URL easily and will get an <code>ok</code> as response.
+                                </a>
+
                             </div>
                         </div>
 

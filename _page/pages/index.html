@@ -43,12 +43,15 @@
                 {% set step1WebworkActionText = 'Webwork Action and HTML View' %}
                 <li class="toc-h2"><span class="badge pull-right">Step 1</span> {{ linkToAnchor(step1WebworkActionText) }}</li>
 
-                {% set step2UserRestText = 'User REST Resource and JS Controller' %}
+                {% set step2UserRestText = 'User Search REST Resource' %}
                 <li class="toc-h2"><span class="badge pull-right">Step 2</span> {{ linkToAnchor(step2UserRestText) }}</li>
+
+                {% set step3UserSearchJSText = 'User Search JS Controller' %}
+                <li class="toc-h2"><span class="badge pull-right">Step 3</span> {{ linkToAnchor(step3UserSearchJSText) }}</li>
 
 
                 {# set last step here too for scroll up from about #}
-                {% set previousStepForAuthorText = step2UserRestText %}
+                {% set previousStepForAuthorText = step3UserSearchJSText %}
 
                 <li class="toc-h2-divider toc--appendix">Appendix</li>
 
@@ -1122,7 +1125,7 @@
                     <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 {# ############################################################# #}
-{# STEP 1 USER REST #}
+{# STEP 2 USER SEARCH REST #}
 {# ############################################################# #}
 
                     {{ headline(step2UserRestText, 'm', step1WebworkActionText) }}
@@ -1410,16 +1413,18 @@
                                     We want that all REST Endpoints of our REST Controller will have an URL-prefix <code>/user</code>, therefore we use the <code>@Path</code> annotation.
                                 </a>
                                 <a class="list-group-item cs-source-point-list__item">
-                                    The <code>UserSearchService</code> is an JIRA Service which will provide us methods to search for users. This Servie needs to be imported from a foreign OSGi bundle, we will see about that later.
+                                    The <code>UserSearchService</code> is a JIRA Service which will provide us methods to search for users. This Servie needs to be imported from a foreign OSGi bundle, we will see about that later.
+                                    Why not use <code>@ComponentImport</code> here you ask? Well try and if it works for you that would be nice. But I am getting some strange WADLGenerator Exceptions when running <code>atlas-integration-test</code>.
+                                    Therefore I use a little trick and import the component somewhere else. Once it is imported somewhere inside our bundle we can use it here. We will see about that later.
                                 </a>
                                 <a class="list-group-item cs-source-point-list__item">
-                                    We use <code>@Inject</code> for constructor injection, so that our UserSeatchService will be injected by Spring on Bean creation.
+                                    We use <code>@Inject</code> for constructor injection, so that our UserSearchService will be injected by Spring on bean creation.
                                 </a>
                                 <a class="list-group-item cs-source-point-list__item">
                                     We provide a default constructor just in case.
                                 </a>
                                 <a class="list-group-item cs-source-point-list__item">
-                                    Since our user search Endpoint will be rather complex we want a simple health endpoint to test the REST API in an easy was.
+                                    Since our user search Endpoint will be rather complex we want a simple health endpoint to test the REST API in an easy way.
                                     Therefore we define a Method as <code>@GET</code> with <code>@Path("/health")</code> which produces JSON <code>@Produces({MediaType.APPLICATION_JSON})</code>.
                                     This endpoint will be reachable via <code>http://localhost:2990/jira/rest/kitchenduty/1.0/user/health</code>.
                                 </a>
@@ -1427,36 +1432,67 @@
                                     The health endpoint will be reachable without authentication via <code>@AnonymousAllowed</code>.
                                     So you can curl the URL easily and will get an <code>ok</code> as response.
                                 </a>
-
+                                <a class="list-group-item cs-source-point-list__item">
+                                    Alright now we code the actual user search Endpoint with <code>@Path("/search")</code>. We do NOT use <code>@AnonymousAllowed</code> here
+                                    because we don't want unauthenticated users search our user database.
+                                </a>
+                                <a class="list-group-item cs-source-point-list__item">
+                                    As we want to search for username, somehow our search keyword needs to be passed as URL-parameter. This
+                                    is done via <code>@QueryParam("query")</code> which leads to the following URL for our endpoint
+                                    <code>http://localhost:2990/jira/rest/kitchenduty/1.0/user/search?query=foo</code>.
+                                    <br><br>Why use QueryParam instead of PathParam you ask? I see you like nice URL-patterns and so do I, but we will see later that the AUI select2 widget
+                                    will send the search keyword as <code>query</code> param, so we stick to this default behaviour.
+                                </a>
+                                <a class="list-group-item cs-source-point-list__item">
+                                    With <code>@Context HttpServletRequest request</code> we get the HTTP-Request as paramater and could for example extract the authenticated user.
+                                    We don't need it now but we might soon. <code>@Context</code> ensures that JIRA context (I think special headers and stuff) is wired into the request.
+                                </a>
+                                <a class="list-group-item cs-source-point-list__item">
+                                    After we searched for users we build the response with <code>Response.ok(someObject).build()</code>.
+                                    The JAXB/JAX-WS implementation ensures that our Model (we will see about that later) is converted to JSON and that a HTTP 200 is send together with the JSON representation of our Object as response body.
+                                </a>
+                                <a class="list-group-item cs-source-point-list__item">
+                                    We provide a private method that searches for usernames using the <code>UserSearchService</code>. If your OSGi component imports are not working correctly you will get a <em>NullPointerException</em> here.
+                                    After we searched the usernames we convert the username list into our model <code>UserSearchResourceModel</code> which will be serialized as JSON response body.
+                                </a>
                             </div>
                         </div>
 
                     </div>
 
 
-                    {# COMMIT 95b8ebf: https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/95b8ebf5ff20a77c6b0853cd93ad0b465033e6f6 #}
 
-                    <p></p>
+                    <strong style="color:red">todo</strong>
+                    <ul style="color:red">
+                        <li>model</li>
+                        <li>component import</li>
+                        <li>Explain Unit and Integration test and altas-integration-test</li>
+
+                        <li>atlas-run and curl to username search</li>
+                        <li>summary and step2 conclusion - <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/95b8ebf5ff20a77c6b0853cd93ad0b465033e6f6">95b8ebf</a> </li>
+                    </ul>
+
                     {#
-
-                    /src/main/java/com/comsysto/kitchen/duty/rest/UserSearchResource.java
-
-                    /src/main/java/com/comsysto/kitchen/duty/rest/
-
-
-
                     src/test/java/it/com/comsysto/kitchen/duty/rest/UserSearchResourceFuncTest.java
 
                     src/test/java/ut/com/comsysto/kitchen/duty/rest/UserSearchResourceTest.java
                     #}
 
 
-                    {#
-                    <p>TODO: atlas-create-home-zip => predefined users</p>
 
-                    #}
+                    <div class="cs-v-spacer cs-v-spacer--big"></div>
 
-                    {# ================================= #}
+{# ############################################################# #}
+{# STEP 3 USER SEARCH JS CONTROLLER #}
+{# ############################################################# #}
+
+                    {{ headline(step3UserSearchJSText, 'm', step2UserRestText) }}
+
+                    <strong style="color:red">todo</strong>
+
+
+
+
 
                     {# TODO: FURTHER READING
 
@@ -1465,6 +1501,11 @@
                                         <p>SHOW: how to use atlas-cli and PI command to develop faster.</p>
 
                                         <p>SHOW: Velocity template caching</p>
+                    #}
+
+                    {#
+                    <p>TODO: atlas-create-home-zip => predefined users</p>
+
                     #}
 
                     <div class="cs-v-spacer cs-v-spacer--big"></div>

@@ -291,8 +291,8 @@ p {
     counter-reset: section;
 }
 .cs-source-point-list__item {
-    padding-top:30px;
-    padding-bottom:30px;
+    padding-top:20px;
+    padding-bottom:20px;
     padding-left:50px;
     cursor: pointer;
 }
@@ -314,15 +314,17 @@ p {
     content: " ";
     margin-left:-34px;
     position:absolute;
-    top:30px;
+    top:20px;
 }
 .cs-source-point-list__item::after {
     counter-increment: section;
     content: counters(section,".") " ";
-    margin-left:-27px;
+    text-align:center;
+    width:40px;
+    margin-left:-42px;
     display: block;
     position:absolute;
-    top:32px;
+    top:22px;
     color:#fff;
 }
 .cs-source-point-list__item--active, .cs-source-point-list__item:hover {

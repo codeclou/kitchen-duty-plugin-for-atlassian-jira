@@ -31,8 +31,6 @@ var _initTocWayPoints = function () {
             if (direction === 'up') {
                 anchor = this.element.getAttribute('data-scroll-to-headline-previous');
             }
-            console.log(direction);
-
             _highlightToLink(anchor);
             _updateLocationHashTocLink(anchor);
         },

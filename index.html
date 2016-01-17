@@ -101,6 +101,9 @@
 </li>
 
 
+                
+                
+
                 <li class="toc-h2-divider toc--appendix">Appendix</li>
 
                 
@@ -1487,7 +1490,105 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
                         We will change the code of <strong><code>UserSearchResource.java</code></strong> to <strong>provide GET Endpoint to search usernames</strong>.
                     </p>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
 
+<span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchParams;
+<span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchService;
+<span class="hljs-keyword">import</span> com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+
+<span class="hljs-keyword">import</span> javax.inject.Inject;
+<span class="hljs-keyword">import</span> javax.inject.Named;
+<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;
+<span class="hljs-keyword">import</span> javax.ws.rs.GET;
+<span class="hljs-keyword">import</span> javax.ws.rs.Path;
+<span class="hljs-keyword">import</span> javax.ws.rs.Produces;
+<span class="hljs-keyword">import</span> javax.ws.rs.QueryParam;
+<span class="hljs-keyword">import</span> javax.ws.rs.core.Context;
+<span class="hljs-keyword">import</span> javax.ws.rs.core.MediaType;
+<span class="hljs-keyword">import</span> javax.ws.rs.core.Response;
+<span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-annotation">@Named</span> <span class="cs-source-point cs-source-point--step2-usersearchresource-1" data-number="1"></span>
+<span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/user"</span>)  <span class="cs-source-point cs-source-point--step2-usersearchresource-2" data-number="2"></span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSearchResource</span> </span>{
+
+    <span class="hljs-keyword">private</span> UserSearchService userSearchService; <span class="cs-source-point cs-source-point--step2-usersearchresource-3" data-number="3"></span>
+
+    <span class="hljs-annotation">@Inject</span> <span class="cs-source-point cs-source-point--step2-usersearchresource-4" data-number="4"></span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserSearchResource</span><span class="hljs-params">(UserSearchService userSearchService)</span> </span>{
+        <span class="hljs-keyword">this</span>.userSearchService = userSearchService;
+    }
+
+    <span class="cs-source-point cs-source-point--step2-usersearchresource-5" data-number="5"></span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserSearchResource</span><span class="hljs-params">()</span> </span>{
+    }
+
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/health"</span>) <span class="cs-source-point cs-source-point--step2-usersearchresource-6" data-number="6"></span>
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span> <span class="cs-source-point cs-source-point--step2-usersearchresource-7" data-number="7"></span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">health</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> Response.ok(<span class="hljs-string">"ok"</span>).build();
+    }
+
+    <span class="hljs-comment">/**
+     * Call from select2 JS plugin
+     * Response needs to look like this:
+     * [{ 'id': 1, 'text': 'Demo' }, { 'id': 2, 'text': 'Demo 2'}]
+     */</span>
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/search"</span>) <span class="cs-source-point cs-source-point--step2-usersearchresource-8" data-number="8"></span>
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">searchUsers</span><span class="hljs-params">(@QueryParam(<span class="hljs-string">"query"</span>)</span> <span class="hljs-keyword">final</span> String userQuery, </span><span class="cs-source-point cs-source-point--step2-usersearchresource-9" data-number="9"></span>
+                                <span class="hljs-annotation">@Context</span> HttpServletRequest request <span class="cs-source-point cs-source-point--step2-usersearchresource-10" data-number="10"></span>) {
+        List&lt;UserSearchResourceModel&gt; users = findUsers(userQuery);
+        <span class="hljs-keyword">return</span> Response.ok(users).build(); <span class="cs-source-point cs-source-point--step2-usersearchresource-11" data-number="11"></span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> List&lt;UserSearchResourceModel&gt; <span class="hljs-title">findUsers</span><span class="hljs-params">(String query)</span> </span>{
+        List&lt;UserSearchResourceModel&gt; userSearchResourceModels =
+                                           <span class="hljs-keyword">new</span> ArrayList&lt;UserSearchResourceModel&gt;();
+        UserSearchParams searchParams = UserSearchParams.builder()
+            .includeActive(<span class="hljs-keyword">true</span>)
+            .sorted(<span class="hljs-keyword">true</span>)
+            .build();
+        List&lt;String&gt; users = userSearchService.findUserNames(query, searchParams); <span class="cs-source-point cs-source-point--step2-usersearchresource-12" data-number="12"></span>
+        <span class="hljs-keyword">if</span> (users != <span class="hljs-keyword">null</span>) {
+            <span class="hljs-keyword">for</span> (String user : users) {
+                userSearchResourceModels.add(<span class="hljs-keyword">new</span> UserSearchResourceModel(user, user));
+            }
+        }
+        <span class="hljs-keyword">return</span> userSearchResourceModels;
+    }
+}</code></pre>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="list-group">
+                                <a class="list-group-item active">
+                                    <span class="cs-source-point" data-number="1"></span>
+                                    Foo
+                                </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="2"></span>
+                                    Bar
+                                </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="2"></span>
+                                    ...
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    
 
                     <p></p>
                     
@@ -1543,14 +1644,13 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
 
 
             
-            
     
     
     
 
     <h2 class="cs-headline cs-headline--m cs-headline--anchor"
         data-scroll-to-headline="author"
-        data-scroll-to-headline-previous="">
+        data-scroll-to-headline-previous="user-rest-resource-and-js-controller">
         
         Author
     </h2>

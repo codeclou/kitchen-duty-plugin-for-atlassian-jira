@@ -273,6 +273,32 @@ p {
     padding-top:30px;
 }
 
+/* CS SOURCE POINT */
+
+.cs-source-point {
+    background-color: #ef22b7;
+    border-radius: 50%;
+    width:22px;
+    height:22px;
+    text-align: center;
+    color:#fff;
+    cursor: pointer;
+    display: inline-block;
+    border:2px solid #ef22b7;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.cs-source-point::after {
+    content: attr(data-number);
+}
+
+.cs-source-point:hover {
+    border:2px solid #fff;
+}
 
 /* TOC */
 
@@ -339,4 +365,5 @@ p {
 .cfsb {
     display: none;
 }
+
 

@@ -47,6 +47,9 @@
                 <li class="toc-h2"><span class="badge pull-right">Step 2</span> {{ linkToAnchor(step2UserRestText) }}</li>
 
 
+                {# set last step here too for scroll up from about #}
+                {% set previousStepForAuthorText = step2UserRestText %}
+
                 <li class="toc-h2-divider toc--appendix">Appendix</li>
 
                 {% set appendixAuthorText = 'Author' %}
@@ -1318,7 +1321,105 @@
                         We will change the code of <strong><code>UserSearchResource.java</code></strong> to <strong>provide GET Endpoint to search usernames</strong>.
                     </p>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ csSource(lang='java', uniqueId='step2-usersearchresource', source='
+                                |package com.comsysto.kitchen.duty.rest;
+                                |
+                                |import com.atlassian.jira.bc.user.search.UserSearchParams;
+                                |import com.atlassian.jira.bc.user.search.UserSearchService;
+                                |import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+                                |
+                                |import javax.inject.Inject;
+                                |import javax.inject.Named;
+                                |import javax.servlet.http.HttpServletRequest;
+                                |import javax.ws.rs.GET;
+                                |import javax.ws.rs.Path;
+                                |import javax.ws.rs.Produces;
+                                |import javax.ws.rs.QueryParam;
+                                |import javax.ws.rs.core.Context;
+                                |import javax.ws.rs.core.MediaType;
+                                |import javax.ws.rs.core.Response;
+                                |import java.util.ArrayList;
+                                |import java.util.List;
+                                |
+                                |@Named {{{point::1}}}
+                                |@Path("/user")  {{{point::2}}}
+                                |public class UserSearchResource {
+                                |
+                                |    private UserSearchService userSearchService; {{{point::3}}}
+                                |
+                                |    @Inject {{{point::4}}}
+                                |    public UserSearchResource(UserSearchService userSearchService) {
+                                |        this.userSearchService = userSearchService;
+                                |    }
+                                |
+                                |    {{{point::5}}}
+                                |    public UserSearchResource() {
+                                |    }
+                                |
+                                |    @GET
+                                |    @Path("/health") {{{point::6}}}
+                                |    @Produces({MediaType.APPLICATION_JSON})
+                                |    @AnonymousAllowed {{{point::7}}}
+                                |    public Response health() {
+                                |        return Response.ok("ok").build();
+                                |    }
+                                |
+                                |    /**
+                                |     * Call from select2 JS plugin
+                                |     * Response needs to look like this:
+                                |     * [{ \'id\': 1, \'text\': \'Demo\' }, { \'id\': 2, \'text\': \'Demo 2\'}]
+                                |     */
+                                |    @GET
+                                |    @Path("/search") {{{point::8}}}
+                                |    @Produces({MediaType.APPLICATION_JSON})
+                                |    public Response searchUsers(@QueryParam("query") final String userQuery, {{{point::9}}}
+                                |                                @Context HttpServletRequest request {{{point::10}}}) {
+                                |        List<UserSearchResourceModel> users = findUsers(userQuery);
+                                |        return Response.ok(users).build(); {{{point::11}}}
+                                |    }
+                                |
+                                |    private List<UserSearchResourceModel> findUsers(String query) {
+                                |        List<UserSearchResourceModel> userSearchResourceModels =
+                                |                                           new ArrayList<UserSearchResourceModel>();
+                                |        UserSearchParams searchParams = UserSearchParams.builder()
+                                |            .includeActive(true)
+                                |            .sorted(true)
+                                |            .build();
+                                |        List<String> users = userSearchService.findUserNames(query, searchParams); {{{point::12}}}
+                                |        if (users != null) {
+                                |            for (String user : users) {
+                                |                userSearchResourceModels.add(new UserSearchResourceModel(user, user));
+                                |            }
+                                |        }
+                                |        return userSearchResourceModels;
+                                |    }
+                                |}
+                            ') }}
+                        </div>
+                        <div class="col-md-6">
 
+                            <div class="list-group">
+                                <a class="list-group-item active">
+                                    <span class="cs-source-point" data-number="1"></span>
+                                    Foo
+                                </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="2"></span>
+                                    Bar
+                                </a>
+                                <a class="list-group-item">
+                                    <span class="cs-source-point" data-number="2"></span>
+                                    ...
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    {# COMMIT 95b8ebf: https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/95b8ebf5ff20a77c6b0853cd93ad0b465033e6f6 #}
 
                     <p></p>
                     {#
@@ -1394,8 +1495,7 @@
 {# ABOUT US #}
 {# ############################################################# #}
 
-            {# TODO: Link to previous step for scroll up. #}
-            {{ headline(appendixAuthorText, 'm' ) }}
+            {{ headline(appendixAuthorText, 'm', previousStepForAuthorText ) }}
 
             <div class="row">
                 <div class="col-md-2 col-md-offset-2 text-center">

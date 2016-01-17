@@ -31,8 +31,8 @@
 </div>
 {% endmacro %}
 
-{% macro csSource(lang='', source='') %}
-<pre class="cs-code"><code class="hljs">{{source | formatSourceCode(lang) | safe }}</code></pre>
+{% macro csSource(lang='', source='', uniqueId='') %}
+<pre class="cs-code"><code class="hljs">{{source | formatSourceCode(lang, uniqueId) | safe }}</code></pre>
 {% endmacro %}
 
 {% macro linkToAnchor(text) %}

@@ -25,7 +25,17 @@ exports.csStringHelper = function () {
         return anchorName;
     };
 
+
+    self.replacePointsInSourceCode = function (text, uniqueId) {
+        var matchPointsAfterHighlightJsReplacement = new RegExp('\{\{\{point::[^}]+\}\}\}','g');
+        return text.replace(matchPointsAfterHighlightJsReplacement, function (match) {
+            return match.replace(new RegExp('\{\{\{point::<span class="hljs-number">([0-9]+)<\/span>\}\}\}', 'g'),
+                '<span class="cs-source-point cs-source-point--' + uniqueId + '-$1" data-number="$1"></span>');
+        });
+    };
+
     return {
-        convertToAnchor: self.convertToAnchor
+        convertToAnchor: self.convertToAnchor,
+        replacePointsInSourceCode: self.replacePointsInSourceCode
     }
 };

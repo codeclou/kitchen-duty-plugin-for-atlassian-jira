@@ -64,7 +64,7 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
             noCache: true
         });
         env.addGlobal('csStringHelper', csStringHelper);
-        env.addFilter('formatSourceCode', function(code, lang) {
+        env.addFilter('formatSourceCode', function(code, lang, uniqueId) {
             /*console.log(code);*/
             var ret = '';
             var lines = code.split('\n');
@@ -80,7 +80,11 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
                 ret = code;
             }
             /* http://highlightjs.readthedocs.org/en/latest/api.html#highlight-name-value-ignore-illegals-continuation */
-            return highlightJs.highlight(lang, ret).value;
+            var highlightedSource = highlightJs.highlight(lang, ret).value;
+            if (uniqueId !== '') {
+                return csStringHelper().replacePointsInSourceCode(highlightedSource, uniqueId);
+            }
+            return highlightedSource;
         });
         fs.readFile(sourceFile, 'utf8', function (err, nunjucksTemplateData) {
             if (err) {

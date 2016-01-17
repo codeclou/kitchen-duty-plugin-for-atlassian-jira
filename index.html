@@ -1511,6 +1511,7 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
                     <div class="row">
                         <div class="col-md-6">
                             
+                            
     
         <div class="cs-code-filename">UserSearchResource.java</div>
     
@@ -1533,25 +1534,25 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
 <span class="hljs-keyword">import</span> java.util.ArrayList;
 <span class="hljs-keyword">import</span> java.util.List;
 
-<span class="hljs-annotation">@Named</span> <span class="cs-source-point cs-source-point--step2-usersearchresource-1" data-number="1"></span>
-<span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/user"</span>)  <span class="cs-source-point cs-source-point--step2-usersearchresource-2" data-number="2"></span>
+<span class="hljs-annotation">@Named</span> <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="1"></span>
+<span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/user"</span>)  <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="2"></span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSearchResource</span> </span>{
 
-    <span class="hljs-keyword">private</span> UserSearchService userSearchService; <span class="cs-source-point cs-source-point--step2-usersearchresource-3" data-number="3"></span>
+    <span class="hljs-keyword">private</span> UserSearchService userSearchService; <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="3"></span>
 
-    <span class="hljs-annotation">@Inject</span> <span class="cs-source-point cs-source-point--step2-usersearchresource-4" data-number="4"></span>
+    <span class="hljs-annotation">@Inject</span> <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="4"></span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserSearchResource</span><span class="hljs-params">(UserSearchService userSearchService)</span> </span>{
         <span class="hljs-keyword">this</span>.userSearchService = userSearchService;
     }
 
-    <span class="cs-source-point cs-source-point--step2-usersearchresource-5" data-number="5"></span>
+    <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="5"></span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserSearchResource</span><span class="hljs-params">()</span> </span>{
     }
 
     <span class="hljs-annotation">@GET</span>
-    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/health"</span>) <span class="cs-source-point cs-source-point--step2-usersearchresource-6" data-number="6"></span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/health"</span>) <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="6"></span>
     <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
-    <span class="hljs-annotation">@AnonymousAllowed</span> <span class="cs-source-point cs-source-point--step2-usersearchresource-7" data-number="7"></span>
+    <span class="hljs-annotation">@AnonymousAllowed</span> <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="7"></span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">health</span><span class="hljs-params">()</span> </span>{
         <span class="hljs-keyword">return</span> Response.ok(<span class="hljs-string">"ok"</span>).build();
     }
@@ -1562,12 +1563,12 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
      * [{ 'id': 1, 'text': 'Demo' }, { 'id': 2, 'text': 'Demo 2'}]
      */</span>
     <span class="hljs-annotation">@GET</span>
-    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/search"</span>) <span class="cs-source-point cs-source-point--step2-usersearchresource-8" data-number="8"></span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/search"</span>) <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="8"></span>
     <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
-    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">searchUsers</span><span class="hljs-params">(@QueryParam(<span class="hljs-string">"query"</span>)</span> <span class="hljs-keyword">final</span> String userQuery, </span><span class="cs-source-point cs-source-point--step2-usersearchresource-9" data-number="9"></span>
-                                <span class="hljs-annotation">@Context</span> HttpServletRequest request <span class="cs-source-point cs-source-point--step2-usersearchresource-10" data-number="10"></span>) {
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">searchUsers</span><span class="hljs-params">(@QueryParam(<span class="hljs-string">"query"</span>)</span> <span class="hljs-keyword">final</span> String userQuery, </span><span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="9"></span>
+                                <span class="hljs-annotation">@Context</span> HttpServletRequest request <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="10"></span>) {
         List&lt;UserSearchResourceModel&gt; users = findUsers(userQuery);
-        <span class="hljs-keyword">return</span> Response.ok(users).build(); <span class="cs-source-point cs-source-point--step2-usersearchresource-11" data-number="11"></span>
+        <span class="hljs-keyword">return</span> Response.ok(users).build(); <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="11"></span>
     }
 
     <span class="hljs-function"><span class="hljs-keyword">private</span> List&lt;UserSearchResourceModel&gt; <span class="hljs-title">findUsers</span><span class="hljs-params">(String query)</span> </span>{
@@ -1577,7 +1578,7 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
             .includeActive(<span class="hljs-keyword">true</span>)
             .sorted(<span class="hljs-keyword">true</span>)
             .build();
-        List&lt;String&gt; users = userSearchService.findUserNames(query, searchParams); <span class="cs-source-point cs-source-point--step2-usersearchresource-12" data-number="12"></span>
+        List&lt;String&gt; users = userSearchService.findUserNames(query, searchParams); <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="12"></span>
         <span class="hljs-keyword">if</span> (users != <span class="hljs-keyword">null</span>) {
             <span class="hljs-keyword">for</span> (String user : users) {
                 userSearchResourceModels.add(<span class="hljs-keyword">new</span> UserSearchResourceModel(user, user));
@@ -1590,36 +1591,29 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
                         </div>
                         <div class="col-md-6">
 
-                            <div class="list-group">
-                                <a class="list-group-item">
-                                    <span class="cs-source-point" data-number="1"></span>
+                            <div class="list-group cs-source-point-list" data-source-target="step2-usersearchresource">
+                                <a class="list-group-item cs-source-point-list__item">
                                     Our REST Controller should be a Spring-Bean and get its dependencies autowired. Therefore provide the JSR annotation <code>@Named</code>
                                     on classlevel.
                                 </a>
-                                <a class="list-group-item">
-                                    <span class="cs-source-point" data-number="2"></span>
+                                <a class="list-group-item cs-source-point-list__item">
                                     We want that all REST Endpoints of our REST Controller will have an URL-prefix <code>/user</code>, therefore we use the <code>@Path</code> annotation.
                                 </a>
-                                <a class="list-group-item">
-                                    <span class="cs-source-point" data-number="3"></span>
+                                <a class="list-group-item cs-source-point-list__item">
                                     The <code>UserSearchService</code> is an JIRA Service which will provide us methods to search for users. This Servie needs to be imported from a foreign OSGi bundle, we will see about that later.
                                 </a>
-                                <a class="list-group-item">
-                                    <span class="cs-source-point" data-number="4"></span>
+                                <a class="list-group-item cs-source-point-list__item">
                                     We use <code>@Inject</code> for constructor injection, so that our UserSeatchService will be injected by Spring on Bean creation.
                                 </a>
-                                <a class="list-group-item">
-                                    <span class="cs-source-point" data-number="5"></span>
+                                <a class="list-group-item cs-source-point-list__item">
                                     We provide a default constructor just in case.
                                 </a>
-                                <a class="list-group-item">
-                                    <span class="cs-source-point" data-number="6"></span>
+                                <a class="list-group-item cs-source-point-list__item">
                                     Since our user search Endpoint will be rather complex we want a simple health endpoint to test the REST API in an easy was.
                                     Therefore we define a Method as <code>@GET</code> with <code>@Path("/health")</code> which produces JSON <code>@Produces({MediaType.APPLICATION_JSON})</code>.
                                     This endpoint will be reachable via <code>http://localhost:2990/jira/rest/kitchenduty/1.0/user/health</code>.
                                 </a>
-                                <a class="list-group-item">
-                                    <span class="cs-source-point" data-number="7"></span>
+                                <a class="list-group-item cs-source-point-list__item">
                                     The health endpoint will be reachable without authentication via <code>@AnonymousAllowed</code>.
                                     So you can curl the URL easily and will get an <code>ok</code> as response.
                                 </a>

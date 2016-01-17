@@ -215,6 +215,10 @@ p {
     height:60px;
 }
 
+.cs-v-spacer--endofpage {
+    height:700px;
+}
+
 .cs-tutorial-image {
     max-width:600px;
 }
@@ -246,6 +250,14 @@ p {
     margin-top:12px;
     margin-bottom:12px;
 }
+
+/* ABOUT */
+
+.cs-about__text {
+    padding-top:20px;
+    padding-left:30px;
+}
+
 /* HIGHLIGHT.JS STYLES */
 
 .hljs {
@@ -319,5 +331,12 @@ p {
 
 .toc-active a {
     color: #fff !important;
+}
+.toc--appendix {
+    font-size:12px;
+}
+/* crypt */
+.cfsb {
+    display: none;
 }
 

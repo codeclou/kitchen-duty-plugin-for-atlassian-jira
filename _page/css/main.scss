@@ -220,7 +220,10 @@ p {
 }
 
 .cs-tutorial-image {
-    max-width:600px;
+}
+
+.cs-do-wrap {
+    word-wrap: break-word;
 }
 
 .cs-warning {
@@ -295,6 +298,10 @@ p {
     padding-bottom:20px;
     padding-left:50px;
     cursor: pointer;
+}
+.cs-source-point-list__item code {
+    color: #b91c8a;
+    word-wrap: break-word;
 }
 .cs-source-point-list__item::before {
     background-color: #ef22b7;

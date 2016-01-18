@@ -501,31 +501,43 @@ target/</code></pre>
                     <p>Now open <strong>Preferences</strong> in IntelliJ and set the built-in maven of the SDK together with the <code>settings.xml</code></p>
                     <p>(Tip: By calling <code>atlas-version</code> all paths including home directory of SDK are printed)</p>
 
-                    <p>
-                        <a href="./images/doc/step-00-intellij-maven-install-settings.png" data-lightbox="00-step-intellij" data-title="Step 0 - Set maven home and maven settings.xml">
-                            <img src="./images/doc/step-00-intellij-maven-install-settings.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Set maven home and maven settings.xml">
-                        </a>
-                    </p>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <p>
+                                <a href="./images/doc/step-00-intellij-maven-install-settings.png" data-lightbox="00-step-intellij" data-title="Step 0 - Set maven home and maven settings.xml">
+                                    <img src="./images/doc/step-00-intellij-maven-install-settings.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Set maven home and maven settings.xml">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
 
                     <div class="cs-v-spacer"></div>
 
                     <p>Since we need the <code>ATLAS_HOME</code> environment variable to get maven inside IntelliJ to work we set that as well.</p>
 
-                    <p>
-                        <a href="./images/doc/step-00-intellij-maven-atlas-home.png" data-lightbox="00-step-intellij" data-title="Step 0 - Set ATLAS_HOME variable">
-                            <img src="./images/doc/step-00-intellij-maven-atlas-home.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Set ATLAS_HOME variable">
-                        </a>
-                    </p>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <p>
+                                <a href="./images/doc/step-00-intellij-maven-atlas-home.png" data-lightbox="00-step-intellij" data-title="Step 0 - Set ATLAS_HOME variable">
+                                    <img src="./images/doc/step-00-intellij-maven-atlas-home.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Set ATLAS_HOME variable">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
 
                     <div class="cs-v-spacer"></div>
 
                     <p>Now you can click on the <strong>Maven-Tab</strong> on the right and click <strong>compile</strong> and you should have a successful build.</p>
 
-                    <p>
-                        <a href="./images/doc/step-00-intellij-maven-successful-compile.png" data-lightbox="00-step-intellij" data-title="Step 0 - Successful Maven Compile">
-                            <img src="./images/doc/step-00-intellij-maven-successful-compile.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Successful Maven Compile">
-                        </a>
-                    </p>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <p>
+                                <a href="./images/doc/step-00-intellij-maven-successful-compile.png" data-lightbox="00-step-intellij" data-title="Step 0 - Successful Maven Compile">
+                                    <img src="./images/doc/step-00-intellij-maven-successful-compile.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Successful Maven Compile">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
 
                     <div class="cs-v-spacer"></div>
 
@@ -703,7 +715,7 @@ Spring-Context: *</code></pre>
                     </p>
 
                     <p>But before we start the implementation we drink another coffee and get our brain up to software-architecture-design-speed, because we need to make some <strong>design decisions</strong> now.
-                        Think of the following section as a little <strong>Story Workshop</strong> we do with our virtual Product Owner and the virtual Scrum Team.</p>
+                        Think of the following section as a little <strong>Story Workshop</strong> we do with our virtual Product Owner and the virtual Scrum Team to build a shared understanding on the work to be done.</p>
 
 
                     <h3 class="cs-headline cs-headline--s">What does the Planning Page really need to do? </h3>
@@ -994,12 +1006,15 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 
                     <p>You should be able to open the <code>KitchenDutyPlanningWebworkAction</code> in IntelliJ now.</p>
 
-
-                    <p>
-                        <a href="./images/doc/step-01-intellij-after-webwork-module-create.png" data-lightbox="01-step-server-side" data-title="Step 1 - IntelliJ after Webwork Module creation">
-                            <img src="./images/doc/step-01-intellij-after-webwork-module-create.png" class="img-thumbnail img-responsive" alt="Step 1 - IntelliJ after Webwork Module creation">
-                        </a>
-                    </p>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <p>
+                                <a href="./images/doc/step-01-intellij-after-webwork-module-create.png" data-lightbox="01-step-server-side" data-title="Step 1 - IntelliJ after Webwork Module creation">
+                                    <img src="./images/doc/step-01-intellij-after-webwork-module-create.png" class="img-thumbnail img-responsive" alt="Step 1 - IntelliJ after Webwork Module creation">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
 
                     <p>Now we change the <code>execute</code> Method to work with our view:</p>
 
@@ -1011,7 +1026,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 }</code></pre>
 
 
-                    <p>Now our view will be called when we browse to the Webactions URL which is simply <code>http://server/jira/secure/[WebWorkAlias].jspa</code> in our case <code>http://server/jira/secure/KitchenDutyPlanningWebworkAction.jspa</code>.</p>
+                    <p>Now our view will be called when we browse to the Webactions URL which is simply <code>http://server/jira/secure/[WebWorkAlias].jspa</code> in our case <code class="cs-do-wrap">http://server/jira/secure/KitchenDutyPlanningWebworkAction.jspa</code>.</p>
 
                     <p>We will now start JIRA wich will have our Plugin installed with the following command. (Go get another coffee, this will take some time to download dependencies)</p>
 
@@ -1031,7 +1046,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 </div>
 
 
-                    <p>Now browse to <a href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa</a> and you should see:</p>
+                    <p>Now browse to <a class="cs-do-wrap" href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa</a> and you should see:</p>
 
                     <div class="row">
                         <div class="col-md-offset-2 col-md-8">
@@ -1089,7 +1104,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                         which is basically the administrator layout.
                     </p>
 
-                    <p>After you have saved the changes run <code>atlas-run</code> again your shell to start JIRA and <a href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">browse to the Planning Page</a>. It should look like this now.</p>
+                    <p>After you have saved the changes run <code>atlas-run</code> again your shell to start JIRA and <a class="cs-do-wrap" href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">browse to the Planning Page</a>. It should look like this now.</p>
 
                     <div class="row">
                         <div class="col-md-offset-2 col-md-8">
@@ -1414,7 +1429,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
                     <p>The SDK created and updated many files now and before we get into all the details let's fire up <code>atlas-run</code> again
                     and see what has been created for us.</p>
 
-                    <p>Once JIRA is started <strong>browse to <a href="http://server/jira/rest/kitchenduty/1.0/message" target="_blank">http://server/jira/rest/kitchenduty/1.0/message</a></strong> and you should see the following.</p>
+                    <p>Once JIRA is started <strong>browse to <a class="cs-do-wrap" href="http://server/jira/rest/kitchenduty/1.0/message" target="_blank">http://server/jira/rest/kitchenduty/1.0/message</a></strong> and you should see the following.</p>
 
                     <div class="row">
                         <div class="col-md-offset-2 col-md-8">
@@ -1598,56 +1613,56 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
                         <div class="col-md-6">
 
                             <div class="list-group cs-source-point-list" data-source-target="step2-usersearchresource">
-                                <a class="list-group-item cs-source-point-list__item">
+                                <div class="list-group-item cs-source-point-list__item">
                                     Our REST Controller should be a Spring-Bean and get its dependencies autowired. Therefore provide the JSR annotation <code>@Named</code>
                                     on classlevel.
-                                </a>
-                                <a class="list-group-item cs-source-point-list__item">
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
                                     We want that all REST Endpoints of our REST Controller will have an URL-prefix <code>/user</code>, therefore we use the <code>@Path</code> annotation.
-                                </a>
-                                <a class="list-group-item cs-source-point-list__item">
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
                                     The <code>UserSearchService</code> is a JIRA Service which will provide us methods to search for users. This Servie needs to be imported from a foreign OSGi bundle, we will see about that later.
                                     Why not use <code>@ComponentImport</code> here you ask? Well try and if it works for you that would be nice. But I am getting some strange WADLGenerator Exceptions when running <code>atlas-integration-test</code>.
                                     Therefore I use a little trick and import the component somewhere else. Once it is imported somewhere inside our bundle we can use it here. We will see about that later.
-                                </a>
-                                <a class="list-group-item cs-source-point-list__item">
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
                                     We use <code>@Inject</code> for constructor injection, so that our UserSearchService will be injected by Spring on bean creation.
-                                </a>
-                                <a class="list-group-item cs-source-point-list__item">
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
                                     We provide a default constructor just in case.
-                                </a>
-                                <a class="list-group-item cs-source-point-list__item">
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
                                     Since our user search Endpoint will be rather complex we want a simple health endpoint to test the REST API in an easy way.
                                     Therefore we define a Method as <code>@GET</code> with <code>@Path("/health")</code> which produces JSON <code>@Produces({MediaType.APPLICATION_JSON})</code>.
                                     This endpoint will be reachable via <code>http://localhost:2990/jira/rest/kitchenduty/1.0/user/health</code>.
-                                </a>
+                                </div>
                                 <a class="list-group-item cs-source-point-list__item">
                                     The health endpoint will be reachable without authentication via <code>@AnonymousAllowed</code>.
                                     So you can curl the URL easily and will get an <code>ok</code> as response.
                                 </a>
-                                <a class="list-group-item cs-source-point-list__item">
+                                <div class="list-group-item cs-source-point-list__item">
                                     Alright now we code the actual user search Endpoint with <code>@Path("/search")</code>. We do NOT use <code>@AnonymousAllowed</code> here
                                     because we don't want unauthenticated users search our user database.
-                                </a>
-                                <a class="list-group-item cs-source-point-list__item">
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
                                     As we want to search for username, somehow our search keyword needs to be passed as URL-parameter. This
                                     is done via <code>@QueryParam("query")</code> which leads to the following URL for our endpoint
                                     <code>http://localhost:2990/jira/rest/kitchenduty/1.0/user/search?query=foo</code>.
                                     <br><br>Why use QueryParam instead of PathParam you ask? I see you like nice URL-patterns and so do I, but we will see later that the AUI select2 widget
                                     will send the search keyword as <code>query</code> param, so we stick to this default behaviour.
-                                </a>
-                                <a class="list-group-item cs-source-point-list__item">
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
                                     With <code>@Context HttpServletRequest request</code> we get the HTTP-Request as paramater and could for example extract the authenticated user.
                                     We don't need it now but we might soon. <code>@Context</code> ensures that JIRA context (I think special headers and stuff) is wired into the request.
-                                </a>
-                                <a class="list-group-item cs-source-point-list__item">
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
                                     After we searched for users we build the response with <code>Response.ok(someObject).build()</code>.
                                     The JAXB/JAX-WS implementation ensures that our Model (we will see about that later) is converted to JSON and that a HTTP 200 is send together with the JSON representation of our Object as response body.
-                                </a>
-                                <a class="list-group-item cs-source-point-list__item">
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
                                     We provide a private method that searches for usernames using the <code>UserSearchService</code>. If your OSGi component imports are not working correctly you will get a <em>NullPointerException</em> here.
                                     After we searched the usernames we convert the username list into our model <code>UserSearchResourceModel</code> which will be serialized as JSON response body.
-                                </a>
+                                </div>
                             </div>
                         </div>
 
@@ -1806,6 +1821,7 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
 
 
             <div class="cs-v-spacer cs-v-spacer--endofpage"></div>
+            <a href="http://comsysto.com/imprint.html" target="_blank">Impressum</a>
 
         </div>
     </div>

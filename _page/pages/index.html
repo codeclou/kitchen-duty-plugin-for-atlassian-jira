@@ -1477,6 +1477,79 @@
 
 
 
+                    <div class="cs-v-spacer cs-v-spacer"></div>
+
+
+
+                    <p>
+                        Now we have the REST Controller but you will have some compile errors now because the <strong>Model needs to be implemented.</strong>.
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            {%  set uniqueIdUserSearchResourceModelStep2 = 'step2-usersearchresourcemodel' %}
+                            {{ csSource(lang='java', filename="UserSearchResourceModel.java", uniqueId=uniqueIdUserSearchResourceModelStep2, source='
+                                |package com.comsysto.kitchen.duty.rest;
+                                |
+                                |import javax.xml.bind.annotation.*;
+                                |@XmlRootElement(name = "users") {{{point::1}}}
+                                |@XmlAccessorType(XmlAccessType.FIELD) {{{point::2}}}
+                                |public class UserSearchResourceModel {
+                                |
+                                |    @XmlElement {{{point::3}}}
+                                |    private String text;
+                                |
+                                |    @XmlElement {{{point::4}}}
+                                |    private String id;
+                                |
+                                |    public UserSearchResourceModel() {
+                                |    }
+                                |
+                                |    public UserSearchResourceModel(String text, String id) {
+                                |        this.text = text;
+                                |        this.id = id;
+                                |    }
+                                |
+                                |    public String getText() {
+                                |        return text;
+                                |    }
+                                |
+                                |    public void setText(String text) {
+                                |        this.text = text;
+                                |    }
+                                |
+                                |    public String getId() {
+                                |        return id;
+                                |    }
+                                |
+                                |    public void setId(String id) {
+                                |        this.id = id;
+                                |    }
+                                |}
+                            ') }}
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="list-group cs-source-point-list" data-source-target="{{ uniqueIdUserSearchResourceModelStep2 }}">
+                                <div class="list-group-item cs-source-point-list__item">
+                                    ...
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
+                                    ...
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
+                                    ...
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
+                                    ...
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
                     <strong style="color:red">todo</strong>
                     <ul style="color:red">
                         <li>model</li>
@@ -1484,7 +1557,7 @@
                         <li>Explain Unit and Integration test and altas-integration-test</li>
 
                         <li>atlas-run and curl to username search</li>
-                        <li>summary and step2 conclusion - <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/95b8ebf5ff20a77c6b0853cd93ad0b465033e6f6">95b8ebf</a> </li>
+                        <li>summary and step2 conclusion - <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a> </li>
                     </ul>
 
                     {#

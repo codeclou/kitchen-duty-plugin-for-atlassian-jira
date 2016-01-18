@@ -1670,6 +1670,82 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
 
 
 
+                    <div class="cs-v-spacer cs-v-spacer"></div>
+
+
+
+                    <p>
+                        Now we have the REST Controller but you will have some compile errors now because the <strong>Model needs to be implemented.</strong>.
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            
+                            
+    
+        <div class="cs-code-filename">UserSearchResourceModel.java</div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.*;
+<span class="hljs-annotation">@XmlRootElement</span>(name = <span class="hljs-string">"users"</span>) <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcemodel" data-cs-source-point-number="1"></span>
+<span class="hljs-annotation">@XmlAccessorType</span>(XmlAccessType.FIELD) <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcemodel" data-cs-source-point-number="2"></span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSearchResourceModel</span> </span>{
+
+    <span class="hljs-annotation">@XmlElement</span> <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcemodel" data-cs-source-point-number="3"></span>
+    <span class="hljs-keyword">private</span> String text;
+
+    <span class="hljs-annotation">@XmlElement</span> <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcemodel" data-cs-source-point-number="4"></span>
+    <span class="hljs-keyword">private</span> String id;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserSearchResourceModel</span><span class="hljs-params">()</span> </span>{
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserSearchResourceModel</span><span class="hljs-params">(String text, String id)</span> </span>{
+        <span class="hljs-keyword">this</span>.text = text;
+        <span class="hljs-keyword">this</span>.id = id;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getText</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> text;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setText</span><span class="hljs-params">(String text)</span> </span>{
+        <span class="hljs-keyword">this</span>.text = text;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getId</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> id;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setId</span><span class="hljs-params">(String id)</span> </span>{
+        <span class="hljs-keyword">this</span>.id = id;
+    }
+}</code></pre>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="list-group cs-source-point-list" data-source-target="step2-usersearchresourcemodel">
+                                <div class="list-group-item cs-source-point-list__item">
+                                    ...
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
+                                    ...
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
+                                    ...
+                                </div>
+                                <div class="list-group-item cs-source-point-list__item">
+                                    ...
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
                     <strong style="color:red">todo</strong>
                     <ul style="color:red">
                         <li>model</li>
@@ -1677,7 +1753,7 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
                         <li>Explain Unit and Integration test and altas-integration-test</li>
 
                         <li>atlas-run and curl to username search</li>
-                        <li>summary and step2 conclusion - <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/95b8ebf5ff20a77c6b0853cd93ad0b465033e6f6">95b8ebf</a> </li>
+                        <li>summary and step2 conclusion - <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a> </li>
                     </ul>
 
                     

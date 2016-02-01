@@ -159,7 +159,8 @@ async.waterfall([
 
             /* https://github.com/Raynos/live-reload */
             console.log(('>> livereload started on port 35676').yellow);
-            shell.exec('live-reload ' + buildDir + ' --port=35676 --delay=1', {async:true, silent:false});
+            // FIXME: CPU is on 100% and Browser hangs
+            // shell.exec('live-reload ' + buildDir + ' --port=35676 --delay=1', {async:true, silent:false});
 
             /* https://www.npmjs.com/package/local-web-server */
             console.log(('>> http-server started on port 8080').yellow);

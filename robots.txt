@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /tutorial/
+Disallow: /_page/
+Disallow: /fonts/
+Disallow: /generated/
+Disallow: /images/

@@ -4,22 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    {# The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags #}
     {% block head %}
     {% endblock %}
 
 
-    <link href="./generated/bundle.css" rel="stylesheet">
+    <link href="/generated/bundle.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Menlo|Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-    <link rel="icon" href="./images/favicon-32.png" type="image/png" sizes="32x32">
-    <link rel="icon" href="./images/favicon-256.png" type="image/png" sizes="256x256">
-    <link rel="icon" href="./images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/images/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/images/favicon-256.png" type="image/png" sizes="256x256">
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
 
     <script>var postLoadMethods = [];</script>
 </head>
 <body>
-<!-- MACROS START -->
+{# MACROS START #}
 {% macro csShell(shellCmd, shellCmdOutput='') %}
 <div class="cs-shell">
     <div class="cs-shell__inner">
@@ -58,7 +58,7 @@
 {% endmacro %}
 
 
-<!-- MACROS END -->
+{# MACROS END #}
 
 {% block contentLayout %}
 content
@@ -67,7 +67,7 @@ content
 
 
 
-<script src="./generated/bundle.js" async></script>
+<script src="/generated/bundle.js" async></script>
 {% block postJs %}
 {% endblock %}
 {% if isLocalhost %}

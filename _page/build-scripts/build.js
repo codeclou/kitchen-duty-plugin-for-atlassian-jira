@@ -163,7 +163,22 @@ async.waterfall([
 
             /* https://www.npmjs.com/package/local-web-server */
             console.log(('>> http-server started on port 8080').yellow);
-            shell.exec('ws  --log-format dev --port 8080 --directory ' + buildDir , {async:true, silent:false});
+            console.log(('>> go to http://localhost:8080/kitchen-duty-plugin-for-atlassian-jira/').yellow);
+
+            var express = require('express');
+            var serveStatic = require('serve-static');
+
+            var app = express();
+
+            app.use('/kitchen-duty-plugin-for-atlassian-jira', serveStatic(buildDir, {
+                maxAge: '1d'
+            }));
+
+            app.get('/', function(req, res){
+                res.redirect(301, '/kitchen-duty-plugin-for-atlassian-jira/');
+            });
+
+            app.listen(8080);
 
             watchers.forEach(function (watcher) {
                 helpers.watchFilesAndTriggerBuild(watcher.what, watcher.watchGlob, watcher.watchCallback);
@@ -177,9 +192,22 @@ async.waterfall([
         if (!lodash.isUndefined(start) && !lodash.isNull(start) && start === 'true') {
             /* https://www.npmjs.com/package/local-web-server */
             console.log(('>> http-server started on port 9999').yellow);
-            shell.exec('ws  --log-format dev --port 9999 --directory ' + buildDir , {async:true, silent:false});
+            console.log(('>> go to http://localhost:9999/kitchen-duty-plugin-for-atlassian-jira/').yellow);
 
-            /* shell.exec('opener http://localhost:9999', {async:false}); */
+            var express = require('express');
+            var serveStatic = require('serve-static');
+
+            var app = express();
+
+            app.use('/kitchen-duty-plugin-for-atlassian-jira', serveStatic(buildDir, {
+                maxAge: '1d'
+            }));
+
+            app.get('/', function(req, res){
+                res.redirect(301, '/kitchen-duty-plugin-for-atlassian-jira/');
+            });
+
+            app.listen(9999);
         }
         waterfallProceed(null, 'startProd');
     }

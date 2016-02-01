@@ -20,6 +20,46 @@
 </head>
 <body>
 {# MACROS START #}
+
+{% macro pageHeader(currentPageId) %}
+    {% set pages = [
+        ('0', '/'),
+        ('1', '/tutorial/01-introduction/'),
+        ('2', '/tutorial/02-step-00-getting-started/'),
+        ('3', '/tutorial/03-story-workshop-for-planning-page/'),
+        ('4', '/tutorial/04-step-01-planning-page--webwork-action-and-html-view/'),
+        ('5', '/tutorial/05-step-02-planning-page--user-search-rest-resource/'),
+        ('6', '/tutorial/06-step-03-planning-page--user-search-js-controller/')
+    ] %}
+
+
+    <div class="container-fluid cs-header">
+        <div class="row">
+            <div class="col-md-6 cs-product-logo">
+                <img src="/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-logo.svg">
+                <h1 class="cs-hidden">Kitchen Duty Plugin for Atlassian JIRA® by comSysto</h1>
+
+
+            </div>
+            <div class="col-md-6  cs-header__corporate-logo hidden-xs hidden-sm">
+                <a href="https://github.com/comsysto"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="comSysto"/></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 cs-pager">
+                <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[currentPageId-1] }}"><i class="fa fa-angle-double-left"></i> previous page</a>
+            </div>
+            <div class="col-md-6 text-right cs-pager">
+                {% if currentPageId < 6 %}
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[currentPageId+1] }}">next page <i class="fa fa-angle-double-right"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+
 {% macro csShell(shellCmd, shellCmdOutput='') %}
 <div class="cs-shell">
     <div class="cs-shell__inner">

@@ -15,25 +15,7 @@ body {
 body.cs-tutorial {
     padding-top:110px;
 }
-.cs-header {
-    background-color:#1E9FCC;
-    position:fixed;
-    top:0px;
-    left:0px;
-    width:100%;
-    z-index:500;
-    height:100px;
-    padding-top:15px;
-    padding-bottom:30px;
-}
 
-.cs-header__corporate-logo {
-    text-align:right;
-    padding-top:20px;
-}
-.cs-header__product-logo {
-
-}
 
 
 .cs-headline {
@@ -381,13 +363,10 @@ p {
 /* TOC */
 
 #toc {
-    /*top: 100px;
-    left: 0px;*/
     height: 100%;
     position: fixed;
     background: transparent;
-
-    padding-top: 20px;
+    padding-top: 30px;
 }
 
 #toc ul {
@@ -404,7 +383,6 @@ p {
 #toc a {
     color: #000;
     text-decoration: none;
-    display: block;
     cursor: pointer;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -445,12 +423,17 @@ p {
 }
 
 
-
 /* PAGER */
 .cs-pager {
     margin-top:20px;
 }
-
+.cs-pager a {
+    color:#fff;
+}
+.cs-pager a:hover {
+    color:#fff;
+    text-decoration: none;
+}
 
 
 /* LANDINGPAGE */
@@ -479,8 +462,7 @@ p {
     background-image: url(../images/kitchen-duty-logo-v2.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    background-size: auto,cover;
-    padding-left:80px;
+    padding-left:95px;
     color:#fff;
     display:inline-block;
 }
@@ -532,4 +514,74 @@ p {
     font-weight:300;
     color:#fff;
     font-size: 22px;
+}
+
+/* NORMAL PAGE */
+.cs-page-header {
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    z-index:500;
+    height:120px;
+    padding-top:15px;
+    padding-bottom:30px;
+    background-image: linear-gradient(135deg,rgba(0,89,131,.85),rgba(95,234,255,.85)),url(../images/kitchen-wallpaper.jpg);
+    background-size: auto,cover;
+    background-repeat: repeat,no-repeat;
+    background-attachment: scroll,fixed;
+}
+
+.cs-page-logo {
+    background-image: url(../images/kitchen-duty-logo-v2.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-left:80px;
+    color:#fff;
+    display:inline-block;
+}
+.cs-page-header-cs-logo {
+    padding-top:20px;
+}
+.cs-page-header--left-fix {
+    padding-left:20px;
+}
+.cs-page-header--right-fix {
+    padding-right:30px;
+}
+.cs-page-logo:hover {
+    text-decoration: none;
+}
+
+.cs-page-logo h1 {
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    font-weight:900;
+    margin-bottom:0;
+    margin-top:0;
+    font-size:25px;
+}
+
+.cs-page-logo h2 {
+    margin-top:0;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight:300;
+    font-size:21px;
+}
+
+
+/* FOOTER LINKS */
+
+.cs-footer {
+    color:#8c8c8c;
+    margin-top:100px;
+    display:inline-block;
+    width:100%;
+    padding-left:10px;
+}
+.cs-grey-toc {
+    color: #8c8c8c !important;
+}
+.cs-grey-toc:hover {
+    color:#8c8c8c !important;
 }

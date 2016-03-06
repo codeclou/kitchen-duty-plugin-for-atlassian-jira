@@ -23,18 +23,73 @@
 <body class="{{ bodyClass }}">
 {# MACROS START #}
 
+
+{% set pages = [
+('0', '/'),
+('1', '/tutorial/01-introduction/'),
+('2', '/tutorial/02-step-00-getting-started/'),
+('3', '/tutorial/03-story-workshop-for-planning-page/'),
+('4', '/tutorial/04-step-01-planning-page--webwork-action-and-html-view/'),
+('5', '/tutorial/05-step-02-planning-page--user-search-rest-resource/'),
+('6', '/tutorial/06-step-03-planning-page--user-search-js-controller/')
+] %}
+
+
+{% macro pageSidebar(currentPageId) %}
+    <div class="col-md-3 hidden-sm hidden-xs" id="toc">
+        <ul>
+
+            {# -------------------------------------------------------------------------------- #}
+
+            <li class="toc-h2 {{ "toc-active" if 1 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[1] }}">
+                    Introduction
+                </a>
+            </li>
+            <li class="toc-h2 {{ "toc-active" if 2 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[2] }}">
+                    <span class="badge pull-right">Step 0</span>
+                    Getting Started
+                </a>
+            </li>
+
+            {# -------------------------------------------------------------------------------- #}
+
+            <li class="toc-h2-divider">Kitchen Duty Planning Page</li>
+
+            <li class="toc-h2 {{ "toc-active" if 3 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[3] }}">
+                    Story Workshop for Planning Page
+                </a>
+            </li>
+            <li class="toc-h2 {{ "toc-active" if 4 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[4] }}">
+                    <span class="badge pull-right">Step 1</span>
+                    Webwork Action and HTML View
+                </a>
+            </li>
+            <li class="toc-h2 {{ "toc-active" if 5 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[5] }}">
+                    <span class="badge pull-right">Step 2</span>
+                    User Search REST Resource
+                </a>
+            </li>
+            <li class="toc-h2 {{ "toc-active" if 6 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[6] }}">
+                    <span class="badge pull-right">Step 3</span>
+                    User Search JS Controller
+                </a>
+            </li>
+
+            {# -------------------------------------------------------------------------------- #}
+
+            <li class="toc-h2-divider toc--appendix">Appendix</li>
+
+            <li class="toc-h2 toc--appendix"><a href="/kitchen-duty-plugin-for-atlassian-jira/license/" target="_blank">License</a></li>
+
+            <li class="toc-h2 toc--appendix"><a href="https://comsysto.com/imprint.html" target="_blank">Impressum</a></li>
+
+            {# -------------------------------------------------------------------------------- #}
+        </ul>
+    </div>
+{% endmacro %}
+
+
 {% macro pageHeader(currentPageId) %}
-    {% set pages = [
-        ('0', '/'),
-        ('1', '/tutorial/01-introduction/'),
-        ('2', '/tutorial/02-step-00-getting-started/'),
-        ('3', '/tutorial/03-story-workshop-for-planning-page/'),
-        ('4', '/tutorial/04-step-01-planning-page--webwork-action-and-html-view/'),
-        ('5', '/tutorial/05-step-02-planning-page--user-search-rest-resource/'),
-        ('6', '/tutorial/06-step-03-planning-page--user-search-js-controller/')
-    ] %}
-
-
     <div class="container-fluid cs-header">
         <div class="row">
             <div class="col-md-6 cs-product-logo">
@@ -113,7 +168,8 @@ content
 {% block postJs %}
 {% endblock %}
 {% if isLocalhost %}
-{# FIXME: <script src="http://localhost:35676"></script>#}
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+            ':35729/livereload.js?snipver=2"></' + 'script>')</script>
 {% endif %}
 </body>
 </html>

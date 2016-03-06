@@ -13,8 +13,9 @@ var async = require('async');
 var path = require('path');
 var highlightJs = require('highlight.js');
 var fse = require('fs-extra');
-var through2 = require('through2')
+var through2 = require('through2');
 var fs = require('fs');
+var glob = require('glob-all');
 
 // ////////////////////////////////////////////////////////////////
 // MODULE - TASKS
@@ -131,7 +132,12 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
 // JS
 exports.buildJs = function(options, nextBuildStep) {
     console.log('>> build js'.bold.cyan);
-    var uglifiedResult = uglifyjs2.minify(options.jsFiles, options.jsUglifyOptions);
+    /* glob seems to delete my array :( that's why we copy it and let glob consume the copy! */
+    var jsFilesCopy = [];
+    options.jsFiles.forEach(function(jsfile) {
+        jsFilesCopy.push(jsfile);
+    });
+    var uglifiedResult = uglifyjs2.minify(glob.sync(jsFilesCopy), options.jsUglifyOptions);
     fse.outputFile(options.jsBundle, uglifiedResult.code, function (err) {
         helpers.printSuccessOrError(err, 'js> write ' + options.jsBundle);
         helpers.proceedBuild(nextBuildStep, 'buildJs');

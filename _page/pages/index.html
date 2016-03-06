@@ -1,5 +1,6 @@
 {% set bodyClass = "" %}
-{% extends layoutSourceDir + "/layout_with_sidebar.html" %}
+{% set CURRENT_PAGE_ID = -1 %}
+{% extends layoutSourceDir + "/layout_landing.html" %}
 {% block head %}
    <title>Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by comSysto">
@@ -46,49 +47,7 @@
 
 
     {#
-        <div class="col-md-3 hidden-sm hidden-xs" id="toc">
-            <ul>
-                {% set introductionText = 'Introduction' %}
-                <li class="toc-h2">{{ linkToAnchor(introductionText) }}</li>
-                {% set gettingStartedText = 'Getting Started' %}
-                <li class="toc-h2">{{ linkToAnchor(gettingStartedText) }}</li>
 
-                {% set step0Text = 'Creating the Plugin Project' %}
-                <li class="toc-h2"><span class="badge pull-right">Step 0</span> {{ linkToAnchor(step0Text) }}</li>
-
-
-
-                <li class="toc-h2-divider">Kitchen Duty Planning Page</li>
-
-                {% set step1StoryWorkshopText = 'Story Workshop for Planning Page' %}
-                <li class="toc-h2">{{ linkToAnchor(step1StoryWorkshopText) }}</li>
-
-                {% set step1WebworkActionText = 'Webwork Action and HTML View' %}
-                <li class="toc-h2"><span class="badge pull-right">Step 1</span> {{ linkToAnchor(step1WebworkActionText) }}</li>
-
-                {% set step2UserRestText = 'User Search REST Resource' %}
-                <li class="toc-h2"><span class="badge pull-right">Step 2</span> {{ linkToAnchor(step2UserRestText) }}</li>
-
-                {% set step3UserSearchJSText = 'User Search JS Controller' %}
-                <li class="toc-h2"><span class="badge pull-right">Step 3</span> {{ linkToAnchor(step3UserSearchJSText) }}</li>
-
-
-
-                {% set previousStepForAuthorText = step3UserSearchJSText %}
-
-                <li class="toc-h2-divider toc--appendix">Appendix</li>
-
-                {% set appendixAuthorText = 'Author' %}
-                <li class="toc-h2 toc--appendix">{{ linkToAnchor(appendixAuthorText) }}</li>
-
-                {% set appendixLegalText = 'License' %}
-                <li class="toc-h2 toc--appendix">{{ linkToAnchor(appendixLegalText) }}</li>
-
-
-                <li class="toc-h2 toc--appendix"><a href="http://comsysto.com/imprint.html" target="_blank">Impressum</a></li>
-
-            </ul>
-        </div>
         #}
 
 

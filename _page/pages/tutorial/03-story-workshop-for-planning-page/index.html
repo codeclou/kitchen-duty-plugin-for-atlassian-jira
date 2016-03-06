@@ -1,4 +1,5 @@
 {% set bodyClass = "cs-tutorial" %}
+{% set CURRENT_PAGE_ID = 3 %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
     <title>Story Workshop for Planning Page | Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
@@ -8,7 +9,7 @@
 {% block content %}
 
 
-{{ pageHeader(3) }}
+{{ pageHeader(CURRENT_PAGE_ID) }}
 
 
 <div class="container-fluid cs-content">

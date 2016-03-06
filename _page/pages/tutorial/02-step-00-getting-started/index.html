@@ -1,4 +1,5 @@
 {% set bodyClass = "cs-tutorial" %}
+{% set CURRENT_PAGE_ID = 2 %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
     <title>Getting Started | Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
@@ -9,7 +10,7 @@
 
 
 
-{{ pageHeader(2) }}
+{{ pageHeader(CURRENT_PAGE_ID) }}
 
 
 <div class="container-fluid cs-content">
@@ -76,7 +77,7 @@
                     {# STEP 0 #}
                     {# ############################################################# #}
 
-                    {{ headline(step0Text, 'm', gettingStartedText) }}
+                    {{ headline('Creating the base project', 'm') }}
 
                     <p>We will now create the JIRA Plugin via the <a href="https://developer.atlassian.com/docs/developer-tools/working-with-the-sdk/command-reference/atlas-create-jira-plugin">Atlassian SDK command <code>atlas-create-jira-plugin</code></a>. Change to a folder where you want to create your Plugin.</p>
                     <p>You will be asked to specify a <code>groupId</code>, <code>artifactId</code>, <code>version</code> and <code>package</code>. You can see my choices below.</p>

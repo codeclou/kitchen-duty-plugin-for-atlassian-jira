@@ -4,9 +4,17 @@
 
 <!-- CONTENT -->
 
-{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        {{ pageSidebar(CURRENT_PAGE_ID) }}
+    </div>
+    <div class="col-md-9">
+        {% block content %}
 
-{% endblock %}
+        {% endblock %}
+
+    </div>
+</div>
 
 
 {% endblock %}

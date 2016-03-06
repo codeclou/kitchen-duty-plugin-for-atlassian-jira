@@ -9,6 +9,7 @@ var moment = require('moment');
 var Hashids = require("hashids");
 var lodash = require('lodash');
 var shell = require('shelljs');
+var killport = require('killport');
 
 // ////////////////////////////////////////////////////////////////
 // REQUIRE - BUILD FILES
@@ -54,17 +55,15 @@ var scssTaskOptions = {
 
 // JS
 var jsTaskOptions = {
-    jsFiles: glob.sync([
+    jsFiles: [
         './node_modules/clipboard/dist/clipboard.js',
         './node_modules/jquery/dist/jquery.js',
-        './node_modules/jquery.scrollto/jquery.scrollTo.js',
-        './node_modules/waypoints/lib/jquery.waypoints.js',
         './node_modules/lightbox2/dist/js/lightbox.js',
         './node_modules/retina.js/dist/retina.js',
         './node_modules/webcomponents.js/CustomElements.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './_page/js/main.js'
-    ]),
+    ],
     jsBundle: buildDir + '/generated/bundle.js',
     jsUglifyOptions: { }
 };
@@ -157,14 +156,19 @@ async.waterfall([
     function(previousStepName, waterfallProceed) {
         if (!lodash.isUndefined(watch) && !lodash.isNull(watch) && watch === 'true') {
 
-            /* https://github.com/Raynos/live-reload */
             console.log(('>> livereload started on port 35676').yellow);
-            // FIXME: CPU is on 100% and Browser hangs
-            // shell.exec('live-reload ' + buildDir + ' --port=35676 --delay=1', {async:true, silent:false});
+            shell.exec('node node_modules/livereloadx/bin/livereloadx.js ' + buildDir + ' ', {async:true, silent:false});
+
 
             /* https://www.npmjs.com/package/local-web-server */
             console.log(('>> http-server started on port 7788').yellow);
             console.log(('>> go to http://localhost:7788/kitchen-duty-plugin-for-atlassian-jira/').yellow);
+
+            killport(7788).then(function(out){
+                helpers.printSuccess(' server> killed any process on port 7788 before starting server' );
+            }).catch(function(err){
+                helpers.printError(' server> failed to process on port 7788 before startup of server');
+            });
 
             var express = require('express');
             var serveStatic = require('serve-static');

@@ -163,8 +163,8 @@ async.waterfall([
             // shell.exec('live-reload ' + buildDir + ' --port=35676 --delay=1', {async:true, silent:false});
 
             /* https://www.npmjs.com/package/local-web-server */
-            console.log(('>> http-server started on port 8080').yellow);
-            console.log(('>> go to http://localhost:8080/kitchen-duty-plugin-for-atlassian-jira/').yellow);
+            console.log(('>> http-server started on port 7788').yellow);
+            console.log(('>> go to http://localhost:7788/kitchen-duty-plugin-for-atlassian-jira/').yellow);
 
             var express = require('express');
             var serveStatic = require('serve-static');
@@ -179,7 +179,7 @@ async.waterfall([
                 res.redirect(301, '/kitchen-duty-plugin-for-atlassian-jira/');
             });
 
-            app.listen(8080);
+            app.listen(7788);
 
             watchers.forEach(function (watcher) {
                 helpers.watchFilesAndTriggerBuild(watcher.what, watcher.watchGlob, watcher.watchCallback);

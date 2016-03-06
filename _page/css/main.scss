@@ -5,7 +5,14 @@
 
 /* CS STYLES */
 
-body{
+html, body {
+    height:100%;
+}
+body {
+    margin:0;
+}
+
+body.cs-tutorial {
     padding-top:110px;
 }
 .cs-header {
@@ -442,4 +449,87 @@ p {
 /* PAGER */
 .cs-pager {
     margin-top:20px;
+}
+
+
+
+/* LANDINGPAGE */
+
+.cs-landing-header {
+    height:100%;
+    background-image: linear-gradient(135deg,rgba(0,89,131,.85),rgba(95,234,255,.85)),url(../images/kitchen-wallpaper.jpg);
+    background-size: auto,cover;
+    background-repeat: repeat,no-repeat;
+    background-attachment: scroll,fixed;
+    margin:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 900px;
+}
+
+.cs-landing-header-inner {
+    margin:0;
+    display: flex;
+    flex-wrap: wrap;
+    width:95%;
+}
+
+.cs-landing-logo {
+    background-image: url(../images/kitchen-duty-logo-v2.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-size: auto,cover;
+    padding-left:80px;
+    color:#fff;
+    display:inline-block;
+}
+.cs-landing-logo:hover {
+    text-decoration: none;
+}
+
+.cs-landing-logo h1 {
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    font-weight:900;
+    margin-bottom:0;
+    margin-top:0;
+}
+
+.cs-landing-logo h2 {
+    margin-top:0;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight:300;
+}
+
+.cs-landing-button-wrapper {
+    margin-top:180px;
+    margin-bottom:180px;
+}
+
+
+
+.cs-landing-button {
+    padding: 15px;
+    border: 2px solid #fff;
+    border-radius: 3px;
+    background-color: transparent;
+    -webkit-transition: all .3s ease-out;
+    transition: all .3s ease-out;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    font-size: 22px;
+}
+
+.cs-landing-button:hover {
+    color:#1e9fcc;
+    background-color: #fff;
+    text-decoration: none;
+}
+
+.cs-landing-teaser {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight:300;
+    color:#fff;
+    font-size: 22px;
 }

@@ -85,8 +85,10 @@ var _scrollToTocLinkByLocationHash = function () {
     }
 };
 
-var _updateLocationHashTocLink = function (anchor) {
-    history.pushState('kitchen-duty', '', '#' + '/scrollto/' + anchor);
+var _updateLocationHashTocLink_updateLocationHashTocLink = function (anchor) {
+    if (anchor != undefined && anchor != null && anchor !== '') {
+        history.pushState('kitchen-duty', '', '#' + '/scrollto/' + anchor);
+    }
 };
 
 var _clickTocLink = function (anchor) {

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>User Search REST Resource ~ Planning Page | Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
+    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by comSysto">
+    <meta name="robots" content="noindex, nofollow">
+
+
+
+    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Menlo|Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,900,700|Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-256.png" type="image/png" sizes="256x256">
+    <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon.svg" type="image/svg+xml">
+
+    <script>var postLoadMethods = [];</script>
+</head>
+<body class="cs-tutorial">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- CONTENT -->
+
+
+
+
+
+
+    
+
+
+    <div class="container-fluid cs-header">
+        <div class="row">
+            <div class="col-md-6 cs-product-logo">
+                <img src="/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-logo.svg">
+                <h1 class="cs-hidden">Kitchen Duty Plugin for Atlassian JIRA® by comSysto</h1>
+
+
+            </div>
+            <div class="col-md-6  cs-header__corporate-logo hidden-xs hidden-sm">
+                <a href="https://github.com/comsysto"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="comSysto"/></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 cs-pager">
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/04-step-01-planning-page--webwork-action-and-html-view/"><i class="fa fa-angle-double-left"></i> previous page</a>
+            </div>
+            <div class="col-md-6 text-right cs-pager">
+                
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/06-step-03-planning-page--user-search-js-controller/">next page <i class="fa fa-angle-double-right"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="container-fluid cs-content">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+    
+    
+
+    <h2 class="cs-headline cs-headline--m cs-headline--anchor"
+        data-scroll-to-headline="user-search-rest-resource"
+        data-scroll-to-headline-previous="">
+        
+        User Search REST Resource
+    </h2>
+
+
+
+
+
+
+            
+            
+            
+
+
+
+            <p>We will now create the <strong>User Search REST Resource</strong> so that our <strong>JS-Controller can search for usernames</strong>.</p>
+
+            <p>What is a REST Resource? It is simply just a basic Controller (MVC) that reacts to certain HTTP Requests with a specific response.</p>
+
+            <p>
+                Atlassian uses <a target="_blank" href="https://en.wikipedia.org/wiki/Java_API_for_XML_Web_Services">JAX-WS</a> and <a target="_blank" href="https://en.wikipedia.org/wiki/Java_Architecture_for_XML_Binding">JAXB</a> for it's built in REST Resources.
+                The actual implementation is hidden from us, and we don't really care about it since we just need to know that somewhere inside JIRA
+                are OSGi bundles which provide the JAX-WS and JAXB implementation.</p>
+
+            <p>Ok, enough of OSGi and theoretical jibber jabber! Let's create our REST Resource with an Atlassian SDK command, like we did create the Webwork Action before.</p>
+
+            <p>Execute the command and choose <a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/rest-api-development/rest-plugin-module" target="_blank"><strong>14: REST Plugin Module</strong></a> and fill out the prompts as stated below.</p>
+
+            
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        atlas-create-jira-plugin-module<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">Executing: /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/apache-maven-<span class="hljs-number">3.2</span>.<span class="hljs-number">1</span>/bin/mvn com.atlassian.maven.plugins:maven-jira-plugin:<span class="hljs-number">6.1</span>.<span class="hljs-number">2</span>:create-plugin-module -gs /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/apache-maven-<span class="hljs-number">3.2</span>.<span class="hljs-number">1</span>/conf/settings.xml
+Java HotSpot(TM) <span class="hljs-number">64</span>-Bit Server VM warning: ignoring option MaxPermSize=<span class="hljs-number">256</span>M; support was removed <span class="hljs-keyword">in</span> <span class="hljs-number">8.0</span>
+[INFO] Scanning <span class="hljs-keyword">for</span> projects...
+[INFO]
+[INFO] Using the builder org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder with a thread count of <span class="hljs-number">1</span>
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] Building kitchen-duty-plugin <span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO] --- maven-jira-plugin:<span class="hljs-number">6.1</span>.<span class="hljs-number">2</span>:create-plugin-module (default-cli) @ kitchen-duty-plugin ---
+Choose Plugin Module:
+<span class="hljs-number">1</span>:  Component Import
+...
+<span class="hljs-number">14</span>: REST Plugin Module
+<span class="hljs-number">15</span>: RPC Endpoint Plugin
+...
+Choose a number (...): <span class="hljs-number">14</span>
+
+Enter New Classname MyRestResource: : UserSearchResource
+Enter Package Name com.comsysto.rest: : com.comsysto.kitchen.duty.rest
+Enter REST Path /usersearchresource: : /kitchenduty
+Enter Version <span class="hljs-number">1.0</span>: : <span class="hljs-number">1.0</span>
+
+Show Advanced Setup? (Y/y/N/n) N: : y
+
+Module Name User Search Resource: : Kitchen Duty Resources
+Module Key user-search-resource: : kitchen-duty-resources
+Module Description The User Search Resource Plugin: : All Kitchen Duty REST Resources
+i18n Name Key user-search-resource.name: : kitchen-duty-plugin.rest.resources.name
+i18n Description Key user-search-resource.description: : kitchen-duty-plugin.rest.resources.description
+Add Package To Scan? (Y/y/N/n) N: : y
+Enter Package: com.comsysto.kitchen.duty.rest
+...
+
+Add Package To Scan? (Y/y/N/n) N: : n
+
+Add Dispatcher? (Y/y/N/n) N: : n
+
+[INFO] Adding the following items to the project:
+[INFO]   [class: com.comsysto.kitchen.duty.rest.UserSearchResourceModel]
+[INFO]   [class: com.comsysto.kitchen.duty.rest.UserSearchResource]
+[INFO]   [class: it.com.comsysto.kitchen.duty.rest.UserSearchResourceFuncTest]
+[INFO]   [class: ut.com.comsysto.kitchen.duty.rest.UserSearchResourceTest]
+[INFO]   [dependency: com.atlassian.plugins.rest:atlassian-rest-common]
+[INFO]   [dependency: com.atlassian.sal:sal-api]
+[INFO]   [dependency: javax.servlet:servlet-api]
+[INFO]   [dependency: javax.ws.rs:jsr311-api]
+[INFO]   [dependency: javax.xml.bind:jaxb-api]
+[INFO]   [dependency: org.apache.wink:wink-client]
+[INFO]   [dependency: org.mockito:mockito-all]
+[INFO]   [module: rest]
+[INFO]   i18n strings: <span class="hljs-number">2</span>
+
+Add Another Plugin Module? (Y/y/N/n) N: : n
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: <span class="hljs-number">01</span>:<span class="hljs-number">52</span> min
+[INFO] Finished at: <span class="hljs-number">2016</span>-<span class="hljs-number">01</span>-<span class="hljs-number">16</span>T20:<span class="hljs-number">07</span>:<span class="hljs-number">35</span>+<span class="hljs-number">01</span>:<span class="hljs-number">00</span>
+[INFO] Final Memory: <span class="hljs-number">24</span>M/<span class="hljs-number">328</span>M
+[INFO] ------------------------------------------------------------------------</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-create-jira-plugin-module"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+
+            <p>The SDK created and updated many files now and before we get into all the details let's fire up <code>atlas-run</code> again
+                and see what has been created for us.</p>
+
+            <p>Once JIRA is started <strong>browse to <a class="cs-do-wrap" href="http://server/jira/rest/kitchenduty/1.0/message" target="_blank">http://server/jira/rest/kitchenduty/1.0/message</a></strong> and you should see the following.</p>
+
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <p>
+                        <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-02-rest-user-search-response-xml.png" data-lightbox="02-step" data-title="Step 2 - XML Response of User Search REST Resource">
+                            <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-02-rest-user-search-response-xml.png" class="img-thumbnail img-responsive" alt="Step 2 - XML Response of User Search REST Resource">
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <p>That's nice. But now we need to understand what is going on. So here is a <strong>short recap of what has been created</strong>.</p>
+
+            <ol>
+                <li><p>The <code>pom.xml</code> has been altered to provide necessary dependencies for JAX-WS API, Servlet API and some testing Dependencies.</p></li>
+                <li><p>The <code>atlassian-plugin.xml</code> has been altered to register the REST Resource to listen to the baseUrl <code>http://server/jira/rest/kitchenduty/1.0/*</code></p></li>
+                <li><p>There now is a <code>UserSearchResource.java</code> which is the actual REST Controller which delivers the response.</p></li>
+                <li><p>In addition to the REST Controller there is <code>UserSearchResourceModel.java</code> which is the Model which is delivered as XML in the REST Controllers response.</p></li>
+            </ol>
+
+            <p>We will now get into all the details and implement the needed features for the user search on the fly.</p>
+
+            <h3 class="cs-headline cs-headline--s">1. Dependencies <em>(pom.xml)</em></h3>
+
+            <p>The <code>pom.xml</code> has these new lines which are quite self explanatory. If you want to read everything in detail read the <a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/rest-api-development/rest-plugin-module" target="_blank">REST Plugin Module documentation</a>.</p>
+
+            
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>servlet-api<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>2.4<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>javax.xml.bind<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>jaxb-api<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>2.1<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>com.atlassian.plugins.rest<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>atlassian-rest-common<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>1.0.2<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>org.apache.wink<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>wink-client<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>1.1.3-incubating<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span></code></pre>
+
+
+            
+
+
+
+
+            <h3 class="cs-headline cs-headline--s">2. REST Resources Handler <em>(atlassian-plugin.xml)</em></h3>
+
+            <p>As already mentioned the <code>atlassian-plugin.xml</code> has been altered to register the REST Resource to listen to the baseUrl <code>http://server/jira/rest/kitchenduty/1.0/*</code>.</p>
+
+            <p>The <code>path</code> and <code>version</code> build the baseurl relative to <code>http://server/jira/rest/*</code>.</p>
+
+            <p><code>package</code> will enable Component Scan (which I think is redundant, but doesn't hurt).</p>
+
+            
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">rest</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"Kitchen Duty Resources"</span>
+      <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-plugin.rest.resources.name"</span>
+      <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-resources"</span>
+      <span class="hljs-attribute">path</span>=<span class="hljs-value">"/kitchenduty"</span>
+      <span class="hljs-attribute">version</span>=<span class="hljs-value">"1.0"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">description</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-plugin.rest.resources.description"</span>&gt;</span>All Kitchen Duty REST Resources<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">package</span>&gt;</span>com.comsysto.kitchen.duty.rest<span class="hljs-tag">&lt;/<span class="hljs-title">package</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">rest</span>&gt;</span></code></pre>
+
+
+            <p>You already know <code>i18n-name-key</code> and the other attributes from the Webwork Action and therefore are not wondering that there are some new i18n key/value pairs inside <code>kitchen-duty-plugin.properties</code>.</p>
+
+            
+    
+<pre class="cs-code"><code class="hljs">kitchen-duty-plugin.rest.resources.name=Kitchen Duty Resources
+kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</code></pre>
+
+
+
+            <h3 class="cs-headline cs-headline--s">3. REST Controller and Model</h3>
+
+            <p>
+                In the directory <code>src/main/java/</code> in the package <code>com.comsysto.kitchen.duty.rest</code> there is now the
+                <code>UserSearchResource.java</code> and the <code>UserSearchResourceModel.java</code>. You can see what has been created in the <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/95b8ebf5ff20a77c6b0853cd93ad0b465033e6f6">GitHub commit 95b8ebf</a>.
+            </p>
+
+            <p>
+                We will change the code to <strong>provide GET Endpoint to search usernames</strong>.
+            </p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    
+                    
+    
+        <div class="cs-code-filename">UserSearchResource.java</div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchParams;
+<span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchService;
+<span class="hljs-keyword">import</span> com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+
+<span class="hljs-keyword">import</span> javax.inject.Inject;
+<span class="hljs-keyword">import</span> javax.inject.Named;
+<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;
+<span class="hljs-keyword">import</span> javax.ws.rs.GET;
+<span class="hljs-keyword">import</span> javax.ws.rs.Path;
+<span class="hljs-keyword">import</span> javax.ws.rs.Produces;
+<span class="hljs-keyword">import</span> javax.ws.rs.QueryParam;
+<span class="hljs-keyword">import</span> javax.ws.rs.core.Context;
+<span class="hljs-keyword">import</span> javax.ws.rs.core.MediaType;
+<span class="hljs-keyword">import</span> javax.ws.rs.core.Response;
+<span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-annotation">@Named</span> <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="1"></span>
+<span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/user"</span>)  <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="2"></span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSearchResource</span> </span>{
+
+    <span class="hljs-keyword">private</span> UserSearchService userSearchService; <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="3"></span>
+
+    <span class="hljs-annotation">@Inject</span> <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="4"></span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserSearchResource</span><span class="hljs-params">(UserSearchService userSearchService)</span> </span>{
+        <span class="hljs-keyword">this</span>.userSearchService = userSearchService;
+    }
+
+    <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="5"></span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserSearchResource</span><span class="hljs-params">()</span> </span>{
+    }
+
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/health"</span>) <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="6"></span>
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span> <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="7"></span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">health</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> Response.ok(<span class="hljs-string">"ok"</span>).build();
+    }
+
+    <span class="hljs-comment">/**
+     * Call from select2 JS plugin
+     * Response needs to look like this:
+     * [{ 'id': 1, 'text': 'Demo' }, { 'id': 2, 'text': 'Demo 2'}]
+     */</span>
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/search"</span>) <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="8"></span>
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">searchUsers</span><span class="hljs-params">(@QueryParam(<span class="hljs-string">"query"</span>)</span> <span class="hljs-keyword">final</span> String userQuery, </span><span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="9"></span>
+                                <span class="hljs-annotation">@Context</span> HttpServletRequest request <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="10"></span>) {
+        List&lt;UserSearchResourceModel&gt; users = findUsers(userQuery);
+        <span class="hljs-keyword">return</span> Response.ok(users).build(); <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="11"></span>
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> List&lt;UserSearchResourceModel&gt; <span class="hljs-title">findUsers</span><span class="hljs-params">(String query)</span> </span>{
+        List&lt;UserSearchResourceModel&gt; userSearchResourceModels =
+                                           <span class="hljs-keyword">new</span> ArrayList&lt;UserSearchResourceModel&gt;();
+        UserSearchParams searchParams = UserSearchParams.builder()
+            .includeActive(<span class="hljs-keyword">true</span>)
+            .sorted(<span class="hljs-keyword">true</span>)
+            .build();
+        List&lt;String&gt; users = userSearchService.findUserNames(query, searchParams); <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresource" data-cs-source-point-number="12"></span>
+        <span class="hljs-keyword">if</span> (users != <span class="hljs-keyword">null</span>) {
+            <span class="hljs-keyword">for</span> (String user : users) {
+                userSearchResourceModels.add(<span class="hljs-keyword">new</span> UserSearchResourceModel(user, user));
+            }
+        }
+        <span class="hljs-keyword">return</span> userSearchResourceModels;
+    }
+}</code></pre>
+
+                </div>
+                <div class="col-md-6">
+
+                    <div class="list-group cs-source-point-list" data-source-target="step2-usersearchresource">
+                        <div class="list-group-item cs-source-point-list__item">
+                            Our REST Controller should be a Spring-Bean and get its dependencies autowired. Therefore provide the JSR annotation <code>@Named</code>
+                            on classlevel.
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            We want that all REST Endpoints of our REST Controller will have an URL-prefix <code>/user</code>, therefore we use the <code>@Path</code> annotation.
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            The <code>UserSearchService</code> is a JIRA Service which will provide us methods to search for users. This Servie needs to be imported from a foreign OSGi bundle, we will see about that later.
+                            Why not use <code>@ComponentImport</code> here you ask? Well try and if it works for you that would be nice. But I am getting some strange WADLGenerator Exceptions when running <code>atlas-integration-test</code>.
+                            Therefore I use a little trick and import the component somewhere else. Once it is imported somewhere inside our bundle we can use it here. We will see about that later.
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            We use <code>@Inject</code> for constructor injection, so that our UserSearchService will be injected by Spring on bean creation.
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            We provide a default constructor just in case.
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            Since our user search Endpoint will be rather complex we want a simple health endpoint to test the REST API in an easy way.
+                            Therefore we define a Method as <code>@GET</code> with <code>@Path("/health")</code> which produces JSON <code>@Produces({MediaType.APPLICATION_JSON})</code>.
+                            This endpoint will be reachable via <code>http://localhost:2990/jira/rest/kitchenduty/1.0/user/health</code>.
+                        </div>
+                        <a class="list-group-item cs-source-point-list__item">
+                            The health endpoint will be reachable without authentication via <code>@AnonymousAllowed</code>.
+                            So you can curl the URL easily and will get an <code>ok</code> as response.
+                        </a>
+                        <div class="list-group-item cs-source-point-list__item">
+                            Alright now we code the actual user search Endpoint with <code>@Path("/search")</code>. We do NOT use <code>@AnonymousAllowed</code> here
+                            because we don't want unauthenticated users search our user database.
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            As we want to search for username, somehow our search keyword needs to be passed as URL-parameter. This
+                            is done via <code>@QueryParam("query")</code> which leads to the following URL for our endpoint
+                            <code>http://localhost:2990/jira/rest/kitchenduty/1.0/user/search?query=foo</code>.
+                            <br><br>Why use QueryParam instead of PathParam you ask? I see you like nice URL-patterns and so do I, but we will see later that the AUI select2 widget
+                            will send the search keyword as <code>query</code> param, so we stick to this default behaviour.
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            With <code>@Context HttpServletRequest request</code> we get the HTTP-Request as paramater and could for example extract the authenticated user.
+                            We don't need it now but we might soon. <code>@Context</code> ensures that JIRA context (I think special headers and stuff) is wired into the request.
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            After we searched for users we build the response with <code>Response.ok(someObject).build()</code>.
+                            The JAXB/JAX-WS implementation ensures that our Model (we will see about that later) is converted to JSON and that a HTTP 200 is send together with the JSON representation of our Object as response body.
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            We provide a private method that searches for usernames using the <code>UserSearchService</code>. If your OSGi component imports are not working correctly you will get a <em>NullPointerException</em> here.
+                            After we searched the usernames we convert the username list into our model <code>UserSearchResourceModel</code> which will be serialized as JSON response body.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="cs-v-spacer cs-v-spacer"></div>
+
+
+
+            <p>
+                Now we have the REST Controller but you will have some compile errors now because the <strong>Model needs to be implemented</strong>.
+            </p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    
+                    
+    
+        <div class="cs-code-filename">UserSearchResourceModel.java</div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.*;
+<span class="hljs-annotation">@XmlRootElement</span>(name = <span class="hljs-string">"users"</span>) <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcemodel" data-cs-source-point-number="1"></span>
+<span class="hljs-annotation">@XmlAccessorType</span>(XmlAccessType.FIELD) <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcemodel" data-cs-source-point-number="2"></span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSearchResourceModel</span> </span>{
+
+    <span class="hljs-annotation">@XmlElement</span> <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcemodel" data-cs-source-point-number="3"></span>
+    <span class="hljs-keyword">private</span> String text;
+
+    <span class="hljs-annotation">@XmlElement</span> <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcemodel" data-cs-source-point-number="4"></span>
+    <span class="hljs-keyword">private</span> String id;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserSearchResourceModel</span><span class="hljs-params">()</span> </span>{
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserSearchResourceModel</span><span class="hljs-params">(String text, String id)</span> </span>{
+        <span class="hljs-keyword">this</span>.text = text;
+        <span class="hljs-keyword">this</span>.id = id;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getText</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> text;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setText</span><span class="hljs-params">(String text)</span> </span>{
+        <span class="hljs-keyword">this</span>.text = text;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getId</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> id;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setId</span><span class="hljs-params">(String id)</span> </span>{
+        <span class="hljs-keyword">this</span>.id = id;
+    }
+}</code></pre>
+
+                </div>
+                <div class="col-md-6">
+
+                    <div class="list-group cs-source-point-list" data-source-target="step2-usersearchresourcemodel">
+                        <div class="list-group-item cs-source-point-list__item">
+                            ...
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            ...
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            ...
+                        </div>
+                        <div class="list-group-item cs-source-point-list__item">
+                            ...
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <strong style="color:red">todo</strong>
+            <ul style="color:red">
+                <li>model</li>
+                <li>component import</li>
+                <li>Explain Unit and Integration test and altas-integration-test</li>
+
+                <li>atlas-run and curl to username search</li>
+                <li>summary and step2 conclusion - <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a> </li>
+            </ul>
+
+            
+
+
+
+            <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js" async></script>
+
+
+
+</body>
+</html>

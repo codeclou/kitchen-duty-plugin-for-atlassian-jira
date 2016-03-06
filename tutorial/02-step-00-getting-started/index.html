@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>Getting Started | Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
+    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by comSysto">
+    <meta name="robots" content="noindex, nofollow">
+
+
+
+    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Menlo|Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,900,700|Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-256.png" type="image/png" sizes="256x256">
+    <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon.svg" type="image/svg+xml">
+
+    <script>var postLoadMethods = [];</script>
+</head>
+<body class="cs-tutorial">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- CONTENT -->
+
+
+
+
+
+
+    
+
+
+    <div class="container-fluid cs-header">
+        <div class="row">
+            <div class="col-md-6 cs-product-logo">
+                <img src="/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-logo.svg">
+                <h1 class="cs-hidden">Kitchen Duty Plugin for Atlassian JIRA® by comSysto</h1>
+
+
+            </div>
+            <div class="col-md-6  cs-header__corporate-logo hidden-xs hidden-sm">
+                <a href="https://github.com/comsysto"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="comSysto"/></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 cs-pager">
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/01-introduction/"><i class="fa fa-angle-double-left"></i> previous page</a>
+            </div>
+            <div class="col-md-6 text-right cs-pager">
+                
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/">next page <i class="fa fa-angle-double-right"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="container-fluid cs-content">
+    <div class="row">
+        <div class="col-md-12">
+            
+    
+    
+    
+
+    <h2 class="cs-headline cs-headline--m cs-headline--anchor"
+        data-scroll-to-headline="getting-started"
+        data-scroll-to-headline-previous="">
+        
+        Getting Started
+    </h2>
+
+
+
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+
+
+
+                    
+                    
+                    
+
+                    <p>That sounds like some simple features to implement so let's get to it.</p>
+
+                    <p>First install the <a href="https://developer.atlassian.com/docs/getting-started/set-up-the-atlassian-plugin-sdk-and-build-a-project">Atlassian SDK</a> and <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Oracle Java JDK 8</a> on your system.</p>
+
+                    <p>After the installation all the <code>atlas-*</code> commands and <code>java</code> command should be on the <code>PATH</code> variable.</p>
+
+                    <p>Let's do a <strong>short version check</strong> of the installed <strong>Atlassian SDK tools</strong>. I am using a Mac so the output will look a little different if you use another OS.</p>
+
+                    
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        atlas-version<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">ATLAS Version:    <span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>
+ATLAS Home:       /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>
+ATLAS Scripts:    /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/bin
+ATLAS Maven Home: /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/apache-maven-<span class="hljs-number">3.2</span>.<span class="hljs-number">1</span>
+AMPS Version:     <span class="hljs-number">6.1</span>.<span class="hljs-number">2</span>
+--------
+Executing: /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/apache-maven-<span class="hljs-number">3.2</span>.<span class="hljs-number">1</span>/bin/mvn --version -gs /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/apache-maven-<span class="hljs-number">3.2</span>.<span class="hljs-number">1</span>/conf/settings.xml
+Java HotSpot(TM) <span class="hljs-number">64</span>-Bit Server VM warning: ignoring option MaxPermSize=<span class="hljs-number">256</span>M; support was removed <span class="hljs-keyword">in</span> <span class="hljs-number">8.0</span>
+Apache Maven <span class="hljs-number">3.2</span>.<span class="hljs-number">1</span> (ea8b2b07643dbb1b84b6d16e1f08391b666bc1e9; <span class="hljs-number">2014</span>-<span class="hljs-number">02</span>-<span class="hljs-number">14</span>T18:<span class="hljs-number">37</span>:<span class="hljs-number">52</span>+<span class="hljs-number">01</span>:<span class="hljs-number">00</span>)
+Maven home: /Applications/Atlassian/atlassian-plugin-sdk-<span class="hljs-number">6.1</span>.<span class="hljs-number">0</span>/apache-maven-<span class="hljs-number">3.2</span>.<span class="hljs-number">1</span>
+Java version: <span class="hljs-number">1.8</span>.<span class="hljs-number">0</span>_45, vendor: Oracle Corporation
+Java home: /Library/Java/JavaVirtualMachines/jdk1.<span class="hljs-number">8.0</span>_45.jdk/Contents/Home/jre
+Default locale: de_DE, platform encoding: UTF-<span class="hljs-number">8</span>
+OS name: <span class="hljs-string">"mac os x"</span>, version: <span class="hljs-string">"10.10.5"</span>, arch: <span class="hljs-string">"x86_64"</span>, family: <span class="hljs-string">"mac"</span></code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-version"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+                    <p>Now check if <strong>Java is correctly installed</strong>.</p>
+
+                    
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        java -version<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">java version <span class="hljs-string">"1.8.0_45"</span>
+Java(TM) SE Runtime Environment (build <span class="hljs-number">1.8</span>.<span class="hljs-number">0</span>_45-b14)
+Java HotSpot(TM) <span class="hljs-number">64</span>-Bit Server VM (build <span class="hljs-number">25.45</span>-b02, mixed mode)</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="java -version"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+                    <p>Ok once you got all that set-up we can start.</p>
+
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+
+                    
+                    
+                    
+
+                    
+    
+    
+    
+
+    <h2 class="cs-headline cs-headline--m cs-headline--anchor"
+        data-scroll-to-headline=""
+        data-scroll-to-headline-previous="">
+        
+        
+    </h2>
+
+
+                    <p>We will now create the JIRA Plugin via the <a href="https://developer.atlassian.com/docs/developer-tools/working-with-the-sdk/command-reference/atlas-create-jira-plugin">Atlassian SDK command <code>atlas-create-jira-plugin</code></a>. Change to a folder where you want to create your Plugin.</p>
+                    <p>You will be asked to specify a <code>groupId</code>, <code>artifactId</code>, <code>version</code> and <code>package</code>. You can see my choices below.</p>
+
+                    
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        atlas-create-jira-plugin<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">...
+Define value <span class="hljs-keyword">for</span> groupId: : com.comsysto
+Define value <span class="hljs-keyword">for</span> artifactId: : kitchen-duty-plugin
+Define value <span class="hljs-keyword">for</span> version:  <span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>-SNAPSHOT: :
+Define value <span class="hljs-keyword">for</span> package:  com.comsysto: : com.comsysto.kitchen.duty
+....
+Confirm
+Y
+...</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-create-jira-plugin"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+
+                    <p>Now the command should have created a folder called like the <code>artifactId</code>, in our case <code>kitchen-duty-plugin</code>.</p>
+
+                </div>
+                <div class="col-md-4">
+
+                    <div class="cs-sidenote">
+                        <div class="cs-sidenote__headline">
+                            How do JIRA Plugins work?
+                        </div>
+                        <div class="cs-sidenote__content">
+                            <div class="cs-sidenote__content-item">
+                                JIRA Plugins are <a href="https://de.wikipedia.org/wiki/OSGi">OSGi</a> bundles.
+                            </div>
+                            <div class="cs-sidenote__content-item">
+                                JIRA starts an OSGi Service Plattform during startup (e.g. <a href="http://felix.apache.org/">Apache felix</a>).
+                            </div>
+                            <div class="cs-sidenote__content-item">
+                                By providing information in <code>pom.xml</code> and custom packaging via <code>atlas-package</code>
+                                the SDK builds an OSGi Plugin bundle in form of a <code>jar</code> file.
+                            </div>
+                            <div class="cs-sidenote__content-item">
+                                JIRA Plugins can therefore be installed into a running JIRA instance. Once installed they are executed on JIRA startup too.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <h3 class="cs-headline cs-headline--s"> Open Project in Java IDE</h3>
+
+                    <p>Use your favorite Java IDE to open the project. I use <a href="https://www.jetbrains.com/idea/">JetBrains IntelliJ IDEA</a> since it is just awesome. If you want to use Eclipse it is fine with me but all the screenshots will be done with IntelliJ.</p>
+
+                    <p>Once you have it opened we need to create 3 files for better usage with git and to tell the IDE how we want our indentation.</p>
+
+                    <p>Create <code>.editorconfig</code> and add statements for line endings, charset and tab indentation. Since IntelliJ is awesome <a href="http://EditorConfig.org">EditorConfig Plugin</a> is already installed. If you are using another IDE get the plugin now.</p>
+
+                    
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-comment"># EditorConfig is awesome: http://EditorConfig.org</span>
+<span class="hljs-setting">root = <span class="hljs-value"><span class="hljs-keyword">true</span></span></span>
+<span class="hljs-title">[*]</span>
+<span class="hljs-setting">end_of_line = <span class="hljs-value">lf</span></span>
+<span class="hljs-setting">insert_final_newline = <span class="hljs-value"><span class="hljs-keyword">true</span></span></span>
+<span class="hljs-setting">charset = <span class="hljs-value">utf-<span class="hljs-number">8</span></span></span>
+<span class="hljs-title">
+[*.html]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span>
+<span class="hljs-title">
+[*.js]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span>
+<span class="hljs-title">
+[*.css]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span>
+<span class="hljs-title">
+[*.xml]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span>
+<span class="hljs-title">
+[*.java]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span>
+<span class="hljs-title">
+[*.vm]</span>
+<span class="hljs-setting">indent_style = <span class="hljs-value">space</span></span>
+<span class="hljs-setting">indent_size = <span class="hljs-value"><span class="hljs-number">4</span></span></span></code></pre>
+
+
+                    <p>Create <code>.gitignore</code> and add ignore statements for files we do not want to commit.</p>
+
+                    
+    
+<pre class="cs-code"><code class="hljs">.idea/
+*.iml
+*.log
+target/</code></pre>
+
+
+                    <p>Create <code>.gitattributes</code> and set line endings to unix.</p>
+
+                    
+    
+<pre class="cs-code"><code class="hljs">*.svg eol=lf
+*.html eol=lf
+*.js eol=lf
+*.css eol=lf
+*.scss eol=lf
+*.json eol=lf
+*.sh eol=lf
+*.yml eol=lf
+*.md eol=lf
+*.txt eol=lf
+*.java eol=lf
+*.properties  eol=lf
+*.xml eol=lf</code></pre>
+
+
+                    <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+                    <div class="alert alert-warning cs-warning" role="alert">
+                        <i class="fa fa-exclamation-triangle fa-lg cs-warning__icon"></i>
+                        The created base project has some minor flaws and some things are still missing before it can actually be build.
+                    </div>
+
+
+                    <p>Edit <code>pom.xml</code> and add line <code>&lt;version&gt;3.3&lt;/version&gt;</code> to <code>maven-compiler-plugin</code>.</p>
+
+                    
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">plugin</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>maven-compiler-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>3.3<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">configuration</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">source</span>&gt;</span>1.7<span class="hljs-tag">&lt;/<span class="hljs-title">source</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">target</span>&gt;</span>1.7<span class="hljs-tag">&lt;/<span class="hljs-title">target</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">configuration</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">plugin</span>&gt;</span></code></pre>
+
+
+                    <p>Also add in the <code>pom.xml</code> right before the closing <code>&lt;/dependencies&gt;</code>.</p>
+
+                    
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependencies</span>&gt;</span>
+   ...
+   <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>com.atlassian.sal<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>sal-api<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>3.0.3<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+       <span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependencies</span>&gt;</span></code></pre>
+
+
+                    <p>Now open <strong>Preferences</strong> in IntelliJ and set the built-in maven of the SDK together with the <code>settings.xml</code></p>
+                    <p>(Tip: By calling <code>atlas-version</code> all paths including home directory of SDK are printed)</p>
+
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <p>
+                                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-install-settings.png" data-lightbox="00-step-intellij" data-title="Step 0 - Set maven home and maven settings.xml">
+                                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-install-settings.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Set maven home and maven settings.xml">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="cs-v-spacer"></div>
+
+                    <p>Since we need the <code>ATLAS_HOME</code> environment variable to get maven inside IntelliJ to work we set that as well.</p>
+
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <p>
+                                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-atlas-home.png" data-lightbox="00-step-intellij" data-title="Step 0 - Set ATLAS_HOME variable">
+                                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-atlas-home.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Set ATLAS_HOME variable">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="cs-v-spacer"></div>
+
+                    <p>Now you can click on the <strong>Maven-Tab</strong> on the right and click <strong>compile</strong> and you should have a successful build.</p>
+
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <p>
+                                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-successful-compile.png" data-lightbox="00-step-intellij" data-title="Step 0 - Successful Maven Compile">
+                                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-successful-compile.png" class="img-thumbnail img-responsive cs-tutorial-image" alt="Step 0 - Successful Maven Compile">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="cs-v-spacer"></div>
+
+                    <p>If you do a <strong>Build</strong> &gt; <strong>Make Project</strong> now and open the <code>MyPluginComponentImpl.java</code> you should have no errors.</p>
+
+                    <div class="cs-v-spacer"></div>
+
+                    <div class="cs-tutorial-step-review">
+                        <div class="cs-tutorial-step-review__headline">
+                            <strong>You have completed Step 0.</strong> Good Job! You can check out this steps solution on GitHub
+                        </div>
+                        <div class="cs-tutorial-step-review__link">
+                            <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-00-kitchen-duty-plugin">
+                                https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-00-kitchen-duty-plugin
+                            </a>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <h3 class="cs-headline cs-headline--s">Further Reading: OSGi</h3>
+
+                    <p>You can skip this chapter if you already know OSGi or if you are not interested in the deep internals of imports and exports beetween OSGi modules. The next Step of the tutorial will build on this knowledge.</p>
+
+                    <p>As you opened <code>MyPluginComponentImpl.java</code> already you might have seen some annotations like <code>@ExportAsService</code> and <code>@ComponentImport</code>.</p>
+
+                    <p>There is also an important passage of <code>maven-jira-plugin</code> in the <code>pom.xml</code> that contains the following lines.</p>
+
+                    
+    
+<pre class="cs-code"><code class="hljs">...
+<span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>maven-jira-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+...
+<span class="hljs-tag">&lt;<span class="hljs-title">instructions</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Atlassian-Plugin-Key</span>&gt;</span>${atlassian.plugin.key}<span class="hljs-tag">&lt;/<span class="hljs-title">Atlassian-Plugin-Key</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Export-Package</span>&gt;</span>
+       com.comsysto.kitchen.duty.api,
+    <span class="hljs-tag">&lt;/<span class="hljs-title">Export-Package</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">Import-Package</span>&gt;</span>
+       org.springframework.osgi.*;resolution:="optional",
+       org.eclipse.gemini.blueprint.*;resolution:="optional",
+       *
+   <span class="hljs-tag">&lt;/<span class="hljs-title">Import-Package</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">Spring-Context</span>&gt;</span>*<span class="hljs-tag">&lt;/<span class="hljs-title">Spring-Context</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">instructions</span>&gt;</span></code></pre>
+
+
+                    <p>
+                        We will now dive into unterstanding what all that means.
+                        First you should read the <a href="https://en.wikipedia.org/wiki/OSGi">Wikipedia Article on OSGi</a>.
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Services (OSGi)</strong></p>
+
+                            <p>
+                                Each bundle can publish and find interfaces and therefore use functionality from other bundles.
+                                JIRA itself is composed of some OSGi bundles itself. Therefore we need to tell the Atlassian SDK which JIRA interfaces we want to use (the OSGi framework then finds the right bundle for us automatically).
+                            </p>
+
+                            <p><strong>Life-Cycle (OSGi)</strong></p>
+
+                            <p>We can install, start and stop OSGi bundles during runtime. That means, while JIRA is running our plugin can be installed, started and stopped.</p>
+
+
+                            <p><strong>Bundles (OSGi)</strong></p>
+
+                            <p>Bundles (also called modules) only share Interfaces with other modules. You want to hide your implementation. The Atlassian SDK creates a <code>jar</code> file with
+                                a custom <code>MANIFEST.mf</code> from the <code>Import/Export-Package</code> instructions of <code>pom.xml</code> and the <a href="https://bitbucket.org/atlassian/atlassian-spring-scanner/overview">Atlassian Spring Scanner Annotations e.g. <code>@ComponentImport</code></a>.</p>
+
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-osgi-and-jira_big.jpg" data-lightbox="00-osgi" data-title="OSGi and JIRA">
+                                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-osgi-and-jira.jpg" class="img-thumbnail img-responsive" alt="OSGi and JIRA">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p>We run the package command, so that the jar file is build.</p>
+
+                    
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        atlas-package<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">...
+[INFO] Building jar: /Users/../kitchen-duty-plugin/target/kitchen-duty-plugin-<span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-package"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+                    <p>We can now inspect the <code>MANIFEST.mf</code> file (I have shortened it a little).</p>
+                    
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        cat target/classes/MANIFEST.md<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">Manifest-Version: <span class="hljs-number">1.0</span>
+Atlassian-Build-Date: <span class="hljs-number">2015</span>-<span class="hljs-number">12</span>-<span class="hljs-number">15</span>T18:<span class="hljs-number">43</span>:<span class="hljs-number">43</span>+<span class="hljs-number">0100</span>
+Atlassian-Plugin-Key: com.comsysto.kitchen-duty-plugin
+Bundle-Name: kitchen-duty-plugin
+Bundle-SymbolicName: com.comsysto.kitchen-duty-plugin
+Bundle-Vendor: comSysto
+Bundle-Version: <span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>.SNAPSHOT
+Export-Package: com.comsysto.kitchen.duty.api;version=<span class="hljs-string">"1.0.0"</span>
+Import-Package: org.springframework.osgi.service.exporter.support;resolution:=optional,
+org.springframework.osgi.service.importer.support;resolution:=optional,
+....
+Require-Capability: osgi.ee;filter:=<span class="hljs-string">"(&amp;(osgi.ee=JavaSE)(version=1.7))"</span>
+Spring-Context: *</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="cat target/classes/MANIFEST.md"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+                    <p>We see <code>Export-Package</code> and <code>Import-Package</code> statements with the values we expected from pom.xml and Annotations</p>
+
+                    <div class="alert alert-info cs-summary">
+                        <p class="cs-summary__headline"><i class="fa fa-lightbulb-o fa-lg"></i> Summary</p>
+                        <hr class="cs-summary__spacer">
+                        <p><strong>@ExportAsService</strong> is used to export our interface (e.g. <code>MyPluginComponent.java</code>) so that other OSGi bundles can use it as Spring Bean. Maybe you want to develop a base plugin and use its functionality from a second plugin, then you know now how to do it.</p>
+                        <hr class="cs-summary__spacer">
+                        <p><strong>@ComponentImport</strong> is used to import functionality from other OSGi bundles Spring Context such as JIRAs <code>ApplicationProperties</code>.</p>
+                        <hr class="cs-summary__spacer">
+                        <p>These annotations are used because JIRA uses <strong><a href="https://spring.io/">Spring</a> together with OSGi</strong> and these annotations help to make beans available as Spring Beans and to get them from the <strong>Spring Context</strong> (even if it is a spring context from other bundle).</p>
+                        <hr class="cs-summary__spacer">
+                        <p>If we want to do something low-level with OSGi imports and exports we can do that in the <strong>pom.xml</strong> with <code>&lt;Import-Package&gt;</code> and <code>&lt;Export-Package&gt;</code></p>
+                    </div>
+
+
+
+
+                    <p>
+                        If you want to dive even deeper into OSGi and Atlassian read about <a href="https://bitbucket.org/atlassian/atlassian-spring-scanner/overview">Atlassian Spring Scanner</a>, watch the <a href="https://www.youtube.com/watch?v=BthwKfxATNE">Apache Felix Introduction Video</a>
+                        or do the <a href="http://felix.apache.org/documentation/tutorials-examples-and-presentations/apache-felix-osgi-tutorial.html">Apache Felix Tutorials</a>.
+                    </p>
+
+
+                    <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+                    </div>
+                </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js" async></script>
+
+
+
+</body>
+</html>

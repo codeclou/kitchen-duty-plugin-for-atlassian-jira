@@ -1,9 +1,17 @@
-@import '../../node_modules/bootstrap/dist/css/bootstrap';
+@import '../../node_modules/bootstrap/scss/bootstrap-flex.scss';
 @import '../../node_modules/font-awesome/scss/font-awesome.scss';
 @import '../../node_modules/highlight.js/styles/railscasts';
 @import '../../node_modules/lightbox2/dist/css/lightbox';
 
 /* CS STYLES */
+
+pre {
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
 
 html, body {
     height:100%;
@@ -40,6 +48,7 @@ body.cs-tutorial {
 .cs-content {
     font-family: 'Open Sans', sans-serif;
     font-size:16px;
+    padding:0;
 }
 
 
@@ -362,11 +371,16 @@ p {
 
 /* TOC */
 
+.cs-sidebar-wrapper {
+
+}
+
 #toc {
     height: 100%;
     position: fixed;
     background: transparent;
     padding-top: 30px;
+    padding-right:30px;
 }
 
 #toc ul {

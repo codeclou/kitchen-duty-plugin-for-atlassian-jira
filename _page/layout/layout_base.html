@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     {# The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags #}
     {% block head %}
     {% endblock %}
@@ -36,7 +36,7 @@
 
 
 {% macro pageSidebar(currentPageId) %}
-    <div class="col-md-3 hidden-sm hidden-xs" id="toc">
+    <div id="toc">
         <ul>
 
             {# -------------------------------------------------------------------------------- #}
@@ -95,7 +95,7 @@
             </span></a>
 
             </div>
-            <div class="col-md-6  cs-page-header-cs-logo text-right hidden-xs hidden-sm  cs-page-header--right-fix">
+            <div class="col-md-6  cs-page-header-cs-logo text-xs-right hidden-xs hidden-sm  cs-page-header--right-fix">
                 <a href="https://comsysto.com/leistungen/atlassian-experts-services" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="comSysto"/></a>
             </div>
         </div>
@@ -103,7 +103,7 @@
             <div class="col-md-6 cs-pager cs-page-header--left-fix">
                 <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[currentPageId-1] }}"><i class="fa fa-angle-left"></i> previous page</a>
             </div>
-            <div class="col-md-6 text-right cs-pager cs-page-header--right-fix">
+            <div class="col-md-6 text-xs-right cs-pager cs-page-header--right-fix">
                 {% if currentPageId < 6 %}
                     <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[currentPageId+1] }}">next page <i class="fa fa-angle-right"></i></a>
                 {% endif %}

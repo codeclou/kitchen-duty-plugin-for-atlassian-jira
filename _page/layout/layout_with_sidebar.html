@@ -3,12 +3,16 @@
 
 
 <!-- CONTENT -->
-<div class="container-fluid">
+
+{{ pageHeader(CURRENT_PAGE_ID) }}
+
+
+<div class="container-fluid cs-content">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 cs-sidebar-wrapper">
             {{ pageSidebar(CURRENT_PAGE_ID) }}
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
 
             {% block content %}
 

@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     
     
     <title>Webwork Action and HTML View ~ Planning Page | Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
@@ -53,11 +53,40 @@
 
 
 <!-- CONTENT -->
-<div class="container-fluid">
+
+
+    <div class="container-fluid cs-page-header">
+        <div class="row">
+            <div class="col-md-6 cs-page-header--left-fix">
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/"><span class="cs-page-logo">
+                <h1>Kitchen Duty Plugin</h1>
+                <h2>for Atlassian JIRA® by comSysto</h2>
+            </span></a>
+
+            </div>
+            <div class="col-md-6  cs-page-header-cs-logo text-xs-right hidden-xs hidden-sm  cs-page-header--right-fix">
+                <a href="https://comsysto.com/leistungen/atlassian-experts-services" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="comSysto"/></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 cs-pager cs-page-header--left-fix">
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/"><i class="fa fa-angle-left"></i> previous page</a>
+            </div>
+            <div class="col-md-6 text-xs-right cs-pager cs-page-header--right-fix">
+                
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/05-step-02-planning-page--user-search-rest-resource/">next page <i class="fa fa-angle-right"></i></a>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="container-fluid cs-content">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 cs-sidebar-wrapper">
             
-    <div class="col-md-3 hidden-sm hidden-xs" id="toc">
+    <div id="toc">
         <ul>
 
             
@@ -105,44 +134,15 @@
     </div>
 
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
 
             
 
 
 
-
-    <div class="container-fluid cs-page-header">
-        <div class="row">
-            <div class="col-md-6 cs-page-header--left-fix">
-                <a href="/kitchen-duty-plugin-for-atlassian-jira/"><span class="cs-page-logo">
-                <h1>Kitchen Duty Plugin</h1>
-                <h2>for Atlassian JIRA® by comSysto</h2>
-            </span></a>
-
-            </div>
-            <div class="col-md-6  cs-page-header-cs-logo text-right hidden-xs hidden-sm  cs-page-header--right-fix">
-                <a href="https://comsysto.com/leistungen/atlassian-experts-services" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="comSysto"/></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 cs-pager cs-page-header--left-fix">
-                <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/"><i class="fa fa-angle-left"></i> previous page</a>
-            </div>
-            <div class="col-md-6 text-right cs-pager cs-page-header--right-fix">
-                
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/05-step-02-planning-page--user-search-rest-resource/">next page <i class="fa fa-angle-right"></i></a>
-                
-            </div>
-        </div>
-    </div>
-
-
-
-<div class="container-fluid cs-content">
-    <div class="row">
-        <div class="col-md-12">
-            
+<div class="row">
+    <div class="col-md-12">
+        
     
     
     
@@ -159,52 +159,52 @@
 
 
 
-            
-            
-            
+        
+        
+        
 
 
-            <p>You might say <em>&ldquo;WebworkAction? That came out of nowhere!&rdquo;</em> and you are right. I will introduce you to it, since this is one way to provide Pages inside JIRA in a nice way.</p>
+        <p>You might say <em>&ldquo;WebworkAction? That came out of nowhere!&rdquo;</em> and you are right. I will introduce you to it, since this is one way to provide Pages inside JIRA in a nice way.</p>
 
-            <p>You can read about <a href="https://developer.atlassian.com/jiradev/jira-platform/jira-architecture/jira-technical-overview/jira-webwork-actions">JIRA Webwork Action</a> or <a href="https://developer.atlassian.com/jiradev/jira-platform/building-jira-add-ons/jira-plugins2-overview/jira-plugin-module-types/webwork-plugin-module">Webwork plugin module</a>
-                but you will also understand what is going on after my short introduction.</p>
+        <p>You can read about <a href="https://developer.atlassian.com/jiradev/jira-platform/jira-architecture/jira-technical-overview/jira-webwork-actions">JIRA Webwork Action</a> or <a href="https://developer.atlassian.com/jiradev/jira-platform/building-jira-add-ons/jira-plugins2-overview/jira-plugin-module-types/webwork-plugin-module">Webwork plugin module</a>
+            but you will also understand what is going on after my short introduction.</p>
 
-            <p><strong>Introduction</strong></p>
+        <p><strong>Introduction</strong></p>
 
-            <ul>
-                <li>
-                    <p>
-                        Basically <strong>Webwork Actions are Controllers</strong> (<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC paradigm</a>) that react to certain URLs in JIRA.
-                    </p>
-                </li>
-                <li>
-                    <p>
-                        They <strong>handle Authentication</strong> (is user logged in?) <strong>and Authorisation</strong> (has user rights to view page?) easily.
-                    </p>
-                </li>
-                <li>
-                    <p>
-                        They let us <strong>define multiple Views</strong> (<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC paradigm</a>) for example an Error-View and a Success-View.
-                    </p>
-                </li>
-                <li>
-                    <p>
-                        They <strong>provide Template Renderer</strong> like Velocity which helps us to inject some variables into the View.
-                    </p>
-                </li>
-                <li>
-                    They are easily <strong>defined with some XML code</strong> in the <code>atlassian-plugin.xml</code> file <em>(we will learn later more about that)</em>.
-                </li>
-            </ul>
+        <ul>
+            <li>
+                <p>
+                    Basically <strong>Webwork Actions are Controllers</strong> (<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC paradigm</a>) that react to certain URLs in JIRA.
+                </p>
+            </li>
+            <li>
+                <p>
+                    They <strong>handle Authentication</strong> (is user logged in?) <strong>and Authorisation</strong> (has user rights to view page?) easily.
+                </p>
+            </li>
+            <li>
+                <p>
+                    They let us <strong>define multiple Views</strong> (<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">MVC paradigm</a>) for example an Error-View and a Success-View.
+                </p>
+            </li>
+            <li>
+                <p>
+                    They <strong>provide Template Renderer</strong> like Velocity which helps us to inject some variables into the View.
+                </p>
+            </li>
+            <li>
+                They are easily <strong>defined with some XML code</strong> in the <code>atlassian-plugin.xml</code> file <em>(we will learn later more about that)</em>.
+            </li>
+        </ul>
 
-            <div class="cs-v-spacer cs-v-spacer--small"></div>
+        <div class="cs-v-spacer cs-v-spacer--small"></div>
 
 
-            <p>Ok now you know enough to get started. Open a terminal and change inside the directory of the plugin.</p>
+        <p>Ok now you know enough to get started. Open a terminal and change inside the directory of the plugin.</p>
 
-            <p>We will again use the Atlassian SDK to generate the basic files for us. Type the command and choose <strong>31. Webwork Plugin</strong></p>
+        <p>We will again use the Atlassian SDK to generate the basic files for us. Type the command and choose <strong>31. Webwork Plugin</strong></p>
 
-            
+        
 <div class="cs-shell">
     <div class="cs-shell__inner">
         atlas-create-jira-plugin-module<br>
@@ -253,15 +253,15 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 </div>
 
 
-            <p>After we have done that we see that a lot of code and files have been generated. You can see all changes in this <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/162ed706c7f4be0356871a4a6f8bb6398b38854f">GitHub Commit 162ed70</a>.</p>
+        <p>After we have done that we see that a lot of code and files have been generated. You can see all changes in this <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/162ed706c7f4be0356871a4a6f8bb6398b38854f">GitHub Commit 162ed70</a>.</p>
 
-            <p>What is important for us are the following changes:</p>
+        <p>What is important for us are the following changes:</p>
 
-            <ul>
-                <li>
-                    <p><code>atlassian-plugin.xml</code> contains now the webwork definiton of our Action and View.</p>
+        <ul>
+            <li>
+                <p><code>atlassian-plugin.xml</code> contains now the webwork definiton of our Action and View.</p>
 
-                    
+                
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"Kitchen Duty Planning Webwork Module"</span> <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.name"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">description</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.description"</span>&gt;</span>The Kitchen Duty Planning Webwork Module Plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
@@ -272,11 +272,11 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
     <span class="hljs-tag">&lt;/<span class="hljs-title">actions</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-title">webwork1</span>&gt;</span></code></pre>
 
-                </li>
-                <li>
-                    <p><code>pom.xml</code> contains now needed dependencies.</p>
+            </li>
+            <li>
+                <p><code>pom.xml</code> contains now needed dependencies.</p>
 
-                    
+                
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
    <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>org.apache.httpcomponents<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
@@ -299,25 +299,25 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 
 
 
-                </li>
-            </ul>
+            </li>
+        </ul>
 
 
-            <p>You should be able to open the <code>KitchenDutyPlanningWebworkAction</code> in IntelliJ now.</p>
+        <p>You should be able to open the <code>KitchenDutyPlanningWebworkAction</code> in IntelliJ now.</p>
 
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <p>
-                        <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-intellij-after-webwork-module-create.png" data-lightbox="01-step-server-side" data-title="Step 1 - IntelliJ after Webwork Module creation">
-                            <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-intellij-after-webwork-module-create.png" class="img-thumbnail img-responsive" alt="Step 1 - IntelliJ after Webwork Module creation">
-                        </a>
-                    </p>
-                </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-intellij-after-webwork-module-create.png" data-lightbox="01-step-server-side" data-title="Step 1 - IntelliJ after Webwork Module creation">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-intellij-after-webwork-module-create.png" class="img-thumbnail img-fluid" alt="Step 1 - IntelliJ after Webwork Module creation">
+                    </a>
+                </p>
             </div>
+        </div>
 
-            <p>Now we change the <code>execute</code> Method to work with our view:</p>
+        <p>Now we change the <code>execute</code> Method to work with our view:</p>
 
-            
+        
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-annotation">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">execute</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
@@ -325,11 +325,11 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 }</code></pre>
 
 
-            <p>Now our view will be called when we browse to the Webactions URL which is simply <code>http://server/jira/secure/[WebWorkAlias].jspa</code> in our case <code class="cs-do-wrap">http://server/jira/secure/KitchenDutyPlanningWebworkAction.jspa</code>.</p>
+        <p>Now our view will be called when we browse to the Webactions URL which is simply <code>http://server/jira/secure/[WebWorkAlias].jspa</code> in our case <code class="cs-do-wrap">http://server/jira/secure/KitchenDutyPlanningWebworkAction.jspa</code>.</p>
 
-            <p>We will now start JIRA wich will have our Plugin installed with the following command. (Go get another coffee, this will take some time to download dependencies)</p>
+        <p>We will now start JIRA wich will have our Plugin installed with the following command. (Go get another coffee, this will take some time to download dependencies)</p>
 
-            
+        
 <div class="cs-shell">
     <div class="cs-shell__inner">
         atlas-run<br>
@@ -345,42 +345,42 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 </div>
 
 
-            <p>Now browse to <a class="cs-do-wrap" href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa</a> and you should see:</p>
+        <p>Now browse to <a class="cs-do-wrap" href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa</a> and you should see:</p>
 
-            <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-atlas-run-jira-with-kitchen-duty-planning-webwork-action.png" data-lightbox="01-step-server-side" data-title="Step 1 - Success View of Kitchen Duty Planning Webwork Action">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-atlas-run-jira-with-kitchen-duty-planning-webwork-action.png" class="img-thumbnail img-responsive" alt="Step 1 - Success View of Kitchen Duty Planning Webwork Action">
-                    </a>
-                </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-atlas-run-jira-with-kitchen-duty-planning-webwork-action.png" data-lightbox="01-step-server-side" data-title="Step 1 - Success View of Kitchen Duty Planning Webwork Action">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-atlas-run-jira-with-kitchen-duty-planning-webwork-action.png" class="img-thumbnail img-fluid" alt="Step 1 - Success View of Kitchen Duty Planning Webwork Action">
+                </a>
             </div>
+        </div>
 
 
-            <div class="cs-v-spacer cs-v-spacer--small"></div>
+        <div class="cs-v-spacer cs-v-spacer--small"></div>
 
-            <p>
-                Alright. That is working but it does not look very nice. We will improve the look and functionality step by step.
-            </p>
-            <p>
-                <strong>What do we need to improve the UX?</strong>
-            </p>
-            <ol>
-                <li>We want to have the usual JIRA administrator page layout</li>
-                <li>We need a sidebar navigation for links to our pages</li>
-                <li>Of course we need a content section</li>
-                <li>i18n would be nice so that we can later easily make our plugin multi-language</li>
-                <li>The planning page should only be accessible for administrators</li>
-            </ol>
+        <p>
+            Alright. That is working but it does not look very nice. We will improve the look and functionality step by step.
+        </p>
+        <p>
+            <strong>What do we need to improve the UX?</strong>
+        </p>
+        <ol>
+            <li>We want to have the usual JIRA administrator page layout</li>
+            <li>We need a sidebar navigation for links to our pages</li>
+            <li>Of course we need a content section</li>
+            <li>i18n would be nice so that we can later easily make our plugin multi-language</li>
+            <li>The planning page should only be accessible for administrators</li>
+        </ol>
 
 
 
-            <h3 class="cs-headline cs-headline--s">1. JIRA administrator page layout <em>(Page Decorator)</em></h3>
+        <h3 class="cs-headline cs-headline--s">1. JIRA administrator page layout <em>(Page Decorator)</em></h3>
 
-            <p>We know what we need and I will introduce you to the Atlassian Components which will do the job.</p>
+        <p>We know what we need and I will introduce you to the Atlassian Components which will do the job.</p>
 
-            <p>Edit the <strong><code>kitchen-duty-planning-success.vm</code></strong> which resides in <code>src/main/resources/templates/kitchen-duty-planning-webwork-module/</code> like this.</p>
+        <p>Edit the <strong><code>kitchen-duty-planning-success.vm</code></strong> which resides in <code>src/main/resources/templates/kitchen-duty-planning-webwork-module/</code> like this.</p>
 
-            
+        
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
@@ -395,58 +395,58 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span></code></pre>
 
 
-            <p>
-                The important thing is the
-                <a target="_blank" href="https://developer.atlassian.com/docs/common-coding-tasks/using-standard-page-decorators"><strong>Page Decorator</strong></a>
-                part which says <code>&lt;meta name="decorator" content="atl.admin"&gt;</code>.
-                So what is that about? This statement tells the Page Decorator to render the layout for <code>atl.admin</code>
-                which is basically the administrator layout.
-            </p>
+        <p>
+            The important thing is the
+            <a target="_blank" href="https://developer.atlassian.com/docs/common-coding-tasks/using-standard-page-decorators"><strong>Page Decorator</strong></a>
+            part which says <code>&lt;meta name="decorator" content="atl.admin"&gt;</code>.
+            So what is that about? This statement tells the Page Decorator to render the layout for <code>atl.admin</code>
+            which is basically the administrator layout.
+        </p>
 
-            <p>After you have saved the changes run <code>atlas-run</code> again your shell to start JIRA and <a class="cs-do-wrap" href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">browse to the Planning Page</a>. It should look like this now.</p>
+        <p>After you have saved the changes run <code>atlas-run</code> again your shell to start JIRA and <a class="cs-do-wrap" href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">browse to the Planning Page</a>. It should look like this now.</p>
 
-            <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <p>
-                        <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-decorator-atl-admin.png" data-lightbox="01-step-server-side" data-title="Step 1 - Page Decorator atl.admin">
-                            <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-decorator-atl-admin.png" class="img-thumbnail img-responsive" alt="Step 1 - Page Decorator atl.admin">
-                        </a>
-                    </p>
-                </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-decorator-atl-admin.png" data-lightbox="01-step-server-side" data-title="Step 1 - Page Decorator atl.admin">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-decorator-atl-admin.png" class="img-thumbnail img-fluid" alt="Step 1 - Page Decorator atl.admin">
+                    </a>
+                </p>
             </div>
+        </div>
 
-            <p>If you had <code>atlas-run</code> still running and do not see your changes, try opening a second shell and type <code>atlas-cli</code> wait for the prompt, type <code>pi</code> and press enter. Now your plugin is force-rebuild. You can read more about that later on in the section about faster development.</p>
+        <p>If you had <code>atlas-run</code> still running and do not see your changes, try opening a second shell and type <code>atlas-cli</code> wait for the prompt, type <code>pi</code> and press enter. Now your plugin is force-rebuild. You can read more about that later on in the section about faster development.</p>
 
-            <p></p>
+        <p></p>
 
 
-            <h3 class="cs-headline cs-headline--s">2. Sidebar Navigation <em>(Web Section / Item)</em></h3>
+        <h3 class="cs-headline cs-headline--s">2. Sidebar Navigation <em>(Web Section / Item)</em></h3>
 
-            <p>We could just simply fiddle our own sidebar together but that is not the professional way.
-                Do do it the professional way we will use the
-                <a href="https://developer.atlassian.com/jiradev/jira-platform/building-jira-add-ons/jira-plugins2-overview/jira-plugin-module-types/web-section-plugin-module" target="_blank">
-                    Web Section Plugin Module
-                </a>
-                and the
-                <a href="https://developer.atlassian.com/docs/getting-started/plugin-modules/web-item-plugin-module" target="_blank">
-                    Web Item Plugin Module
-                </a>
-                to hook into the JIRA Sidebar which renders for every administrator tab section, so that it will look like this.
-            </p>
+        <p>We could just simply fiddle our own sidebar together but that is not the professional way.
+            Do do it the professional way we will use the
+            <a href="https://developer.atlassian.com/jiradev/jira-platform/building-jira-add-ons/jira-plugins2-overview/jira-plugin-module-types/web-section-plugin-module" target="_blank">
+                Web Section Plugin Module
+            </a>
+            and the
+            <a href="https://developer.atlassian.com/docs/getting-started/plugin-modules/web-item-plugin-module" target="_blank">
+                Web Item Plugin Module
+            </a>
+            to hook into the JIRA Sidebar which renders for every administrator tab section, so that it will look like this.
+        </p>
 
-            <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <p>
-                        <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-web-section-and-item.png" data-lightbox="01-step-server-side" data-title="Step 1 - Web Section and Web Item">
-                            <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-web-section-and-item.png" class="img-thumbnail img-responsive" alt="Step 1 - Web Section and Web Item">
-                        </a>
-                    </p>
-                </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-web-section-and-item.png" data-lightbox="01-step-server-side" data-title="Step 1 - Web Section and Web Item">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-web-section-and-item.png" class="img-thumbnail img-fluid" alt="Step 1 - Web Section and Web Item">
+                    </a>
+                </p>
             </div>
+        </div>
 
-            <p>You might need another coffee because here comes the code for the <code>atlassian-plugin.xml</code> which resides in <code>src/main/resources/</code></p>
+        <p>You might need another coffee because here comes the code for the <code>atlassian-plugin.xml</code> which resides in <code>src/main/resources/</code></p>
 
-            
+        
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">atlassian-plugin</span>&gt;</span>
 ...
@@ -470,78 +470,78 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 <span class="hljs-tag">&lt;/<span class="hljs-title">atlassian-plugin</span>&gt;</span></code></pre>
 
 
-            <p>
-                The <strong>web-section</strong> is the "container" which hold <em>web-items</em> and has a headline.
-                <strong>Web-items</strong> are basically the navigation links and have a name and URL.
-            </p>
+        <p>
+            The <strong>web-section</strong> is the "container" which hold <em>web-items</em> and has a headline.
+            <strong>Web-items</strong> are basically the navigation links and have a name and URL.
+        </p>
 
-            <div class="cs-v-spacer cs-v-spacer--small"></div>
+        <div class="cs-v-spacer cs-v-spacer--small"></div>
 
-            <p><em>So what is happening here?</em></p>
+        <p><em>So what is happening here?</em></p>
 
-            <ul>
-                <li>
-                    <p>
-                        The <strong><code>web-section</code></strong> does need a <strong>unique key and name</strong>. The <strong>weight</strong> defines the order of the section relative to sections of other addons.
-                        The <strong>location</strong> defines the page or tab under which the web-section should be injected; we use the Addons Tab.
-                        The <code>&lt;label key</code> is some OSGi stuff I think, just name the key as the i18n-name-key.
-                        Lastly the <code>i18n-name-key</code> is the identifier to the <code>kitchen-duty-plugin.properties</code> language file which contains the actual translations.
-                    </p>
-                </li>
-                <li><p>
-                        The <strong><code>web-item</code></strong> has the same attributes as the web-section. But you need to specify a <code>section</code> which points to our web-section name.
-                        The <code>&lt;link</code> object contains the actual URL to our page.
-                    </p>
-                </li>
-            </ul>
+        <ul>
+            <li>
+                <p>
+                    The <strong><code>web-section</code></strong> does need a <strong>unique key and name</strong>. The <strong>weight</strong> defines the order of the section relative to sections of other addons.
+                    The <strong>location</strong> defines the page or tab under which the web-section should be injected; we use the Addons Tab.
+                    The <code>&lt;label key</code> is some OSGi stuff I think, just name the key as the i18n-name-key.
+                    Lastly the <code>i18n-name-key</code> is the identifier to the <code>kitchen-duty-plugin.properties</code> language file which contains the actual translations.
+                </p>
+            </li>
+            <li><p>
+                    The <strong><code>web-item</code></strong> has the same attributes as the web-section. But you need to specify a <code>section</code> which points to our web-section name.
+                    The <code>&lt;link</code> object contains the actual URL to our page.
+                </p>
+            </li>
+        </ul>
 
 
-            <div class="cs-v-spacer cs-v-spacer--small"></div>
+        <div class="cs-v-spacer cs-v-spacer--small"></div>
 
-            <p>Since we heard about <strong>i18n</strong> now we need to define our values in the language file <code>kitchen-duty-plugin.properties</code>.</p>
+        <p>Since we heard about <strong>i18n</strong> now we need to define our values in the language file <code>kitchen-duty-plugin.properties</code>.</p>
 
-            
+        
     
 <pre class="cs-code"><code class="hljs"># websection/webitems
 kitchen-duty-plugin.admin.planning.page.web.section.name = Kitchen Duty Plugin
 kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pre>
 
 
-            <p>Alright this was a little complicated but now we have a nice sidbar navigation link.</p>
+        <p>Alright this was a little complicated but now we have a nice sidbar navigation link.</p>
 
 
-            <h3 class="cs-headline cs-headline--s">3. Content Section <em>(AUI Layout)</em></h3>
+        <h3 class="cs-headline cs-headline--s">3. Content Section <em>(AUI Layout)</em></h3>
 
-            <p>Ok this is a no-brainer since you already saw the content section. But to be consistent here is the screenshot ;)</p>
+        <p>Ok this is a no-brainer since you already saw the content section. But to be consistent here is the screenshot ;)</p>
 
-            <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <p>
-                        <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-content.png" data-lightbox="01-step-server-side" data-title="Step 1 - Content Section">
-                            <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-content.png" class="img-thumbnail img-responsive" alt="Step 1 - Content Section">
-                        </a>
-                    </p>
-                </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-content.png" data-lightbox="01-step-server-side" data-title="Step 1 - Content Section">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-content.png" class="img-thumbnail img-fluid" alt="Step 1 - Content Section">
+                    </a>
+                </p>
             </div>
+        </div>
 
-            <p>
-                If you want to be the a-student you can read about <a target="_blank" href="https://docs.atlassian.com/aui/latest/docs/layout.html">AUI Layout</a>
-                and play around a little. We will use that later to further style our pages.
-            </p>
+        <p>
+            If you want to be the a-student you can read about <a target="_blank" href="https://docs.atlassian.com/aui/latest/docs/layout.html">AUI Layout</a>
+            and play around a little. We will use that later to further style our pages.
+        </p>
 
-            <h3 class="cs-headline cs-headline--s">4. Internationalization <em>(i18n / Velocity)</em></h3>
+        <h3 class="cs-headline cs-headline--s">4. Internationalization <em>(i18n / Velocity)</em></h3>
 
-            <p>You already saw some i18n for web-section/item names. Now we want to i18n-ize our html template.</p>
+        <p>You already saw some i18n for web-section/item names. Now we want to i18n-ize our html template.</p>
 
-            <p>
-                You might have seen the file-ending <code>.vm</code> already. That means the
-                <strong><code>kitchen-duty-planning-success.vm</code></strong> is an <a target="_blank" href="http://velocity.apache.org/">Apache Velocity template</a>.
-                Some might wonder now <em>"Didn't the ancient greek use velocity?! Is it really still around?"</em>. Yes it is and I think it does a great job.
-            </p>
+        <p>
+            You might have seen the file-ending <code>.vm</code> already. That means the
+            <strong><code>kitchen-duty-planning-success.vm</code></strong> is an <a target="_blank" href="http://velocity.apache.org/">Apache Velocity template</a>.
+            Some might wonder now <em>"Didn't the ancient greek use velocity?! Is it really still around?"</em>. Yes it is and I think it does a great job.
+        </p>
 
-            <p>So let's get to action, we will change our html code using <code>i18n.getText("i18n.key")</code> which is a velocity helper to render the i18n value for a given key.</p>
+        <p>So let's get to action, we will change our html code using <code>i18n.getText("i18n.key")</code> which is a velocity helper to render the i18n value for a given key.</p>
 
-            
+        
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
@@ -556,9 +556,9 @@ kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pr
 <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span></code></pre>
 
 
-            <p>Now we need to add the translations to the <code>kitchen-duty-plugin.properties</code> file and we are done internationalising our page.</p>
+        <p>Now we need to add the translations to the <code>kitchen-duty-plugin.properties</code> file and we are done internationalising our page.</p>
 
-            
+        
     
 <pre class="cs-code"><code class="hljs"># kitchen-duty-planning-success.vm
 kitchen-duty-plugin.admin.planning.page.headline = Kitchen Duty Plugin - Planning Page
@@ -567,66 +567,65 @@ kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plu
 
 
 
-            <h3 class="cs-headline cs-headline--s">5. Admin only Authorization <em>(Webwork Action)</em></h3>
+        <h3 class="cs-headline cs-headline--s">5. Admin only Authorization <em>(Webwork Action)</em></h3>
 
-            <p>We are using a <strong>Webwork Action</strong> for our planning page and we can simply set <code>roles-required="admin"</code> in the
-                <code>atlassian-plugin.xml</code> to enforce administrator only authorization.</p>
+        <p>We are using a <strong>Webwork Action</strong> for our planning page and we can simply set <code>roles-required="admin"</code> in the
+            <code>atlassian-plugin.xml</code> to enforce administrator only authorization.</p>
 
-            
+        
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module"</span>
           <span class="hljs-attribute">...</span>
           <span class="hljs-attribute">roles-required</span>=<span class="hljs-value">"admin"</span>&gt;</span></code></pre>
 
 
-            <p>If you log out of JIRA now and browse again to the planning page you will see the administrator login form. When logging in as <code>admin</code> (password <code>admin</code>) you should be redirected to the planning page.</p>
+        <p>If you log out of JIRA now and browse again to the planning page you will see the administrator login form. When logging in as <code>admin</code> (password <code>admin</code>) you should be redirected to the planning page.</p>
 
-            <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <p>
-                        <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-done.png" data-lightbox="01-step-server-side" data-title="Step 1 - Done">
-                            <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-done.png" class="img-thumbnail img-responsive" alt="Step 1 - Done">
-                        </a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="cs-v-spacer"></div>
-
-            <div class="cs-tutorial-step-review">
-                <div class="cs-tutorial-step-review__headline">
-                    <strong>You have completed Step 1.</strong> Good Job! You can check out this steps solution on GitHub
-                </div>
-                <div class="cs-tutorial-step-review__link">
-                    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin">
-                        https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-done.png" data-lightbox="01-step-server-side" data-title="Step 1 - Done">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-done.png" class="img-thumbnail img-fluid" alt="Step 1 - Done">
                     </a>
-                </div>
+                </p>
             </div>
-
-            <div class="cs-v-spacer cs-v-spacer"></div>
-
-            <p>The grafic shows <strong>which components we implemented in this section</strong>.</p>
-
-            <div class="row">
-                <div class="col-md-offset-3 col-md-6">
-                    <p>
-                        <a href="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/01-components-done-webwork-action-and-html-view.jpg" data-lightbox="01-step-server-side" data-title="Step 1 - Components implemented after completion of Step 1">
-                            <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/01-components-done-webwork-action-and-html-view.jpg" class="img-thumbnail img-responsive" alt="Step 1 - Components implemented after completion of Step 1">
-                        </a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="cs-v-spacer cs-v-spacer--big"></div>
-            <div class="cs-v-spacer cs-v-spacer--big"></div>
-
-
-
-
-
-
         </div>
+
+        <div class="cs-v-spacer"></div>
+
+        <div class="cs-tutorial-step-review">
+            <div class="cs-tutorial-step-review__headline">
+                <strong>You have completed Step 1.</strong> Good Job! You can check out this steps solution on GitHub
+            </div>
+            <div class="cs-tutorial-step-review__link">
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin">
+                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin
+                </a>
+            </div>
+        </div>
+
+        <div class="cs-v-spacer cs-v-spacer"></div>
+
+        <p>The grafic shows <strong>which components we implemented in this section</strong>.</p>
+
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/01-components-done-webwork-action-and-html-view.jpg" data-lightbox="01-step-server-side" data-title="Step 1 - Components implemented after completion of Step 1">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/01-components-done-webwork-action-and-html-view.jpg" class="img-thumbnail img-fluid" alt="Step 1 - Components implemented after completion of Step 1">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+
+
+
+
     </div>
 </div>
 

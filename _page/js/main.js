@@ -50,25 +50,28 @@ var initPlanningPageSvgOverview = function () {
 
     console.log('loading SCG stuff');
 
-    var s = Snap('#webwork-overview');
+    var s = Snap('#kitchen-duty-planning-page--component-overview');
     var g = s.group();
-    var planningPageOverview = Snap.load('/kitchen-duty-plugin-for-atlassian-jira/images/test.svg', function ( loadedFragment ) {
+    var planningPageOverview = Snap.load('/kitchen-duty-plugin-for-atlassian-jira/images/interactive/kitchen-duty-planning-page--component-overview.svg', function ( loadedFragment ) {
 
         g.append( loadedFragment );
         var webworkBoxWrapper = g.select('#webwork-action');
-        var webworkBox1 = g.select('#webwork-action--box1');
-        var webworkBox2 = g.select('#webwork-action--box2');
-        webworkBoxWrapper.click(function () {
-                toastr.success('You have clicked something!', 'Awesome!')
+
+        g.select('#jira').click(function () {
+            toastr.success('JIRA', 'Awesome!')
         });
 
+
+        webworkBoxWrapper.click(function () {
+            toastr.success('You have clicked something!', 'Awesome!')
+        });
         webworkBoxWrapper.mouseover(function() {
-            webworkBox1.animate({stroke: '#00ff00'}, 200, mina.easein);
-            webworkBox2.animate({fill: 'coral'}, 200, mina.easein);
+            webworkBoxWrapper.select('path').animate({fill: 'coral'}, 200, mina.easein);
+            webworkBoxWrapper.select('text').animate({fill: 'coral'}, 200, mina.easein);
         });
         webworkBoxWrapper.mouseout(function() {
-            webworkBox1.animate({stroke: '#00ff00'}, 200, mina.easein);
-            webworkBox2.animate({fill: 'white'}, 200, mina.easein);
+            webworkBoxWrapper.select('path').animate({fill: 'black'}, 200, mina.easein);
+            webworkBoxWrapper.select('text').animate({fill: 'black'}, 200, mina.easein);
         });
 
     } );

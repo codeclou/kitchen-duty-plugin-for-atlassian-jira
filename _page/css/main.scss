@@ -4,6 +4,11 @@
 @import '../../node_modules/lightbox2/dist/css/lightbox';
 @import '../../node_modules/toastr/toastr';
 
+
+.img-fluid--fix-svg-ie-and-ff {
+    width: 100%;
+}
+
 /* CS STYLES */
 
 pre {
@@ -661,3 +666,12 @@ p {
     color:#fff;
     font-size: 22px;
 }
+
+
+
+
+/** SVG STYLING **/
+
+/*path:hover {
+    cursor: pointer;
+}*/

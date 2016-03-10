@@ -204,7 +204,7 @@ body {
     background-image: url(../images/kitchen-duty-logo-v2.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    padding-left:80px;
+    padding-left:65px;
     color:#fff;
     display:inline-block;
 }
@@ -670,8 +670,9 @@ p {
 
 
 
-/** SVG STYLING **/
+/** SCOPED SVG STYLING **/
 
-/*path:hover {
-    cursor: pointer;
-}*/
+#kitchen-duty-planning-page--component-overview  {
+
+}
+

@@ -46,42 +46,115 @@ var initClipboardJs = function () {
 
 };
 
-var initPlanningPageSvgOverview = function () {
 
-    console.log('loading SCG stuff');
 
-    var s = Snap('#kitchen-duty-planning-page--component-overview');
-    var g = s.group();
-    var planningPageOverview = Snap.load('/kitchen-duty-plugin-for-atlassian-jira/images/interactive/kitchen-duty-planning-page--component-overview.svg', function ( loadedFragment ) {
+var _getHoverEffect__bg = function(svgElement) {
+    return {
+        element: svgElement,
+        mouseInAttributes: {
+            fill: 'rgba(30,159,204)'
+        },
+        mouseOutAttributes: {
+            fill: 'black'
+        }
+    };
+};
+var _getHoverEffect__fill = function(svgElement) {
+    return {
+        element: svgElement,
+        mouseInAttributes: {
+            fill: 'rgba(240,251,255)'
+        },
+        mouseOutAttributes: {
+            fill: 'white'
+        }
+    };
+};
+var _getHoverEffect__label = function(svgElement) {
+    return {
+        element: svgElement,
+        mouseInAttributes: {
+            fill: 'rgba(30,159,204)'
+        },
+        mouseOutAttributes: {
+            fill: 'black'
+        }
+    };
+};
 
-        g.append( loadedFragment );
-        var webworkBoxWrapper = g.select('#webwork-action');
+/**
+ * See images/interactive/README.md for expected SVG format and conventions used here.
+ *
+ * @param svgElement (group with children)
+ * @param clickCallback will be executed on click
+ * @private
+ */
+var _snapSvgMouseOverAndClickInfoBoxWithText = function(svgElement, clickCallback) {
+    if (svgElement === undefined || svgElement === null) return;
 
-        g.select('#jira').click(function () {
-            toastr.success('JIRA', 'Awesome!')
+    svgElement.click(function () {
+        clickCallback();
+    });
+    $('#' + svgElement.attr('id')).css('cursor','pointer');
+
+    var children = svgElement.selectAll('*');
+    var effectsToRegister = [];
+    for(var i=0 ; i < children.length ; i++) {
+        if (_startsWith(children[i].attr('id'), 'bg')) {
+            effectsToRegister.push(_getHoverEffect__bg(children[i]));
+        }
+        if (_startsWith(children[i].attr('id'), 'label')) {
+            effectsToRegister.push(_getHoverEffect__label(children[i]));
+        }
+        if (_startsWith(children[i].attr('id'), 'fill')) {
+            effectsToRegister.push(_getHoverEffect__fill(children[i]));
+        }
+    }
+    svgElement.mouseover(function() {
+        effectsToRegister.forEach(function(effectAndElement) {
+            effectAndElement.element.animate(effectAndElement.mouseInAttributes, 200, mina.easein);
         });
-
-
-        webworkBoxWrapper.click(function () {
-            toastr.success('You have clicked something!', 'Awesome!')
+    });
+    svgElement.mouseout(function() {
+        effectsToRegister.forEach(function(effectAndElement) {
+            effectAndElement.element.animate(effectAndElement.mouseOutAttributes, 200, mina.easein);
         });
-        webworkBoxWrapper.mouseover(function() {
-            webworkBoxWrapper.select('path').animate({fill: 'coral'}, 200, mina.easein);
-            webworkBoxWrapper.select('text').animate({fill: 'coral'}, 200, mina.easein);
-        });
-        webworkBoxWrapper.mouseout(function() {
-            webworkBoxWrapper.select('path').animate({fill: 'black'}, 200, mina.easein);
-            webworkBoxWrapper.select('text').animate({fill: 'black'}, 200, mina.easein);
-        });
-
-    } );
-
-    //var hoverover = function() { g.animate({ transform: 's2r45,150,150' }, 1000, mina.bounce ) };
-    //var hoverout = function() { g.animate({ transform: 's1r0,150,150' }, 1000, mina.bounce ) };
+    });
 
 };
 
+var initPlanningPageSvgOverview = function () {
+    var s = Snap('#kitchen-duty-planning-page--component-overview');
+    var g = s.group();
+    var planningPageOverview = Snap.load('/kitchen-duty-plugin-for-atlassian-jira/images/interactive/kitchen-duty-planning-page--component-overview.svg', function (loadedFragment) {
+        g.append(loadedFragment);
+
+        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#jira'), function () {
+            toastr.success('JIRA', 'Awesome!')
+        });
+        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#kitchen-duty-resource'), function () {
+            toastr.success('kitchen-duty-resource', 'Awesome!')
+        });
+        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#webwork-action'), function () {
+            toastr.success('webwork-action', 'Awesome!')
+        });
+        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#user-resource'), function () {
+            toastr.success('user-action', 'Awesome!')
+        });
+        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#user-js-controller'), function () {
+            toastr.success('user-js-controller', 'Awesome!')
+        });
+        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#kitchen-duty-js-controller'), function () {
+            toastr.success('kitchen-duty-js-controller', 'Awesome!')
+        });
+        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#html-view'), function () {
+            toastr.success('html-view', 'Awesome!')
+        });
+    });
+};
+
 var _startsWith = function (string, prefix) {
+    if (string === undefined || string === null) return false;
     return string.slice(0, prefix.length) == prefix;
 };
 

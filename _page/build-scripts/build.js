@@ -56,12 +56,15 @@ var scssTaskOptions = {
 // JS
 var jsTaskOptions = {
     jsFiles: [
+        './node_modules/tether/dist/js/tether.js',
         './node_modules/clipboard/dist/clipboard.js',
         './node_modules/jquery/dist/jquery.js',
         './node_modules/lightbox2/dist/js/lightbox.js',
         './node_modules/retina.js/dist/retina.js',
         './node_modules/webcomponents.js/CustomElements.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
+        './node_modules/snapsvg/dist/snap.svg.js',
+        './node_modules/toastr/toastr.js',
         './_page/js/main.js'
     ],
     jsBundle: buildDir + '/generated/bundle.js',

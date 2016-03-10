@@ -2,6 +2,7 @@
 @import '../../node_modules/font-awesome/scss/font-awesome.scss';
 @import '../../node_modules/highlight.js/styles/railscasts';
 @import '../../node_modules/lightbox2/dist/css/lightbox';
+@import '../../node_modules/toastr/toastr';
 
 /* CS STYLES */
 
@@ -63,7 +64,7 @@ body {
     overflow-y: auto;
     padding: 0 30px 30px 30px;
     position: fixed;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: #fff;
 }
 
 .cs-sidebar-wrapper {
@@ -119,7 +120,7 @@ body {
 }
 
 .toc-active {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: #fff;
     color:#1E9FCC;
 }
 

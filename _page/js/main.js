@@ -34,6 +34,7 @@ var initBootstrapTooltip = function () {
 var initClipboardJs = function () {
     /* https://github.com/zenorocha/clipboard.js */
     var clipboard = new Clipboard('.cs-shell__copy-clipboard');
+    /* FIXME:
     $('.cs-shell__copy-clipboard').tooltip({trigger: 'manual', title: 'copied!'});
     $('.cs-shell__copy-clipboard').click(function(){
         var that = $(this)
@@ -41,10 +42,41 @@ var initClipboardJs = function () {
         setTimeout(function(){
             that.tooltip('hide');
         }, 1000);
-    });
+    });*/
 
 };
 
+var initPlanningPageSvgOverview = function () {
+
+    console.log('loading SCG stuff');
+
+    var s = Snap('#webwork-overview');
+    var g = s.group();
+    var planningPageOverview = Snap.load('/kitchen-duty-plugin-for-atlassian-jira/images/test.svg', function ( loadedFragment ) {
+
+        g.append( loadedFragment );
+        var webworkBoxWrapper = g.select('#webwork-action');
+        var webworkBox1 = g.select('#webwork-action--box1');
+        var webworkBox2 = g.select('#webwork-action--box2');
+        webworkBoxWrapper.click(function () {
+                toastr.success('You have clicked something!', 'Awesome!')
+        });
+
+        webworkBoxWrapper.mouseover(function() {
+            webworkBox1.animate({stroke: '#00ff00'}, 200, mina.easein);
+            webworkBox2.animate({fill: 'coral'}, 200, mina.easein);
+        });
+        webworkBoxWrapper.mouseout(function() {
+            webworkBox1.animate({stroke: '#00ff00'}, 200, mina.easein);
+            webworkBox2.animate({fill: 'white'}, 200, mina.easein);
+        });
+
+    } );
+
+    //var hoverover = function() { g.animate({ transform: 's2r45,150,150' }, 1000, mina.bounce ) };
+    //var hoverout = function() { g.animate({ transform: 's1r0,150,150' }, 1000, mina.bounce ) };
+
+};
 
 var _startsWith = function (string, prefix) {
     return string.slice(0, prefix.length) == prefix;
@@ -55,9 +87,12 @@ $(function () {
         postLoadMethods[i]();
     }
 
-    initBootstrapTooltip();
+    initPlanningPageSvgOverview();
+
+    /* initBootstrapTooltip(); */
 
     initClipboardJs();
 
     initCsSourcePointerHover();
+
 });

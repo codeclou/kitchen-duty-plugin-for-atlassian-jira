@@ -1,25 +1,130 @@
+{% set bodyClass = "cs-tutorial-body" %}
 {% extends layoutSourceDir + "/layout_base.html" %}
+
+{% set pages = [
+('0', '/'),
+('1', '/tutorial/01-introduction/'),
+('2', '/tutorial/02-step-00-getting-started/'),
+('3', '/tutorial/03-story-workshop-for-planning-page/'),
+('4', '/tutorial/04-step-01-planning-page--webwork-action-and-html-view/'),
+('5', '/tutorial/05-step-02-planning-page--user-search-rest-resource/'),
+('6', '/tutorial/06-step-03-planning-page--user-search-js-controller/')
+] %}
+
+{% macro pageSidebar(currentPageId) %}
+    <div id="toc">
+        <ul>
+
+            {# -------------------------------------------------------------------------------- #}
+
+            <li class="toc-h2 {{ "toc-active" if 1 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[1] }}">
+                    Introduction
+                </a>
+            </li>
+            <li class="toc-h2 {{ "toc-active" if 2 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[2] }}">
+                    <span class="cs-step-badge pull-right">0</span>
+                    Getting Started
+                </a>
+            </li>
+
+            {# -------------------------------------------------------------------------------- #}
+
+            <li class="toc-h2-divider">Kitchen Duty Planning Page</li>
+
+            <li class="toc-h2 {{ "toc-active" if 3 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[3] }}">
+                    Story Workshop for Planning Page
+                </a>
+            </li>
+            <li class="toc-h2 {{ "toc-active" if 4 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[4] }}">
+                    <span class="cs-step-badge pull-right">1</span>
+                    Webwork Action and HTML View
+                </a>
+            </li>
+            <li class="toc-h2 {{ "toc-active" if 5 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[5] }}">
+                    <span class="cs-step-badge pull-right">2</span>
+                    User Search REST Resource
+                </a>
+            </li>
+            <li class="toc-h2 {{ "toc-active" if 6 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[6] }}">
+                    <span class="cs-step-badge pull-right">3</span>
+                    User Search JS Controller
+                </a>
+            </li>
+
+            {# -------------------------------------------------------------------------------- #}
+        </ul>
+
+    </div>
+{% endmacro %}
+
+
+
+
+
+
+
+
 {% block contentLayout %}
 
+    <div class="container-fluid cs-page-header">
+        <div class="row">
+            <div class="col-md-6 cs-page-header--left-fix">
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/"><span class="cs-page-logo">
+                <h1>Kitchen Duty Plugin</h1>
+                <h2>for Atlassian JIRA® by comSysto</h2>
+            </span></a>
+
+            </div>
+            <div class="col-md-6  cs-page-header-cs-logo text-xs-right hidden-xs hidden-sm  cs-page-header--right-fix">
+                <a href="https://comsysto.com/leistungen/atlassian-experts-services" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="comSysto"/></a>
+            </div>
+        </div>
+
+    </div>
 
 <!-- CONTENT -->
 
-{{ pageHeader(CURRENT_PAGE_ID) }}
 
 
-<div class="container-fluid cs-content">
-    <div class="row">
-        <div class="col-md-3 cs-sidebar-wrapper">
+<div class="cs-sidebar-wrapper">
             {{ pageSidebar(CURRENT_PAGE_ID) }}
+</div>
+
+<div class="cs-content-wrapper">
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+
+
+<div class="cs-footer">
+    <div class="cs-footer-left">
+        <a class="cs-grey-footer-link" href="/kitchen-duty-plugin-for-atlassian-jira/license/" target="_blank">License</a> &middot;
+        <a class="cs-grey-footer-link" href="https://comsysto.com/imprint.html" target="_blank">Impressum</a>
+    </div>
+    <div class="cs-footer-right">
+        <div class="container-fluid ">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6 cs-pager cs-page-header--left-fix">
+                            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[CURRENT_PAGE_ID-1] }}"><i class="fa fa-angle-left"></i> previous page</a>
+                        </div>
+                        <div class="col-md-6 text-xs-right cs-pager cs-page-header--right-fix">
+                            {% if CURRENT_PAGE_ID < 6 %}
+                                <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[CURRENT_PAGE_ID+1] }}">next page <i class="fa fa-angle-right"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-8">
 
-            {% block content %}
-
-            {% endblock %}
-
-        </div>
     </div>
 </div>
+
+
+
 
 {% endblock %}

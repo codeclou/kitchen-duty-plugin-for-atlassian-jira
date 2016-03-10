@@ -15,19 +15,16 @@ pre {
 
 html, body {
     height:100%;
+    min-height:600px;
 }
 body {
     margin:0;
 }
 
-body.cs-tutorial {
-    padding-top:110px;
-}
-
-
+/** TYPO **/
 
 .cs-headline {
-    margin-top:30px;
+    margin-top:10px;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -45,12 +42,204 @@ body.cs-tutorial {
     display:inline-block;
 }
 
-.cs-content {
-    font-family: 'Open Sans', sans-serif;
-    font-size:16px;
-    padding:0;
+
+/** BASE LAYOUT **/
+
+.cs-tutorial-body {
+    background-image: linear-gradient(135deg,rgba(0,89,131,.85),rgba(95,234,255,.85)),url(../images/kitchen-wallpaper.jpg);
+    background-size: auto,cover;
+    background-repeat: repeat,no-repeat;
+    background-attachment: scroll,fixed;
 }
 
+.cs-content-wrapper {
+    font-family: 'Open Sans', sans-serif;
+    font-size:16px;
+    top:90px;
+    bottom:60px;
+    left:350px;
+    right:0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 30px 30px 30px;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.cs-sidebar-wrapper {
+    top:90px;
+    bottom:60px;
+    left:0;
+    width:350px;
+    padding: 0;
+    position: fixed;
+}
+
+.cs-sidebar-wrapper ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cs-sidebar-wrapper li {
+    padding: 0;
+    border-bottom:1px solid #efefef;
+}
+
+.cs-sidebar-wrapper a {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display:inline-block;
+    width:100%;
+    height:100%;
+    padding:10px;
+}
+
+.toc-h2 {
+    padding-left: 10px;
+}
+
+.toc-h2-divider {
+    text-align:center;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight:200;
+    color: #efefef;
+    margin-top:30px;
+}
+
+.toc-h3 {
+    padding-left: 20px;
+}
+
+.toc-active {
+    background-color: rgba(255, 255, 255, 0.95);
+    color:#1E9FCC;
+}
+
+.toc-active a {
+    color: #1E9FCC !important;
+}
+.toc--appendix {
+    font-size:12px;
+}
+
+.cs-step-badge {
+    background-color: #fff;
+    border-radius: 50%;
+    padding:4px;
+    width:18px;
+    height:18px;
+    overflow: hidden;
+    font-size: 11px;
+    text-align:center;
+    line-height:10px;
+    color:#1E9FCC;
+}
+.toc-active .cs-step-badge {
+    color:#fff;
+    background-color: #1E9FCC;
+}
+
+.cs-footer {
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:60px;
+}
+.cs-footer-left {
+    width:300px;
+    position:fixed;
+    bottom:0;
+    left:0;
+    padding:20px;
+    color:#efefef;
+}
+.cs-footer-right {
+    position:fixed;
+    bottom:0;
+    left:300px;
+    right:0;
+    height:60px;
+    padding-left:40px;
+}
+
+.cs-grey-footer-link {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight:200;
+    color: #efefef !important;
+}
+.cs-grey-footer-link:hover {
+    color:#efefef !important;
+}
+
+
+/* NORMAL PAGE */
+.cs-page-header {
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    z-index:500;
+    height:90px;
+    padding-top:15px;
+    padding-bottom:30px;
+
+}
+
+.cs-page-logo {
+    background-image: url(../images/kitchen-duty-logo-v2.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-left:80px;
+    color:#fff;
+    display:inline-block;
+}
+.cs-page-header-cs-logo {
+    padding-top:15px;
+}
+.cs-page-logo:hover {
+    text-decoration: none;
+}
+
+.cs-page-logo h1 {
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    font-weight:900;
+    margin-bottom:0;
+    margin-top:0;
+    font-size:25px;
+}
+
+.cs-page-logo h2 {
+    margin-top:0;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight:300;
+    font-size:21px;
+}
+
+
+/* FOOTER LINKS */
+
+.cs-footer {
+    color:#8c8c8c;
+    margin-top:100px;
+    display:inline-block;
+    width:100%;
+    padding-left:10px;
+}
+
+
+
+
+/** HELPER FOO **/
 
 .cs-hidden {
     display:none;
@@ -371,66 +560,8 @@ p {
 
 /* TOC */
 
-.cs-sidebar-wrapper {
 
-}
 
-#toc {
-    height: 100%;
-    position: fixed;
-    background: transparent;
-    padding-top: 30px;
-    padding-right:30px;
-}
-
-#toc ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-#toc li {
-    padding: 5px 10px;
-    border-bottom:1px solid #efefef;
-}
-
-#toc a {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.toc-h2 {
-    padding-left: 10px;
-}
-
-.toc-h2-divider {
-    padding-left: 10px;
-    font-weight:bold;
-    color: #5b5b5b;
-    margin-top:30px;
-}
-
-.toc-h3 {
-    padding-left: 20px;
-}
-
-.toc-active {
-    background: #1E9FCC;
-}
-
-.toc-active a {
-    color: #fff !important;
-}
-.toc--appendix {
-    font-size:12px;
-}
 /* crypt */
 .cfsb {
     display: none;
@@ -528,74 +659,4 @@ p {
     font-weight:300;
     color:#fff;
     font-size: 22px;
-}
-
-/* NORMAL PAGE */
-.cs-page-header {
-    position:fixed;
-    top:0px;
-    left:0px;
-    width:100%;
-    z-index:500;
-    height:120px;
-    padding-top:15px;
-    padding-bottom:30px;
-    background-image: linear-gradient(135deg,rgba(0,89,131,.85),rgba(95,234,255,.85)),url(../images/kitchen-wallpaper.jpg);
-    background-size: auto,cover;
-    background-repeat: repeat,no-repeat;
-    background-attachment: scroll,fixed;
-}
-
-.cs-page-logo {
-    background-image: url(../images/kitchen-duty-logo-v2.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    padding-left:80px;
-    color:#fff;
-    display:inline-block;
-}
-.cs-page-header-cs-logo {
-    padding-top:20px;
-}
-.cs-page-header--left-fix {
-    padding-left:20px;
-}
-.cs-page-header--right-fix {
-    padding-right:30px;
-}
-.cs-page-logo:hover {
-    text-decoration: none;
-}
-
-.cs-page-logo h1 {
-    font-family: 'Roboto', sans-serif;
-    text-transform: uppercase;
-    font-weight:900;
-    margin-bottom:0;
-    margin-top:0;
-    font-size:25px;
-}
-
-.cs-page-logo h2 {
-    margin-top:0;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight:300;
-    font-size:21px;
-}
-
-
-/* FOOTER LINKS */
-
-.cs-footer {
-    color:#8c8c8c;
-    margin-top:100px;
-    display:inline-block;
-    width:100%;
-    padding-left:10px;
-}
-.cs-grey-toc {
-    color: #8c8c8c !important;
-}
-.cs-grey-toc:hover {
-    color:#8c8c8c !important;
 }

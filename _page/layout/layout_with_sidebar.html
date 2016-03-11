@@ -8,7 +8,11 @@
 ('3', '/tutorial/03-story-workshop-for-planning-page/'),
 ('4', '/tutorial/04-step-01-planning-page--webwork-action-and-html-view/'),
 ('5', '/tutorial/05-step-02-planning-page--user-search-rest-resource/'),
-('6', '/tutorial/06-step-03-planning-page--user-search-js-controller/')
+('6', '/tutorial/06-step-03-planning-page--user-search-js-controller/'),
+('7', '/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/'),
+('8', '/tutorial/08-step-05-planning-page--kitchen-duty-planning-js-controller/'),
+('9', '/tutorial/09-story-workshop-for-overview-page/')
+
 ] %}
 
 {% macro pageSidebar(currentPageId) %}
@@ -50,8 +54,24 @@
                     User Search JS Controller
                 </a>
             </li>
+            <li class="toc-h2 {{ "toc-active" if 7 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[7] }}">
+                    <span class="cs-step-badge pull-right">4</span>
+                    Kitchen Duty Planning REST Resource
+                </a>
+            </li>
+            <li class="toc-h2 {{ "toc-active" if 8 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[8] }}">
+                    <span class="cs-step-badge pull-right">5</span>
+                    Kitchen Duty Planning JS Controller
+                </a>
+            </li>
 
             {# -------------------------------------------------------------------------------- #}
+
+            <li class="toc-h2-divider">Kitchen Duty Overview Page</li>
+            <li class="toc-h2 {{ "toc-active" if 9 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[9] }}">
+                    Story Workshop for Overview Page
+                </a>
+            </li>
         </ul>
 
 
@@ -74,7 +94,7 @@
 
 {% block contentLayout %}
 
-    {% if CURRENT_PAGE_ID >= 3 and CURRENT_PAGE_ID <= 6 %}
+    {% if CURRENT_PAGE_ID >= 3 and CURRENT_PAGE_ID <= 8 %}
         {% if CURRENT_PAGE_ID == 3 %}
             {% set infoGraphicComponentOverviewSettings = '{
                     "markedAsDone": [ ],
@@ -106,6 +126,24 @@
             {% set infoGraphicComponentOverviewSettings = '{
                     "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model" ],
                     "markedAsTodo": [ "user-js-controller" ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }'
+            %}
+        {% endif %}
+        {% if CURRENT_PAGE_ID == 7 %}
+            {% set infoGraphicComponentOverviewSettings = '{
+                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller" ],
+                    "markedAsTodo": [ "kitchen-duty-resource", "kitchen-duty-planning-model" ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }'
+            %}
+        {% endif %}
+        {% if CURRENT_PAGE_ID == 8 %}
+            {% set infoGraphicComponentOverviewSettings = '{
+                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller", "kitchen-duty-resource", "kitchen-duty-planning-model"  ],
+                    "markedAsTodo": [ "kitchen-duty-js-controller" ],
                     "markedAsGrayedOut": [ ],
                     "onClick": [ ]
                 }'

@@ -1,0 +1,60 @@
+{% set CURRENT_PAGE_ID = 8 %}
+{% extends layoutSourceDir + "/layout_with_sidebar.html" %}
+{% block head %}
+    <title>Kitchen Duty Planning JS Controller ~ Planning Page | Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
+    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by comSysto">
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block content %}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        {{ headline('Kitchen Duty Planning JS Controller', 'm') }}
+
+
+
+
+        {# ############################################################# #}
+        {# STEP 4  #}
+        {# ############################################################# #}
+
+
+        <strong style="color:red">todo</strong>
+
+
+
+        <div class="cs-v-spacer"></div>
+        <div class="cs-tutorial-step-review">
+            <div class="cs-tutorial-step-review__headline">
+                <strong>You have completed Step 5.</strong> Good Job! You can check out this steps solution on GitHub
+            </div>
+            <div class="cs-tutorial-step-review__link">
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin">
+                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin
+                </a>
+            </div>
+        </div>
+        <div class="cs-v-spacer"></div>
+        <p>The graphic shows marked green <strong>which components we implemented in this section</strong>.</p>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1 col-xl-8 col-xl-offset-2">
+                {{ interactiveGraphic('p08-ig01', 'kitchen-duty-planning-page--component-overview',
+                '{
+                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller", "kitchen-duty-resource", "kitchen-duty-planning-model", "kitchen-duty-js-controller" ],
+                    "markedAsTodo": [  ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }')
+                }}
+            </div>
+        </div>
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+    </div>
+</div>
+
+
+{% endblock %}

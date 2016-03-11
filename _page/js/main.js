@@ -1,3 +1,7 @@
+/* ================================================================================================ */
+/* STUFF */
+/* ================================================================================================ */
+
 var initCsSourcePointerHover = function () {
     /** when hovering item in list on the right */
     $('.cs-source-point-list__item').hover(
@@ -34,7 +38,6 @@ var initBootstrapTooltip = function () {
 var initClipboardJs = function () {
     /* https://github.com/zenorocha/clipboard.js */
     var clipboard = new Clipboard('.cs-shell__copy-clipboard');
-    /* FIXME:
     $('.cs-shell__copy-clipboard').tooltip({trigger: 'manual', title: 'copied!'});
     $('.cs-shell__copy-clipboard').click(function(){
         var that = $(this)
@@ -42,130 +45,220 @@ var initClipboardJs = function () {
         setTimeout(function(){
             that.tooltip('hide');
         }, 1000);
-    });*/
-
-};
-
-
-
-var _getHoverEffect__bg = function(svgElement) {
-    return {
-        element: svgElement,
-        mouseInAttributes: {
-            fill: 'rgba(30,159,204)'
-        },
-        mouseOutAttributes: {
-            fill: 'black'
-        }
-    };
-};
-var _getHoverEffect__fill = function(svgElement) {
-    return {
-        element: svgElement,
-        mouseInAttributes: {
-            fill: 'rgba(240,251,255)'
-        },
-        mouseOutAttributes: {
-            fill: 'white'
-        }
-    };
-};
-var _getHoverEffect__label = function(svgElement) {
-    return {
-        element: svgElement,
-        mouseInAttributes: {
-            fill: 'rgba(30,159,204)'
-        },
-        mouseOutAttributes: {
-            fill: 'black'
-        }
-    };
-};
-
-/**
- * See images/interactive/README.md for expected SVG format and conventions used here.
- *
- * @param svgElement (group with children)
- * @param clickCallback will be executed on click
- * @private
- */
-var _snapSvgMouseOverAndClickInfoBoxWithText = function(svgElement, clickCallback) {
-    if (svgElement === undefined || svgElement === null) return;
-
-    svgElement.click(function () {
-        clickCallback();
     });
-    $('#' + svgElement.attr('id')).css('cursor','pointer');
+};
 
-    var children = svgElement.selectAll('*');
-    var effectsToRegister = [];
-    for(var i=0 ; i < children.length ; i++) {
-        if (_startsWith(children[i].attr('id'), 'bg')) {
-            effectsToRegister.push(_getHoverEffect__bg(children[i]));
+/* ================================================================================================ */
+/* INTERACTIVE GRAPHICS */
+/* ================================================================================================ */
+
+/* we have three elements bg*, fill* and label* which we define styles for. See `images/interactive/README.md` */
+
+var interactiveGraphicStyles = {
+    bg: {
+        normal: {
+            mouseIn: {
+                fill: 'rgba(30,159,204)'
+            },
+            mouseOut: {
+                fill: 'black'
+            }
+        },
+        markedAsDone: {
+            mouseIn: {
+                fill: 'rgba(0, 158, 53)'
+            },
+            mouseOut: {
+                fill: 'rgba(0, 158, 53)'
+            }
+        },
+        markedAsTodo: {
+            mouseIn: {
+                fill: 'rgba(255, 145, 29)'
+            },
+            mouseOut: {
+                fill: 'rgba(255, 145, 29)'
+            }
+        },
+        markedAsGrayedOut: {
+            mouseIn: {
+                fill: 'rgba(30,159,204)'
+            },
+            mouseOut: {
+                fill: 'black'
+            }
         }
-        if (_startsWith(children[i].attr('id'), 'label')) {
-            effectsToRegister.push(_getHoverEffect__label(children[i]));
+    },
+    fill: {
+        normal: {
+            mouseIn: {
+                fill: 'rgba(30,159,204)'
+            },
+            mouseOut: {
+                fill: 'black'
+            }
+        },
+        markedAsDone: {
+            mouseIn: {
+                fill: 'rgba(107, 233, 150)'
+            },
+            mouseOut: {
+                fill: 'rgba(195, 233, 208)'
+            }
+        },
+        markedAsTodo: {
+            mouseIn: {
+                fill: 'rgba(255,184,109)'
+            },
+            mouseOut: {
+                fill: 'rgba(255,227,197)'
+            }
+        },
+        markedAsGrayedOut: {
+            mouseIn: {
+                fill: 'rgba(30,159,204)'
+            },
+            mouseOut: {
+                fill: 'black'
+            }
         }
-        if (_startsWith(children[i].attr('id'), 'fill')) {
-            effectsToRegister.push(_getHoverEffect__fill(children[i]));
+    },
+    label: {
+        normal: {
+            mouseIn: {
+                fill: 'black'
+            },
+            mouseOut: {
+                fill: 'black'
+            }
+        },
+        markedAsDone: {
+            mouseIn: {
+                fill: 'black'
+            },
+            mouseOut: {
+                fill: 'rgba(0, 158, 53)'
+            }
+        },
+        markedAsTodo: {
+            mouseIn: {
+                fill: 'black'
+            },
+            mouseOut: {
+                fill: 'rgba(216, 111, 0)'
+            }
+        },
+        markedAsGrayedOut: {
+            mouseIn: {
+                fill: 'rgba(30,159,204)'
+            },
+            mouseOut: {
+                fill: 'black'
+            }
         }
     }
-    svgElement.mouseover(function() {
-        effectsToRegister.forEach(function(effectAndElement) {
-            effectAndElement.element.animate(effectAndElement.mouseInAttributes, 200, mina.easein);
-        });
-    });
-    svgElement.mouseout(function() {
-        effectsToRegister.forEach(function(effectAndElement) {
-            effectAndElement.element.animate(effectAndElement.mouseOutAttributes, 200, mina.easein);
-        });
-    });
-
 };
 
-var initPlanningPageSvgOverview = function () {
-    var s = Snap('#kitchen-duty-planning-page--component-overview');
-    var g = s.group();
-    var planningPageOverview = Snap.load('/kitchen-duty-plugin-for-atlassian-jira/images/interactive/kitchen-duty-planning-page--component-overview.svg', function (loadedFragment) {
+var _extractElementTypeFromElementId = function(elementId) {
+    if (_startsWith(elementId, 'bg')) {
+        return 'bg';
+    }
+    if (_startsWith(elementId, 'label')) {
+        return 'label';
+    }
+    if (_startsWith(elementId, 'fill')) {
+        return 'fill';
+    }
+    return 'other';
+};
+
+/* See images/interactive/README.md for expected SVG format and conventions used here. */
+ var _loadInteractiveGraphic = function (el) {
+    var svgId = $(el).attr('id');
+    console.log('ig: loading svg graphic: ' + svgId);
+    var jsonSettings = JSON.parse($(el).attr('data-json-settings'));
+    if (jsonSettings === undefined || jsonSettings === null) { console.log('ig: failed1'); return; }
+    if (jsonSettings['markedAsDone'] === undefined || typeof jsonSettings['markedAsDone'] !== 'object') { console.log('ig: failed2'); return; }
+    if (jsonSettings['markedAsTodo'] === undefined || typeof jsonSettings['markedAsTodo'] !== 'object') { console.log('ig: failed3'); return; }
+    if (jsonSettings['markedAsGrayedOut'] === undefined || typeof jsonSettings['markedAsGrayedOut'] !== 'object') { console.log('ig: failed4'); return; }
+    if (jsonSettings['onClick'] === undefined || typeof jsonSettings['onClick'] !== 'object') { console.log('ig: failed5'); return; }
+    console.log('ig: valid input');
+
+    var svgToLoad = '/kitchen-duty-plugin-for-atlassian-jira/images/interactive/' + $(el).attr('data-svg-to-load') + '.svg';
+    var g = Snap('#' + svgId).group();
+    Snap.load(svgToLoad, function (loadedFragment) {
         g.append(loadedFragment);
+        //
+        // STYLE ELEMENTS
+        //
+        [ 'markedAsDone', 'markedAsTodo', 'markedAsGrayedOut' ].forEach(function(settingsCategory) {
+            jsonSettings[settingsCategory].forEach(function(svgGroupName) {
+                var svgGroup = g.select('#' + svgGroupName);
+                var svgGroupChildren = svgGroup.selectAll('*');
+                    $(svgGroupChildren).each(function(ind, svgGroupChild) {
+                        var svgGroupChildId = svgGroupChild.attr('id');
+                        var svgGroupChildType = _extractElementTypeFromElementId(svgGroupChildId);
+                        if (svgGroupChildType !== 'other') {
+                            svgGroupChild.attr(interactiveGraphicStyles[svgGroupChildType][settingsCategory]['mouseOut']);
+                            svgGroup.mouseover(function() {
+                                svgGroupChild.animate(
+                                    interactiveGraphicStyles[svgGroupChildType][settingsCategory]['mouseIn'],
+                                    200, mina.easein);
+                            });
+                            svgGroup.mouseout(function() {
+                                svgGroupChild.animate(
+                                    interactiveGraphicStyles[svgGroupChildType][settingsCategory]['mouseOut'],
+                                    200, mina.easein);
+                            });
+                        }
 
-        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#jira'), function () {
-            toastr.success('JIRA', 'Awesome!')
+                });
+            });
         });
-        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#kitchen-duty-resource'), function () {
-            toastr.success('kitchen-duty-resource', 'Awesome!')
-        });
-        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#webwork-action'), function () {
-            toastr.success('webwork-action', 'Awesome!')
-        });
-        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#user-resource'), function () {
-            toastr.success('user-action', 'Awesome!')
-        });
-        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#user-js-controller'), function () {
-            toastr.success('user-js-controller', 'Awesome!')
-        });
-        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#kitchen-duty-js-controller'), function () {
-            toastr.success('kitchen-duty-js-controller', 'Awesome!')
-        });
-        _snapSvgMouseOverAndClickInfoBoxWithText(g.select('#html-view'), function () {
-            toastr.success('html-view', 'Awesome!')
+        //
+        // REGISTER CLICK EVENTS
+        //
+        jsonSettings['onClick'].forEach(function(onClickSettings) {
+            var onClickGroupName = Object.keys(onClickSettings)[0];
+            $('#' + onClickGroupName).click(function () {
+                console.log('ig: ' + onClickGroupName + ' clicked');
+                // ouuuuu that can be misused bla bla bla .... I know! You can always provide a pull request :)
+                window[onClickSettings[onClickGroupName]]();
+            });
+            // pointer on mouseover of group (note for future me: if there are "unfilled" areas inside group, point will not work in that area. Ergo: Always have filled rect in background of group.)
+            $('#' + onClickGroupName).css('cursor','pointer');
         });
     });
 };
+
+var initInteractiveGraphics = function () {
+    $('.cs-interactive-graphic').each(function(ind, el) {
+        _loadInteractiveGraphic(el)
+    });
+};
+
+
+/* ================================================================================================ */
+/* HELPERS */
+/* ================================================================================================ */
 
 var _startsWith = function (string, prefix) {
     if (string === undefined || string === null) return false;
     return string.slice(0, prefix.length) == prefix;
 };
 
+/* ================================================================================================ */
+/* ONLOAD */
+/* ================================================================================================ */
+
 $(function () {
     for (var i = 0; i < postLoadMethods.length; i++){
         postLoadMethods[i]();
     }
 
-    initPlanningPageSvgOverview();
+    initInteractiveGraphics();
 
-    /* initBootstrapTooltip(); */
+    initBootstrapTooltip();
 
     initClipboardJs();
 

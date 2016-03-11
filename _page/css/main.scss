@@ -5,6 +5,20 @@
 @import '../../node_modules/toastr/toastr';
 
 
+// IE 11 flexbox fix.
+// https://github.com/twbs/bootstrap/issues/17310
+@if $enable-flex {
+    @each $breakpoint in map-keys($grid-breakpoints) {
+        @include media-breakpoint-up($breakpoint) {
+            @for $size from 1 through $grid-columns {
+                .col-#{$breakpoint}-#{$size} {
+                    max-width: percentage($size / $grid-columns);
+                }
+            }
+        }
+    }
+}
+
 .img-fluid--fix-svg-ie-and-ff {
     width: 100%;
 }
@@ -180,10 +194,10 @@ body {
     position:fixed;
     bottom:60px;
     left:0;
-    height:200px;
+    height:250px;
     width:350px;
     background-color: #fff;
-    padding:10px 20px 10px 0;
+    padding:20px 10px 10px 10px;
 }
 
 .cs-grey-footer-link {

@@ -61,6 +61,9 @@
 
 
 
+
+        <div class="cs-v-spacer"></div>
+        <p>The graphic shows marked green <strong>which components we implemented in this section</strong>.</p>
         <script>
             var dummyClickCallback = function() {
                 toastr.warning('dummy callback', 'Awesome!')
@@ -68,22 +71,16 @@
         </script>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1 col-xl-8 col-xl-offset-2">
-                {{ interactiveGraphic('svg06kdt', 'kitchen-duty-planning-page--component-overview',
-                '{ "markedAsDone": [ "webwork-action" ],
-                   "markedAsTodo": [ ],
-                   "markedAsGrayedOut": [ ],
-                   "onClick": [ { "webwork-action": "dummyClickCallback" } ]
-                 }'
-                )}}
+                {{ interactiveGraphic('p05-ig01', 'kitchen-duty-planning-page--component-overview',
+                '{
+                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller" ],
+                    "markedAsTodo": [ ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ { "webwork-action": "dummyClickCallback" } ]
+                }')
+                }}
             </div>
         </div>
-
-
-
-
-
-
-
         <div class="cs-v-spacer cs-v-spacer--big"></div>
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 

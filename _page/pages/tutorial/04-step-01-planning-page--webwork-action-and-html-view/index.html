@@ -439,19 +439,21 @@
             </div>
         </div>
 
-        <div class="cs-v-spacer cs-v-spacer"></div>
-
-        <p>The grafic shows <strong>which components we implemented in this section</strong>.</p>
-
+        <div class="cs-v-spacer"></div>
+        <p>The graphic shows marked green <strong>which components we implemented in this section</strong>.</p>
         <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/01-components-done-webwork-action-and-html-view.jpg" data-lightbox="01-step-server-side" data-title="Step 1 - Components implemented after completion of Step 1">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/01-components-done-webwork-action-and-html-view.jpg" class="img-thumbnail img-fluid" alt="Step 1 - Components implemented after completion of Step 1">
-                    </a>
-                </p>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1 col-xl-8 col-xl-offset-2">
+               {{ interactiveGraphic('p04-ig01', 'kitchen-duty-planning-page--component-overview',
+               '{
+                    "markedAsDone": [ "webwork-action", "html-view" ],
+                    "markedAsTodo": [ ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }')
+               }}
             </div>
         </div>
+
 
         <div class="cs-v-spacer cs-v-spacer--big"></div>
         <div class="cs-v-spacer cs-v-spacer--big"></div>

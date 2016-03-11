@@ -84,6 +84,7 @@ body {
     padding: 0 30px 30px 30px;
     position: fixed;
     background-color: #fff;
+    z-index:500001;
 }
 
 .cs-sidebar-wrapper {
@@ -198,6 +199,16 @@ body {
     width:350px;
     background-color: #fff;
     padding:20px 10px 10px 10px;
+    z-index:500005;
+    -webkit-transition: width 1s, height 1s; /* Safari */
+    transition: width 1s, height 1s;
+}
+
+.cs-toc-infographic-wrapper:hover {
+    width:700px;
+    height:500px;
+    -webkit-transition: width 1s, height 1s; /* Safari */
+    transition: width 1s, height 1s;
 }
 
 .cs-grey-footer-link {

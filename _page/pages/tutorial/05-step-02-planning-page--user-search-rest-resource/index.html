@@ -473,17 +473,274 @@
             Now that we have our code ready we need to take care of the <strong>Unit- and Integration-tests</strong>.
         </p>
 
-        <ul>
-            <li>Explain Unit and Integration test and altas-integration-test</li>
+        <p>
+            First we will change the <strong>Unitest</strong> which reside in <code>/src/test/java/*</code> to something that makes sense. So we mock the <code>UserSearchService</code>
+            and provide two users <code>bob</code> and <code>sue</code> as mocks. Now we test if our <code>searchUser</code> Method works as expected.
+        </p>
 
-        </ul>
+        {{ csSource(lang='java', filename="UserSearchResourceTest.java", uniqueId='fdgbfdsgdfgfdg', source='
+            |package ut.com.comsysto.kitchen.duty.rest;
+            |
+            |import com.atlassian.jira.bc.user.search.UserSearchParams;
+            |import com.atlassian.jira.bc.user.search.UserSearchService;
+            |import com.comsysto.kitchen.duty.rest.UserSearchResource;
+            |import com.comsysto.kitchen.duty.rest.UserSearchResourceModel;
+            |import org.junit.After;
+            |import org.junit.Before;
+            |import org.junit.Test;
+            |import org.mockito.Mockito;
+            |
+            |import javax.ws.rs.core.Response;
+            |import java.util.ArrayList;
+            |import java.util.List;
+            |
+            |import static org.junit.Assert.assertEquals;
+            |import static org.junit.Assert.assertNotNull;
+            |import static org.mockito.Matchers.any;
+            |import static org.mockito.Matchers.anyObject;
+            |import static org.mockito.Matchers.anyString;
+            |import static org.mockito.Mockito.mock;
+            |import static org.mockito.Mockito.when;
+            |
+            |public class UserSearchResourceTest {
+            |
+            |    @Before
+            |    public void setup() {
+            |
+            |    }
+            |
+            |    @After
+            |    public void tearDown() {
+            |
+            |    }
+            |
+            |    @Test
+            |    public void messageIsValid() {
+            |        final List<String> mockedUsers = new ArrayList<>();
+            |        mockedUsers.add("bob");
+            |        mockedUsers.add("sue");
+            |
+            |        UserSearchService mockedUserSearchService = Mockito.mock(UserSearchService.class);
+            |        when(mockedUserSearchService.findUserNames(anyString(), any(UserSearchParams.class))).thenReturn(mockedUsers);
+            |
+            |        UserSearchResource resource = new UserSearchResource(mockedUserSearchService);
+            |
+            |        Response response = resource.searchUsers("bo", null);
+            |        final List<UserSearchResourceModel> users = (List<UserSearchResourceModel>) response.getEntity();
+            |
+            |        assertEquals("should contain bob", "bob", users.get(0).getText());
+            |    }
+            |}
+        ') }}
 
-        {#
-        src/test/java/it/com/comsysto/kitchen/duty/rest/UserSearchResourceFuncTest.java
+        <p>
+            Now we can run <code>atlas-unit-test</code> to run all our Unittests.
+        </p>
 
-        src/test/java/ut/com/comsysto/kitchen/duty/rest/UserSearchResourceTest.java
-        #}
 
+        {{ csShell(shellCmd='atlas-unit-test', shellCmdOutput='
+            |[INFO] ------------------------------------------------------------------------
+            |[INFO] Building kitchen-duty-plugin 1.0.0-SNAPSHOT
+            |[INFO] ------------------------------------------------------------------------
+            |[INFO]
+            |[INFO] --- maven-jira-plugin:6.1.2:compress-resources (default-compress-resources) @ kitchen-duty-plugin ---
+            |[INFO] Compiling javascript using YUI
+            |...
+            |
+            |-------------------------------------------------------
+            | T E S T S
+            |-------------------------------------------------------
+            |Running ut.com.comsysto.kitchen.duty.MyComponentUnitTest
+            |Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.051 sec
+            |Running ut.com.comsysto.kitchen.duty.rest.UserSearchResourceTest
+            |Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.148 sec
+            |Running ut.com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest
+            |Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
+            |
+            |Results :
+            |
+            |Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+            |
+            |[INFO] ------------------------------------------------------------------------
+            |[INFO] BUILD SUCCESS
+            |[INFO] ------------------------------------------------------------------------
+            |[INFO] Total time: 3.477 s
+            |[INFO] Finished at: 2016-03-11T19:34:06+01:00
+            |[INFO] Final Memory: 25M/320M
+            |[INFO] ------------------------------------------------------------------------
+            |
+         ') }}
+
+        <div class="cs-v-spacer cs-v-spacer"></div>
+
+        <p>
+            Now that Unittests are working let us modify the created <strong>Integrationtest</strong>.
+        </p>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                {%  set idUserSearchResourceFuncTestStep2 = 'step2-usersearchresourcefunctest' %}
+                {{ csSource(lang='java', filename="UserSearchResourceFuncTest.java", uniqueId=idUserSearchResourceFuncTestStep2, source='
+                    |package it.com.comsysto.kitchen.duty.rest;
+                    |
+                    |import org.apache.wink.client.ClientConfig;
+                    |import org.apache.wink.client.Resource;
+                    |import org.apache.wink.client.RestClient;
+                    |import org.apache.wink.client.handlers.BasicAuthSecurityHandler;
+                    |import org.junit.After;
+                    |import org.junit.Before;
+                    |import org.junit.Test;
+                    |
+                    |import static org.junit.Assert.assertEquals;
+                    |import static org.junit.Assert.assertNotNull;
+                    |
+                    |public class UserSearchResourceFuncTest {
+                    |
+                    |    private String baseUrl;
+                    |
+                    |    @Before
+                    |    public void setup() {
+                    |        baseUrl = System.getProperty("baseurl"); {{{point::1}}}
+                    |    }
+                    |
+                    |    @After
+                    |    public void tearDown() {
+                    |
+                    |    }
+                    |
+                    |    @Test
+                    |    public void testSearchUser__unAuthorized() { {{{point::2}}}
+                    |        String resourceUrl = baseUrl + "/rest/kitchenduty/1.0/user/search?query=adm";
+                    |        String response = httpGet(resourceUrl);
+                    |        assertNotNull("should not be null", response);
+                    |        assertEquals("should contain unauthorized message",
+                    |            toJSON("{\'message\':\'Client must be authenticated to access this resource.\',\'status-code\':401}"),
+                    |            response);
+                    |    }
+                    |    @Test
+                    |    public void testSearchUser__authorized() { {{{point::3}}}
+                    |        String resourceUrl = baseUrl + "/rest/kitchenduty/1.0/user/search?query=adm";
+                    |        String response = httpGet(resourceUrl, "admin", "admin");
+                    |        assertNotNull("should not be null", response);
+                    |        assertEquals("should contain admin",
+                    |            toJSON("[{\'text\':\'admin\',\'id\':\'admin\'}]"),
+                    |            response);
+                    |    }
+                    |
+                    |    private String toJSON(String text) { {{{point::4}}}
+                    |        return text.replaceAll("\'", "\\"");
+                    |    }
+                    |
+                    |    private String httpGet(String url) { {{{point::5}}}
+                    |        return _httpGet(url, null);
+                    |    }
+                    |
+                    |    private String httpGet(String url, String username, String password) { {{{point::6}}}
+                    |        ClientConfig config = new ClientConfig();
+                    |        BasicAuthSecurityHandler basicAuthSecHandler = new BasicAuthSecurityHandler();
+                    |        basicAuthSecHandler.setUserName(username);
+                    |        basicAuthSecHandler.setPassword(password);
+                    |        config.handlers(basicAuthSecHandler);
+                    |        return _httpGet(url, config);
+                    |    }
+                    |
+                    |    private String _httpGet(String url, ClientConfig config) { {{{point::7}}}
+                    |        RestClient client = new RestClient();
+                    |        if (config != null) {
+                    |            client = new RestClient(config);
+                    |        }
+                    |        Resource resource = client.resource(url);
+                    |        return resource
+                    |            .header("Accept", "application/json;q=1.0")
+                    |            .get()
+                    |            .getEntity(String.class);
+                    |    }
+                    |}
+                ') }}
+            </div>
+            <div class="col-md-6">
+
+                <div class="list-group cs-source-point-list" data-source-target="{{ idUserSearchResourceFuncTestStep2 }}">
+                    <div class="list-group-item cs-source-point-list__item">
+                        Since we will be running a special SDK command to execute our Integrationtests the SDK will provide a system property
+                        with the base URL to JIRA. We set that during <code>@Before</code> phase of our test.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Our first test should test authentication, therefore we call our REST Resource without credentials and expect a <code>HTTP 401</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Our second test should test a valid response authenticated wit the user admin.
+                        We search for <code>adm</code> and expect to get <code>admin</code> as result.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        This is just a little helper method to replace single quotes to double quotes,
+                        so that we can easily write JSON with single quotes in our tests.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        A convenience Method to fire a HTTP GET request without authentication.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        A convenience Method to fire a HTTP GET request with authentication (basic auth).
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The low-level HTTP GET method using the <code>wink</code> RestClient. You will need to write
+                        more of it if your tests get more complex, but for us this is enough for now.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <p>
+            Now we can run <code>atlas-integration-test</code> to run all our Integrationtests. You might want to get another coffee during that run, it takes some time.
+        </p>
+
+
+        {{ csShell(shellCmd='atlas-integration-test', shellCmdOutput='
+            |[INFO] ------------------------------------------------------------------------
+            |[INFO] Building kitchen-duty-plugin 1.0.0-SNAPSHOT
+            |[INFO] ------------------------------------------------------------------------
+            |[INFO]
+            |[INFO] --- maven-jira-plugin:6.1.2:compress-resources (default-compress-resources) @ kitchen-duty-plugin ---
+            |[INFO] Compiling javascript using YUI
+            |[INFO] 0 Javascript file(s) were minified into target directory /Users/bg/git-work/kitchen-duty-MASTER/step-02-kitchen-duty-plugin/target/classes
+            |[INFO] 0 CSS file(s) were minified into target directory /Users/bg/git-work/kitchen-duty-MASTER/step-02-kitchen-duty-plugin/target/classes
+            |[INFO] Compressing XML files
+            |[INFO] 0 XML file(s) were minified into target directory /Users/bg/git-work/kitchen-duty-MASTER/step-02-kitchen-duty-plugin/target/classes
+            |[INFO]
+            |....
+            |[INFO] --- atlassian-spring-scanner-maven-plugin:1.2.6:atlassian-spring-scanner (default) @ kitchen-duty-plugin ---
+            |[INFO] Starting Atlassian Spring Byte Code Scanner...
+            |[INFO]
+            |
+            |... 4 million lines later ...
+            |
+            |-------------------------------------------------------
+            | T E S T S
+            |-------------------------------------------------------
+            |Running it.com.comsysto.kitchen.duty.MyComponentWiredTest
+            |Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.248 sec
+            |Running it.com.comsysto.kitchen.duty.rest.UserSearchResourceFuncTest
+            |Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.018 sec
+            |
+            |Results :
+            |
+            |Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+            |
+            |[INFO] jira: Shutting down
+            |[INFO] using codehaus cargo v1.4.7
+            |...
+            |[INFO] ------------------------------------------------------------------------
+            |[INFO] BUILD SUCCESS
+            |[INFO] ------------------------------------------------------------------------
+            |[INFO] Total time: 01:10 min
+            |[INFO] Finished at: 2016-03-11T19:38:26+01:00
+            |[INFO] Final Memory: 32M/437M
+            |[INFO] ------------------------------------------------------------------------
+         ') }}
 
 
         <div class="cs-v-spacer"></div>

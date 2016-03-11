@@ -646,12 +646,292 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
             Now that we have our code ready we need to take care of the <strong>Unit- and Integration-tests</strong>.
         </p>
 
-        <ul>
-            <li>Explain Unit and Integration test and altas-integration-test</li>
-
-        </ul>
+        <p>
+            First we will change the <strong>Unitest</strong> which reside in <code>/src/test/java/*</code> to something that makes sense. So we mock the <code>UserSearchService</code>
+            and provide two users <code>bob</code> and <code>sue</code> as mocks. Now we test if our <code>searchUser</code> Method works as expected.
+        </p>
 
         
+    
+        <div class="cs-code-filename">UserSearchResourceTest.java</div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> ut.com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchParams;
+<span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchService;
+<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.rest.UserSearchResource;
+<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.rest.UserSearchResourceModel;
+<span class="hljs-keyword">import</span> org.junit.After;
+<span class="hljs-keyword">import</span> org.junit.Before;
+<span class="hljs-keyword">import</span> org.junit.Test;
+<span class="hljs-keyword">import</span> org.mockito.Mockito;
+
+<span class="hljs-keyword">import</span> javax.ws.rs.core.Response;
+<span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.junit.Assert.assertEquals;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.junit.Assert.assertNotNull;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.mockito.Matchers.any;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.mockito.Matchers.anyObject;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.mockito.Matchers.anyString;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.mockito.Mockito.mock;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.mockito.Mockito.when;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSearchResourceTest</span> </span>{
+
+    <span class="hljs-annotation">@Before</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+
+    }
+
+    <span class="hljs-annotation">@After</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">tearDown</span><span class="hljs-params">()</span> </span>{
+
+    }
+
+    <span class="hljs-annotation">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">messageIsValid</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">final</span> List&lt;String&gt; mockedUsers = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        mockedUsers.add(<span class="hljs-string">"bob"</span>);
+        mockedUsers.add(<span class="hljs-string">"sue"</span>);
+
+        UserSearchService mockedUserSearchService = Mockito.mock(UserSearchService.class);
+        when(mockedUserSearchService.findUserNames(anyString(), any(UserSearchParams.class))).thenReturn(mockedUsers);
+
+        UserSearchResource resource = <span class="hljs-keyword">new</span> UserSearchResource(mockedUserSearchService);
+
+        Response response = resource.searchUsers(<span class="hljs-string">"bo"</span>, <span class="hljs-keyword">null</span>);
+        <span class="hljs-keyword">final</span> List&lt;UserSearchResourceModel&gt; users = (List&lt;UserSearchResourceModel&gt;) response.getEntity();
+
+        assertEquals(<span class="hljs-string">"should contain bob"</span>, <span class="hljs-string">"bob"</span>, users.get(<span class="hljs-number">0</span>).getText());
+    }
+}</code></pre>
+
+
+        <p>
+            Now we can run <code>atlas-unit-test</code> to run all our Unittests.
+        </p>
+
+
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        atlas-unit-test<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">[INFO] ------------------------------------------------------------------------
+[INFO] Building kitchen-duty-plugin <span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO] --- maven-jira-plugin:<span class="hljs-number">6.1</span>.<span class="hljs-number">2</span>:compress-resources (default-compress-resources) @ kitchen-duty-plugin ---
+[INFO] Compiling javascript using YUI
+...
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running ut.com.comsysto.kitchen.duty.MyComponentUnitTest
+Tests run: <span class="hljs-number">1</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>, Time elapsed: <span class="hljs-number">0.051</span> sec
+Running ut.com.comsysto.kitchen.duty.rest.UserSearchResourceTest
+Tests run: <span class="hljs-number">1</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>, Time elapsed: <span class="hljs-number">0.148</span> sec
+Running ut.com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest
+Tests run: <span class="hljs-number">1</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>, Time elapsed: <span class="hljs-number">0</span> sec
+
+Results :
+
+Tests run: <span class="hljs-number">3</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: <span class="hljs-number">3.477</span> s
+[INFO] Finished at: <span class="hljs-number">2016</span>-<span class="hljs-number">03</span>-<span class="hljs-number">11</span>T19:<span class="hljs-number">34</span>:<span class="hljs-number">06</span>+<span class="hljs-number">01</span>:<span class="hljs-number">00</span>
+[INFO] Final Memory: <span class="hljs-number">25</span>M/<span class="hljs-number">320</span>M
+[INFO] ------------------------------------------------------------------------</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-unit-test"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+        <div class="cs-v-spacer cs-v-spacer"></div>
+
+        <p>
+            Now that Unittests are working let us modify the created <strong>Integrationtest</strong>.
+        </p>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                
+                
+    
+        <div class="cs-code-filename">UserSearchResourceFuncTest.java</div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> it.com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> org.apache.wink.client.ClientConfig;
+<span class="hljs-keyword">import</span> org.apache.wink.client.Resource;
+<span class="hljs-keyword">import</span> org.apache.wink.client.RestClient;
+<span class="hljs-keyword">import</span> org.apache.wink.client.handlers.BasicAuthSecurityHandler;
+<span class="hljs-keyword">import</span> org.junit.After;
+<span class="hljs-keyword">import</span> org.junit.Before;
+<span class="hljs-keyword">import</span> org.junit.Test;
+
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.junit.Assert.assertEquals;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.junit.Assert.assertNotNull;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSearchResourceFuncTest</span> </span>{
+
+    <span class="hljs-keyword">private</span> String baseUrl;
+
+    <span class="hljs-annotation">@Before</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>{
+        baseUrl = System.getProperty(<span class="hljs-string">"baseurl"</span>); <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcefunctest" data-cs-source-point-number="1"></span>
+    }
+
+    <span class="hljs-annotation">@After</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">tearDown</span><span class="hljs-params">()</span> </span>{
+
+    }
+
+    <span class="hljs-annotation">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testSearchUser__unAuthorized</span><span class="hljs-params">()</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcefunctest" data-cs-source-point-number="2"></span>
+        String resourceUrl = baseUrl + <span class="hljs-string">"/rest/kitchenduty/1.0/user/search?query=adm"</span>;
+        String response = httpGet(resourceUrl);
+        assertNotNull(<span class="hljs-string">"should not be null"</span>, response);
+        assertEquals(<span class="hljs-string">"should contain unauthorized message"</span>,
+            toJSON(<span class="hljs-string">"{'message':'Client must be authenticated to access this resource.','status-code':401}"</span>),
+            response);
+    }
+    <span class="hljs-annotation">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testSearchUser__authorized</span><span class="hljs-params">()</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcefunctest" data-cs-source-point-number="3"></span>
+        String resourceUrl = baseUrl + <span class="hljs-string">"/rest/kitchenduty/1.0/user/search?query=adm"</span>;
+        String response = httpGet(resourceUrl, <span class="hljs-string">"admin"</span>, <span class="hljs-string">"admin"</span>);
+        assertNotNull(<span class="hljs-string">"should not be null"</span>, response);
+        assertEquals(<span class="hljs-string">"should contain admin"</span>,
+            toJSON(<span class="hljs-string">"[{'text':'admin','id':'admin'}]"</span>),
+            response);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> String <span class="hljs-title">toJSON</span><span class="hljs-params">(String text)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcefunctest" data-cs-source-point-number="4"></span>
+        <span class="hljs-keyword">return</span> text.replaceAll(<span class="hljs-string">"'"</span>, <span class="hljs-string">"\""</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> String <span class="hljs-title">httpGet</span><span class="hljs-params">(String url)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcefunctest" data-cs-source-point-number="5"></span>
+        <span class="hljs-keyword">return</span> _httpGet(url, <span class="hljs-keyword">null</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> String <span class="hljs-title">httpGet</span><span class="hljs-params">(String url, String username, String password)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcefunctest" data-cs-source-point-number="6"></span>
+        ClientConfig config = <span class="hljs-keyword">new</span> ClientConfig();
+        BasicAuthSecurityHandler basicAuthSecHandler = <span class="hljs-keyword">new</span> BasicAuthSecurityHandler();
+        basicAuthSecHandler.setUserName(username);
+        basicAuthSecHandler.setPassword(password);
+        config.handlers(basicAuthSecHandler);
+        <span class="hljs-keyword">return</span> _httpGet(url, config);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> String <span class="hljs-title">_httpGet</span><span class="hljs-params">(String url, ClientConfig config)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcefunctest" data-cs-source-point-number="7"></span>
+        RestClient client = <span class="hljs-keyword">new</span> RestClient();
+        <span class="hljs-keyword">if</span> (config != <span class="hljs-keyword">null</span>) {
+            client = <span class="hljs-keyword">new</span> RestClient(config);
+        }
+        Resource resource = client.resource(url);
+        <span class="hljs-keyword">return</span> resource
+            .header(<span class="hljs-string">"Accept"</span>, <span class="hljs-string">"application/json;q=1.0"</span>)
+            .get()
+            .getEntity(String.class);
+    }
+}</code></pre>
+
+            </div>
+            <div class="col-md-6">
+
+                <div class="list-group cs-source-point-list" data-source-target="step2-usersearchresourcefunctest">
+                    <div class="list-group-item cs-source-point-list__item">
+                        Since we will be running a special SDK command to execute our Integrationtests the SDK will provide a system property
+                        with the base URL to JIRA. We set that during <code>@Before</code> phase of our test.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Our first test should test authentication, therefore we call our REST Resource without credentials and expect a <code>HTTP 401</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Our second test should test a valid response authenticated wit the user admin.
+                        We search for <code>adm</code> and expect to get <code>admin</code> as result.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        This is just a little helper method to replace single quotes to double quotes,
+                        so that we can easily write JSON with single quotes in our tests.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        A convenience Method to fire a HTTP GET request without authentication.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        A convenience Method to fire a HTTP GET request with authentication (basic auth).
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The low-level HTTP GET method using the <code>wink</code> RestClient. You will need to write
+                        more of it if your tests get more complex, but for us this is enough for now.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <p>
+            Now we can run <code>atlas-integration-test</code> to run all our Integrationtests. You might want to get another coffee during that run, it takes some time.
+        </p>
+
+
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        atlas-integration-test<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">[INFO] ------------------------------------------------------------------------
+[INFO] Building kitchen-duty-plugin <span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO] --- maven-jira-plugin:<span class="hljs-number">6.1</span>.<span class="hljs-number">2</span>:compress-resources (default-compress-resources) @ kitchen-duty-plugin ---
+[INFO] Compiling javascript using YUI
+[INFO] <span class="hljs-number">0</span> Javascript file(s) were minified into target directory /Users/<span class="hljs-built_in">bg</span>/git-work/kitchen-duty-MASTER/step-<span class="hljs-number">02</span>-kitchen-duty-plugin/target/classes
+[INFO] <span class="hljs-number">0</span> CSS file(s) were minified into target directory /Users/<span class="hljs-built_in">bg</span>/git-work/kitchen-duty-MASTER/step-<span class="hljs-number">02</span>-kitchen-duty-plugin/target/classes
+[INFO] Compressing XML files
+[INFO] <span class="hljs-number">0</span> XML file(s) were minified into target directory /Users/<span class="hljs-built_in">bg</span>/git-work/kitchen-duty-MASTER/step-<span class="hljs-number">02</span>-kitchen-duty-plugin/target/classes
+[INFO]
+....
+[INFO] --- atlassian-spring-scanner-maven-plugin:<span class="hljs-number">1.2</span>.<span class="hljs-number">6</span>:atlassian-spring-scanner (default) @ kitchen-duty-plugin ---
+[INFO] Starting Atlassian Spring Byte Code Scanner...
+[INFO]
+
+... <span class="hljs-number">4</span> million lines later ...
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running it.com.comsysto.kitchen.duty.MyComponentWiredTest
+Tests run: <span class="hljs-number">1</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>, Time elapsed: <span class="hljs-number">1.248</span> sec
+Running it.com.comsysto.kitchen.duty.rest.UserSearchResourceFuncTest
+Tests run: <span class="hljs-number">2</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>, Time elapsed: <span class="hljs-number">1.018</span> sec
+
+Results :
+
+Tests run: <span class="hljs-number">3</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>
+
+[INFO] jira: Shutting down
+[INFO] using codehaus cargo v1.<span class="hljs-number">4.7</span>
+...
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: <span class="hljs-number">01</span>:<span class="hljs-number">10</span> min
+[INFO] Finished at: <span class="hljs-number">2016</span>-<span class="hljs-number">03</span>-<span class="hljs-number">11</span>T19:<span class="hljs-number">38</span>:<span class="hljs-number">26</span>+<span class="hljs-number">01</span>:<span class="hljs-number">00</span>
+[INFO] Final Memory: <span class="hljs-number">32</span>M/<span class="hljs-number">437</span>M
+[INFO] ------------------------------------------------------------------------</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="atlas-integration-test"><i class="fa fa-files-o"></i></a>
+</div>
 
 
 

@@ -299,8 +299,10 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
         <ol>
             <li><p>The <code>pom.xml</code> has been altered to provide necessary dependencies for JAX-WS API, Servlet API and some testing Dependencies.</p></li>
             <li><p>The <code>atlassian-plugin.xml</code> has been altered to register the REST Resource to listen to the baseUrl <code>http://server/jira/rest/kitchenduty/1.0/*</code></p></li>
-            <li><p>There now is a <code>UserSearchResource.java</code> which is the actual REST Controller which delivers the response.</p></li>
-            <li><p>In addition to the REST Controller there is <code>UserSearchResourceModel.java</code> which is the Model which is delivered as XML in the REST Controllers response.</p></li>
+            <li><p>There now is a <code>UserSearchResource.java</code> which is the actual REST Controller which delivers the response.</p>
+                <p>In addition to the REST Controller there is <code>UserSearchResourceModel.java</code> which is the Model which is delivered as XML in the REST Controllers response.</p>
+            </li>
+            <li><p>An unit-test <code>UserSearchResourceTest</code> and integration-test <code>UserSearchResourceFuncTest</code> file has be created.</p></li>
         </ol>
 
         <p>We will now get into all the details and implement the needed features for the user search on the fly.</p>
@@ -523,7 +525,7 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
 
 
 
-        <div class="cs-v-spacer cs-v-spacer"></div>
+        <div class="cs-v-spacer"></div>
 
 
 
@@ -581,16 +583,21 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
 
                 <div class="list-group cs-source-point-list" data-source-target="step2-usersearchresourcemodel">
                     <div class="list-group-item cs-source-point-list__item">
-                        ...
+                        Currently we only use JSON and have disabled XML as response format.
+                        But if you someday want to use XML you will need a name for the container holding users.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        ...
+                        This basically tells the compiler to look for <code>@XmlElement</code> on the attribute level and not on the getters/setters.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        ...
+                        Since the select2 widget from AUI wants to have a certain JSON format we just stick to that and define a property called <code>text</code>.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        ...
+                        The same thing for the property called <code>id</code>.
+                    </div>
+                    <div class="list-group-item">
+                        Ok this will render us the following JSON format once we use it:<br>
+                        <code>[ { "id": "foo", "text": "foo" }, { "id": "bar", "text": "bar" } ]</code>
                     </div>
 
                 </div>
@@ -599,17 +606,83 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
         </div>
 
 
-        <strong style="color:red">todo</strong>
-        <ul style="color:red">
-            <li>model</li>
-            <li>component import</li>
+        <div class="cs-v-spacer cs-v-spacer"></div>
+
+
+
+        <p>
+            Ok we could run <code>atlas-run</code> now and see what we get, but as I told you we need to take care of the <code>@ComponentImport</code>
+            of <code>UserSearchService</code> first. Since it doesn't matter where in our plugin we import foreign Interfaces we do it in the "dummy"-component so
+            our imports will be available everywhere in our plugin.
+        </p>
+
+        <p>
+            
+    
+        <div class="cs-code-filename">MyPluginComponentImpl.java</div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchService;
+<span class="hljs-keyword">import</span> com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+...
+
+<span class="hljs-annotation">@Named</span> (<span class="hljs-string">"myPluginComponent"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPluginComponentImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MyPluginComponent</span> </span>{
+   ...
+   <span class="hljs-annotation">@ComponentImport</span>
+   <span class="hljs-keyword">private</span> UserSearchService userSearchService;
+   ...
+}</code></pre>
+
+        </p>
+
+        <div class="cs-v-spacer"></div>
+
+
+        <h3 class="cs-headline cs-headline--s">4. Unit- and Integrationtests</h3>
+
+        <p>
+            Now that we have our code ready we need to take care of the <strong>Unit- and Integration-tests</strong>.
+        </p>
+
+        <ul>
             <li>Explain Unit and Integration test and altas-integration-test</li>
 
-            <li>atlas-run and curl to username search</li>
-            <li>summary and step2 conclusion - <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a> </li>
         </ul>
 
         
+
+
+
+        <div class="cs-v-spacer"></div>
+
+
+        <h3 class="cs-headline cs-headline--s">Finally let's do a manual test</h3>
+
+        <p>
+            Alright now it is time to startup and see what we get. Run the plugin with <code>atlas-run</code> and then we use Curl to search for users.
+            Wait for atlas-run to startup JIRA and then fire a search request against our User Search REST Resource:
+        </p>
+
+
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        curl --user admin:admin  http://localhost:2990/jira/rest/kitchenduty/1.0/user/search?query=adm<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">[{<span class="hljs-string">"text"</span>:<span class="hljs-string">"admin"</span>,<span class="hljs-string">"id"</span>:<span class="hljs-string">"admin"</span>}]</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="curl --user admin:admin  http://localhost:2990/jira/rest/kitchenduty/1.0/user/search?query=adm"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+        <p>
+            Since we provided <code>?query=adm</code> we want a list of all user starting with <code>adm</code> which is currently only <code>admin</code>.
+        </p>
+
+        <div class="cs-v-spacer"></div>
+
 
         <div class="cs-tutorial-step-review">
             <div class="cs-tutorial-step-review__headline">
@@ -619,6 +692,8 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
                 <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin">
                     https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin
                 </a>
+                <br>
+                Or view the diff from Step 1 to Step 2 here: <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a>
             </div>
         </div>
 
@@ -645,6 +720,10 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
         </div>
         <div class="cs-v-spacer cs-v-spacer--big"></div>
         <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+
+
 
     </div>
 </div>

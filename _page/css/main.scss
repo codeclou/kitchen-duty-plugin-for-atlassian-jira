@@ -84,7 +84,7 @@ body {
     padding: 0 30px 30px 30px;
     position: fixed;
     background-color: #fff;
-    z-index:500001;
+    z-index:1;
 }
 
 .cs-sidebar-wrapper {
@@ -199,7 +199,7 @@ body {
     width:350px;
     background-color: #fff;
     padding:20px 10px 10px 10px;
-    z-index:500005;
+    z-index:2;
     -webkit-transition: width 1s, height 1s; /* Safari */
     transition: width 1s, height 1s;
 }

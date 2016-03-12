@@ -34,7 +34,7 @@
     "sass-css-stream": "latest",
     "sass-lint": "latest",
     "serve-static": "^1.10.2",
-    "shelljs": "latest",
+    "shelljs": "^0.5.3",
     "through2": "^2.0.0",
     "uglify-js": "latest",
     "yargs": "latest",

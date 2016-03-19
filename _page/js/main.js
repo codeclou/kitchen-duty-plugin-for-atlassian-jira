@@ -242,6 +242,12 @@ var initInteractiveGraphics = function () {
 /* HELPERS */
 /* ================================================================================================ */
 
+var redirectToSsl = function () {
+    if (!_startsWith(window.location, 'https')) {
+        window.location = "https://" + window.location.hostname + window.location.pathname + window.location.search;
+    }
+};
+
 var _startsWith = function (string, prefix) {
     if (string === undefined || string === null) return false;
     return string.slice(0, prefix.length) == prefix;
@@ -252,6 +258,8 @@ var _startsWith = function (string, prefix) {
 /* ================================================================================================ */
 
 $(function () {
+    redirectToSsl();
+
     for (var i = 0; i < postLoadMethods.length; i++){
         postLoadMethods[i]();
     }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+    <url>
+        <loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/</loc>
+        <image:image>
+            <image:loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-plugin--social.jpg</image:loc>
+            <image:caption>Kitchen Duty Plugin Tutorial for Atlassian JIRA® by comSysto</image:caption>
+        </image:image>
+        <lastmod>2016-03-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/01-introduction/</loc>
+        <image:image>
+            <image:loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-kitchen-duty-planning-page_big.jpg</image:loc>
+            <image:caption>Mockup of Planning Page ~ Kitchen Duty Plugin for Atlassian JIRA® by comSysto</image:caption>
+        </image:image>
+        <lastmod>2016-03-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/02-step-00-getting-started/</loc>
+        <image:image>
+            <image:loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-osgi-and-jira_big.jpg</image:loc>
+            <image:caption>OSGi Bundle Overview ~ Kitchen Duty Plugin for Atlassian JIRA® by comSysto</image:caption>
+        </image:image>
+        <lastmod>2016-03-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/</loc>
+        <image:image>
+            <image:loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/drawings/serious-thinking.jpg</image:loc>
+            <image:caption>Serious Thinking ~ Kitchen Duty Plugin for Atlassian JIRA® by comSysto</image:caption>
+        </image:image>
+        <lastmod>2016-03-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/</loc>
+        <image:image>
+            <image:loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/drawings/serious-thinking.jpg</image:loc>
+            <image:caption>Serious Thinking ~ Kitchen Duty Plugin for Atlassian JIRA® by comSysto</image:caption>
+        </image:image>
+        <lastmod>2016-03-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/04-step-01-planning-page--webwork-action-and-html-view/</loc>
+        <image:image>
+            <image:loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-done.png</image:loc>
+            <image:caption>Planning Page Overview Webwork Action ~ Kitchen Duty Plugin for Atlassian JIRA® by comSysto</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-web-section-and-item.png</image:loc>
+            <image:caption>Web-Section and Web-Item ~ Kitchen Duty Plugin for Atlassian JIRA® by comSysto</image:caption>
+        </image:image>
+        <lastmod>2016-03-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/05-step-02-planning-page--user-search-rest-resource/</loc>
+        <image:image>
+            <image:loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-02-rest-user-search-response-xml.png</image:loc>
+            <image:caption>REST Response of UserSearchController ~ Kitchen Duty Plugin for Atlassian JIRA® by comSysto</image:caption>
+        </image:image>
+        <lastmod>2016-03-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+</urlset>

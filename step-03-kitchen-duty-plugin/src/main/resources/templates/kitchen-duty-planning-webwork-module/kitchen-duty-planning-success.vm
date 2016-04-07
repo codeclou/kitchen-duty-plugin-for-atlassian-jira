@@ -1,0 +1,11 @@
+<html>
+<head>
+    <title>$i18n.getText("kitchen-duty-plugin.admin.planning.page.title")</title>
+    <meta name="decorator" content="atl.admin">
+</head>
+<body>
+<h1>$i18n.getText("kitchen-duty-plugin.admin.planning.page.headline")</h1>
+
+<p>Now it looks nice :)</p>
+</body>
+</html>

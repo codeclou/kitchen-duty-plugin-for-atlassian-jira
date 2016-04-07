@@ -1,0 +1,13 @@
+*.svg eol=lf
+*.html eol=lf
+*.js eol=lf
+*.css eol=lf
+*.scss eol=lf
+*.json eol=lf
+*.sh eol=lf
+*.yml eol=lf
+*.md eol=lf
+*.txt eol=lf
+*.java eol=lf
+*.properties  eol=lf
+*.xml eol=lf

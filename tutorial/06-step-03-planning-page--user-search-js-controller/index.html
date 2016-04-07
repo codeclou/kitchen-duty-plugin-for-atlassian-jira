@@ -250,7 +250,7 @@
 
         <h3 class="cs-headline cs-headline--s">What about JS Frameworks, Template Engines and jQuery?</h3>
 
-        <p>Alright that is it about our Widget. But how we write our JavaScript code?
+        <p>Alright that is it about our Widget. But how do we write our JavaScript code?
         Is there any template engine? Any watchers and/or frameworks? You have good point there.
         Let me tell you a short tale about JIRA and JavaScript...
 
@@ -306,7 +306,7 @@
 
         
     
-        <div class="cs-code-filename">kitchen-duty-plugin--planning-page-controller.js</div>
+        <div class="cs-code-filename">/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</div>
     
 <pre class="cs-code"><code class="hljs">AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
    <span class="hljs-built_in">require</span>([<span class="hljs-string">'aui/flag'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">flag</span>) </span>{
@@ -319,10 +319,143 @@
 });</code></pre>
 
 
+        <p>Our new JS Controller will not just work out of the box. We need to define a resource in <code>atlassian-plugin.xml</code>
+            for our controller and the handlebar.js file.</p>
+
+        
+    
+        <div class="cs-code-filename">src/main/resources/atlassian-plugin.xml</div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">web-resource</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-plugin-resources--planning-page"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin Web Resources for Planning Page"</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:ajs<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin--planning-page-controller.js"</span> <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/kitchen-duty-plugin--planning-page-controller.js"</span>/&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"handlebars.js"</span> <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/3rdparty/handlebars-v4.0.5.js"</span>/&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">context</span>&gt;</span>kitchen-duty-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">context</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">web-resource</span>&gt;</span></code></pre>
+
+
+        <p>We have defined the resource now but JIRA does not know when to use (load) the resources we defined.
+        <strong>We will use the PageBuilderService to tell JIRA when to load our resources</strong>. (You might want to try <code>#require</code> in your velocity templates instead, but PageBuilderService always worked best for me)</p>
+
+        <p>We pull in some additional dependencies to be able to use PageBuilderService. Add these dependencies to your <code>pom.xml</code>.</p>
+
+
+        
+    
+        <div class="cs-code-filename">pom.xml</div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>com.atlassian.templaterenderer<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>atlassian-template-renderer-api<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>1.5.7<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>com.atlassian.plugins<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>atlassian-plugins-webresource<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>3.3.3<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+	<span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span></code></pre>
+
+
+        <p>We already learned that we need to do a <code>@ComponentImport</code> somewhere in our application to pull dependencies from other OSGi Bundles.
+        That is why we simply do that in our <code>MyPluginComponentImpl.java</code> file which we will (mis)use for that purpose from now on.</p>
+
+        
+    
+        <div class="cs-code-filename">src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java</div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">import</span> com.atlassian.webresource.api.assembler.PageBuilderService;
+
+...
+
+<span class="hljs-annotation">@ComponentImport</span>
+<span class="hljs-keyword">private</span> PageBuilderService pageBuilderService;</code></pre>
+
+
+        <p>Now that the PageBuilderService is usable we need to tell our Webwork Action to load our resources.</p>
+
+        <div class="row">
+            <div class="col-md-8">
+                
+    
+        <div class="cs-code-filename">src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java</div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.webwork;
+
+<span class="hljs-keyword">import</span> com.atlassian.webresource.api.assembler.PageBuilderService;
+<span class="hljs-keyword">import</span> org.slf4j.Logger;
+<span class="hljs-keyword">import</span> org.slf4j.LoggerFactory;
+<span class="hljs-keyword">import</span> com.atlassian.jira.web.action.JiraWebActionSupport;
+
+<span class="hljs-keyword">import</span> javax.inject.Inject;
+<span class="hljs-keyword">import</span> javax.inject.Named;
+
+<span class="hljs-annotation">@Named</span> <span class="cs-source-point" data-cs-source-point-id="h768go8gbo8gv8gbu909" data-cs-source-point-number="1"></span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyPlanningWebworkAction</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">JiraWebActionSupport</span>
+</span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Logger log = LoggerFactory.getLogger(KitchenDutyPlanningWebworkAction.class);
+
+    <span class="hljs-annotation">@Inject</span> <span class="cs-source-point" data-cs-source-point-id="h768go8gbo8gv8gbu909" data-cs-source-point-number="2"></span>
+    <span class="hljs-keyword">private</span> PageBuilderService pageBuilderService;
+
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">execute</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        pageBuilderService.assembler().resources().requireWebResource(
+           <span class="hljs-string">"com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources"</span> <span class="cs-source-point" data-cs-source-point-id="h768go8gbo8gv8gbu909" data-cs-source-point-number="3"></span>
+        ).requireWebResource(
+           <span class="hljs-string">"com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources--planning-page"</span>
+        );
+
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"kitchen-duty-planning-success"</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setPageBuilderService</span><span class="hljs-params">(PageBuilderService pageBuilderService)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="h768go8gbo8gv8gbu909" data-cs-source-point-number="4"></span>
+        <span class="hljs-keyword">this</span>.pageBuilderService = pageBuilderService;
+    }
+}</code></pre>
+
+            </div>
+            <div class="col-md-4">
+                <div class="list-group cs-source-point-list" data-source-target="h768go8gbo8gv8gbu909">
+                    <div class="list-group-item cs-source-point-list__item">
+                        Define our <code>KitchenDutyPlanningWebworkAction</code> as <code>@Named</code>-component.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Use <code>@Inject</code> to wire the <code>PageBuilderService</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We tell the PageBuilderService via <code>requireWebResource()</code>
+                        to load our share resource bundle and our planning-page bundle containing the controller and handlebars.
+                        The pattern for require is <code>"pluginKey:resourceKey"</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        And of course a setter for the setter injection of PageBuilderService.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <p>After starting up JIRA via <code>atlas-run</code> (you should restart atlas-run because we added something to pom.xml) you
+            <strong>should see a green success message popping up on the top right </strong> when
+        surfing to planning page: <a class="cs-do-wrap" href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa</a></p>
 
 
 
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-03-js-controller-working.gif" data-lightbox="03-step" data-title="Step 3 - Test of JS Controller for Planning Page">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-03-js-controller-working.gif" class="img-thumbnail img-fluid" alt="Step 3 - Test of JS Controller for Planning Page">
+                    </a>
+                </p>
+            </div>
+        </div>
 
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+        <h3 class="cs-headline cs-headline--s">Setting up Select2 Widget to find Users</h3>
 
 
 

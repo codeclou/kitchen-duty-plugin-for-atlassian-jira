@@ -67,7 +67,7 @@
 
         <h3 class="cs-headline cs-headline--s">What about JS Frameworks, Template Engines and jQuery?</h3>
 
-        <p>Alright that is it about our Widget. But how we write our JavaScript code?
+        <p>Alright that is it about our Widget. But how do we write our JavaScript code?
         Is there any template engine? Any watchers and/or frameworks? You have good point there.
         Let me tell you a short tale about JIRA and JavaScript...
 
@@ -114,22 +114,143 @@
         <p>Now we <strong>create our JS-Controller</strong> file in <code>/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</code>.
         We put some simple dummy code inside which will trigger a <a href="https://docs.atlassian.com/aui/5.7.31/docs/flag.html">message flag</a> on pageload just to see if everything is working.</p>
 
-        {{ csSource(lang='js', filename="kitchen-duty-plugin--planning-page-controller.js", source="
-                    |AJS.toInit(function(){
-                    |   require(['aui/flag'], function(flag) {
-                    |       var myFlag = flag({
-                    |           type: 'success',
-                    |           title: 'Kitchen Duty Plugin',
-                    |           body: 'JS Controller is working'
-                    |       });
-                    |   });
-                    |});
-                ") }}
+        {{ csSource(lang='js', filename="/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js", source="
+            |AJS.toInit(function(){
+            |   require(['aui/flag'], function(flag) {
+            |       var myFlag = flag({
+            |           type: 'success',
+            |           title: 'Kitchen Duty Plugin',
+            |           body: 'JS Controller is working'
+            |       });
+            |   });
+            |});
+        ") }}
+
+        <p>Our new JS Controller will not just work out of the box. We need to define a resource in <code>atlassian-plugin.xml</code>
+            for our controller and the handlebar.js file.</p>
+
+        {{ csSource(lang='xml', filename="src/main/resources/atlassian-plugin.xml", source='
+            |<web-resource key="kitchen-duty-plugin-resources--planning-page" name="kitchen-duty-plugin Web Resources for Planning Page">
+            |	<dependency>com.atlassian.auiplugin:ajs</dependency>
+            |	<resource type="download" name="kitchen-duty-plugin--planning-page-controller.js" location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
+            |	<resource type="download" name="handlebars.js" location="/js/3rdparty/handlebars-v4.0.5.js"/>
+            |	<context>kitchen-duty-plugin</context>
+            |</web-resource>
+        ') }}
+
+        <p>We have defined the resource now but JIRA does not know when to use (load) the resources we defined.
+        <strong>We will use the PageBuilderService to tell JIRA when to load our resources</strong>. (You might want to try <code>#require</code> in your velocity templates instead, but PageBuilderService always worked best for me)</p>
+
+        <p>We pull in some additional dependencies to be able to use PageBuilderService. Add these dependencies to your <code>pom.xml</code>.</p>
+
+
+        {{ csSource(lang='xml', filename="pom.xml", source='
+            |<dependency>
+            |	<groupId>com.atlassian.templaterenderer</groupId>
+            |	<artifactId>atlassian-template-renderer-api</artifactId>
+            |	<version>1.5.7</version>
+            |	<scope>provided</scope>
+            |</dependency>
+            |<dependency>
+            |	<groupId>com.atlassian.plugins</groupId>
+            |	<artifactId>atlassian-plugins-webresource</artifactId>
+            |	<version>3.3.3</version>
+            |	<scope>provided</scope>
+            |</dependency>
+        ') }}
+
+        <p>We already learned that we need to do a <code>@ComponentImport</code> somewhere in our application to pull dependencies from other OSGi Bundles.
+        That is why we simply do that in our <code>MyPluginComponentImpl.java</code> file which we will (mis)use for that purpose from now on.</p>
+
+        {{ csSource(lang='java', filename="src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java", source='
+            |import com.atlassian.webresource.api.assembler.PageBuilderService;
+            |
+            |...
+            |
+            |@ComponentImport
+            |private PageBuilderService pageBuilderService;
+        ') }}
+
+        <p>Now that the PageBuilderService is usable we need to tell our Webwork Action to load our resources.</p>
+
+        <div class="row">
+            <div class="col-md-8">
+                {{ csSource(lang='java', filename="src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java", uniqueId='h768go8gbo8gv8gbu909', source='
+                    |package com.comsysto.kitchen.duty.webwork;
+                    |
+                    |import com.atlassian.webresource.api.assembler.PageBuilderService;
+                    |import org.slf4j.Logger;
+                    |import org.slf4j.LoggerFactory;
+                    |import com.atlassian.jira.web.action.JiraWebActionSupport;
+                    |
+                    |import javax.inject.Inject;
+                    |import javax.inject.Named;
+                    |
+                    |@Named {{{point::1}}}
+                    |public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
+                    |{
+                    |    private static final Logger log = LoggerFactory.getLogger(KitchenDutyPlanningWebworkAction.class);
+                    |
+                    |    @Inject {{{point::2}}}
+                    |    private PageBuilderService pageBuilderService;
+                    |
+                    |    @Override
+                    |    public String execute() throws Exception {
+                    |        pageBuilderService.assembler().resources().requireWebResource(
+                    |           "com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources" {{{point::3}}}
+                    |        ).requireWebResource(
+                    |           "com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources--planning-page"
+                    |        );
+                    |
+                    |        return "kitchen-duty-planning-success";
+                    |    }
+                    |
+                    |    public void setPageBuilderService(PageBuilderService pageBuilderService) { {{{point::4}}}
+                    |        this.pageBuilderService = pageBuilderService;
+                    |    }
+                    |}
+                ') }}
+            </div>
+            <div class="col-md-4">
+                <div class="list-group cs-source-point-list" data-source-target="h768go8gbo8gv8gbu909">
+                    <div class="list-group-item cs-source-point-list__item">
+                        Define our <code>KitchenDutyPlanningWebworkAction</code> as <code>@Named</code>-component.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Use <code>@Inject</code> to wire the <code>PageBuilderService</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We tell the PageBuilderService via <code>requireWebResource()</code>
+                        to load our share resource bundle and our planning-page bundle containing the controller and handlebars.
+                        The pattern for require is <code>"pluginKey:resourceKey"</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        And of course a setter for the setter injection of PageBuilderService.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <p>After starting up JIRA via <code>atlas-run</code> (you should restart atlas-run because we added something to pom.xml) you
+            <strong>should see a green success message popping up on the top right </strong> when
+        surfing to planning page: <a class="cs-do-wrap" href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa</a></p>
 
 
 
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-03-js-controller-working.gif" data-lightbox="03-step" data-title="Step 3 - Test of JS Controller for Planning Page">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-03-js-controller-working.gif" class="img-thumbnail img-fluid" alt="Step 3 - Test of JS Controller for Planning Page">
+                    </a>
+                </p>
+            </div>
+        </div>
 
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
 
+        <h3 class="cs-headline cs-headline--s">Setting up Select2 Widget to find Users</h3>
 
 
 

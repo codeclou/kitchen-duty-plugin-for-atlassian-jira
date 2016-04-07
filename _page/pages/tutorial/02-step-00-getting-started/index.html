@@ -1,4 +1,5 @@
 {% set CURRENT_PAGE_ID = 2 %}
+{% set gitHubBaseUrlForStep0 = 'https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-00-kitchen-duty-plugin/' %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
     <title>Getting Started | Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
@@ -6,9 +7,6 @@
     <meta name="robots" content="index, follow">
 {% endblock %}
 {% block content %}
-
-
-
 
     <div class="row">
         <div class="col-md-12">
@@ -130,7 +128,7 @@
 
                     <p>Create <code>.editorconfig</code> and add statements for line endings, charset and tab indentation. Since IntelliJ is awesome <a href="http://EditorConfig.org">EditorConfig Plugin</a> is already installed. If you are using another IDE get the plugin now.</p>
 
-                    {{ csSource(lang='ini', source='
+                    {{ csSource(lang='ini', filename=".editorconfig", ghBaseUrl=gitHubBaseUrlForStep0, source='
                          |# EditorConfig is awesome: http://EditorConfig.org
                          |root = true
                          |[*]
@@ -165,7 +163,7 @@
 
                     <p>Create <code>.gitignore</code> and add ignore statements for files we do not want to commit.</p>
 
-                    {{ csSource(lang='ini', source='
+                    {{ csSource(lang='ini', filename=".gitignore", ghBaseUrl=gitHubBaseUrlForStep0, source='
                         |.idea/
                         |*.iml
                         |*.log
@@ -174,7 +172,7 @@
 
                     <p>Create <code>.gitattributes</code> and set line endings to unix.</p>
 
-                    {{ csSource(lang='ini', source='
+                    {{ csSource(lang='ini', filename=".gitattributes", ghBaseUrl=gitHubBaseUrlForStep0, source='
                         |*.svg eol=lf
                         |*.html eol=lf
                         |*.js eol=lf
@@ -201,7 +199,7 @@
 
                     <p>Edit <code>pom.xml</code> and add line <code>&lt;version&gt;3.3&lt;/version&gt;</code> to <code>maven-compiler-plugin</code>.</p>
 
-                    {{ csSource(lang='xml', source='
+                    {{ csSource(lang='xml', filename="pom.xml", ghBaseUrl=gitHubBaseUrlForStep0, source='
                         |<plugin>
                         |    <artifactId>maven-compiler-plugin</artifactId>
                         |    <version>3.3</version>
@@ -214,7 +212,7 @@
 
                     <p>Also add in the <code>pom.xml</code> right before the closing <code>&lt;/dependencies&gt;</code>.</p>
 
-                    {{ csSource(lang='xml', source='
+                    {{ csSource(lang='xml', filename="pom.xml", ghBaseUrl=gitHubBaseUrlForStep0, source='
                         |<dependencies>
                         |   ...
                         |   <dependency>
@@ -297,7 +295,7 @@
 
                     <p>There is also an important passage of <code>maven-jira-plugin</code> in the <code>pom.xml</code> that contains the following lines.</p>
 
-                    {{ csSource(lang='xml', source='
+                    {{ csSource(lang='xml', filename="pom.xml", ghBaseUrl=gitHubBaseUrlForStep0, source='
                     |...
                     |<artifactId>maven-jira-plugin</artifactId>
                     |...

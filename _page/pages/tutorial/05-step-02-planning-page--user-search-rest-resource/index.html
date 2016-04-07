@@ -1,4 +1,5 @@
 {% set CURRENT_PAGE_ID = 5 %}
+{% set gitHubBaseUrlForStep2 = 'https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/' %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
     <title>User Search REST Resource ~ Planning Page | Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
@@ -137,7 +138,7 @@
 
         <p>The <code>pom.xml</code> has these new lines which are quite self explanatory. If you want to read everything in detail read the <a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/rest-api-development/rest-plugin-module" target="_blank">REST Plugin Module documentation</a>.</p>
 
-        {{ csSource(lang='xml', source='
+        {{ csSource(lang='xml', filename="pom.xml", ghBaseUrl=gitHubBaseUrlForStep2, source='
                     |<dependency>
                     |    <groupId>javax.servlet</groupId>
                     |    <artifactId>servlet-api</artifactId>
@@ -190,7 +191,7 @@
 
         <p><code>package</code> will enable Component Scan (which I think is redundant, but doesn't hurt).</p>
 
-        {{ csSource(lang='xml', source='
+        {{ csSource(lang='xml', filename="src/main/resources/atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep2, source='
                     |<rest name="Kitchen Duty Resources"
                     |      i18n-name-key="kitchen-duty-plugin.rest.resources.name"
                     |      key="kitchen-duty-resources"
@@ -203,7 +204,7 @@
 
         <p>You already know <code>i18n-name-key</code> and the other attributes from the Webwork Action and therefore are not wondering that there are some new i18n key/value pairs inside <code>kitchen-duty-plugin.properties</code>.</p>
 
-        {{ csSource(lang='ini', source='
+        {{ csSource(lang='ini', filename="src/main/resources/kitchen-duty-plugin.properties", ghBaseUrl=gitHubBaseUrlForStep2, source='
                     |kitchen-duty-plugin.rest.resources.name=Kitchen Duty Resources
                     |kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources
                 ') }}
@@ -223,7 +224,7 @@
         <div class="row">
             <div class="col-md-6">
                 {%  set uniqueIdUserSearchResourceStep2 = 'step2-usersearchresource' %}
-                {{ csSource(lang='java', filename="UserSearchResource.java", uniqueId=uniqueIdUserSearchResourceStep2, source='
+                {{ csSource(lang='java', filename="src/main/java/com/comsysto/kitchen/duty/rest/UserSearchResource.java", uniqueId=uniqueIdUserSearchResourceStep2, ghBaseUrl=gitHubBaseUrlForStep2, source='
                             |package com.comsysto.kitchen.duty.rest;
                             |
                             |import com.atlassian.jira.bc.user.search.UserSearchParams;
@@ -369,7 +370,8 @@
         <div class="row">
             <div class="col-md-6">
                 {%  set uniqueIdUserSearchResourceModelStep2 = 'step2-usersearchresourcemodel' %}
-                {{ csSource(lang='java', filename="UserSearchResourceModel.java", uniqueId=uniqueIdUserSearchResourceModelStep2, source='
+
+                {{ csSource(lang='java', filename="src/main/java/com/comsysto/kitchen/duty/rest/UserSearchResourceModel.java", uniqueId=uniqueIdUserSearchResourceModelStep2, ghBaseUrl=gitHubBaseUrlForStep2, source='
                             |package com.comsysto.kitchen.duty.rest;
                             |
                             |import javax.xml.bind.annotation.*;
@@ -447,7 +449,7 @@
         </p>
 
         <p>
-            {{ csSource(lang='java', filename="MyPluginComponentImpl.java", uniqueId='sdfrg445ger', source='
+            {{ csSource(lang='java', filename="src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java", uniqueId='sdfrg445ger', ghBaseUrl=gitHubBaseUrlForStep2, source='
                 |package com.comsysto.kitchen.duty.rest;
                 |
                 |import com.atlassian.jira.bc.user.search.UserSearchService;
@@ -478,7 +480,7 @@
             and provide two users <code>bob</code> and <code>sue</code> as mocks. Now we test if our <code>searchUser</code> Method works as expected.
         </p>
 
-        {{ csSource(lang='java', filename="UserSearchResourceTest.java", uniqueId='fdgbfdsgdfgfdg', source='
+        {{ csSource(lang='java', filename="src/test/java/ut/com/comsysto/kitchen/duty/rest/UserSearchResourceTest.java", ghBaseUrl=gitHubBaseUrlForStep2, uniqueId='fdgbfdsgdfgfdg', source='
             |package ut.com.comsysto.kitchen.duty.rest;
             |
             |import com.atlassian.jira.bc.user.search.UserSearchParams;
@@ -581,7 +583,7 @@
         <div class="row">
             <div class="col-md-6">
                 {%  set idUserSearchResourceFuncTestStep2 = 'step2-usersearchresourcefunctest' %}
-                {{ csSource(lang='java', filename="UserSearchResourceFuncTest.java", uniqueId=idUserSearchResourceFuncTestStep2, source='
+                {{ csSource(lang='java', filename="src/test/java/it/com/comsysto/kitchen/duty/rest/UserSearchResourceFuncTest.java", ghBaseUrl=gitHubBaseUrlForStep2, uniqueId=idUserSearchResourceFuncTestStep2, source='
                     |package it.com.comsysto.kitchen.duty.rest;
                     |
                     |import org.apache.wink.client.ClientConfig;

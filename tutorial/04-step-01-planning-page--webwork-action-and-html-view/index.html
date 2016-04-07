@@ -301,6 +301,26 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 
                 
     
+        <div class="cs-code-filename">src/main/resources/atlassian-plugin.xml
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;webwork1 key=&quot;kitchen-duty-planning-webwork-module&quot; name=&quot;Kitchen Duty Planning Webwork Module&quot; i18n-name-key=&quot;kitchen-duty-planning-webwork-module.name&quot;&gt;
+    &lt;description key=&quot;kitchen-duty-planning-webwork-module.description&quot;&gt;The Kitchen Duty Planning Webwork Module Plugin&lt;/description&gt;
+    &lt;actions&gt;
+      &lt;action name=&quot;com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction&quot; alias=&quot;KitchenDutyPlanningWebworkAction&quot;&gt;
+        &lt;view name=&quot;kitchen-duty-planning-success&quot;&gt;/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm&lt;/view&gt;
+      &lt;/action&gt;
+    &lt;/actions&gt;
+  &lt;/webwork1&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"Kitchen Duty Planning Webwork Module"</span> <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.name"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">description</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.description"</span>&gt;</span>The Kitchen Duty Planning Webwork Module Plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">actions</span>&gt;</span>
@@ -315,6 +335,36 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                 <p><code>pom.xml</code> contains now needed dependencies.</p>
 
                 
+    
+        <div class="cs-code-filename">pom.xml
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/pom.xml" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;dependency&gt;
+   &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;
+   &lt;artifactId&gt;httpclient&lt;/artifactId&gt;
+   &lt;version&gt;4.1.1&lt;/version&gt;
+   &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+   &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+   &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+   &lt;version&gt;1.6.6&lt;/version&gt;
+   &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+   &lt;groupId&gt;org.mockito&lt;/groupId&gt;
+   &lt;artifactId&gt;mockito-all&lt;/artifactId&gt;
+   &lt;version&gt;1.8.5&lt;/version&gt;
+   &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
    <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>org.apache.httpcomponents<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
@@ -356,6 +406,22 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
         <p>Now we change the <code>execute</code> Method to work with our view:</p>
 
         
+    
+        <div class="cs-code-filename">src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="@Override
+public String execute() throws Exception {
+   return &quot;kitchen-duty-planning-success&quot;;
+}"><i class="fa fa-files-o"></i></a>
+        </div>
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-annotation">@Override</span>
 <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">execute</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
@@ -424,6 +490,29 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 
         
     
+        <div class="cs-code-filename">src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Planning Page - Kitchen Duty Plugin&lt;/title&gt;
+    &lt;meta name=&quot;decorator&quot; content=&quot;atl.admin&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Kitchen Duty Plugin - Planning Page&lt;/h1&gt;
+
+&lt;p&gt;Now it looks nice :)&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Planning Page - Kitchen Duty Plugin<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
@@ -490,6 +579,38 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 
         
     
+        <div class="cs-code-filename">src/main/resources/atlassian-plugin.xml
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;atlassian-plugin&gt;
+...
+  &lt;web-section key=&quot;admin_kitchen_duty_planning_section&quot;
+               name=&quot;admin_kitchen_duty_planning_section&quot;
+               location=&quot;admin_plugins_menu&quot;
+               weight=&quot;20&quot;
+               i18n-name-key=&quot;kitchen-duty-plugin.admin.planning.page.web.section.name&quot;&gt;
+    &lt;label key=&quot;kitchen-duty-plugin.admin.planning.page.web.section.name&quot; /&gt;
+  &lt;/web-section&gt;
+
+  &lt;web-item key=&quot;admin_kitchen_duty_planning_webitem&quot;
+            name=&quot;admin_kitchen_duty_planning_webitem&quot;
+            section=&quot;admin_plugins_menu/admin_kitchen_duty_planning_section&quot;
+            weight=&quot;15&quot;
+            i18n-name-key=&quot;kitchen-duty-plugin.admin.planning.page.web.item.name&quot;&gt;
+    &lt;label key=&quot;kitchen-duty-plugin.admin.planning.page.web.item.name&quot; /&gt;
+    &lt;link linkId=&quot;admin_kitchen_duty_planning_webitem_link&quot;&gt;/secure/KitchenDutyPlanningWebworkAction.jspa&lt;/link&gt;
+  &lt;/web-item&gt;
+
+&lt;/atlassian-plugin&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">atlassian-plugin</span>&gt;</span>
 ...
   <span class="hljs-tag">&lt;<span class="hljs-title">web-section</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"admin_kitchen_duty_planning_section"</span>
@@ -544,6 +665,21 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 
         
     
+        <div class="cs-code-filename">src/main/resources/kitchen-duty-plugin.properties
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="# websection/webitems
+kitchen-duty-plugin.admin.planning.page.web.section.name = Kitchen Duty Plugin
+kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page"><i class="fa fa-files-o"></i></a>
+        </div>
+    
 <pre class="cs-code"><code class="hljs"># websection/webitems
 kitchen-duty-plugin.admin.planning.page.web.section.name = Kitchen Duty Plugin
 kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pre>
@@ -585,6 +721,29 @@ kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pr
 
         
     
+        <div class="cs-code-filename">src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;$i18n.getText(&quot;kitchen-duty-plugin.admin.planning.page.title&quot;)&lt;/title&gt;
+    &lt;meta name=&quot;decorator&quot; content=&quot;atl.admin&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;$i18n.getText(&quot;kitchen-duty-plugin.admin.planning.page.headline&quot;)&lt;/h1&gt;
+
+&lt;p&gt;Now it looks nice :)&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>$i18n.getText("kitchen-duty-plugin.admin.planning.page.title")<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
@@ -602,6 +761,21 @@ kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pr
 
         
     
+        <div class="cs-code-filename">src/main/resources/kitchen-duty-plugin.properties
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="# kitchen-duty-planning-success.vm
+kitchen-duty-plugin.admin.planning.page.headline = Kitchen Duty Plugin - Planning Page
+kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plugin"><i class="fa fa-files-o"></i></a>
+        </div>
+    
 <pre class="cs-code"><code class="hljs"># kitchen-duty-planning-success.vm
 kitchen-duty-plugin.admin.planning.page.headline = Kitchen Duty Plugin - Planning Page
 kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plugin</code></pre>
@@ -615,6 +789,21 @@ kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plu
             <code>atlassian-plugin.xml</code> to enforce administrator only authorization.</p>
 
         
+    
+        <div class="cs-code-filename">src/main/resources/atlassian-plugin.xml
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;webwork1 key=&quot;kitchen-duty-planning-webwork-module&quot;
+          ...
+          roles-required=&quot;admin&quot;&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module"</span>
           <span class="hljs-attribute">...</span>

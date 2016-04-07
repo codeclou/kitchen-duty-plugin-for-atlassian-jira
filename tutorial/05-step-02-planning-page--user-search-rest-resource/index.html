@@ -326,6 +326,42 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
 
         
     
+        <div class="cs-code-filename">pom.xml
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/pom.xml" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;dependency&gt;
+    &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+    &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+    &lt;version&gt;2.4&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;javax.xml.bind&lt;/groupId&gt;
+    &lt;artifactId&gt;jaxb-api&lt;/artifactId&gt;
+    &lt;version&gt;2.1&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.atlassian.plugins.rest&lt;/groupId&gt;
+    &lt;artifactId&gt;atlassian-rest-common&lt;/artifactId&gt;
+    &lt;version&gt;1.0.2&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.wink&lt;/groupId&gt;
+    &lt;artifactId&gt;wink-client&lt;/artifactId&gt;
+    &lt;version&gt;1.1.3-incubating&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>servlet-api<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
@@ -367,6 +403,26 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
 
         
     
+        <div class="cs-code-filename">src/main/resources/atlassian-plugin.xml
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;rest name=&quot;Kitchen Duty Resources&quot;
+      i18n-name-key=&quot;kitchen-duty-plugin.rest.resources.name&quot;
+      key=&quot;kitchen-duty-resources&quot;
+      path=&quot;/kitchenduty&quot;
+      version=&quot;1.0&quot;&gt;
+  &lt;description key=&quot;kitchen-duty-plugin.rest.resources.description&quot;&gt;All Kitchen Duty REST Resources&lt;/description&gt;
+  &lt;package&gt;com.comsysto.kitchen.duty.rest&lt;/package&gt;
+&lt;/rest&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
+    
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">rest</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"Kitchen Duty Resources"</span>
       <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-plugin.rest.resources.name"</span>
       <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-resources"</span>
@@ -380,6 +436,20 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
         <p>You already know <code>i18n-name-key</code> and the other attributes from the Webwork Action and therefore are not wondering that there are some new i18n key/value pairs inside <code>kitchen-duty-plugin.properties</code>.</p>
 
         
+    
+        <div class="cs-code-filename">src/main/resources/kitchen-duty-plugin.properties
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="kitchen-duty-plugin.rest.resources.name=Kitchen Duty Resources
+kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources"><i class="fa fa-files-o"></i></a>
+        </div>
     
 <pre class="cs-code"><code class="hljs">kitchen-duty-plugin.rest.resources.name=Kitchen Duty Resources
 kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</code></pre>
@@ -402,7 +472,11 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
                 
                 
     
-        <div class="cs-code-filename">UserSearchResource.java
+        <div class="cs-code-filename">src/main/java/com/comsysto/kitchen/duty/rest/UserSearchResource.java
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/UserSearchResource.java" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
             
             <a class="cs-code-copylink cs--trigger-copy-clipboard"
                data-toggle="tooltip" data-placement="left"
@@ -627,9 +701,14 @@ public class UserSearchResource {
         <div class="row">
             <div class="col-md-6">
                 
+
                 
     
-        <div class="cs-code-filename">UserSearchResourceModel.java
+        <div class="cs-code-filename">src/main/java/com/comsysto/kitchen/duty/rest/UserSearchResourceModel.java
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/UserSearchResourceModel.java" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
             
             <a class="cs-code-copylink cs--trigger-copy-clipboard"
                data-toggle="tooltip" data-placement="left"
@@ -753,7 +832,11 @@ public class UserSearchResourceModel {
         <p>
             
     
-        <div class="cs-code-filename">MyPluginComponentImpl.java
+        <div class="cs-code-filename">src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
             
             <a class="cs-code-copylink cs--trigger-copy-clipboard"
                data-toggle="tooltip" data-placement="left"
@@ -806,7 +889,11 @@ public class MyPluginComponentImpl implements MyPluginComponent {
 
         
     
-        <div class="cs-code-filename">UserSearchResourceTest.java
+        <div class="cs-code-filename">src/test/java/ut/com/comsysto/kitchen/duty/rest/UserSearchResourceTest.java
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/test/java/ut/com/comsysto/kitchen/duty/rest/UserSearchResourceTest.java" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
             
             <a class="cs-code-copylink cs--trigger-copy-clipboard"
                data-toggle="tooltip" data-placement="left"
@@ -980,7 +1067,11 @@ Tests run: <span class="hljs-number">3</span>, Failures: <span class="hljs-numbe
                 
                 
     
-        <div class="cs-code-filename">UserSearchResourceFuncTest.java
+        <div class="cs-code-filename">src/test/java/it/com/comsysto/kitchen/duty/rest/UserSearchResourceFuncTest.java
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/test/java/it/com/comsysto/kitchen/duty/rest/UserSearchResourceFuncTest.java" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
             
             <a class="cs-code-copylink cs--trigger-copy-clipboard"
                data-toggle="tooltip" data-placement="left"

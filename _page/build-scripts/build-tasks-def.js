@@ -65,6 +65,22 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
             noCache: true
         });
         env.addGlobal('csStringHelper', csStringHelper);
+        env.addFilter('formatSourceCodeForCopyClipboardDataAttribute', function(code) {
+            var ret = '';
+            var lines = code.split('\n');
+            if (typeof lines !== 'undefined' && lines != null) {
+                for (var i = 0; i < lines.length; i++) {
+                    var replaced = lines[i].replace(/^[ ]*[|]/, '');
+                    replaced = replaced.replace(/&#123;/g, '{');
+                    replaced = replaced.replace(/&#125;/g, '}');
+                    ret = ret + replaced + '\n';
+                }
+                ret = ret.trim();
+            } else {
+                ret = code;
+            }
+            return ret;
+        });
         env.addFilter('formatSourceCode', function(code, lang, uniqueId) {
             /*console.log(code);*/
             var ret = '';

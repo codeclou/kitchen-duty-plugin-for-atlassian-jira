@@ -1,3 +1,7 @@
+/* tooltip */
+$tooltip-bg: #1E9FCC;
+
+
 @import '../../node_modules/bootstrap/scss/bootstrap-flex.scss';
 @import '../../node_modules/font-awesome/scss/font-awesome.scss';
 @import '../../node_modules/highlight.js/styles/railscasts';
@@ -335,7 +339,7 @@ p {
     margin-bottom:15px;
 }
 .cs-shell__inner {
-    display:table-cell;
+    display:block;
     vertical-align: top;
     padding: 10px 10px 10px 10px;
     font-size: 90%;
@@ -352,9 +356,9 @@ p {
 .cs-shell__output {
     color: #afafaf;
     background: transparent;
-    border:0px;
-    padding:0px;
-    margin:0px;
+    border:0;
+    padding:0;
+    margin:0;
     margin-top:10px;
 }
 .cs-shell__output-hljs {
@@ -363,10 +367,10 @@ p {
 }
 .cs-shell__copy-clipboard {
     cursor: pointer;
-    display:table-cell;
-    vertical-align: top;
-    color: #303030;
-    padding-left:0.5rem;
+    display:inline-block;
+    float:right;
+    color: #ffffff;
+    padding:3px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -374,10 +378,9 @@ p {
     -ms-user-select: none;
     user-select: none;
 }
-.cs-shell__copy-clipboard:active {
-    padding-top:0.1rem;
-    padding-left:0.6rem;
-    color:#7CBB00;
+.cs-shell__copy-clipboard:hover {
+    color:#ffffff;
+    border-bottom:3px solid #ef22b7;
 }
 
 .cs-sidenote {
@@ -515,6 +518,21 @@ p {
     font-size: 13px;
     font-family: Menlo, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+.cs-code-copylink, .cs-code-ghlink {
+    color: #ffffff;
+    display: inline-block;
+    float:right;
+    margin-left:15px;
+    cursor: pointer;
+    padding-left:3px;
+}
+.cs-code-copylink:hover, .cs-code-ghlink:hover {
+    color: #ffffff;
+    border-bottom:3px solid #ef22b7;
+}
+
+
 
 
 .cs-source-point-list {
@@ -808,3 +826,5 @@ p {
 .cs-blockquote em{
     font-style: italic;
 }
+
+

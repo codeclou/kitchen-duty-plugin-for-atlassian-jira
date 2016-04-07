@@ -33,17 +33,22 @@ var initCsSourcePointerHover = function () {
 
 var initBootstrapTooltip = function () {
     $('[data-toggle="popover"]').popover();
+    $('[data-toggle="tooltip"]').tooltip();
+
 };
 
 var initClipboardJs = function () {
     /* https://github.com/zenorocha/clipboard.js */
-    var clipboard = new Clipboard('.cs-shell__copy-clipboard');
-    $('.cs-shell__copy-clipboard').tooltip({trigger: 'manual', title: 'copied!'});
-    $('.cs-shell__copy-clipboard').click(function(){
-        var that = $(this)
+    var clipboard = new Clipboard('.cs--trigger-copy-clipboard');
+    $('.cs--trigger-copy-clipboard').click(function(){
+        var that = $(this);
+        that.tooltip('dispose');
+        that.attr('title', 'copied!');
         that.tooltip('show');
         setTimeout(function(){
-            that.tooltip('hide');
+            that.attr('title', that.attr('data-title-orig'));
+            that.tooltip('dispose');
+            that.tooltip();
         }, 1000);
     });
 };

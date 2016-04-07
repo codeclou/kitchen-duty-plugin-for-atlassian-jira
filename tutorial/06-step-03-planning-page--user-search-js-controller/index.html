@@ -189,6 +189,8 @@
     </h2>
 
 
+        
+
 
         
         
@@ -216,11 +218,15 @@
                 
 <div class="cs-shell">
     <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="AJS.version"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
         AJS.version<br>
         <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs"><span class="hljs-number">5.7</span>.<span class="hljs-number">31</span></code></pre>
 
     </div>
-    <a class="cs-shell__copy-clipboard" data-clipboard-text="AJS.version"><i class="fa fa-files-o"></i></a>
 </div>
 
 
@@ -263,11 +269,15 @@
         
 <div class="cs-shell">
     <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="var theFooElement = AJS.$(&#39;#foo&#39;);"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
         var theFooElement = AJS.$(&#39;#foo&#39;);<br>
         <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">undefined</code></pre>
 
     </div>
-    <a class="cs-shell__copy-clipboard" data-clipboard-text="var theFooElement = AJS.$(&#39;#foo&#39;);"><i class="fa fa-files-o"></i></a>
 </div>
 
 
@@ -306,7 +316,26 @@
 
         
     
-        <div class="cs-code-filename">/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</div>
+        <div class="cs-code-filename">src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="AJS.toInit(function(){
+   require([&#39;aui/flag&#39;], function(flag) {
+       var myFlag = flag({
+           type: &#39;success&#39;,
+           title: &#39;Kitchen Duty Plugin&#39;,
+           body: &#39;JS Controller is working&#39;
+       });
+   });
+});"><i class="fa fa-files-o"></i></a>
+        </div>
     
 <pre class="cs-code"><code class="hljs">AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
    <span class="hljs-built_in">require</span>([<span class="hljs-string">'aui/flag'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">flag</span>) </span>{
@@ -324,7 +353,23 @@
 
         
     
-        <div class="cs-code-filename">src/main/resources/atlassian-plugin.xml</div>
+        <div class="cs-code-filename">src/main/resources/atlassian-plugin.xml
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;web-resource key=&quot;kitchen-duty-plugin-resources--planning-page&quot; name=&quot;kitchen-duty-plugin Web Resources for Planning Page&quot;&gt;
+	&lt;dependency&gt;com.atlassian.auiplugin:ajs&lt;/dependency&gt;
+	&lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-plugin--planning-page-controller.js&quot; location=&quot;/js/kitchen-duty-plugin--planning-page-controller.js&quot;/&gt;
+	&lt;resource type=&quot;download&quot; name=&quot;handlebars.js&quot; location=&quot;/js/3rdparty/handlebars-v4.0.5.js&quot;/&gt;
+	&lt;context&gt;kitchen-duty-plugin&lt;/context&gt;
+&lt;/web-resource&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">web-resource</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-plugin-resources--planning-page"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin Web Resources for Planning Page"</span>&gt;</span>
 	<span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:ajs<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
@@ -342,7 +387,29 @@
 
         
     
-        <div class="cs-code-filename">pom.xml</div>
+        <div class="cs-code-filename">pom.xml
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/pom.xml" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;dependency&gt;
+	&lt;groupId&gt;com.atlassian.templaterenderer&lt;/groupId&gt;
+	&lt;artifactId&gt;atlassian-template-renderer-api&lt;/artifactId&gt;
+	&lt;version&gt;1.5.7&lt;/version&gt;
+	&lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+	&lt;groupId&gt;com.atlassian.plugins&lt;/groupId&gt;
+	&lt;artifactId&gt;atlassian-plugins-webresource&lt;/artifactId&gt;
+	&lt;version&gt;3.3.3&lt;/version&gt;
+	&lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
 	<span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>com.atlassian.templaterenderer<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
@@ -363,7 +430,23 @@
 
         
     
-        <div class="cs-code-filename">src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java</div>
+        <div class="cs-code-filename">src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="import com.atlassian.webresource.api.assembler.PageBuilderService;
+
+...
+
+@ComponentImport
+private PageBuilderService pageBuilderService;"><i class="fa fa-files-o"></i></a>
+        </div>
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-keyword">import</span> com.atlassian.webresource.api.assembler.PageBuilderService;
 
@@ -379,7 +462,50 @@
             <div class="col-md-8">
                 
     
-        <div class="cs-code-filename">src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java</div>
+        <div class="cs-code-filename">src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="package com.comsysto.kitchen.duty.webwork;
+
+import com.atlassian.webresource.api.assembler.PageBuilderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.atlassian.jira.web.action.JiraWebActionSupport;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+@Named {{{point::1}}}
+public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
+{
+    private static final Logger log = LoggerFactory.getLogger(KitchenDutyPlanningWebworkAction.class);
+
+    @Inject {{{point::2}}}
+    private PageBuilderService pageBuilderService;
+
+    @Override
+    public String execute() throws Exception {
+        pageBuilderService.assembler().resources().requireWebResource(
+           &quot;com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources&quot; {{{point::3}}}
+        ).requireWebResource(
+           &quot;com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources--planning-page&quot;
+        );
+
+        return &quot;kitchen-duty-planning-success&quot;;
+    }
+
+    public void setPageBuilderService(PageBuilderService pageBuilderService) { {{{point::4}}}
+        this.pageBuilderService = pageBuilderService;
+    }
+}"><i class="fa fa-files-o"></i></a>
+        </div>
     
 <pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.webwork;
 

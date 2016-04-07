@@ -39,17 +39,32 @@
 {% macro csShell(shellCmd, shellCmdOutput='') %}
 <div class="cs-shell">
     <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="{{shellCmd}}"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
         {{shellCmd}}<br>
         <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">{{shellCmdOutput | formatSourceCode('bash') | safe }}</code></pre>
 
     </div>
-    <a class="cs-shell__copy-clipboard" data-clipboard-text="{{shellCmd}}"><i class="fa fa-files-o"></i></a>
 </div>
 {% endmacro %}
 
-{% macro csSource(lang='', source='', uniqueId='', filename='') %}
+{% macro csSource(lang='', source='', uniqueId='', filename='', ghBaseUrl='') %}
     {% if filename %}
-        <div class="cs-code-filename">{{ filename }}</div>
+        <div class="cs-code-filename">{{ filename }}
+            {% if ghBaseUrl %}
+                <a href="{{ ghBaseUrl }}{{ filename }}" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            {% endif %}
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="{{source | formatSourceCodeForCopyClipboardDataAttribute() }}"><i class="fa fa-files-o"></i></a>
+        </div>
     {% endif %}
 <pre class="cs-code"><code class="hljs">{{source | formatSourceCode(lang, uniqueId) | safe }}</code></pre>
 {% endmacro %}

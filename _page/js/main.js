@@ -243,14 +243,14 @@ var initInteractiveGraphics = function () {
 /* ================================================================================================ */
 
 var redirectToSsl = function () {
-    if (!_startsWith(window.location.protocol, 'https')) {
+    if (!_startsWith(window.location.protocol, 'https') && !_startsWith(window.location.href, 'http://localhost')) {
         window.location.href = "https://" + window.location.hostname + window.location.pathname + window.location.search;
     }
 };
 
-var _startsWith = function (string, prefix) {
-    if (string === undefined || string === null) return false;
-    return string.slice(0, prefix.length) == prefix;
+var _startsWith = function (stringS, prefix) {
+    if (stringS === undefined || stringS === null) return false;
+    return stringS.slice(0, prefix.length) == prefix;
 };
 
 /* ================================================================================================ */

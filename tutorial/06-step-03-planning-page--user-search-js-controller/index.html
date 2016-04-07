@@ -190,22 +190,136 @@
 
 
 
-
-
         
         
         
 
 
+        <p>In the previous section we implemented the User Search REST Endpoint which we will now use
+        from our JS Controller. You might want to check the <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/">Story Workshop</a> again to see what we
+        want to build here.</p>
 
-        
-    <div class="cs-working-on-it">
-        We are working on it. Please visit again some time.
+
+        <h3 class="cs-headline cs-headline--s">AUI and JIRA Version?</h3>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <p>Ok so we want to use the <strong><a href="https://docs.atlassian.com/aui/latest/docs/auiselect2.html">Select2 Widget from the AUI Framework</a></strong>.
+                    First you have to know that each version of JIRA has AUI prepackaged in a certain version.
+                    Therefore we will use that and not pull in a second version of that (really, don't do that).</p>
+
+                <p>So we do a <code>atlas-run</code> and wait for JIRA to startup. Now open the Browser Console
+                    and type:</p>
+
+
+                
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        AJS.version<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs"><span class="hljs-number">5.7</span>.<span class="hljs-number">31</span></code></pre>
+
     </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="AJS.version"><i class="fa fa-files-o"></i></a>
+</div>
 
-    <a href="http://dilbert.com/strip/2003-01-22" target="_blank">
-        <img src="http://assets.amuniversal.com/304f90806d5901301d7d001dd8b71c47">
-    </a>
+
+
+                <p>It will print the exact version used in the JIRA target version we code our plugin for.
+                    At this point you really have to think about the range of versions you want to support with
+                    your plugin. If you want to support older JIRA versions you need to know the lowest version of AUI
+                    availabe and code with backwardscompatibility in mind. To make things simpler we assume that our
+                    plugin will be compatible starting from JIRA 7.0 up to the latest JIRA version (currently 7.1.x).</p>
+
+                <p>Alright now open the
+                    <a href="https://docs.atlassian.com/aui/5.7.31/docs/applicationHeader.html" target="_blank">AUI documentation for 5.7.31</a>
+                    and select AUI Select 2 documentation.
+                    Ok no offense to the people writing the docs but it is a little thin and it took me some
+                    time to come up with a hassle-free way to use the Select 2 the way I want it to behave.
+                    You just read the doc and I will provide you some code you should like.</p>
+            </div>
+            <div class="col-md-offset-1 col-md-5">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-03-ajs-version.png" data-lightbox="03-step" data-title="Step 3 - Find out the AJS/AUI Version">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-03-ajs-version.png" class="img-thumbnail img-fluid" alt="Step 2 - Find out the AJS/AUI Version">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+
+        <h3 class="cs-headline cs-headline--s">What about JS Frameworks, Template Engines and jQuery?</h3>
+
+        <p>Alright that is it about our Widget. But how we write our JavaScript code?
+        Is there any template engine? Any watchers and/or frameworks? You have good point there.
+        Let me tell you a short tale about JIRA and JavaScript...
+
+        <p>Ok basically we already used <code>AJS.version</code> before, so you might have already wondered
+        what that actually was. <strong>JIRA bundles a lightweight jQuery which is bound to <code>AJS</code></strong>
+        there is no <code>$</code> or <code>jQuery</code> and even if there were you are advised to
+        use <code>AJS</code> prefix. So here is a basic example:</p>
+
+
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        var theFooElement = AJS.$(&#39;#foo&#39;);<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">undefined</code></pre>
+
+    </div>
+    <a class="cs-shell__copy-clipboard" data-clipboard-text="var theFooElement = AJS.$(&#39;#foo&#39;);"><i class="fa fa-files-o"></i></a>
+</div>
+
+
+        <p>It will select the DOM element with id foo (when there is no such element it will return <code>undefined</code>).
+            Ok just take that in for now, I know it is unfamiliar but we will get used to it.</p>
+
+        <p>So what about template Engines? Unfortunately there seems to be nothing here. Therefore I use
+        handlebars.js myself. Why that framework? Good question. Because it does not pull in or rely on jQuery
+        or other thirdparty js frameworks and just registers on global that does not interfere with JIRA.</p>
+
+        <div class="cs-blockquote">
+            <p>Small is beautiful - Avoid using big JavaScript frameworks that will register globals, bring in dependencies and tend to overwrite stuff that might break JIRA functionality.</p>
+        </div>
+
+
+        <p>Alright let's resume what we are going to use:</p>
+
+        <ul>
+            <li>lightweight jQuery provided with <code>AJS</code> prefix</li>
+            <li>AUI framework methods like <code>AJS.getI18nText</code></li>
+            <li><a href="http://handlebarsjs.com/" target="_blank">handlebars.js template engine</a></li>
+            <li>html page with serverside velocity (which we will not use to much)</li>
+        </ul>
+
+
+
+        <h3 class="cs-headline cs-headline--s">Basic setup of JS Dependencies and Controller</h3>
+
+
+        <p>First we <strong><a href="http://handlebarsjs.com/installation.html">download the <code>handlebars.js</code></a> file</strong> and put
+            it here <code>/src/main/resources/js/3rdparty/handelbars-v4.0.5.js</code>.
+            (You can use bower, npm and other tools if you want to integrate that into your build. But we want to keep it simple here.)</p>
+
+        <p>Now we <strong>create our JS-Controller</strong> file in <code>/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</code>.
+        We put some simple dummy code inside which will trigger a <a href="https://docs.atlassian.com/aui/5.7.31/docs/flag.html">message flag</a> on pageload just to see if everything is working.</p>
+
+        
+    
+        <div class="cs-code-filename">kitchen-duty-plugin--planning-page-controller.js</div>
+    
+<pre class="cs-code"><code class="hljs">AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+   <span class="hljs-built_in">require</span>([<span class="hljs-string">'aui/flag'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">flag</span>) </span>{
+       <span class="hljs-keyword">var</span> myFlag = flag({
+           type: <span class="hljs-string">'success'</span>,
+           title: <span class="hljs-string">'Kitchen Duty Plugin'</span>,
+           body: <span class="hljs-string">'JS Controller is working'</span>
+       });
+   });
+});</code></pre>
+
+
+
 
 
 

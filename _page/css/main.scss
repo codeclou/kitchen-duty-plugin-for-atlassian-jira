@@ -340,7 +340,6 @@ p {
     padding: 10px 10px 10px 10px;
     font-size: 90%;
     font-family: Menlo, Menlo, Monaco, Consolas, "Courier New", monospace;
-    border-radius: 10px;
     margin-top:0;
     margin-bottom:10px;
     color:#fff;
@@ -497,7 +496,7 @@ p {
 .cs-code {
     background: #333;
     border:0;
-    border-radius: 10px;
+    padding:10px;
 }
 
 .cs-tutorial-space-top-small {
@@ -507,14 +506,14 @@ p {
 /* CS SOURCE CODE */
 
 .cs-code-filename {
-    margin-left:15px;
-    margin-right:15px;
+    margin-left:0;
+    margin-right:0;
     padding: 5px 10px 5px 10px;
     background-color: #525252;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
     color:#fff;
-    font-weight:bold;
+    font-weight:300;
+    font-size: 13px;
+    font-family: Menlo, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 
@@ -555,6 +554,8 @@ p {
     counter-increment: section;
     content: counters(section,".") " ";
     text-align:center;
+    line-height: 20px;
+    font-size:15px;
     width:40px;
     margin-left:-42px;
     display: block;
@@ -573,10 +574,13 @@ p {
     width:22px;
     height:22px;
     text-align: center;
+    line-height: 17px;
+    font-size:14px;
     color:#fff;
     cursor: pointer;
     display: inline-block;
     border:2px solid #ef22b7;
+    box-shadow: 0 0 0 rgba(239,38,183, 0.6);
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -588,15 +592,37 @@ p {
     content: attr(data-cs-source-point-number);
 }
 .cs-source-point:hover {
-    transform: scale(1.3);
+    animation: pulse 1s infinite;
 }
 .cs-source-point--active {
-    animation: pulse 1s ease infinite;
+    animation: pulse 1s infinite;
+}
+
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(239,38,183, 0.6);
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 10px rgba(239,38,183, 0.2);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(239,38,183, 0);
+    }
 }
 @keyframes pulse {
-    0% {   transform: scale(1);    }
-    50% {  transform: scale(1.3);  }
-    100% { transform: scale(1); }
+    0% {
+        -moz-box-shadow: 0 0 0 0 rgba(239,38,183, 0.6);
+        box-shadow: 0 0 0 0 rgba(239,38,183, 0.6);
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 10px rgba(239,38,183, 0.2);
+        box-shadow: 0 0 0 10px rgba(239,38,183, 0.2);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(239,38,183, 0);
+        box-shadow: 0 0 0 0 rgba(239,38,183, 0);
+    }
 }
 
 /* TOC */

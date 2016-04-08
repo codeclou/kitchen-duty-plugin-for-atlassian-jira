@@ -71,6 +71,8 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
             if (typeof lines !== 'undefined' && lines != null) {
                 for (var i = 0; i < lines.length; i++) {
                     var replaced = lines[i].replace(/^[ ]*[|]/, '');
+                    /* remove {{{point::3}}} flags */
+                    replaced = replaced.replace(/[{]{3}point::[0-9]+[}]{3}/g, '');
                     replaced = replaced.replace(/&#123;/g, '{');
                     replaced = replaced.replace(/&#125;/g, '}');
                     ret = ret + replaced + '\n';

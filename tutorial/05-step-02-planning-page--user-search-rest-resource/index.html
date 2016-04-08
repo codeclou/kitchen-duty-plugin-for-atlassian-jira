@@ -501,25 +501,25 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-@Named {{{point::1}}}
-@Path(&quot;/user&quot;)  {{{point::2}}}
+@Named 
+@Path(&quot;/user&quot;)  
 public class UserSearchResource {
 
-    private UserSearchService userSearchService; {{{point::3}}}
+    private UserSearchService userSearchService; 
 
-    @Inject {{{point::4}}}
+    @Inject 
     public UserSearchResource(UserSearchService userSearchService) {
         this.userSearchService = userSearchService;
     }
 
-    {{{point::5}}}
+    
     public UserSearchResource() {
     }
 
     @GET
-    @Path(&quot;/health&quot;) {{{point::6}}}
+    @Path(&quot;/health&quot;) 
     @Produces({MediaType.APPLICATION_JSON})
-    @AnonymousAllowed {{{point::7}}}
+    @AnonymousAllowed 
     public Response health() {
         return Response.ok(&quot;ok&quot;).build();
     }
@@ -530,12 +530,12 @@ public class UserSearchResource {
      * [{ &#39;id&#39;: 1, &#39;text&#39;: &#39;Demo&#39; }, { &#39;id&#39;: 2, &#39;text&#39;: &#39;Demo 2&#39;}]
      */
     @GET
-    @Path(&quot;/search&quot;) {{{point::8}}}
+    @Path(&quot;/search&quot;) 
     @Produces({MediaType.APPLICATION_JSON})
-    public Response searchUsers(@QueryParam(&quot;query&quot;) final String userQuery, {{{point::9}}}
-                                @Context HttpServletRequest request {{{point::10}}}) {
+    public Response searchUsers(@QueryParam(&quot;query&quot;) final String userQuery, 
+                                @Context HttpServletRequest request ) {
         List&lt;UserSearchResourceModel&gt; users = findUsers(userQuery);
-        return Response.ok(users).build(); {{{point::11}}}
+        return Response.ok(users).build(); 
     }
 
     private List&lt;UserSearchResourceModel&gt; findUsers(String query) {
@@ -545,7 +545,7 @@ public class UserSearchResource {
             .includeActive(true)
             .sorted(true)
             .build();
-        List&lt;String&gt; users = userSearchService.findUserNames(query, searchParams); {{{point::12}}}
+        List&lt;String&gt; users = userSearchService.findUserNames(query, searchParams); 
         if (users != null) {
             for (String user : users) {
                 userSearchResourceModels.add(new UserSearchResourceModel(user, user));
@@ -717,14 +717,14 @@ public class UserSearchResource {
                data-clipboard-text="package com.comsysto.kitchen.duty.rest;
 
 import javax.xml.bind.annotation.*;
-@XmlRootElement(name = &quot;users&quot;) {{{point::1}}}
-@XmlAccessorType(XmlAccessType.FIELD) {{{point::2}}}
+@XmlRootElement(name = &quot;users&quot;) 
+@XmlAccessorType(XmlAccessType.FIELD) 
 public class UserSearchResourceModel {
 
-    @XmlElement {{{point::3}}}
+    @XmlElement 
     private String text;
 
-    @XmlElement {{{point::4}}}
+    @XmlElement 
     private String id;
 
     public UserSearchResourceModel() {
@@ -1096,7 +1096,7 @@ public class UserSearchResourceFuncTest {
 
     @Before
     public void setup() {
-        baseUrl = System.getProperty(&quot;baseurl&quot;); {{{point::1}}}
+        baseUrl = System.getProperty(&quot;baseurl&quot;); 
     }
 
     @After
@@ -1105,7 +1105,7 @@ public class UserSearchResourceFuncTest {
     }
 
     @Test
-    public void testSearchUser__unAuthorized() { {{{point::2}}}
+    public void testSearchUser__unAuthorized() { 
         String resourceUrl = baseUrl + &quot;/rest/kitchenduty/1.0/user/search?query=adm&quot;;
         String response = httpGet(resourceUrl);
         assertNotNull(&quot;should not be null&quot;, response);
@@ -1114,7 +1114,7 @@ public class UserSearchResourceFuncTest {
             response);
     }
     @Test
-    public void testSearchUser__authorized() { {{{point::3}}}
+    public void testSearchUser__authorized() { 
         String resourceUrl = baseUrl + &quot;/rest/kitchenduty/1.0/user/search?query=adm&quot;;
         String response = httpGet(resourceUrl, &quot;admin&quot;, &quot;admin&quot;);
         assertNotNull(&quot;should not be null&quot;, response);
@@ -1123,15 +1123,15 @@ public class UserSearchResourceFuncTest {
             response);
     }
 
-    private String toJSON(String text) { {{{point::4}}}
+    private String toJSON(String text) { 
         return text.replaceAll(&quot;&#39;&quot;, &quot;\&quot;&quot;);
     }
 
-    private String httpGet(String url) { {{{point::5}}}
+    private String httpGet(String url) { 
         return _httpGet(url, null);
     }
 
-    private String httpGet(String url, String username, String password) { {{{point::6}}}
+    private String httpGet(String url, String username, String password) { 
         ClientConfig config = new ClientConfig();
         BasicAuthSecurityHandler basicAuthSecHandler = new BasicAuthSecurityHandler();
         basicAuthSecHandler.setUserName(username);
@@ -1140,7 +1140,7 @@ public class UserSearchResourceFuncTest {
         return _httpGet(url, config);
     }
 
-    private String _httpGet(String url, ClientConfig config) { {{{point::7}}}
+    private String _httpGet(String url, ClientConfig config) { 
         RestClient client = new RestClient();
         if (config != null) {
             client = new RestClient(config);

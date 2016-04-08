@@ -481,18 +481,18 @@ import com.atlassian.jira.web.action.JiraWebActionSupport;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named {{{point::1}}}
+@Named 
 public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
 {
     private static final Logger log = LoggerFactory.getLogger(KitchenDutyPlanningWebworkAction.class);
 
-    @Inject {{{point::2}}}
+    @Inject 
     private PageBuilderService pageBuilderService;
 
     @Override
     public String execute() throws Exception {
         pageBuilderService.assembler().resources().requireWebResource(
-           &quot;com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources&quot; {{{point::3}}}
+           &quot;com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources&quot; 
         ).requireWebResource(
            &quot;com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources--planning-page&quot;
         );
@@ -500,7 +500,7 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
         return &quot;kitchen-duty-planning-success&quot;;
     }
 
-    public void setPageBuilderService(PageBuilderService pageBuilderService) { {{{point::4}}}
+    public void setPageBuilderService(PageBuilderService pageBuilderService) { 
         this.pageBuilderService = pageBuilderService;
     }
 }"><i class="fa fa-files-o"></i></a>

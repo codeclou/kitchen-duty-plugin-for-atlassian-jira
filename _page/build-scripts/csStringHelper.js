@@ -27,10 +27,10 @@ exports.csStringHelper = function () {
 
 
     self.replacePointsInSourceCode = function (text, uniqueId) {
-        var matchPointsAfterHighlightJsReplacement = new RegExp('\{\{\{point::[^}]+\}\}\}','g');
+        var matchPointsAfterHighlightJsReplacement = new RegExp('\{\{\{(<[^>]+>)?point::[^}]+\}[^}]*\}[^}]*\}','g');
         return text.replace(matchPointsAfterHighlightJsReplacement, function (match) {
-            return match.replace(new RegExp('\{\{\{point::<span class="hljs-number">([0-9]+)<\/span>\}\}\}', 'g'),
-                '<span class="cs-source-point" data-cs-source-point-id="' + uniqueId + '" data-cs-source-point-number="$1"></span>');
+            return match.replace(new RegExp('\{\{\{(<[^>]+>)?point::(<[^>]+>)?([0-9]+)(<[^>]+>)?\}[^}]*\}[^}]*\}', 'g'),
+                '<span class="cs-source-point" data-cs-source-point-id="' + uniqueId + '" data-cs-source-point-number="$3"></span>');
         });
     };
 

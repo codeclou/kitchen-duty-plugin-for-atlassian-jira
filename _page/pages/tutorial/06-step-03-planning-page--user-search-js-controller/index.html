@@ -86,12 +86,15 @@
         <p>It will select the DOM element with id foo (when there is no such element it will return <code>undefined</code>).
             Ok just take that in for now, I know it is unfamiliar but we will get used to it.</p>
 
-        <p>So what about template Engines? Unfortunately there seems to be nothing here. Therefore I use
-        handlebars.js myself. Why that framework? Good question. Because it does not pull in or rely on jQuery
-        or other thirdparty js frameworks and just registers on global that does not interfere with JIRA.</p>
+        <p>So what about template Engines? There is <a href="https://docs.atlassian.com/aui/latest/docs/soy.html" target="_blank">soy</a>
+            which can be used server-side and client-side. We will stick with velocity for server-side templates (you could switch to soy completely).
+            And we will use soy-templates on the client-side.</p>
 
         <div class="cs-blockquote">
-            <p>Small is beautiful - Avoid using big JavaScript frameworks that will register globals, bring in dependencies and tend to overwrite stuff that might break JIRA functionality.</p>
+            <p>
+                Small is beautiful - Avoid using big JavaScript frameworks that will register globals, bring in dependencies and tend to overwrite stuff that might break JIRA functionality.
+                In most cases AUI already provides a way to solve your problem.
+            </p>
         </div>
 
 
@@ -100,18 +103,13 @@
         <ul>
             <li>lightweight jQuery provided with <code>AJS</code> prefix</li>
             <li>AUI framework methods like <code>AJS.getI18nText</code></li>
-            <li><a href="http://handlebarsjs.com/" target="_blank">handlebars.js template engine</a></li>
+            <li><a href="https://developer.atlassian.com/confdev/tutorials/writing-soy-templates-in-your-plugin" target="_blank">soy template engine</a></li>
             <li>html page with serverside velocity (which we will not use to much)</li>
         </ul>
 
 
 
         <h3 class="cs-headline cs-headline--s">Basic setup of JS Dependencies and Controller</h3>
-
-
-        <p>First we <strong><a href="http://handlebarsjs.com/installation.html">download the <code>handlebars.js</code></a> file</strong> and put
-            it here <code>/src/main/resources/js/3rdparty/handelbars-v4.0.5.js</code>.
-            (You can use bower, npm and other tools if you want to integrate that into your build. But we want to keep it simple here.)</p>
 
         <p>Now we <strong>create our JS-Controller</strong> file in <code>/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</code>.
         We put some simple dummy code inside which will trigger a <a href="https://docs.atlassian.com/aui/5.7.31/docs/flag.html">message flag</a> on pageload just to see if everything is working.</p>
@@ -129,19 +127,19 @@
         ") }}
 
         <p>Our new JS Controller will not just work out of the box. We need to define a resource in <code>atlassian-plugin.xml</code>
-            for our controller and the handlebar.js file.</p>
+            for our controller.</p>
 
         {{ csSource(lang='xml', filename="src/main/resources/atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep3, source='
             |<web-resource key="kitchen-duty-plugin-resources--planning-page" name="kitchen-duty-plugin Web Resources for Planning Page">
             |	<dependency>com.atlassian.auiplugin:ajs</dependency>
             |	<resource type="download" name="kitchen-duty-plugin--planning-page-controller.js" location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
-            |	<resource type="download" name="handlebars.js" location="/js/3rdparty/handlebars-v4.0.5.js"/>
             |	<context>kitchen-duty-plugin</context>
             |</web-resource>
         ') }}
 
         <p>We have defined the resource now but JIRA does not know when to use (load) the resources we defined.
-        <strong>We will use the PageBuilderService to tell JIRA when to load our resources</strong>. (You might want to try <code>#require</code> in your velocity templates instead, but PageBuilderService always worked best for me)</p>
+        <strong>We will use the PageBuilderService to tell JIRA when to load our resources</strong>.
+            (You might want to try <code>#require</code> in your velocity templates instead, but PageBuilderService always worked best for me)</p>
 
         <p>We pull in some additional dependencies to be able to use PageBuilderService. Add these dependencies to your <code>pom.xml</code>.</p>
 
@@ -223,7 +221,7 @@
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         We tell the PageBuilderService via <code>requireWebResource()</code>
-                        to load our shared resource bundle and our planning-page bundle containing the controller and handlebars.
+                        to load our shared resource bundle and our planning-page bundle containing the controller.
                         The pattern for require is <code>"pluginKey:resourceKey"</code>.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
@@ -254,8 +252,170 @@
 
         <h3 class="cs-headline cs-headline--s">Setting up Select2 Widget to find Users</h3>
 
+        <p>Before we start you might (not necessary) want to read in depth about <a href="https://docs.atlassian.com/aui/latest/docs/layout.html" target="_blank">AUI Layout</a>,
+            <a href="https://docs.atlassian.com/aui/latest/docs/forms.html" target="_blank">AUI Forms</a> and <a href="https://developer.atlassian.com/confdev/tutorials/writing-soy-templates-in-your-plugin" target="_blank">Soy</a>.</p>
 
-        {{ weAreWorkingOnIt() }}
+        <p>What is soy? It is a templating framework with templates we can use server-side and client-side. Cool! But we will need a transformer to transform the
+        soy templates into JavaScript to be able to use them in our JS-Controller.</p>
+
+        <p>Here is a short summary of what we will be doing now:</p>
+        <ul>
+            <li>Create a soy template for the user search.</li>
+            <li>define a transformer to be able to use soy template in JS Controller.</li>
+            <li>write some JS code to use <a href="https://docs.atlassian.com/aui/latest/docs/auiselect2.html" target="_blank">AUI Select2 widget</a> with our User Search REST Resource (see previous chapter).</li>
+        </ul>
+
+        <p>Create the soy template in <code>src/main/resources/templates-soy/kitchen-duty-planning--user-search.soy</code> and paste the following code there.</p>
+
+
+        {{ csSource(lang='soy', filename="src/main/resources/templates-soy/kitchen-duty-planning--user-search.soy", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='dsfhuzk656', source='
+            |{namespace JIRA.Templates.KDP} {{{point::1}}}
+            |/**
+            | * Kitchen Duty Planning Page - User Search Template
+            | */
+            |{template .userSearch} {{{point::2}}}
+            |<form class="aui" id="kdp-user-select-form"> {{{point::3}}}
+            |
+            |    <div class="field-group">
+            |        <label for="kdp-user-select">Users</label>
+            |        <div id="kdp-user-select"  {{{point::4}}}
+            |                 name="kdp-user-select"
+            |                 class="kdp-aui-select"
+            |                 multiple=""
+            |                 placeholder="start typing a username ...">
+            |        </div>
+            |        <div class="description">The users that should have kitchen duty.</div>
+            |    </div>
+            |    <div class="buttons-container">
+            |        <div class="buttons">
+            |            <input class="button submit" type="submit" {{{point::5}}}
+            |                   id="kdp-user-select-save-button"
+            |                   value="show"/>
+            |        </div>
+            |    </div>
+            |
+            |</form>
+            |{/template}
+        ') }}
+
+        <p>Change velocity template so that we have one div container with an id we can use to dynamically insert our content which is rendered by JS-Controller.</p>
+
+        {{ csSource(lang='html', filename="src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='h76sdfsgdfgodjfnsdfn909', source='
+            |<html>
+            |<head>
+            |    <title>$i18n.getText("kitchen-duty-plugin.admin.planning.page.title")</title>
+            |    <meta name="decorator" content="atl.admin">
+            |</head>
+            |<body>
+            |<h1>$i18n.getText("kitchen-duty-plugin.admin.planning.page.headline")</h1>
+            |
+            |<div id="kdp-planning-page-container"></div> {{{point::1}}}
+            |
+            |</body>
+            |</html>
+        ') }}
+
+        <p>Change the JS-Controller to render the soy template, initialize the AUI Select 2 widget to work with our User Search REST Resource.</p>
+
+        {{ csSource(lang='js', filename="src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='iusndf98sidjcn', source="
+            |var showSuccessFlag = function(message) {
+            |    require(['aui/flag'], function(flag) {
+            |        var myFlag = flag({
+            |            type: 'success',
+            |            title: 'Kitchen Duty Plugin',
+            |            close: 'auto',
+            |            body: message
+            |        });
+            |    });
+            |};
+            |
+            |var initUserSearch = function(restUrl) {
+            |    var templateUserSearch = JIRA.Templates.KDP.userSearch();
+            |
+            |    var auiUserSelectOptions = {
+            |        ajax: {
+            |            url: function () {
+            |                return restUrl + '/user/search';
+            |            },
+            |            dataType: 'json',
+            |            delay: 250,
+            |            data: function (searchTerm) {
+            |                return {
+            |                    query: searchTerm
+            |                };
+            |            },
+            |            results: function (data) {
+            |                return {
+            |                    results: data
+            |                };
+            |            },
+            |            cache: true
+            |        },
+            |        minimumInputLength: 1,
+            |        tags: 'true'
+            |    };
+            |
+            |    /* INIT TEMPLATES AND WIDGETS */
+            |
+            |    AJS.$('#kdp-planning-page-container').append(templateUserSearch);
+            |    AJS.$('#kdp-user-select').auiSelect2(auiUserSelectOptions);
+            |    AJS.$('#kdp-user-select-form').submit(function (e) {
+            |        e.preventDefault();
+            |        AJS.$(AJS.$('#kdp-user-select').select2('data')).each(function () {
+            |            showSuccessFlag(this.id);
+            |        });
+            |    });
+            |};
+            |
+            |AJS.toInit(function(){
+            |    AJS.log('KDP: Planning Page Controller initializing ...');
+            |    var baseUrl = AJS.params.baseURL;
+            |    var restUrl = baseUrl + '/rest/kitchenduty/1.0';
+            |
+            |    initUserSearch(restUrl);
+            |});
+            ") }}
+
+        <p>Now we need to teach JIRA that we want to use soy in our client-side code and define a transformer and the soy template to load. Also we need to define AUI dependencies to be loaded.</p>
+
+        {{ csSource(lang='xml', filename="src/main/resources/atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='difjn9sufpoj', source='
+            |<?xml version="1.0" encoding="UTF-8"?>
+            |
+            |<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+            |...
+            |  <web-resource key="kitchen-duty-plugin-resources--planning-page" name="kitchen-duty-plugin Web Resources for Planning Page">
+            |    <dependency>com.atlassian.auiplugin:ajs</dependency>
+            |    <dependency>com.atlassian.auiplugin:aui-select2</dependency> {{{point::1}}}
+            |    <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency> {{{point::2}}}
+            |    <transformation extension="soy"> {{{point::3}}}
+            |      <transformer key="soyTransformer">
+            |        <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+            |      </transformer>
+            |    </transformation>
+            |    <resource type="download" name="kitchen-duty-planning--user-search--soy.js" {{{point::4}}}
+            |              location="templates-soy/kitchen-duty-planning--user-search.soy"/>
+            |    <resource type="download" name="kitchen-duty-plugin--planning-page-controller.js"
+            |              location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
+            |    <context>kitchen-duty-plugin</context>
+            |  </web-resource>
+            |...
+            |</atlassian-plugin>
+        ') }}
+
+        <p>Now restart <code>atlas-run</code> and refresh (shift-reload) the Page and you should see this:</p>
+
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-03-user-search-select2.gif" data-lightbox="03-step" data-title="Step 3 - User Search working with AUI select2 widget and soy Template">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-03-user-search-select2.gif" class="img-thumbnail img-fluid" alt="Step 3 - User Search working with AUI select2 widget and soy Template">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+
 
 
 
@@ -277,18 +437,7 @@
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
-<!--
-        <div class="alert alert-info cs-summary">
-            <p><strong>TO BE CONTINUED</strong> - We will continue this tutorial soon.</p>
-            <hr class="cs-summary__spacer">
-            <p>We will then tend to</p>
-            <ul>
-                <li><p>Creating REST Resources for UserSearch and KitchenDutyPlanningModel operations.</p></li>
-                <li><p>Creating JavaScript Controller and HTML view with Atlassian AUI and interact with REST Resources.</p></li>
-            </ul>
-            <hr class="cs-summary__spacer">
-            <p>Of course there will be more steps following after that. </p>
-        </div>
+
 
 
 
@@ -323,8 +472,6 @@
                 }}
             </div>
         </div>
-
--->
 
         <div class="cs-v-spacer cs-v-spacer--big"></div>
         <div class="cs-v-spacer cs-v-spacer--big"></div>

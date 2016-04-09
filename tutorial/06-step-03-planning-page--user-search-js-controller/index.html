@@ -283,12 +283,15 @@
         <p>It will select the DOM element with id foo (when there is no such element it will return <code>undefined</code>).
             Ok just take that in for now, I know it is unfamiliar but we will get used to it.</p>
 
-        <p>So what about template Engines? Unfortunately there seems to be nothing here. Therefore I use
-        handlebars.js myself. Why that framework? Good question. Because it does not pull in or rely on jQuery
-        or other thirdparty js frameworks and just registers on global that does not interfere with JIRA.</p>
+        <p>So what about template Engines? There is <a href="https://docs.atlassian.com/aui/latest/docs/soy.html" target="_blank">soy</a>
+            which can be used server-side and client-side. We will stick with velocity for server-side templates (you could switch to soy completely).
+            And we will use soy-templates on the client-side.</p>
 
         <div class="cs-blockquote">
-            <p>Small is beautiful - Avoid using big JavaScript frameworks that will register globals, bring in dependencies and tend to overwrite stuff that might break JIRA functionality.</p>
+            <p>
+                Small is beautiful - Avoid using big JavaScript frameworks that will register globals, bring in dependencies and tend to overwrite stuff that might break JIRA functionality.
+                In most cases AUI already provides a way to solve your problem.
+            </p>
         </div>
 
 
@@ -297,18 +300,13 @@
         <ul>
             <li>lightweight jQuery provided with <code>AJS</code> prefix</li>
             <li>AUI framework methods like <code>AJS.getI18nText</code></li>
-            <li><a href="http://handlebarsjs.com/" target="_blank">handlebars.js template engine</a></li>
+            <li><a href="https://developer.atlassian.com/confdev/tutorials/writing-soy-templates-in-your-plugin" target="_blank">soy template engine</a></li>
             <li>html page with serverside velocity (which we will not use to much)</li>
         </ul>
 
 
 
         <h3 class="cs-headline cs-headline--s">Basic setup of JS Dependencies and Controller</h3>
-
-
-        <p>First we <strong><a href="http://handlebarsjs.com/installation.html">download the <code>handlebars.js</code></a> file</strong> and put
-            it here <code>/src/main/resources/js/3rdparty/handelbars-v4.0.5.js</code>.
-            (You can use bower, npm and other tools if you want to integrate that into your build. But we want to keep it simple here.)</p>
 
         <p>Now we <strong>create our JS-Controller</strong> file in <code>/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</code>.
         We put some simple dummy code inside which will trigger a <a href="https://docs.atlassian.com/aui/5.7.31/docs/flag.html">message flag</a> on pageload just to see if everything is working.</p>
@@ -348,7 +346,7 @@
 
 
         <p>Our new JS Controller will not just work out of the box. We need to define a resource in <code>atlassian-plugin.xml</code>
-            for our controller and the handlebar.js file.</p>
+            for our controller.</p>
 
         
     
@@ -365,7 +363,6 @@
                data-clipboard-text="&lt;web-resource key=&quot;kitchen-duty-plugin-resources--planning-page&quot; name=&quot;kitchen-duty-plugin Web Resources for Planning Page&quot;&gt;
 	&lt;dependency&gt;com.atlassian.auiplugin:ajs&lt;/dependency&gt;
 	&lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-plugin--planning-page-controller.js&quot; location=&quot;/js/kitchen-duty-plugin--planning-page-controller.js&quot;/&gt;
-	&lt;resource type=&quot;download&quot; name=&quot;handlebars.js&quot; location=&quot;/js/3rdparty/handlebars-v4.0.5.js&quot;/&gt;
 	&lt;context&gt;kitchen-duty-plugin&lt;/context&gt;
 &lt;/web-resource&gt;"><i class="fa fa-files-o"></i></a>
         </div>
@@ -373,13 +370,13 @@
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">web-resource</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-plugin-resources--planning-page"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin Web Resources for Planning Page"</span>&gt;</span>
 	<span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:ajs<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
 	<span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin--planning-page-controller.js"</span> <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/kitchen-duty-plugin--planning-page-controller.js"</span>/&gt;</span>
-	<span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"handlebars.js"</span> <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/3rdparty/handlebars-v4.0.5.js"</span>/&gt;</span>
 	<span class="hljs-tag">&lt;<span class="hljs-title">context</span>&gt;</span>kitchen-duty-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">context</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">web-resource</span>&gt;</span></code></pre>
 
 
         <p>We have defined the resource now but JIRA does not know when to use (load) the resources we defined.
-        <strong>We will use the PageBuilderService to tell JIRA when to load our resources</strong>. (You might want to try <code>#require</code> in your velocity templates instead, but PageBuilderService always worked best for me)</p>
+        <strong>We will use the PageBuilderService to tell JIRA when to load our resources</strong>.
+            (You might want to try <code>#require</code> in your velocity templates instead, but PageBuilderService always worked best for me)</p>
 
         <p>We pull in some additional dependencies to be able to use PageBuilderService. Add these dependencies to your <code>pom.xml</code>.</p>
 
@@ -551,7 +548,7 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         We tell the PageBuilderService via <code>requireWebResource()</code>
-                        to load our shared resource bundle and our planning-page bundle containing the controller and handlebars.
+                        to load our shared resource bundle and our planning-page bundle containing the controller.
                         The pattern for require is <code>"pluginKey:resourceKey"</code>.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
@@ -582,39 +579,350 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
 
         <h3 class="cs-headline cs-headline--s">Setting up Select2 Widget to find Users</h3>
 
+        <p>Before we start you might (not necessary) want to read in depth about <a href="https://docs.atlassian.com/aui/latest/docs/layout.html" target="_blank">AUI Layout</a>,
+            <a href="https://docs.atlassian.com/aui/latest/docs/forms.html" target="_blank">AUI Forms</a> and <a href="https://developer.atlassian.com/confdev/tutorials/writing-soy-templates-in-your-plugin" target="_blank">Soy</a>.</p>
+
+        <p>What is soy? It is a templating framework with templates we can use server-side and client-side. Cool! But we will need a transformer to transform the
+        soy templates into JavaScript to be able to use them in our JS-Controller.</p>
+
+        <p>Here is a short summary of what we will be doing now:</p>
+        <ul>
+            <li>Create a soy template for the user search.</li>
+            <li>define a transformer to be able to use soy template in JS Controller.</li>
+            <li>write some JS code to use <a href="https://docs.atlassian.com/aui/latest/docs/auiselect2.html" target="_blank">AUI Select2 widget</a> with our User Search REST Resource (see previous chapter).</li>
+        </ul>
+
+        <p>Create the soy template in <code>src/main/resources/templates-soy/kitchen-duty-planning--user-search.soy</code> and paste the following code there.</p>
+
 
         
-    <div class="cs-working-on-it">
-        We are working on it. Please visit again some time.
-    </div>
+    
+        <div class="cs-code-filename">src/main/resources/templates-soy/kitchen-duty-planning--user-search.soy
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/src/main/resources/templates-soy/kitchen-duty-planning--user-search.soy" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="{namespace JIRA.Templates.KDP} 
+/**
+ * Kitchen Duty Planning Page - User Search Template
+ */
+{template .userSearch} 
+&lt;form class=&quot;aui&quot; id=&quot;kdp-user-select-form&quot;&gt; 
 
-    <a href="http://dilbert.com/strip/2003-01-22" target="_blank">
-        <img src="http://assets.amuniversal.com/304f90806d5901301d7d001dd8b71c47">
-    </a>
+    &lt;div class=&quot;field-group&quot;&gt;
+        &lt;label for=&quot;kdp-user-select&quot;&gt;Users&lt;/label&gt;
+        &lt;div id=&quot;kdp-user-select&quot;  
+                 name=&quot;kdp-user-select&quot;
+                 class=&quot;kdp-aui-select&quot;
+                 multiple=&quot;&quot;
+                 placeholder=&quot;start typing a username ...&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;description&quot;&gt;The users that should have kitchen duty.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;buttons-container&quot;&gt;
+        &lt;div class=&quot;buttons&quot;&gt;
+            &lt;input class=&quot;button submit&quot; type=&quot;submit&quot; 
+                   id=&quot;kdp-user-select-save-button&quot;
+                   value=&quot;show&quot;/&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 
-
-
-
-        
-
-        
-
-        <div class="cs-v-spacer cs-v-spacer--big"></div>
-        <div class="cs-v-spacer cs-v-spacer--big"></div>
-
-
-<!--
-        <div class="alert alert-info cs-summary">
-            <p><strong>TO BE CONTINUED</strong> - We will continue this tutorial soon.</p>
-            <hr class="cs-summary__spacer">
-            <p>We will then tend to</p>
-            <ul>
-                <li><p>Creating REST Resources for UserSearch and KitchenDutyPlanningModel operations.</p></li>
-                <li><p>Creating JavaScript Controller and HTML view with Atlassian AUI and interact with REST Resources.</p></li>
-            </ul>
-            <hr class="cs-summary__spacer">
-            <p>Of course there will be more steps following after that. </p>
+&lt;/form&gt;
+{/template}"><i class="fa fa-files-o"></i></a>
         </div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">namespace</span> JIRA.Templates.KDP</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk656" data-cs-source-point-number="1"></span>
+<span class="hljs-comment">/**
+ * Kitchen Duty Planning Page - User Search Template
+ */</span>
+<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .userSearch</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk656" data-cs-source-point-number="2"></span>
+&lt;form class=<span class="hljs-string">"aui"</span> id=<span class="hljs-string">"kdp-user-select-form"</span>&gt; <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk656" data-cs-source-point-number="3"></span>
+
+    &lt;div class=<span class="hljs-string">"field-group"</span>&gt;
+        &lt;label for=<span class="hljs-string">"kdp-user-select"</span>&gt;Users&lt;/label&gt;
+        &lt;div id=<span class="hljs-string">"kdp-user-select"</span>  <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk656" data-cs-source-point-number="4"></span>
+                 name=<span class="hljs-string">"kdp-user-select"</span>
+                 class=<span class="hljs-string">"kdp-aui-select"</span>
+                 multiple=<span class="hljs-string">""</span>
+                 placeholder=<span class="hljs-string">"start typing a username ..."</span>&gt;
+        &lt;/div&gt;
+        &lt;div class=<span class="hljs-string">"description"</span>&gt;The users that should have kitchen duty.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=<span class="hljs-string">"buttons-container"</span>&gt;
+        &lt;div class=<span class="hljs-string">"buttons"</span>&gt;
+            &lt;input class=<span class="hljs-string">"button submit"</span> type=<span class="hljs-string">"submit"</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk656" data-cs-source-point-number="5"></span>
+                   id=<span class="hljs-string">"kdp-user-select-save-button"</span>
+                   value=<span class="hljs-string">"show"</span>/&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+&lt;/form&gt;
+<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span></code></pre>
+
+
+        <p>Change velocity template so that we have one div container with an id we can use to dynamically insert our content which is rendered by JS-Controller.</p>
+
+        
+    
+        <div class="cs-code-filename">src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;$i18n.getText(&quot;kitchen-duty-plugin.admin.planning.page.title&quot;)&lt;/title&gt;
+    &lt;meta name=&quot;decorator&quot; content=&quot;atl.admin&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;$i18n.getText(&quot;kitchen-duty-plugin.admin.planning.page.headline&quot;)&lt;/h1&gt;
+
+&lt;div id=&quot;kdp-planning-page-container&quot;&gt;&lt;/div&gt; 
+
+&lt;/body&gt;
+&lt;/html&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>$i18n.getText("kitchen-duty-plugin.admin.planning.page.title")<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"decorator"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"atl.admin"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>$i18n.getText("kitchen-duty-plugin.admin.planning.page.headline")<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"kdp-planning-page-container"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span> <span class="cs-source-point" data-cs-source-point-id="h76sdfsgdfgodjfnsdfn909" data-cs-source-point-number="1"></span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span></code></pre>
+
+
+        <p>Change the JS-Controller to render the soy template, initialize the AUI Select 2 widget to work with our User Search REST Resource.</p>
+
+        
+    
+        <div class="cs-code-filename">src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="var showSuccessFlag = function(message) {
+    require([&#39;aui/flag&#39;], function(flag) {
+        var myFlag = flag({
+            type: &#39;success&#39;,
+            title: &#39;Kitchen Duty Plugin&#39;,
+            close: &#39;auto&#39;,
+            body: message
+        });
+    });
+};
+
+var initUserSearch = function(restUrl) {
+    var templateUserSearch = JIRA.Templates.KDP.userSearch();
+
+    var auiUserSelectOptions = {
+        ajax: {
+            url: function () {
+                return restUrl + &#39;/user/search&#39;;
+            },
+            dataType: &#39;json&#39;,
+            delay: 250,
+            data: function (searchTerm) {
+                return {
+                    query: searchTerm
+                };
+            },
+            results: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 1,
+        tags: &#39;true&#39;
+    };
+
+    /* INIT TEMPLATES AND WIDGETS */
+
+    AJS.$(&#39;#kdp-planning-page-container&#39;).append(templateUserSearch);
+    AJS.$(&#39;#kdp-user-select&#39;).auiSelect2(auiUserSelectOptions);
+    AJS.$(&#39;#kdp-user-select-form&#39;).submit(function (e) {
+        e.preventDefault();
+        AJS.$(AJS.$(&#39;#kdp-user-select&#39;).select2(&#39;data&#39;)).each(function () {
+            showSuccessFlag(this.id);
+        });
+    });
+};
+
+AJS.toInit(function(){
+    AJS.log(&#39;KDP: Planning Page Controller initializing ...&#39;);
+    var baseUrl = AJS.params.baseURL;
+    var restUrl = baseUrl + &#39;/rest/kitchenduty/1.0&#39;;
+
+    initUserSearch(restUrl);
+});"><i class="fa fa-files-o"></i></a>
+        </div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">var</span> showSuccessFlag = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">message</span>) </span>{
+    <span class="hljs-built_in">require</span>([<span class="hljs-string">'aui/flag'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">flag</span>) </span>{
+        <span class="hljs-keyword">var</span> myFlag = flag({
+            type: <span class="hljs-string">'success'</span>,
+            title: <span class="hljs-string">'Kitchen Duty Plugin'</span>,
+            close: <span class="hljs-string">'auto'</span>,
+            body: message
+        });
+    });
+};
+
+<span class="hljs-keyword">var</span> initUserSearch = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">restUrl</span>) </span>{
+    <span class="hljs-keyword">var</span> templateUserSearch = JIRA.Templates.KDP.userSearch();
+
+    <span class="hljs-keyword">var</span> auiUserSelectOptions = {
+        ajax: {
+            url: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">return</span> restUrl + <span class="hljs-string">'/user/search'</span>;
+            },
+            dataType: <span class="hljs-string">'json'</span>,
+            delay: <span class="hljs-number">250</span>,
+            data: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">searchTerm</span>) </span>{
+                <span class="hljs-keyword">return</span> {
+                    query: searchTerm
+                };
+            },
+            results: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>{
+                <span class="hljs-keyword">return</span> {
+                    results: data
+                };
+            },
+            cache: <span class="hljs-literal">true</span>
+        },
+        minimumInputLength: <span class="hljs-number">1</span>,
+        tags: <span class="hljs-string">'true'</span>
+    };
+
+    <span class="hljs-comment">/* INIT TEMPLATES AND WIDGETS */</span>
+
+    AJS.$(<span class="hljs-string">'#kdp-planning-page-container'</span>).append(templateUserSearch);
+    AJS.$(<span class="hljs-string">'#kdp-user-select'</span>).auiSelect2(auiUserSelectOptions);
+    AJS.$(<span class="hljs-string">'#kdp-user-select-form'</span>).submit(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+        e.preventDefault();
+        AJS.$(AJS.$(<span class="hljs-string">'#kdp-user-select'</span>).select2(<span class="hljs-string">'data'</span>)).each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            showSuccessFlag(<span class="hljs-keyword">this</span>.id);
+        });
+    });
+};
+
+AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    AJS.log(<span class="hljs-string">'KDP: Planning Page Controller initializing ...'</span>);
+    <span class="hljs-keyword">var</span> baseUrl = AJS.params.baseURL;
+    <span class="hljs-keyword">var</span> restUrl = baseUrl + <span class="hljs-string">'/rest/kitchenduty/1.0'</span>;
+
+    initUserSearch(restUrl);
+});</code></pre>
+
+
+        <p>Now we need to teach JIRA that we want to use soy in our client-side code and define a transformer and the soy template to load. Also we need to define AUI dependencies to be loaded.</p>
+
+        
+    
+        <div class="cs-code-filename">src/main/resources/atlassian-plugin.xml
+            
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+                   data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+                   class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+            
+            <a class="cs-code-copylink cs--trigger-copy-clipboard"
+               data-toggle="tooltip" data-placement="left"
+               data-title-orig="Copy file content to clipboard"
+               title="Copy file content to clipboard"
+               data-clipboard-text="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+
+&lt;atlassian-plugin key=&quot;${atlassian.plugin.key}&quot; name=&quot;${project.name}&quot; plugins-version=&quot;2&quot;&gt;
+...
+  &lt;web-resource key=&quot;kitchen-duty-plugin-resources--planning-page&quot; name=&quot;kitchen-duty-plugin Web Resources for Planning Page&quot;&gt;
+    &lt;dependency&gt;com.atlassian.auiplugin:ajs&lt;/dependency&gt;
+    &lt;dependency&gt;com.atlassian.auiplugin:aui-select2&lt;/dependency&gt; 
+    &lt;dependency&gt;com.atlassian.auiplugin:aui-experimental-soy-templates&lt;/dependency&gt; 
+    &lt;transformation extension=&quot;soy&quot;&gt; 
+      &lt;transformer key=&quot;soyTransformer&quot;&gt;
+        &lt;functions&gt;com.atlassian.confluence.plugins.soy:soy-core-functions&lt;/functions&gt;
+      &lt;/transformer&gt;
+    &lt;/transformation&gt;
+    &lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-planning--user-search--soy.js&quot; 
+              location=&quot;templates-soy/kitchen-duty-planning--user-search.soy&quot;/&gt;
+    &lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-plugin--planning-page-controller.js&quot;
+              location=&quot;/js/kitchen-duty-plugin--planning-page-controller.js&quot;/&gt;
+    &lt;context&gt;kitchen-duty-plugin&lt;/context&gt;
+  &lt;/web-resource&gt;
+...
+&lt;/atlassian-plugin&gt;"><i class="fa fa-files-o"></i></a>
+        </div>
+    
+<pre class="cs-code"><code class="hljs"><span class="hljs-pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">atlassian-plugin</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"${atlassian.plugin.key}"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"${project.name}"</span> <span class="hljs-attribute">plugins-version</span>=<span class="hljs-value">"2"</span>&gt;</span>
+...
+  <span class="hljs-tag">&lt;<span class="hljs-title">web-resource</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-plugin-resources--planning-page"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin Web Resources for Planning Page"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:ajs<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:aui-select2<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span> <span class="cs-source-point" data-cs-source-point-id="difjn9sufpoj" data-cs-source-point-number="1"></span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:aui-experimental-soy-templates<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span> <span class="cs-source-point" data-cs-source-point-id="difjn9sufpoj" data-cs-source-point-number="2"></span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">transformation</span> <span class="hljs-attribute">extension</span>=<span class="hljs-value">"soy"</span>&gt;</span> <span class="cs-source-point" data-cs-source-point-id="difjn9sufpoj" data-cs-source-point-number="3"></span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">transformer</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"soyTransformer"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">functions</span>&gt;</span>com.atlassian.confluence.plugins.soy:soy-core-functions<span class="hljs-tag">&lt;/<span class="hljs-title">functions</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">transformer</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">transformation</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-planning--user-search--soy.js"</span> <span class="cs-source-point" data-cs-source-point-id="difjn9sufpoj" data-cs-source-point-number="4"></span>
+              <span class="hljs-attribute">location</span>=<span class="hljs-value">"templates-soy/kitchen-duty-planning--user-search.soy"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin--planning-page-controller.js"</span>
+              <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/kitchen-duty-plugin--planning-page-controller.js"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">context</span>&gt;</span>kitchen-duty-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">context</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">web-resource</span>&gt;</span>
+...
+<span class="hljs-tag">&lt;/<span class="hljs-title">atlassian-plugin</span>&gt;</span></code></pre>
+
+
+        <p>Now restart <code>atlas-run</code> and refresh (shift-reload) the Page and you should see this:</p>
+
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-03-user-search-select2.gif" data-lightbox="03-step" data-title="Step 3 - User Search working with AUI select2 widget and soy Template">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-03-user-search-select2.gif" class="img-thumbnail img-fluid" alt="Step 3 - User Search working with AUI select2 widget and soy Template">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+
+
+        
+
+        
+
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+
 
 
 
@@ -656,8 +964,6 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
 
             </div>
         </div>
-
--->
 
         <div class="cs-v-spacer cs-v-spacer--big"></div>
         <div class="cs-v-spacer cs-v-spacer--big"></div>

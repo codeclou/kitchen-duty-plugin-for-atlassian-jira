@@ -1,6 +1,14 @@
 /* tooltip */
 $tooltip-bg: #1E9FCC;
+$alert-border-radius: 0;
 
+/*
+$alert-success-bg:            $state-success-bg !default;
+$alert-success-text:          $state-success-text !default;
+$alert-success-border:
+*/
+
+$list-group-border-radius: 0;
 
 @import '../../node_modules/bootstrap/scss/bootstrap-flex.scss';
 @import '../../node_modules/font-awesome/scss/font-awesome.scss';
@@ -409,7 +417,7 @@ p {
 
 .cs-tutorial-step-review {
     position:relative;
-    border-radius: 6px;
+    border-radius: 0;
     border: 1px solid #0ecc13;
     background-color: #d4efcd;
     padding:20px;

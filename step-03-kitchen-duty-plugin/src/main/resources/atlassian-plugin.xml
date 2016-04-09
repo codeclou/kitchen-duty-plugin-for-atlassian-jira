@@ -20,8 +20,17 @@
   </web-resource>
   <web-resource key="kitchen-duty-plugin-resources--planning-page" name="kitchen-duty-plugin Web Resources for Planning Page">
     <dependency>com.atlassian.auiplugin:ajs</dependency>
-    <resource type="download" name="kitchen-duty-plugin--planning-page-controller.js" location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
-    <resource type="download" name="handlebars.js" location="/js/3rdparty/handlebars-v4.0.5.js"/>
+    <dependency>com.atlassian.auiplugin:aui-select2</dependency>
+    <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency>
+    <transformation extension="soy">
+      <transformer key="soyTransformer">
+        <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+      </transformer>
+    </transformation>
+    <resource type="download" name="kitchen-duty-planning--user-search--soy.js"
+              location="templates-soy/kitchen-duty-planning--user-search.soy"/>
+    <resource type="download" name="kitchen-duty-plugin--planning-page-controller.js"
+              location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
     <context>kitchen-duty-plugin</context>
   </web-resource>
   <webwork1 key="kitchen-duty-planning-webwork-module" name="Kitchen Duty Planning Webwork Module" i18n-name-key="kitchen-duty-planning-webwork-module.name" roles-required="admin">

@@ -27,8 +27,8 @@
         <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
       </transformer>
     </transformation>
-    <resource type="download" name="kitchen-duty-planning--user-search--soy.js"
-              location="templates-soy/kitchen-duty-planning--user-search.soy"/>
+    <resource type="download" name="kitchen-duty-planning-soy.js"
+              location="templates-soy/kitchen-duty-planning.soy"/>
     <resource type="download" name="kitchen-duty-plugin--planning-page-controller.js"
               location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
     <context>kitchen-duty-plugin</context>

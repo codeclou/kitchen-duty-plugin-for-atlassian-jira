@@ -39,9 +39,9 @@ var initUserSearch = function(restUrl) {
 
     AJS.$('#kdp-planning-page-container').append(templateUserSearch);
     AJS.$('#kdp-user-select').auiSelect2(auiUserSelectOptions);
-    AJS.$("#kdp-user-select-form").submit(function (e) {
+    AJS.$('#kdp-user-select-form').submit(function (e) {
         e.preventDefault();
-        AJS.$(AJS.$('#kdp-user-select').select2("data")).each(function () {
+        AJS.$(AJS.$('#kdp-user-select').select2('data')).each(function () {
             showSuccessFlag(this.id);
         });
     });

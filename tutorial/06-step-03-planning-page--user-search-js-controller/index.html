@@ -283,7 +283,8 @@
         <p>It will select the DOM element with id foo (when there is no such element it will return <code>undefined</code>).
             Ok just take that in for now, I know it is unfamiliar but we will get used to it.</p>
 
-        <p>So what about template Engines? There is <a href="https://docs.atlassian.com/aui/latest/docs/soy.html" target="_blank">soy</a>
+        <p>So what about template Engines? There is <a href="https://docs.atlassian.com/aui/latest/docs/soy.html" target="_blank">soy</a> which
+            is basically the <a href="https://developers.google.com/closure/templates/"  target="_blank">Google Closure Template Framework</a>
             which can be used server-side and client-side. We will stick with velocity for server-side templates (you could switch to soy completely).
             And we will use soy-templates on the client-side.</p>
 
@@ -300,7 +301,7 @@
         <ul>
             <li>lightweight jQuery provided with <code>AJS</code> prefix</li>
             <li>AUI framework methods like <code>AJS.getI18nText</code></li>
-            <li><a href="https://developer.atlassian.com/confdev/tutorials/writing-soy-templates-in-your-plugin" target="_blank">soy template engine</a></li>
+            <li><a href="https://developer.atlassian.com/confdev/tutorials/writing-soy-templates-in-your-plugin" target="_blank">soy templates</a> (<a href="https://developers.google.com/closure/templates/"  target="_blank">Google Closure Template Framework</a>)</li>
             <li>html page with serverside velocity (which we will not use to much)</li>
         </ul>
 
@@ -592,14 +593,15 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
             <li>write some JS code to use <a href="https://docs.atlassian.com/aui/latest/docs/auiselect2.html" target="_blank">AUI Select2 widget</a> with our User Search REST Resource (see previous chapter).</li>
         </ul>
 
-        <p>Create the soy template in <code>src/main/resources/templates-soy/kitchen-duty-planning--user-search.soy</code> and paste the following code there.</p>
+        <p>Create the soy template file in <code>src/main/resources/templates-soy/kitchen-duty-planning.soy</code> and paste the following code there.</p>
+        <p>This file will later contain more than one template for each use case. But we will have one file per page.</p>
 
 
         
     
-        <div class="cs-code-filename">src/main/resources/templates-soy/kitchen-duty-planning--user-search.soy
+        <div class="cs-code-filename">src/main/resources/templates-soy/kitchen-duty-planning.soy
             
-                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/src/main/resources/templates-soy/kitchen-duty-planning--user-search.soy" target="_blank"
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-03-kitchen-duty-plugin/src/main/resources/templates-soy/kitchen-duty-planning.soy" target="_blank"
                    data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
                    class="cs-code-ghlink"><i class="fa fa-github"></i></a>
             
@@ -864,8 +866,8 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
         &lt;functions&gt;com.atlassian.confluence.plugins.soy:soy-core-functions&lt;/functions&gt;
       &lt;/transformer&gt;
     &lt;/transformation&gt;
-    &lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-planning--user-search--soy.js&quot; 
-              location=&quot;templates-soy/kitchen-duty-planning--user-search.soy&quot;/&gt;
+    &lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-planning-soy.js&quot; 
+              location=&quot;templates-soy/kitchen-duty-planning.soy&quot;/&gt;
     &lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-plugin--planning-page-controller.js&quot;
               location=&quot;/js/kitchen-duty-plugin--planning-page-controller.js&quot;/&gt;
     &lt;context&gt;kitchen-duty-plugin&lt;/context&gt;
@@ -887,8 +889,8 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
         <span class="hljs-tag">&lt;<span class="hljs-title">functions</span>&gt;</span>com.atlassian.confluence.plugins.soy:soy-core-functions<span class="hljs-tag">&lt;/<span class="hljs-title">functions</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">transformer</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">transformation</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-planning--user-search--soy.js"</span> <span class="cs-source-point" data-cs-source-point-id="difjn9sufpoj" data-cs-source-point-number="4"></span>
-              <span class="hljs-attribute">location</span>=<span class="hljs-value">"templates-soy/kitchen-duty-planning--user-search.soy"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-planning-soy.js"</span> <span class="cs-source-point" data-cs-source-point-id="difjn9sufpoj" data-cs-source-point-number="4"></span>
+              <span class="hljs-attribute">location</span>=<span class="hljs-value">"templates-soy/kitchen-duty-planning.soy"</span>/&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin--planning-page-controller.js"</span>
               <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/kitchen-duty-plugin--planning-page-controller.js"</span>/&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">context</span>&gt;</span>kitchen-duty-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">context</span>&gt;</span>

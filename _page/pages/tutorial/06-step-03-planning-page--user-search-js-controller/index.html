@@ -86,7 +86,8 @@
         <p>It will select the DOM element with id foo (when there is no such element it will return <code>undefined</code>).
             Ok just take that in for now, I know it is unfamiliar but we will get used to it.</p>
 
-        <p>So what about template Engines? There is <a href="https://docs.atlassian.com/aui/latest/docs/soy.html" target="_blank">soy</a>
+        <p>So what about template Engines? There is <a href="https://docs.atlassian.com/aui/latest/docs/soy.html" target="_blank">soy</a> which
+            is basically the <a href="https://developers.google.com/closure/templates/"  target="_blank">Google Closure Template Framework</a>
             which can be used server-side and client-side. We will stick with velocity for server-side templates (you could switch to soy completely).
             And we will use soy-templates on the client-side.</p>
 
@@ -103,7 +104,7 @@
         <ul>
             <li>lightweight jQuery provided with <code>AJS</code> prefix</li>
             <li>AUI framework methods like <code>AJS.getI18nText</code></li>
-            <li><a href="https://developer.atlassian.com/confdev/tutorials/writing-soy-templates-in-your-plugin" target="_blank">soy template engine</a></li>
+            <li><a href="https://developer.atlassian.com/confdev/tutorials/writing-soy-templates-in-your-plugin" target="_blank">soy templates</a> (<a href="https://developers.google.com/closure/templates/"  target="_blank">Google Closure Template Framework</a>)</li>
             <li>html page with serverside velocity (which we will not use to much)</li>
         </ul>
 
@@ -265,10 +266,11 @@
             <li>write some JS code to use <a href="https://docs.atlassian.com/aui/latest/docs/auiselect2.html" target="_blank">AUI Select2 widget</a> with our User Search REST Resource (see previous chapter).</li>
         </ul>
 
-        <p>Create the soy template in <code>src/main/resources/templates-soy/kitchen-duty-planning--user-search.soy</code> and paste the following code there.</p>
+        <p>Create the soy template file in <code>src/main/resources/templates-soy/kitchen-duty-planning.soy</code> and paste the following code there.</p>
+        <p>This file will later contain more than one template for each use case. But we will have one file per page.</p>
 
 
-        {{ csSource(lang='soy', filename="src/main/resources/templates-soy/kitchen-duty-planning--user-search.soy", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='dsfhuzk656', source='
+        {{ csSource(lang='soy', filename="src/main/resources/templates-soy/kitchen-duty-planning.soy", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='dsfhuzk656', source='
             |{namespace JIRA.Templates.KDP} {{{point::1}}}
             |/**
             | * Kitchen Duty Planning Page - User Search Template
@@ -392,8 +394,8 @@
             |        <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
             |      </transformer>
             |    </transformation>
-            |    <resource type="download" name="kitchen-duty-planning--user-search--soy.js" {{{point::4}}}
-            |              location="templates-soy/kitchen-duty-planning--user-search.soy"/>
+            |    <resource type="download" name="kitchen-duty-planning-soy.js" {{{point::4}}}
+            |              location="templates-soy/kitchen-duty-planning.soy"/>
             |    <resource type="download" name="kitchen-duty-plugin--planning-page-controller.js"
             |              location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
             |    <context>kitchen-duty-plugin</context>

@@ -280,6 +280,7 @@ body {
 }
 .cs-page-logo:hover {
     text-decoration: none;
+    color:#fff;
 }
 
 .cs-page-logo h1, .cs-page-logo-small h3 {
@@ -539,7 +540,7 @@ p {
 .cs-code-filename {
     margin-left:0;
     margin-right:0;
-    padding: 5px 10px 5px 10px;
+    padding: 10px 10px 5px 10px;
     background-color: #525252;
     color:#fff;
     font-weight:300;
@@ -555,6 +556,7 @@ p {
     margin-left:15px;
     cursor: pointer;
     padding-left:3px;
+    border-bottom:3px solid #525252;
 }
 .cs-code-copylink:hover, .cs-code-ghlink:hover {
     color: #ffffff;
@@ -734,6 +736,7 @@ p {
 }
 .cs-landing-logo:hover {
     text-decoration: none;
+    color:#fff;
 }
 
 .cs-landing-logo h1 {

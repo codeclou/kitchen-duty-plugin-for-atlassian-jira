@@ -115,7 +115,7 @@
         <p>Now we <strong>create our JS-Controller</strong> file in <code>/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</code>.
         We put some simple dummy code inside which will trigger a <a href="https://docs.atlassian.com/aui/5.7.31/docs/flag.html">message flag</a> on pageload just to see if everything is working.</p>
 
-        {{ csSource(lang='js', filename="src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js", ghBaseUrl=gitHubBaseUrlForStep3, source="
+        {{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin--planning-page-controller.js", ghBaseUrl=gitHubBaseUrlForStep3, source="
             |AJS.toInit(function(){
             |   require(['aui/flag'], function(flag) {
             |       var myFlag = flag({
@@ -130,7 +130,7 @@
         <p>Our new JS Controller will not just work out of the box. We need to define a resource in <code>atlassian-plugin.xml</code>
             for our controller.</p>
 
-        {{ csSource(lang='xml', filename="src/main/resources/atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep3, source='
+        {{ csSource(lang='xml', filepath="src/main/resources/", filename="atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep3, source='
             |<web-resource key="kitchen-duty-plugin-resources--planning-page" name="kitchen-duty-plugin Web Resources for Planning Page">
             |	<dependency>com.atlassian.auiplugin:ajs</dependency>
             |	<resource type="download" name="kitchen-duty-plugin--planning-page-controller.js" location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
@@ -163,7 +163,7 @@
         <p>We already learned that we need to do a <code>@ComponentImport</code> somewhere in our application to pull dependencies from other OSGi Bundles.
         That is why we simply do that in our <code>MyPluginComponentImpl.java</code> file which we will (mis)use for that purpose from now on.</p>
 
-        {{ csSource(lang='java', filename="src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java", ghBaseUrl=gitHubBaseUrlForStep3, source='
+        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/impl/", filename="MyPluginComponentImpl.java", ghBaseUrl=gitHubBaseUrlForStep3, source='
             |import com.atlassian.webresource.api.assembler.PageBuilderService;
             |
             |...
@@ -176,7 +176,7 @@
 
         <div class="row">
             <div class="col-md-8">
-                {{ csSource(lang='java', filename="src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='h768go8gbo8gv8gbu909', source='
+                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/webwork/", filename="KitchenDutyPlanningWebworkAction.java", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='h768go8gbo8gv8gbu909', source='
                     |package com.comsysto.kitchen.duty.webwork;
                     |
                     |import com.atlassian.webresource.api.assembler.PageBuilderService;
@@ -270,7 +270,7 @@
         <p>This file will later contain more than one template for each use case. But we will have one file per page.</p>
 
 
-        {{ csSource(lang='soy', filename="src/main/resources/templates-soy/kitchen-duty-planning.soy", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='dsfhuzk656', source='
+        {{ csSource(lang='soy', filepath="src/main/resources/templates-soy/", filename="kitchen-duty-planning.soy", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='dsfhuzk656', source='
             |{namespace JIRA.Templates.KDP} {{{point::1}}}
             |/**
             | * Kitchen Duty Planning Page - User Search Template
@@ -302,7 +302,7 @@
 
         <p>Change velocity template so that we have one div container with an id we can use to dynamically insert our content which is rendered by JS-Controller.</p>
 
-        {{ csSource(lang='html', filename="src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='h76sdfsgdfgodjfnsdfn909', source='
+        {{ csSource(lang='html', filepath="src/main/resources/templates/kitchen-duty-planning-webwork-module/", filename="kitchen-duty-planning-success.vm", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='h76sdfsgdfgodjfnsdfn909', source='
             |<html>
             |<head>
             |    <title>$i18n.getText("kitchen-duty-plugin.admin.planning.page.title")</title>
@@ -319,7 +319,7 @@
 
         <p>Change the JS-Controller to render the soy template, initialize the AUI Select 2 widget to work with our User Search REST Resource.</p>
 
-        {{ csSource(lang='js', filename="src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='iusndf98sidjcn', source="
+        {{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin--planning-page-controller.js", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='iusndf98sidjcn', source="
             |var showSuccessFlag = function(message) {
             |    require(['aui/flag'], function(flag) {
             |        var myFlag = flag({
@@ -380,7 +380,7 @@
 
         <p>Now we need to teach JIRA that we want to use soy in our client-side code and define a transformer and the soy template to load. Also we need to define AUI dependencies to be loaded.</p>
 
-        {{ csSource(lang='xml', filename="src/main/resources/atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='difjn9sufpoj', source='
+        {{ csSource(lang='xml', filepath="src/main/resources/", filename="atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='difjn9sufpoj', source='
             |<?xml version="1.0" encoding="UTF-8"?>
             |
             |<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">

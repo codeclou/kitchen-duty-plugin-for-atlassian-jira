@@ -33,7 +33,8 @@ var initCsSourcePointerHover = function () {
 
 var initBootstrapTooltip = function () {
     $('[data-toggle="popover"]').popover();
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]:visible').tooltip();
+    $('[data-toggle="tooltip"]:hidden').tooltip();
 
 };
 

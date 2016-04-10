@@ -16,26 +16,14 @@ $alert-success-border:
 
 $list-group-border-radius: 0;
 
-@import '../../node_modules/bootstrap/scss/bootstrap-flex.scss';
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '../../node_modules/font-awesome/scss/font-awesome.scss';
 @import '../../node_modules/highlight.js/styles/railscasts';
 @import '../../node_modules/lightbox2/dist/css/lightbox';
 @import '../../node_modules/toastr/toastr';
 
 
-// IE 11 flexbox fix.
-// https://github.com/twbs/bootstrap/issues/17310
-@if $enable-flex {
-    @each $breakpoint in map-keys($grid-breakpoints) {
-        @include media-breakpoint-up($breakpoint) {
-            @for $size from 1 through $grid-columns {
-                .col-#{$breakpoint}-#{$size} {
-                    max-width: percentage($size / $grid-columns);
-                }
-            }
-        }
-    }
-}
+
 
 .img-fluid--fix-svg-ie-and-ff {
     width: 100%;
@@ -106,6 +94,7 @@ body {
 @include media-breakpoint-down(md) {
     .cs-content-wrapper {
         left: 0;
+        padding: 5px 5px 20px 5px;
     }
 }
 
@@ -556,6 +545,7 @@ p {
     font-weight:300;
     font-size: 13px;
     font-family: Menlo, Menlo, Monaco, Consolas, "Courier New", monospace;
+    overflow:hidden;
 }
 
 .cs-code-copylink, .cs-code-ghlink {
@@ -727,11 +717,18 @@ p {
     width:95%;
 }
 
-.cs-landing-logo {
+.cs-landing-logo-img {
     background-image: url(../images/kitchen-duty-logo-v2.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    padding-left:95px;
+    display:inline-block;
+    width:80px;
+    height:80px;
+    margin-right:20px;
+    margin-left:-40px;
+    float:left;
+}
+.cs-landing-logo {
     color:#fff;
     display:inline-block;
 }
@@ -745,12 +742,22 @@ p {
     font-weight:900;
     margin-bottom:0;
     margin-top:0;
+    white-space: nowrap;
 }
 
 .cs-landing-logo h2 {
     margin-top:0;
     font-family: 'Source Sans Pro', sans-serif;
     font-weight:300;
+    white-space: nowrap;
+}
+@include media-breakpoint-down(sm) {
+    .cs-landing-logo h1 {
+        font-size: 25px;
+    }
+    .cs-landing-logo h2 {
+        font-size: 18px;
+    }
 }
 
 .cs-landing-button-wrapper {

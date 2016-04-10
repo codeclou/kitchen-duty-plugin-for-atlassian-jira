@@ -113,7 +113,7 @@
             <li>
                 <p><code>atlassian-plugin.xml</code> contains now the webwork definiton of our Action and View.</p>
 
-                {{ csSource(lang='xml', filename="src/main/resources/atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep1, source='
+                {{ csSource(lang='xml', filepath="src/main/resources/", filename="atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep1, source='
                             |  <webwork1 key="kitchen-duty-planning-webwork-module" name="Kitchen Duty Planning Webwork Module" i18n-name-key="kitchen-duty-planning-webwork-module.name">
                             |    <description key="kitchen-duty-planning-webwork-module.description">The Kitchen Duty Planning Webwork Module Plugin</description>
                             |    <actions>
@@ -167,7 +167,7 @@
 
         <p>Now we change the <code>execute</code> Method to work with our view:</p>
 
-        {{ csSource(lang='java', filename="src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java", ghBaseUrl=gitHubBaseUrlForStep1, source='
+        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/webwork/", filename="KitchenDutyPlanningWebworkAction.java", ghBaseUrl=gitHubBaseUrlForStep1, source='
                     |@Override
                     |public String execute() throws Exception {
                     |   return "kitchen-duty-planning-success";
@@ -222,7 +222,7 @@
 
         <p>Edit the <strong><code>kitchen-duty-planning-success.vm</code></strong> which resides in <code>src/main/resources/templates/kitchen-duty-planning-webwork-module/</code> like this.</p>
 
-        {{ csSource(lang='html', filename="src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm", ghBaseUrl=gitHubBaseUrlForStep1, source='
+        {{ csSource(lang='html', filepath="src/main/resources/templates/kitchen-duty-planning-webwork-module/", filename="kitchen-duty-planning-success.vm", ghBaseUrl=gitHubBaseUrlForStep1, source='
                     |<html>
                     |<head>
                     |    <title>Planning Page - Kitchen Duty Plugin</title>
@@ -287,7 +287,7 @@
 
         <p>You might need another coffee because here comes the code for the <code>atlassian-plugin.xml</code> which resides in <code>src/main/resources/</code></p>
 
-        {{ csSource(lang='xml', filename="src/main/resources/atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep1, source='
+        {{ csSource(lang='xml', filepath="src/main/resources/", filename="atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep1, source='
                     |<atlassian-plugin>
                     |...
                     |  <web-section key="admin_kitchen_duty_planning_section"
@@ -340,7 +340,7 @@
 
         <p>Since we heard about <strong>i18n</strong> now we need to define our values in the language file <code>kitchen-duty-plugin.properties</code>.</p>
 
-        {{ csSource(lang='ini', filename="src/main/resources/kitchen-duty-plugin.properties", ghBaseUrl=gitHubBaseUrlForStep1, source='
+        {{ csSource(lang='ini', filepath="src/main/resources/", filename="kitchen-duty-plugin.properties", ghBaseUrl=gitHubBaseUrlForStep1, source='
                     |# websection/webitems
                     |kitchen-duty-plugin.admin.planning.page.web.section.name = Kitchen Duty Plugin
                     |kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page
@@ -380,7 +380,7 @@
 
         <p>So let's get to action, we will change our html code using <code>i18n.getText("i18n.key")</code> which is a velocity helper to render the i18n value for a given key.</p>
 
-        {{ csSource(lang='html', filename="src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm", ghBaseUrl=gitHubBaseUrlForStep1, source='
+        {{ csSource(lang='html', filepath="src/main/resources/templates/kitchen-duty-planning-webwork-module/", filename="kitchen-duty-planning-success.vm", ghBaseUrl=gitHubBaseUrlForStep1, source='
                     |<html>
                     |<head>
                     |    <title>$i18n.getText("kitchen-duty-plugin.admin.planning.page.title")</title>
@@ -396,7 +396,7 @@
 
         <p>Now we need to add the translations to the <code>kitchen-duty-plugin.properties</code> file and we are done internationalising our page.</p>
 
-        {{ csSource(lang='ini', filename="src/main/resources/kitchen-duty-plugin.properties", ghBaseUrl=gitHubBaseUrlForStep1, source='
+        {{ csSource(lang='ini', filepath="src/main/resources/", filename="kitchen-duty-plugin.properties", ghBaseUrl=gitHubBaseUrlForStep1, source='
                     |# kitchen-duty-planning-success.vm
                     |kitchen-duty-plugin.admin.planning.page.headline = Kitchen Duty Plugin - Planning Page
                     |kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plugin
@@ -409,7 +409,7 @@
         <p>We are using a <strong>Webwork Action</strong> for our planning page and we can simply set <code>roles-required="admin"</code> in the
             <code>atlassian-plugin.xml</code> to enforce administrator only authorization.</p>
 
-        {{ csSource(lang='xml', filename="src/main/resources/atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep1, source='
+        {{ csSource(lang='xml', filepath="src/main/resources/", filename="atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep1, source='
                     |<webwork1 key="kitchen-duty-planning-webwork-module"
                     |          ...
                     |          roles-required="admin">

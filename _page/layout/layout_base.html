@@ -51,11 +51,19 @@
 </div>
 {% endmacro %}
 
-{% macro csSource(lang='', source='', uniqueId='', filename='', ghBaseUrl='') %}
+{% macro csSource(lang='', source='', uniqueId='', filename='', filepath='', ghBaseUrl='') %}
     {% if filename %}
-        <div class="cs-code-filename">{{ filename }}
+        <div class="cs-code-filename">
+            {% if filepath %}
+            <span class="hidden-md-down">{{ filepath }}</span><span class="hidden-lg-up"
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  title="{{ filepath }}">.../</span>{{ filename }}
+            {% else %}
+                {{ filename }}
+            {% endif %}
             {% if ghBaseUrl %}
-                <a href="{{ ghBaseUrl }}{{ filename }}" target="_blank"
+                <a href="{{ ghBaseUrl }}{{ filepath }}{{ filename }}" target="_blank"
                    data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
                    class="cs-code-ghlink"><i class="fa fa-github"></i></a>
             {% endif %}

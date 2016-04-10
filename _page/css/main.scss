@@ -92,7 +92,6 @@ body {
 
 .cs-content-wrapper {
     font-family: 'Open Sans', sans-serif;
-    font-size:16px;
     top:90px;
     bottom:60px;
     left:350px;
@@ -143,14 +142,17 @@ body {
 
 .toc-h2 {
     padding-left: 10px;
+    font-size:14px;
 }
 
 .toc-h2-divider {
-    text-align:center;
+    text-align:left;
     font-family: 'Source Sans Pro', sans-serif;
     font-weight:200;
     color: #efefef;
-    margin-top:30px;
+    font-size:12px;
+    margin-top:10px;
+    padding:0 0 0 10px !important;
 }
 
 .toc-h3 {

@@ -103,6 +103,11 @@ body {
     background-color: #fff;
     z-index:1;
 }
+@include media-breakpoint-down(md) {
+    .cs-content-wrapper {
+        left: 0;
+    }
+}
 
 .cs-sidebar-wrapper {
     top:90px;
@@ -214,6 +219,20 @@ body {
     height:60px;
     padding-left:40px;
 }
+
+@include media-breakpoint-down(sm) {
+    .cs-footer-left {
+        width:240px;
+        padding:10px;
+    }
+    .cs-footer-right {
+        position:fixed;
+        left:240px;
+        padding-left:5px;
+    }
+}
+
+
 .cs-toc-infographic-wrapper {
     height:250px;
     width:350px;
@@ -254,13 +273,18 @@ body {
 
 }
 
-.cs-page-logo {
+.cs-page-logo-img {
     background-image: url(../images/kitchen-duty-logo-v2.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    padding-left:65px;
-    color:#fff;
     display:inline-block;
+    float:left;
+    width:50px;
+    height:50px;
+    margin-right:5px;
+}
+.cs-page-logo {
+    color:#fff;
 }
 .cs-page-header-cs-logo {
     padding-top:15px;
@@ -269,15 +293,15 @@ body {
     text-decoration: none;
 }
 
-.cs-page-logo h1 {
+.cs-page-logo h1, .cs-page-logo-small h3 {
     font-family: 'Roboto', sans-serif;
     text-transform: uppercase;
     font-weight:900;
     margin-bottom:0;
     margin-top:0;
     font-size:25px;
+    color:#fff;
 }
-
 .cs-page-logo h2 {
     margin-top:0;
     font-family: 'Source Sans Pro', sans-serif;

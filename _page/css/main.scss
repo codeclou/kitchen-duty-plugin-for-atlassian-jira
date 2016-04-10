@@ -1,6 +1,12 @@
 /* tooltip */
 $tooltip-bg: #1E9FCC;
 $alert-border-radius: 0;
+$btn-primary-color:              #fff;
+$btn-primary-bg:                 transparent;
+$btn-primary-border:             #fff;
+$btn-border-radius:              0;
+$btn-border-radius-lg:           0;
+$btn-border-radius-sm:           0;
 
 /*
 $alert-success-bg:            $state-success-bg !default;
@@ -835,4 +841,10 @@ p {
     font-style: italic;
 }
 
-
+/* stars */
+.cs-stars-on-github-right {
+    border-left:1px solid #fff;
+    padding-left:10px;
+    margin-left:10px;
+    display:inline-block;
+}

@@ -258,6 +258,13 @@ var _startsWith = function (stringS, prefix) {
     return stringS.slice(0, prefix.length) == prefix;
 };
 
+var initStarsOnGitHub = function() {
+    /* dummy token from user csgruenebe with no scopes, means no rights on anything. but otherwise some users might not see the stars, because of API Rate limit */
+    $.getJSON('https://api.github.com/repos/comsysto/kitchen-duty-plugin-for-atlassian-jira/stargazers?access_token=2605ab0ec4b7c4de2a19ef458b9c24cd33876ca4', function(data) {
+        $('.cs-stars-on-github-count-stars').html(data.length);
+    });
+};
+
 /* ================================================================================================ */
 /* ONLOAD */
 /* ================================================================================================ */
@@ -276,5 +283,7 @@ $(function () {
     initClipboardJs();
 
     initCsSourcePointerHover();
+
+    initStarsOnGitHub();
 
 });

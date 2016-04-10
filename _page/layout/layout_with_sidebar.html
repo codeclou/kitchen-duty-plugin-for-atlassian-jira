@@ -64,6 +64,68 @@
                     Kitchen Duty Planning JS Controller
                 </a>
             </li>
+            {% if CURRENT_PAGE_ID >= 3 and CURRENT_PAGE_ID <= 8 %}
+            <li>
+                {% if CURRENT_PAGE_ID == 3 %}
+                        {% set infoGraphicComponentOverviewSettings = '{
+                    "markedAsDone": [ ],
+                    "markedAsTodo": [ ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }'
+                        %}
+                    {% endif %}
+                    {% if CURRENT_PAGE_ID == 4 %}
+                        {% set infoGraphicComponentOverviewSettings = '{
+                    "markedAsDone": [ ],
+                    "markedAsTodo": [ "webwork-action", "html-view" ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }'
+                        %}
+                    {% endif %}
+                    {% if CURRENT_PAGE_ID == 5 %}
+                        {% set infoGraphicComponentOverviewSettings = '{
+                    "markedAsDone": [ "webwork-action", "html-view" ],
+                    "markedAsTodo": [ "user-resource", "user-search-resource-model" ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }'
+                        %}
+                    {% endif %}
+                    {% if CURRENT_PAGE_ID == 6 %}
+                        {% set infoGraphicComponentOverviewSettings = '{
+                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model" ],
+                    "markedAsTodo": [ "user-js-controller" ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }'
+                        %}
+                    {% endif %}
+                    {% if CURRENT_PAGE_ID == 7 %}
+                        {% set infoGraphicComponentOverviewSettings = '{
+                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller" ],
+                    "markedAsTodo": [ "kitchen-duty-resource", "kitchen-duty-planning-model" ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }'
+                        %}
+                    {% endif %}
+                    {% if CURRENT_PAGE_ID == 8 %}
+                        {% set infoGraphicComponentOverviewSettings = '{
+                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller", "kitchen-duty-resource", "kitchen-duty-planning-model"  ],
+                    "markedAsTodo": [ "kitchen-duty-js-controller" ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }'
+                        %}
+                {% endif %}
+                <p>&nbsp;</p>
+                <div class="cs-toc-infographic-wrapper">
+                    {{ interactiveGraphic('navSvg11', 'kitchen-duty-planning-page--component-overview', infoGraphicComponentOverviewSettings )}}
+                </div>
+            </li>
+            {% endif %}
 
             {# -------------------------------------------------------------------------------- #}
 
@@ -73,6 +135,8 @@
                 </a>
             </li>
         </ul>
+
+
 
 
     </div>
@@ -98,7 +162,7 @@
          id="{{ id }}"
          data-json-settings="{{ jsonData }}"
          data-svg-to-load="{{ name }}"
-         width="100%"
+         width="310"
          viewBox="0 0 1043 654"
          preserveAspectRatio="xMaxYMax">
     </svg>
@@ -106,66 +170,7 @@
 
 {% block contentLayout %}
 
-    {% if CURRENT_PAGE_ID >= 3 and CURRENT_PAGE_ID <= 8 %}
-        {% if CURRENT_PAGE_ID == 3 %}
-            {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ ],
-                    "markedAsTodo": [ ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-            %}
-        {% endif %}
-        {% if CURRENT_PAGE_ID == 4 %}
-            {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ ],
-                    "markedAsTodo": [ "webwork-action", "html-view" ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-            %}
-        {% endif %}
-        {% if CURRENT_PAGE_ID == 5 %}
-            {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ "webwork-action", "html-view" ],
-                    "markedAsTodo": [ "user-resource", "user-search-resource-model" ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-            %}
-        {% endif %}
-        {% if CURRENT_PAGE_ID == 6 %}
-            {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model" ],
-                    "markedAsTodo": [ "user-js-controller" ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-            %}
-        {% endif %}
-        {% if CURRENT_PAGE_ID == 7 %}
-            {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller" ],
-                    "markedAsTodo": [ "kitchen-duty-resource", "kitchen-duty-planning-model" ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-            %}
-        {% endif %}
-        {% if CURRENT_PAGE_ID == 8 %}
-            {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller", "kitchen-duty-resource", "kitchen-duty-planning-model"  ],
-                    "markedAsTodo": [ "kitchen-duty-js-controller" ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-            %}
-        {% endif %}
 
-        <div class="cs-toc-infographic-wrapper">
-            {{ interactiveGraphic('navSvg11', 'kitchen-duty-planning-page--component-overview', infoGraphicComponentOverviewSettings )}}
-        </div>
-    {% endif %}
 
 
     <div class="container-fluid cs-page-header">

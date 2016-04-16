@@ -93,8 +93,12 @@ body {
 }
 @include media-breakpoint-down(md) {
     .cs-content-wrapper {
-        left: 0;
         padding: 5px 5px 20px 5px;
+        position: relative;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
     }
 }
 
@@ -208,14 +212,29 @@ body {
     height:60px;
     padding-left:40px;
 }
-
+@include media-breakpoint-down(md) {
+    .cs-footer {
+        position:relative;
+        bottom:0;
+        left:0;
+    }
+    .cs-footer-left {
+        position:relative;
+        bottom:0;
+        left:0;
+    }
+    .cs-footer-right {
+        position:relative;
+        bottom:0;
+        left:0;
+    }
+}
 @include media-breakpoint-down(sm) {
     .cs-footer-left {
         width:240px;
         padding:10px;
     }
     .cs-footer-right {
-        position:fixed;
         left:240px;
         padding-left:5px;
     }
@@ -259,7 +278,16 @@ body {
     height:90px;
     padding-top:15px;
     padding-bottom:30px;
+}
 
+@include media-breakpoint-down(md) {
+    .cs-page-header {
+        position: relative;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+    }
 }
 
 .cs-page-logo-img {

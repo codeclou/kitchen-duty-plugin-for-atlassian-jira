@@ -269,141 +269,257 @@
         <p>Create the soy template file in <code>src/main/resources/templates-soy/kitchen-duty-planning.soy</code> and paste the following code there.</p>
         <p>This file will later contain more than one template for each use case. But we will have one file per page.</p>
 
+        <div class="row">
+            <div class="col-md-8">
+                {{ csSource(lang='soy', filepath="src/main/resources/templates-soy/", filename="kitchen-duty-planning.soy",
+                            ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='dsfhuzk65fdsb6', source='
+                    |{namespace JIRA.Templates.KDP} {{{point::1}}}
+                    |/**
+                    | * Kitchen Duty Planning Page - User Search Template
+                    | */
+                    |{template .userSearch} {{{point::2}}}
+                    |<form class="aui" id="kdp-user-select-form"> {{{point::3}}}
+                    |
+                    |    <div class="field-group">
+                    |        <label for="kdp-user-select">Users</label>
+                    |        <div id="kdp-user-select"  {{{point::4}}}
+                    |                 name="kdp-user-select"
+                    |                 class="kdp-aui-select"
+                    |                 multiple=""
+                    |                 placeholder="start typing a username ...">
+                    |        </div>
+                    |        <div class="description">The users that should have kitchen duty.</div>
+                    |    </div>
+                    |    <div class="buttons-container">
+                    |        <div class="buttons">
+                    |            <input class="button submit" type="submit" {{{point::5}}}
+                    |                   id="kdp-user-select-save-button"
+                    |                   value="show"/>
+                    |        </div>
+                    |    </div>
+                    |
+                    |</form>
+                    |{/template}
+                ') }}
+            </div>
+            <div class="col-md-4">
+                <div class="list-group cs-source-point-list" data-source-target="dsfhuzk65fdsb6">
+                    <div class="list-group-item cs-source-point-list__item">
+                        We define a namespace called <code>JIRA.Templates.KDP</code> for our templates.
+                        Later we will access all out templates with <code>namespace.templateName</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Our first actual template will be called <code>.userSearch</code> and contains HTML code we will later
+                        use from our JS Controller.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The input-fields and AUI widgets will only render correctly if we surround them with a form that has a class called <code>aui</code>.
+                        We define an id on the form to be able to access it via jQuery later.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        This is teh container for the AUI Select 2 widget. We use a <code>div</code> with id <code>kdp-user-select</code>.
+                        Don't forget <code>multiple</code> to tell the widget on init that this field will accept multiple values.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The last thing we need is a button to submit the form.
+                        We also give the button a unique id to use it via jQuery later.
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        {{ csSource(lang='soy', filepath="src/main/resources/templates-soy/", filename="kitchen-duty-planning.soy", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='dsfhuzk656', source='
-            |{namespace JIRA.Templates.KDP} {{{point::1}}}
-            |/**
-            | * Kitchen Duty Planning Page - User Search Template
-            | */
-            |{template .userSearch} {{{point::2}}}
-            |<form class="aui" id="kdp-user-select-form"> {{{point::3}}}
-            |
-            |    <div class="field-group">
-            |        <label for="kdp-user-select">Users</label>
-            |        <div id="kdp-user-select"  {{{point::4}}}
-            |                 name="kdp-user-select"
-            |                 class="kdp-aui-select"
-            |                 multiple=""
-            |                 placeholder="start typing a username ...">
-            |        </div>
-            |        <div class="description">The users that should have kitchen duty.</div>
-            |    </div>
-            |    <div class="buttons-container">
-            |        <div class="buttons">
-            |            <input class="button submit" type="submit" {{{point::5}}}
-            |                   id="kdp-user-select-save-button"
-            |                   value="show"/>
-            |        </div>
-            |    </div>
-            |
-            |</form>
-            |{/template}
-        ') }}
 
         <p>Change velocity template so that we have one div container with an id we can use to dynamically insert our content which is rendered by JS-Controller.</p>
-
-        {{ csSource(lang='html', filepath="src/main/resources/templates/kitchen-duty-planning-webwork-module/", filename="kitchen-duty-planning-success.vm", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='h76sdfsgdfgodjfnsdfn909', source='
-            |<html>
-            |<head>
-            |    <title>$i18n.getText("kitchen-duty-plugin.admin.planning.page.title")</title>
-            |    <meta name="decorator" content="atl.admin">
-            |</head>
-            |<body>
-            |<h1>$i18n.getText("kitchen-duty-plugin.admin.planning.page.headline")</h1>
-            |
-            |<div id="kdp-planning-page-container"></div> {{{point::1}}}
-            |
-            |</body>
-            |</html>
-        ') }}
+        <div class="row">
+            <div class="col-md-8">
+                {{ csSource(lang='html', filepath="src/main/resources/templates/kitchen-duty-planning-webwork-module/",
+                            filename="kitchen-duty-planning-success.vm", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='h76sdfsgdfgodjfnsdfnsdfdsdsf909', source='
+                    |<html>
+                    |<head>
+                    |    <title>$i18n.getText("kitchen-duty-plugin.admin.planning.page.title")</title>
+                    |    <meta name="decorator" content="atl.admin">
+                    |</head>
+                    |<body>
+                    |<h1>$i18n.getText("kitchen-duty-plugin.admin.planning.page.headline")</h1>
+                    |
+                    |<div id="kdp-planning-page-container"></div> {{{point::1}}}
+                    |
+                    |</body>
+                    |</html>
+                ') }}
+            </div>
+            <div class="col-md-4">
+                <div class="list-group cs-source-point-list" data-source-target="h76sdfsgdfgodjfnsdfnsdfdsdsf909">
+                    <div class="list-group-item cs-source-point-list__item">
+                        The only thing we change in our Velocity template is to place on div container which we will use
+                        to append the rendered template(s) to.
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <p>Change the JS-Controller to render the soy template, initialize the AUI Select 2 widget to work with our User Search REST Resource.</p>
 
-        {{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin--planning-page-controller.js", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='iusndf98sidjcn', source="
-            |var showSuccessFlag = function(message) {
-            |    require(['aui/flag'], function(flag) {
-            |        var myFlag = flag({
-            |            type: 'success',
-            |            title: 'Kitchen Duty Plugin',
-            |            close: 'auto',
-            |            body: message
-            |        });
-            |    });
-            |};
-            |
-            |var initUserSearch = function(restUrl) {
-            |    var templateUserSearch = JIRA.Templates.KDP.userSearch();
-            |
-            |    var auiUserSelectOptions = {
-            |        ajax: {
-            |            url: function () {
-            |                return restUrl + '/user/search';
-            |            },
-            |            dataType: 'json',
-            |            delay: 250,
-            |            data: function (searchTerm) {
-            |                return {
-            |                    query: searchTerm
-            |                };
-            |            },
-            |            results: function (data) {
-            |                return {
-            |                    results: data
-            |                };
-            |            },
-            |            cache: true
-            |        },
-            |        minimumInputLength: 1,
-            |        tags: 'true'
-            |    };
-            |
-            |    /* INIT TEMPLATES AND WIDGETS */
-            |
-            |    AJS.$('#kdp-planning-page-container').append(templateUserSearch);
-            |    AJS.$('#kdp-user-select').auiSelect2(auiUserSelectOptions);
-            |    AJS.$('#kdp-user-select-form').submit(function (e) {
-            |        e.preventDefault();
-            |        AJS.$(AJS.$('#kdp-user-select').select2('data')).each(function () {
-            |            showSuccessFlag(this.id);
-            |        });
-            |    });
-            |};
-            |
-            |AJS.toInit(function(){
-            |    AJS.log('KDP: Planning Page Controller initializing ...');
-            |    var baseUrl = AJS.params.baseURL;
-            |    var restUrl = baseUrl + '/rest/kitchenduty/1.0';
-            |
-            |    initUserSearch(restUrl);
-            |});
-            ") }}
+        <div class="row">
+            <div class="col-md-7">
+                {{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin--planning-page-controller.js",
+                            ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='iusndf98sidjcn', source="
+                    |var showSuccessFlag = function(message) { {{{point::1}}}
+                    |    require(['aui/flag'], function(flag) {
+                    |        var myFlag = flag({
+                    |            type: 'success',
+                    |            title: 'Kitchen Duty Plugin',
+                    |            close: 'auto',
+                    |            body: message
+                    |        });
+                    |    });
+                    |};
+                    |
+                    |var initUserSearch = function(restUrl) { {{{point::2}}}
+                    |    var templateUserSearch = JIRA.Templates.KDP.userSearch(); {{{point::3}}}
+                    |
+                    |    var auiUserSelectOptions = {
+                    |        ajax: {
+                    |            url: function () {
+                    |                return restUrl + '/user/search'; {{{point::4}}}
+                    |            },
+                    |            dataType: 'json',
+                    |            delay: 250,
+                    |            data: function (searchTerm) {
+                    |                return {
+                    |                    query: searchTerm
+                    |                };
+                    |            },
+                    |            results: function (data) {
+                    |                return {
+                    |                    results: data
+                    |                };
+                    |            },
+                    |            cache: true
+                    |        },
+                    |        minimumInputLength: 1,
+                    |        tags: 'true' {{{point::5}}}
+                    |    };
+                    |
+                    |    /* INIT TEMPLATES AND WIDGETS */
+                    |
+                    |    AJS.$('#kdp-planning-page-container').append(templateUserSearch); {{{point::6}}}
+                    |    AJS.$('#kdp-user-select').auiSelect2(auiUserSelectOptions); {{{point::7}}}
+                    |    AJS.$('#kdp-user-select-form').submit(function (e) { {{{point::8}}}
+                    |        e.preventDefault();
+                    |        AJS.$(AJS.$('#kdp-user-select').select2('data')).each(function () { {{{point::9}}}
+                    |            showSuccessFlag(this.id);
+                    |        });
+                    |    });
+                    |};
+                    |
+                    |AJS.toInit(function(){ {{{point::10}}}
+                    |    AJS.log('KDP: Planning Page Controller initializing ...');
+                    |    var baseUrl = AJS.params.baseURL; {{{point::11}}}
+                    |    var restUrl = baseUrl + '/rest/kitchenduty/1.0';
+                    |
+                    |    initUserSearch(restUrl); {{{point::12}}}
+                    |});
+                    ") }}
+            </div>
+            <div class="col-md-5">
+                <div class="list-group cs-source-point-list" data-source-target="iusndf98sidjcn">
+                    <div class="list-group-item cs-source-point-list__item">
+                        We put the message flag into a function so that we can easily create success flags everywhere we want.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We define a init function for our user search code. Inside there we will initialize everything we need for AUI Select 2.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The first thing we do is get our <code>userSearch</code> soy template and have it ready to use.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The <code>auiUserSelectOptions</code> are the options of AUI Select 2 which you can read in the docs.
+                        We define the URL here where the AUI Select 2 field should query for usernames.
+                        The rest of the options is necessary and should be self explanatory.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        This option tells the AUI Select 2 that we want to have tags which should be removable.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we append our rendered userSearch soy template to the DOM into our special div-container we defined earlier.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Right after that we initialize the AUI Select 2 field for userSearch with the previously defined options.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we hook into the submit button of the form and prevent the default-form-submit.
+                        Otherwise the form would trigger a POST/GET request which we don't want.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Later we will hook in here the code to save the selection, but that will happen in the next chapter.
+                        For now we are fine with getting each selected username displayed as a success flag.
+                        <code>select2('data')</code> returns an array with all selected elements.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The <code>AJS.toInit</code> function is a little helper that executes its callback when the AUI Framework has loaded.
+                        We put all calls to our init functions there.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We get the baseUrl from the AUI Framework. If you call the <code>AJS.params.baseURL</code> to early outside the <code>AJS.init</code> helper
+                        you will get undefined errors. Depending on the baseUrl we build our base <code>restUrl</code> which all Endpoints have in common.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Finally we call the initUserSearch function and pass the restUrl.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>&nbsp;</p>
 
         <p>Now we need to teach JIRA that we want to use soy in our client-side code and define a transformer and the soy template to load. Also we need to define AUI dependencies to be loaded.</p>
-
-        {{ csSource(lang='xml', filepath="src/main/resources/", filename="atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='difjn9sufpoj', source='
-            |<?xml version="1.0" encoding="UTF-8"?>
-            |
-            |<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
-            |...
-            |  <web-resource key="kitchen-duty-plugin-resources--planning-page" name="kitchen-duty-plugin Web Resources for Planning Page">
-            |    <dependency>com.atlassian.auiplugin:ajs</dependency>
-            |    <dependency>com.atlassian.auiplugin:aui-select2</dependency> {{{point::1}}}
-            |    <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency> {{{point::2}}}
-            |    <transformation extension="soy"> {{{point::3}}}
-            |      <transformer key="soyTransformer">
-            |        <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
-            |      </transformer>
-            |    </transformation>
-            |    <resource type="download" name="kitchen-duty-planning-soy.js" {{{point::4}}}
-            |              location="templates-soy/kitchen-duty-planning.soy"/>
-            |    <resource type="download" name="kitchen-duty-plugin--planning-page-controller.js"
-            |              location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
-            |    <context>kitchen-duty-plugin</context>
-            |  </web-resource>
-            |...
-            |</atlassian-plugin>
-        ') }}
-
+        <div class="row">
+            <div class="col-md-8">
+                {{ csSource(lang='xml', filepath="src/main/resources/", filename="atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='difjn9sufpoj', source='
+                    |<?xml version="1.0" encoding="UTF-8"?>
+                    |
+                    |<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+                    |...
+                    |  <web-resource key="kitchen-duty-plugin-resources--planning-page" name="kitchen-duty-plugin Web Resources for Planning Page">
+                    |    <dependency>com.atlassian.auiplugin:ajs</dependency>
+                    |    <dependency>com.atlassian.auiplugin:aui-select2</dependency> {{{point::1}}}
+                    |    <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency> {{{point::2}}}
+                    |    <transformation extension="soy"> {{{point::3}}}
+                    |      <transformer key="soyTransformer">
+                    |        <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+                    |      </transformer>
+                    |    </transformation>
+                    |    <resource type="download" name="kitchen-duty-planning-soy.js" {{{point::4}}}
+                    |              location="templates-soy/kitchen-duty-planning.soy"/>
+                    |    <resource type="download" name="kitchen-duty-plugin--planning-page-controller.js"
+                    |              location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
+                    |    <context>kitchen-duty-plugin</context>
+                    |  </web-resource>
+                    |...
+                    |</atlassian-plugin>
+                ') }}
+            </div>
+            <div class="col-md-4">
+                <div class="list-group cs-source-point-list" data-source-target="difjn9sufpoj">
+                    <div class="list-group-item cs-source-point-list__item">
+                        We specify teh dependency to AUI Select 2 widget so that JIRA provides it when our bundle is loaded.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We also specify the special soy dependency as it is stated in the docs (even though I think this does nothing)
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we specify a transformer which transforms the soy templates into JavaScript. It transforms all files
+                        with <code>soy</code> extension to JavaScript. (But not really all, see next point)
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We specify another download resource. This is the JavaScript file which contains all our soy templates for the planning page.
+                        <code>location</code> is the path to the source file which is a soy file. The soy file will be dynamically transformed to JavaScript by
+                        the previously defined transformer.
+                    </div>
+                </div>
+            </div>
+        </div>
         <p>Now restart <code>atlas-run</code> and refresh (shift-reload) the Page and you should see this:</p>
 
         <div class="row">
@@ -419,7 +535,9 @@
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
+        <p>Ok we can Search for users now and add/remove them to our input field. In the next section we will tend to saving the selection and loading the AUI Select 2 with our saved selection.</p>
 
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
 
         {# TODO: FURTHER READING
 

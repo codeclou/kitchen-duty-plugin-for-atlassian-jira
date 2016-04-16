@@ -634,8 +634,9 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
         <p>Create the soy template file in <code>src/main/resources/templates-soy/kitchen-duty-planning.soy</code> and paste the following code there.</p>
         <p>This file will later contain more than one template for each use case. But we will have one file per page.</p>
 
-
-        
+        <div class="row">
+            <div class="col-md-8">
+                
     
         <div class="cs-code-filename">
             
@@ -682,16 +683,16 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
 {/template}"><i class="fa fa-files-o"></i></a>
         </div>
     
-<pre class="cs-code"><code class="hljs"><span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">namespace</span> JIRA.Templates.KDP</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk656" data-cs-source-point-number="1"></span>
+<pre class="cs-code"><code class="hljs"><span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">namespace</span> JIRA.Templates.KDP</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk65fdsb6" data-cs-source-point-number="1"></span>
 <span class="hljs-comment">/**
  * Kitchen Duty Planning Page - User Search Template
  */</span>
-<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .userSearch</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk656" data-cs-source-point-number="2"></span>
-&lt;form class=<span class="hljs-string">"aui"</span> id=<span class="hljs-string">"kdp-user-select-form"</span>&gt; <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk656" data-cs-source-point-number="3"></span>
+<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .userSearch</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk65fdsb6" data-cs-source-point-number="2"></span>
+&lt;form class=<span class="hljs-string">"aui"</span> id=<span class="hljs-string">"kdp-user-select-form"</span>&gt; <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk65fdsb6" data-cs-source-point-number="3"></span>
 
     &lt;div class=<span class="hljs-string">"field-group"</span>&gt;
         &lt;label for=<span class="hljs-string">"kdp-user-select"</span>&gt;Users&lt;/label&gt;
-        &lt;div id=<span class="hljs-string">"kdp-user-select"</span>  <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk656" data-cs-source-point-number="4"></span>
+        &lt;div id=<span class="hljs-string">"kdp-user-select"</span>  <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk65fdsb6" data-cs-source-point-number="4"></span>
                  name=<span class="hljs-string">"kdp-user-select"</span>
                  class=<span class="hljs-string">"kdp-aui-select"</span>
                  multiple=<span class="hljs-string">""</span>
@@ -701,7 +702,7 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
     &lt;/div&gt;
     &lt;div class=<span class="hljs-string">"buttons-container"</span>&gt;
         &lt;div class=<span class="hljs-string">"buttons"</span>&gt;
-            &lt;input class=<span class="hljs-string">"button submit"</span> type=<span class="hljs-string">"submit"</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk656" data-cs-source-point-number="5"></span>
+            &lt;input class=<span class="hljs-string">"button submit"</span> type=<span class="hljs-string">"submit"</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dsfhuzk65fdsb6" data-cs-source-point-number="5"></span>
                    id=<span class="hljs-string">"kdp-user-select-save-button"</span>
                    value=<span class="hljs-string">"show"</span>/&gt;
         &lt;/div&gt;
@@ -710,10 +711,38 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
 &lt;/form&gt;
 <span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span></code></pre>
 
+            </div>
+            <div class="col-md-4">
+                <div class="list-group cs-source-point-list" data-source-target="dsfhuzk65fdsb6">
+                    <div class="list-group-item cs-source-point-list__item">
+                        We define a namespace called <code>JIRA.Templates.KDP</code> for our templates.
+                        Later we will access all out templates with <code>namespace.templateName</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Our first actual template will be called <code>.userSearch</code> and contains HTML code we will later
+                        use from our JS Controller.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The input-fields and AUI widgets will only render correctly if we surround them with a form that has a class called <code>aui</code>.
+                        We define an id on the form to be able to access it via jQuery later.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        This is teh container for the AUI Select 2 widget. We use a <code>div</code> with id <code>kdp-user-select</code>.
+                        Don't forget <code>multiple</code> to tell the widget on init that this field will accept multiple values.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The last thing we need is a button to submit the form.
+                        We also give the button a unique id to use it via jQuery later.
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <p>Change velocity template so that we have one div container with an id we can use to dynamically insert our content which is rendered by JS-Controller.</p>
-
-        
+        <div class="row">
+            <div class="col-md-8">
+                
     
         <div class="cs-code-filename">
             
@@ -753,15 +782,27 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
 <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>$i18n.getText("kitchen-duty-plugin.admin.planning.page.headline")<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
 
-<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"kdp-planning-page-container"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span> <span class="cs-source-point" data-cs-source-point-id="h76sdfsgdfgodjfnsdfn909" data-cs-source-point-number="1"></span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"kdp-planning-page-container"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span> <span class="cs-source-point" data-cs-source-point-id="h76sdfsgdfgodjfnsdfnsdfdsdsf909" data-cs-source-point-number="1"></span>
 
 <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span></code></pre>
 
+            </div>
+            <div class="col-md-4">
+                <div class="list-group cs-source-point-list" data-source-target="h76sdfsgdfgodjfnsdfnsdfdsdsf909">
+                    <div class="list-group-item cs-source-point-list__item">
+                        The only thing we change in our Velocity template is to place on div container which we will use
+                        to append the rendered template(s) to.
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <p>Change the JS-Controller to render the soy template, initialize the AUI Select 2 widget to work with our User Search REST Resource.</p>
 
-        
+        <div class="row">
+            <div class="col-md-7">
+                
     
         <div class="cs-code-filename">
             
@@ -779,7 +820,7 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
                data-toggle="tooltip" data-placement="left"
                data-title-orig="Copy file content to clipboard"
                title="Copy file content to clipboard"
-               data-clipboard-text="var showSuccessFlag = function(message) {
+               data-clipboard-text="var showSuccessFlag = function(message) { 
     require([&#39;aui/flag&#39;], function(flag) {
         var myFlag = flag({
             type: &#39;success&#39;,
@@ -790,13 +831,13 @@ public class KitchenDutyPlanningWebworkAction extends JiraWebActionSupport
     });
 };
 
-var initUserSearch = function(restUrl) {
-    var templateUserSearch = JIRA.Templates.KDP.userSearch();
+var initUserSearch = function(restUrl) { 
+    var templateUserSearch = JIRA.Templates.KDP.userSearch(); 
 
     var auiUserSelectOptions = {
         ajax: {
             url: function () {
-                return restUrl + &#39;/user/search&#39;;
+                return restUrl + &#39;/user/search&#39;; 
             },
             dataType: &#39;json&#39;,
             delay: 250,
@@ -813,31 +854,31 @@ var initUserSearch = function(restUrl) {
             cache: true
         },
         minimumInputLength: 1,
-        tags: &#39;true&#39;
+        tags: &#39;true&#39; 
     };
 
     /* INIT TEMPLATES AND WIDGETS */
 
-    AJS.$(&#39;#kdp-planning-page-container&#39;).append(templateUserSearch);
-    AJS.$(&#39;#kdp-user-select&#39;).auiSelect2(auiUserSelectOptions);
-    AJS.$(&#39;#kdp-user-select-form&#39;).submit(function (e) {
+    AJS.$(&#39;#kdp-planning-page-container&#39;).append(templateUserSearch); 
+    AJS.$(&#39;#kdp-user-select&#39;).auiSelect2(auiUserSelectOptions); 
+    AJS.$(&#39;#kdp-user-select-form&#39;).submit(function (e) { 
         e.preventDefault();
-        AJS.$(AJS.$(&#39;#kdp-user-select&#39;).select2(&#39;data&#39;)).each(function () {
+        AJS.$(AJS.$(&#39;#kdp-user-select&#39;).select2(&#39;data&#39;)).each(function () { 
             showSuccessFlag(this.id);
         });
     });
 };
 
-AJS.toInit(function(){
+AJS.toInit(function(){ 
     AJS.log(&#39;KDP: Planning Page Controller initializing ...&#39;);
-    var baseUrl = AJS.params.baseURL;
+    var baseUrl = AJS.params.baseURL; 
     var restUrl = baseUrl + &#39;/rest/kitchenduty/1.0&#39;;
 
-    initUserSearch(restUrl);
+    initUserSearch(restUrl); 
 });"><i class="fa fa-files-o"></i></a>
         </div>
     
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">var</span> showSuccessFlag = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">message</span>) </span>{
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">var</span> showSuccessFlag = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">message</span>) </span>{ <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="1"></span>
     <span class="hljs-built_in">require</span>([<span class="hljs-string">'aui/flag'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">flag</span>) </span>{
         <span class="hljs-keyword">var</span> myFlag = flag({
             type: <span class="hljs-string">'success'</span>,
@@ -848,13 +889,13 @@ AJS.toInit(function(){
     });
 };
 
-<span class="hljs-keyword">var</span> initUserSearch = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">restUrl</span>) </span>{
-    <span class="hljs-keyword">var</span> templateUserSearch = JIRA.Templates.KDP.userSearch();
+<span class="hljs-keyword">var</span> initUserSearch = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">restUrl</span>) </span>{ <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="2"></span>
+    <span class="hljs-keyword">var</span> templateUserSearch = JIRA.Templates.KDP.userSearch(); <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="3"></span>
 
     <span class="hljs-keyword">var</span> auiUserSelectOptions = {
         ajax: {
             url: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-                <span class="hljs-keyword">return</span> restUrl + <span class="hljs-string">'/user/search'</span>;
+                <span class="hljs-keyword">return</span> restUrl + <span class="hljs-string">'/user/search'</span>; <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="4"></span>
             },
             dataType: <span class="hljs-string">'json'</span>,
             delay: <span class="hljs-number">250</span>,
@@ -871,33 +912,85 @@ AJS.toInit(function(){
             cache: <span class="hljs-literal">true</span>
         },
         minimumInputLength: <span class="hljs-number">1</span>,
-        tags: <span class="hljs-string">'true'</span>
+        tags: <span class="hljs-string">'true'</span> <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="5"></span>
     };
 
     <span class="hljs-comment">/* INIT TEMPLATES AND WIDGETS */</span>
 
-    AJS.$(<span class="hljs-string">'#kdp-planning-page-container'</span>).append(templateUserSearch);
-    AJS.$(<span class="hljs-string">'#kdp-user-select'</span>).auiSelect2(auiUserSelectOptions);
-    AJS.$(<span class="hljs-string">'#kdp-user-select-form'</span>).submit(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+    AJS.$(<span class="hljs-string">'#kdp-planning-page-container'</span>).append(templateUserSearch); <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="6"></span>
+    AJS.$(<span class="hljs-string">'#kdp-user-select'</span>).auiSelect2(auiUserSelectOptions); <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="7"></span>
+    AJS.$(<span class="hljs-string">'#kdp-user-select-form'</span>).submit(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{ <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="8"></span>
         e.preventDefault();
-        AJS.$(AJS.$(<span class="hljs-string">'#kdp-user-select'</span>).select2(<span class="hljs-string">'data'</span>)).each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        AJS.$(AJS.$(<span class="hljs-string">'#kdp-user-select'</span>).select2(<span class="hljs-string">'data'</span>)).each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="9"></span>
             showSuccessFlag(<span class="hljs-keyword">this</span>.id);
         });
     });
 };
 
-AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{ <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="10"></span>
     AJS.log(<span class="hljs-string">'KDP: Planning Page Controller initializing ...'</span>);
-    <span class="hljs-keyword">var</span> baseUrl = AJS.params.baseURL;
+    <span class="hljs-keyword">var</span> baseUrl = AJS.params.baseURL; <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="11"></span>
     <span class="hljs-keyword">var</span> restUrl = baseUrl + <span class="hljs-string">'/rest/kitchenduty/1.0'</span>;
 
-    initUserSearch(restUrl);
+    initUserSearch(restUrl); <span class="cs-source-point" data-cs-source-point-id="iusndf98sidjcn" data-cs-source-point-number="12"></span>
 });</code></pre>
 
+            </div>
+            <div class="col-md-5">
+                <div class="list-group cs-source-point-list" data-source-target="iusndf98sidjcn">
+                    <div class="list-group-item cs-source-point-list__item">
+                        We put the message flag into a function so that we can easily create success flags everywhere we want.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We define a init function for our user search code. Inside there we will initialize everything we need for AUI Select 2.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The first thing we do is get our <code>userSearch</code> soy template and have it ready to use.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The <code>auiUserSelectOptions</code> are the options of AUI Select 2 which you can read in the docs.
+                        We define the URL here where the AUI Select 2 field should query for usernames.
+                        The rest of the options is necessary and should be self explanatory.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        This option tells the AUI Select 2 that we want to have tags which should be removable.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we append our rendered userSearch soy template to the DOM into our special div-container we defined earlier.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Right after that we initialize the AUI Select 2 field for userSearch with the previously defined options.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we hook into the submit button of the form and prevent the default-form-submit.
+                        Otherwise the form would trigger a POST/GET request which we don't want.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Later we will hook in here the code to save the selection, but that will happen in the next chapter.
+                        For now we are fine with getting each selected username displayed as a success flag.
+                        <code>select2('data')</code> returns an array with all selected elements.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The <code>AJS.toInit</code> function is a little helper that executes its callback when the AUI Framework has loaded.
+                        We put all calls to our init functions there.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We get the baseUrl from the AUI Framework. If you call the <code>AJS.params.baseURL</code> to early outside the <code>AJS.init</code> helper
+                        you will get undefined errors. Depending on the baseUrl we build our base <code>restUrl</code> which all Endpoints have in common.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Finally we call the initUserSearch function and pass the restUrl.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>&nbsp;</p>
 
         <p>Now we need to teach JIRA that we want to use soy in our client-side code and define a transformer and the soy template to load. Also we need to define AUI dependencies to be loaded.</p>
-
-        
+        <div class="row">
+            <div class="col-md-8">
+                
     
         <div class="cs-code-filename">
             
@@ -960,7 +1053,27 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
 ...
 <span class="hljs-tag">&lt;/<span class="hljs-title">atlassian-plugin</span>&gt;</span></code></pre>
 
-
+            </div>
+            <div class="col-md-4">
+                <div class="list-group cs-source-point-list" data-source-target="difjn9sufpoj">
+                    <div class="list-group-item cs-source-point-list__item">
+                        We specify teh dependency to AUI Select 2 widget so that JIRA provides it when our bundle is loaded.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We also specify the special soy dependency as it is stated in the docs (even though I think this does nothing)
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we specify a transformer which transforms the soy templates into JavaScript. It transforms all files
+                        with <code>soy</code> extension to JavaScript. (But not really all, see next point)
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We specify another download resource. This is the JavaScript file which contains all our soy templates for the planning page.
+                        <code>location</code> is the path to the source file which is a soy file. The soy file will be dynamically transformed to JavaScript by
+                        the previously defined transformer.
+                    </div>
+                </div>
+            </div>
+        </div>
         <p>Now restart <code>atlas-run</code> and refresh (shift-reload) the Page and you should see this:</p>
 
         <div class="row">
@@ -976,7 +1089,9 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
+        <p>Ok we can Search for users now and add/remove them to our input field. In the next section we will tend to saving the selection and loading the AUI Select 2 with our saved selection.</p>
 
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
 
         
 

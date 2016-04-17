@@ -48,6 +48,11 @@
                     Obviously the other way round would be a POST request on <code>/planning/week/15</code> with a list of users
                     as request body to store the user list for the week 15.
                 </p>
+
+                <p>
+                    And for our stretch-goal a GET request on <code>/planning/user/bob</code> should return a list of week numbers
+                    in which Bob has Kitchen Duty.
+                </p>
             </div>
             <div class="col-md-offset-1 col-md-5">
                 <table class="table table-bordered cs-table-uml">
@@ -76,8 +81,40 @@
             </div>
         </div>
 
+        <h3 class="cs-headline cs-headline--s">How exactly do we persist our data?</h3>
 
+        <div class="row">
+            <div class="col-md-7">
 
+                <p>Alright we now how we want to use our REST Endpoint from the perspective of the JS Controller. And we have some kind of clue
+                    on how the data should be stored theoretically.</p>
+
+                <p>There are some possibilities to persist data in JIRA. </p>
+
+                <!--
+                TODO:
+                <p>SAL + PluginSettingsFactory
+                    <hr>
+                    https://developer.atlassian.com/docs/common-coding-tasks/storing-plugin-settings</p>
+
+                <p>
+                    Active Objects:
+                    <hr>
+                    Reasons why: https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects
+                    <hr>
+                    https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/getting-started-with-active-objects
+                    <hr>
+                    https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects
+                </p>
+                -->
+
+            </div>
+            <div class="col-md-5">
+                <div style="padding:0 60px 0 60px">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/persist-data-in-jira.jpg" class="img-fluid" style="max-width:250px">
+                </div>
+            </div>
+        </div>
 
 
         <h3 class="cs-headline cs-headline--s">Creating the Kitchen Duty Planning REST Resource</h3>

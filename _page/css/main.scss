@@ -913,3 +913,26 @@ p {
     margin-left:10px;
     display:inline-block;
 }
+
+
+/* uml */
+.cs-table-uml {
+    display:inline-block;
+    border:0px;
+    width: unset;
+    font-family: Menlo,Menlo,Monaco,Consolas,"Courier New",monospace;
+}
+.cs-table-uml td, .cs-table-uml th, .cs-table-uml thead th {
+    border-color:#000;
+    border-width: 2px;
+}
+.cs-table-uml--connector {
+    border-left: 0px !important;
+    border-top: 0px !important;
+    border-right: 0px !important;
+    border-bottom:1px solid #1E9FCC !important;
+    color:#1E9FCC;
+}
+.cs-table-uml--blank {
+    border-width:0px !important;
+}

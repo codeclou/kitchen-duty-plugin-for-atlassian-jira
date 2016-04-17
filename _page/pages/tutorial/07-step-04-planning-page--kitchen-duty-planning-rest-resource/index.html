@@ -1,4 +1,5 @@
 {% set CURRENT_PAGE_ID = 7 %}
+{% set gitHubBaseUrlForStep4 = 'https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/' %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
     <title>Kitchen Duty Planning REST Resource ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by comSysto</title>
@@ -13,43 +14,170 @@
     <div class="col-md-12">
         {{ headline('Kitchen Duty Planning REST Resource', 'm') }}
 
-
-
-
         {# ############################################################# #}
         {# STEP 4  #}
         {# ############################################################# #}
 
+        <div class="alert alert-danger">THIS PAGE IS UNDER CONSTRUCTION. WORK IN PROGRESS</div>
 
-        {{ weAreWorkingOnIt() }}
+        <p>Basically we will build the <strong>Kitchen Duty Planning REST Resource</strong> and the <strong>Kitchen Duty Planning REST Model</strong>
+            which will persist our selected weeks and users to the database.</p>
 
-<!--
-        <div class="cs-v-spacer"></div>
-        <div class="cs-tutorial-step-review">
-            <div class="cs-tutorial-step-review__headline">
-                <strong>You have completed Step 4.</strong> Good Job! You can check out this steps solution on GitHub
-            </div>
-            <div class="cs-tutorial-step-review__link">
-                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin">
-                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin
-                </a>
-            </div>
-        </div>
-        <div class="cs-v-spacer"></div>
-        <p>The graphic shows marked green <strong>which components we implemented in this section</strong>.</p>
+        <p>You also might want to look into <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/">the Story Workshop</a> again to recapitulate what we are going to build now.</p>
+
+        <div class="alert alert-info">This chapter heavily depends on the <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/05-step-02-planning-page--user-search-rest-resource/">configuration done in Step 2</a>.</div>
+
+        <h3 class="cs-headline cs-headline--s">What do we need exactly?</h3>
+
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1 col-xl-8 col-xl-offset-2">
-                {{ interactiveGraphic('p07-ig01', 'kitchen-duty-planning-page--component-overview',
-                '{
-                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller", "kitchen-duty-resource", "kitchen-duty-planning-model" ],
-                    "markedAsTodo": [  ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }')
-                }}
+            <div class="col-md-6">
+                <p>
+                    After some serious brain usage on how to store the actual data of <strong>&laquo;who has Kitchen Duty in which week?&raquo;</strong>
+                    I came up with the <strong>Data-Model</strong> seen on the right.</p>
+                <p>
+                    The <strong>Week</strong> will be the actual week number in the year. With a little thinking ahead of how I want to use it in the JS Controller
+                    I basically will select a week via a date picker and <a href="http://momentjs.com/docs/#/get-set/iso-week/">calculate the isoWeek in the frontend using moment.js</a></p>
+                <p>
+                    The <strong>User</strong> part is obvious. We will need to store a list of usernames in the database in relation with a isoWeek (<a href="https://en.wikibooks.org/wiki/Java_Persistence/OneToMany"><code>@OneToMany</code></a>).
+                </p>
+                <p>
+                    Concerning the <strong>REST Endpoint</strong> I will want to have an URL which I can fire
+                    GET requests on something like <code>/planning/week/15</code> and receive a list of users.
+                </p>
+                <p>
+                    Obviously the other way round would be a POST request on <code>/planning/week/15</code> with a list of users
+                    as request body to store the user list for the week 15.
+                </p>
+            </div>
+            <div class="col-md-offset-1 col-md-5">
+                <table class="table table-bordered cs-table-uml">
+                    <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th class="cs-table-uml--connector">
+                            n&nbsp;&nbsp;&nbsp;&nbsp;1
+                        </th>
+                        <th>User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>isoWeek: Integer</td>
+                        <td class="cs-table-uml--blank"></td>
+                        <td>username: String</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <br>
+                <div style="padding:0 60px 0 60px">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/uml.jpg" class="img-fluid" style="max-width:250px">
+                </div>
             </div>
         </div>
--->
+
+
+
+
+
+        <h3 class="cs-headline cs-headline--s">Creating the Kitchen Duty Planning REST Resource</h3>
+
+        <p>We will create the Kitchen Duty Planning REST Resource which will interact with the JS Controller to load and store the Kitchen Duty Planning REST Model.</p>
+
+        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=gitHubBaseUrlForStep4, source='
+            |package com.comsysto.kitchen.duty.rest;
+            |
+            |import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+            |
+            |import javax.inject.Inject;
+            |import javax.inject.Named;
+            |import javax.servlet.http.HttpServletRequest;
+            |import javax.ws.rs.GET;
+            |import javax.ws.rs.Path;
+            |import javax.ws.rs.Produces;
+            |import javax.ws.rs.QueryParam;
+            |import javax.ws.rs.core.Context;
+            |import javax.ws.rs.core.MediaType;
+            |import javax.ws.rs.core.Response;
+            |import java.util.ArrayList;
+            |import java.util.List;
+            |
+            |@Named
+            |@Path("/planning")
+            |public class KitchenDutyPlanningResource {
+            |
+            |
+            |    @GET
+            |    @Path("/health")
+            |    @Produces({MediaType.APPLICATION_JSON})
+            |    @AnonymousAllowed
+            |    public Response health() {
+            |        return Response.ok("ok").build();
+            |    }
+            |
+            |}
+            ') }}
+
+        <h3 class="cs-headline cs-headline--s">Creating the Kitchen Duty Planning REST Model</h3>
+
+        <p>Now we create the model which will be used to persist data to the database.</p>
+
+        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningModel.java", ghBaseUrl=gitHubBaseUrlForStep4, source='
+                |package com.comsysto.kitchen.duty.rest;
+                |
+                |import javax.xml.bind.annotation.*;
+                |@XmlRootElement(name = "planning")
+                |@XmlAccessorType(XmlAccessType.FIELD)
+                |public class KitchenDutyPlanningModel {
+                |
+                |    @XmlElement
+                |    private Integer isoWeek;
+                |
+                |    @XmlElement
+                |    @XmlRootElement(name = "users")
+                |    private List<String> users;
+                |
+                |    public KitchenDutyPlanningModel() {
+                |    }
+                |
+                |	// TODO: getters/setters
+                |}
+            ') }}
+
+        <p>We will <strong>store the ISO Calender Week Number</strong> together with <strong>a list of users</strong>.
+            Such and entry represents a Kitchen Duty entry for a certain week with the persons that have Kitchen Duty.</p>
+
+
+        <div class="alert alert-danger">THIS PAGE IS UNDER CONSTRUCTION. WORK IN PROGRESS</div>
+
+
+        <!--
+                <div class="cs-v-spacer"></div>
+                <div class="cs-tutorial-step-review">
+                    <div class="cs-tutorial-step-review__headline">
+                        <strong>You have completed Step 4.</strong> Good Job! You can check out this steps solution on GitHub
+                    </div>
+                    <div class="cs-tutorial-step-review__link">
+                        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin">
+                            https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin
+                        </a>
+                    </div>
+                </div>
+                <div class="cs-v-spacer"></div>
+                <p>The graphic shows marked green <strong>which components we implemented in this section</strong>.</p>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1 col-xl-8 col-xl-offset-2">
+                        {{ interactiveGraphic('p07-ig01', 'kitchen-duty-planning-page--component-overview',
+                        '{
+                            "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller", "kitchen-duty-resource", "kitchen-duty-planning-model" ],
+                            "markedAsTodo": [  ],
+                            "markedAsGrayedOut": [ ],
+                            "onClick": [ ]
+                        }')
+                        }}
+                    </div>
+                </div>
+        -->
         <div class="cs-v-spacer cs-v-spacer--big"></div>
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 

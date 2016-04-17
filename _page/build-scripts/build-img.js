@@ -1,4 +1,6 @@
 var Imagemin = require('imagemin');
+var imageminOptipng = require('imagemin-optipng');
+
 var helpers = require('./build-helpers-def.js');
 var colors = require('colors');
 
@@ -20,22 +22,26 @@ new Imagemin()
     .src('_images/*.{gif,jpg,png,svg}')
     .dest('images')
     .use(Imagemin.jpegtran({progressive: true}))
+    .use(imageminOptipng({optimizationLevel: 3}))
     .run(runCallback);
 
 new Imagemin()
     .src('_images/doc/*.{gif,jpg,png,svg}')
     .dest('images/doc/')
     .use(Imagemin.jpegtran({progressive: true}))
+    .use(imageminOptipng({optimizationLevel: 3}))
     .run(runCallback);
 
 new Imagemin()
     .src('_images/drawings/*.{gif,jpg,png,svg}')
     .dest('images/drawings/')
     .use(Imagemin.jpegtran({progressive: true}))
+    .use(imageminOptipng({optimizationLevel: 3}))
     .run(runCallback);
 
 new Imagemin()
     .src('_images/interactive/*.{gif,jpg,png,svg}')
     .dest('images/interactive/')
     .use(Imagemin.jpegtran({progressive: true}))
+    .use(imageminOptipng({optimizationLevel: 3}))
     .run(runCallback);

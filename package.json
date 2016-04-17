@@ -26,6 +26,7 @@
     "hashids": "^1.0.2",
     "highlight.js": "^8.9.1",
     "imagemin": "^4.0.0",
+    "imagemin-optipng": "^4.3.0",
     "killport": "^1.0.1",
     "livereloadx": "^0.3.9",
     "moment": "^2.10.6",

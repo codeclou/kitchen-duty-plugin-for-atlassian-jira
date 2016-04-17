@@ -227,6 +227,8 @@ body {
         position:relative;
         bottom:0;
         left:0;
+        right:0;
+        padding-left:0;
     }
 }
 @include media-breakpoint-down(sm) {
@@ -235,8 +237,8 @@ body {
         padding:10px;
     }
     .cs-footer-right {
-        left:240px;
-        padding-left:5px;
+        left:0;
+        padding-left:0;
     }
 }
 
@@ -714,7 +716,7 @@ p {
 
 /* PAGER */
 .cs-pager {
-    margin-top:20px;
+    margin-top:12px;
 }
 .cs-pager a {
     color:#fff;

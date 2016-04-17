@@ -942,7 +942,7 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
                         We put the message flag into a function so that we can easily create success flags everywhere we want.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        We define a init function for our user search code. Inside there we will initialize everything we need for AUI Select 2.
+                        We define an init function for our user search code. Inside there we will initialize everything we need for AUI Select 2.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         The first thing we do is get our <code>userSearch</code> soy template and have it ready to use.
@@ -966,7 +966,7 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
                         Otherwise the form would trigger a POST/GET request which we don't want.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        Later we will hook in here the code to save the selection, but that will happen in the next chapter.
+                        Later we will hook the code to save the selection in here, but that will happen in future chapters.
                         For now we are fine with getting each selected username displayed as a success flag.
                         <code>select2('data')</code> returns an array with all selected elements.
                     </div>
@@ -1089,13 +1089,12 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
-        <p>Ok we can Search for users now and add/remove them to our input field. In the next section we will tend to saving the selection and loading the AUI Select 2 with our saved selection.</p>
+        <p>Ok we can search for users now and add or remove them to or from our input field.
+            In the next chapter we tend to the actual Kitchen Duty Planning REST Resources that save our selection.
+            Further chapters will tend to the JS Controller saving the selection and loading the AUI Select 2 with our saved selection.</p>
 
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 
-        
-
-        
 
         <div class="cs-v-spacer cs-v-spacer--big"></div>
         <div class="cs-v-spacer cs-v-spacer--big"></div>
@@ -1167,13 +1166,13 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-lg-6 col-md-4 col-sm-1 col-xs-1 cs-pager cs-page-header--left-fix">
-                            <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/05-step-02-planning-page--user-search-rest-resource/"><i class="fa fa-angle-left"></i>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 cs-pager cs-page-header--left-fix">
+                            <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/05-step-02-planning-page--user-search-rest-resource/"><i class="fa fa-angle-left"></i>
                                 <span class="hidden-sm-down">previous page</span></a>
                         </div>
-                        <div class="col-lg-6 col-md-4 col-sm-1 col-xs-1 text-xs-right cs-pager cs-page-header--right-fix">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-xs-right cs-pager cs-page-header--right-fix">
                             
-                                <a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/">
+                                <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/">
                                     <span class="hidden-sm-down">next page</span>
                                     <i class="fa fa-angle-right"></i></a>
                             

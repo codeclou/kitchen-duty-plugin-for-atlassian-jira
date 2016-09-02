@@ -6,10 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
     
-    <title>Story Workshop for Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by comSysto</title>
-    <meta description="In the Story Workshop we analyse and plan how we want to develop the Planning Page of Kitchen Duty Plugin for Atlassian JIRA® by comSysto">
-    <meta name="robots" content="index, follow">
-
+    
 
     
     <meta property="og:title" content="Kitchen Duty Plugin for Atlassian JIRA® by comSysto" />
@@ -17,9 +14,7 @@
     <meta property="og:description" content="An interactive tutorial on how to write Plugins for Atlassian JIRA® by comSysto" />
 
     
-    <link rel="canonical" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/" />
-
-    <link rel="alternate" type="application/rss+xml" title="Kitchen Duty Plugin News" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/rss_feed.xml" />
+    <link rel="canonical" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira//Users/clouless/git/kitchen-duty-GHPAGES/_page/layout/layout_with_sidebar.html" />
 
 
 
@@ -107,7 +102,7 @@
 
             <li class="toc-h2-divider">Part I: Kitchen Duty Planning Page</li>
 
-            <li class="toc-h2 toc-active"><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/">
+            <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/">
                     Story Workshop for Planning Page
                 </a>
             </li>
@@ -137,34 +132,6 @@
                 </a>
             </li>
             
-            <li>
-                
-                        
-                    
-                    
-                    
-                    
-                    
-                    
-                <p>&nbsp;</p>
-                <div class="cs-toc-infographic-wrapper">
-                    
-    <svg class="cs-interactive-graphic"
-         id="navSvg11"
-         data-json-settings="{
-                    &quot;markedAsDone&quot;: [ ],
-                    &quot;markedAsTodo&quot;: [ ],
-                    &quot;markedAsGrayedOut&quot;: [ ],
-                    &quot;onClick&quot;: [ ]
-                }"
-         data-svg-to-load="kitchen-duty-planning-page--component-overview"
-         viewBox="0 0 1043 654"
-         preserveAspectRatio="xMaxYMax">
-    </svg>
-
-                </div>
-            </li>
-            
 
             
 
@@ -186,177 +153,7 @@
 <div class="cs-content-wrapper">
     
 
-
-<div class="row">
-    <div class="col-md-8">
-        
     
-    
-    
-
-    <h2 class="cs-headline cs-headline--m cs-headline--anchor"
-        data-scroll-to-headline="story-workshop-for-planning-page"
-        data-scroll-to-headline-previous="">
-        
-        Story Workshop for Planning Page
-    </h2>
-
-
-
-        <p>Our base project is compiling and now we want to tackle our first User Story and <strong>implement the Kitchen Duty Planning page</strong>.
-        </p>
-
-        <p>But before we start the implementation we drink another coffee and get our brain up to software-architecture-design-speed, because we need to make some <strong>design decisions</strong> now.
-            Think of the following section as a little <strong>Story Workshop</strong> we do with our virtual Product Owner and the virtual Scrum Team to build a shared understanding on the work to be done.</p>
-
-
-        <h3 class="cs-headline cs-headline--s">What does the Planning Page really need to do? </h3>
-
-        <div class="row">
-            <div class="col-md-4">
-                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-kitchen-duty-planning-page_big.jpg" data-lightbox="user-stories" data-title="Kitchen Duty Planning Page Mockup">
-                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-kitchen-duty-planning-page.jpg" class="img-fluid cs-image" alt="Kitchen Duty Planning Page Mockup">
-                </a>
-            </div>
-            <div class="col-md-8">
-                <ul>
-                    <li>We need to be able to get a list of all JIRA usernames and make them selectable.</li>
-                    <li>We need some kind of calendar widget that is clickable and let's us select weeks.</li>
-                    <li>We need to be able to persist the information permanently into some kind of database storage.</li>
-                    <li>We need to be able to get stored users for a week, display and make them removable from the weeks schedule.</li>
-                </ul>
-
-                <p>
-                    Ok sounds like basic stuff we did a trillion times already in some other projects.
-                    But the question is, <strong>how do we do this the cool Atlassian way?</strong>
-                </p>
-            </div>
-        </div>
-
-
-    </div>
-    <div class="col-md-4 hidden-xs hidden-sm">
-        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/serious-thinking.jpg" class="img-fluid">
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-
-        <h3 class="cs-headline cs-headline--s">UX Components (Atlassian AUI)</h3>
-
-        <div class="row">
-            <div class="col-md-8">
-                <p>
-                    Most of you might know <a href="http://getbootstrap.com/" target="_blank">Bootstrap</a> and use it to build sweet responsive websites.
-                    Atlassian also has such a Framework that drives their Applications. It is called <strong><a href="https://docs.atlassian.com/aui/latest/"  target="_blank">Atlassian User Interface</a></strong> in short AUI.
-                </p>
-                <div class="col-md-offset-1 col-md-10">
-                    <p>
-                        <a href="https://docs.atlassian.com/aui/latest/" target="_blank">
-                            <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-atlassian-aui-screenshot.png" class="img-thumbnail img-fluid" alt="Atlassian User Interface Screenshot">
-                        </a>
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <p><strong>Shopping List</strong></p>
-                <ul>
-                    <li>
-
-                        <p>
-                            <a href="https://docs.atlassian.com/aui/latest/docs/auiselect2.html" target="_blank">
-                                AUI Select 2 component for User Selection
-                            </a>
-                        </p>
-
-                        <p><img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-aui-select2-demo.gif"
-                                class="img-thumbnail img-fluid cs-tutorial-image"
-                                alt="AUI select2 demo"></p>
-                    </li>
-                    <li>
-                        <p>
-                            <a href="https://docs.atlassian.com/aui/latest/docs/date-picker.html" target="_blank">
-                                AUI Datepicker component for Week Selection
-                            </a>
-                        </p>
-                        <p><img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-aui-datepicker-demo.gif"
-                                class="img-thumbnail img-fluid cs-tutorial-image"
-                                alt="AUI select2 demo"></p>
-                    </li>
-                </ul>
-
-
-            </div>
-        </div>
-
-
-        <p>Ok now we have <strong>selected the two frontend components</strong> we want to use and continue with <strong>server side components</strong>.</p>
-
-        <div class="cs-v-spacer cs-v-spacer--small"></div>
-
-
-        <div class="row">
-            <div class="col-md-5">
-
-                <h3 class="cs-headline cs-headline--s">Component Planning</h3>
-
-
-                <p>The caffeine kicks in now and our spacey software-engineering mind is fully operational to <strong>design the server components</strong>.</p>
-
-                <p>We could use a Servlet and simple MVC approach with lame JSP-style-pages and normal Request-Response-Cycle ...</p>
-
-                <p>But since that is just lame we will do it with <strong>REST Resources</strong> and a simple view that has a lot of (ugly) JavaScript code to interact with the REST Resources.</p>
-
-                <p>So after thinking about that a little we came up with the scheme on the right. (What is Webwork Action? We will learn about that soon.)</p>
-
-
-
-            </div>
-            <div class="col-md-5 col-md-offset-1 cs-tutorial-space-top-small">
-
-                
-    <svg class="cs-interactive-graphic"
-         id="p03-ig01"
-         data-json-settings="{
-                    &quot;markedAsDone&quot;: [ ],
-                    &quot;markedAsTodo&quot;: [ ],
-                    &quot;markedAsGrayedOut&quot;: [ ],
-                    &quot;onClick&quot;: [ ]
-                }"
-         data-svg-to-load="kitchen-duty-planning-page--component-overview"
-         viewBox="0 0 1043 654"
-         preserveAspectRatio="xMaxYMax">
-    </svg>
- <!--  { "webwork-action": "dummyClickCallback" } -->
-
-            </div>
-        </div>
-
-        <p><strong>Component Overview</strong></p>
-
-        <ul>
-            <li><p><strong>Kitchen Duty Planning Webwork Action</strong> is a basic &ldquo;Servlet&rdquo; that provides the actual Page to browse to and provides the HTML View and JavaScript.</p>
-                <ul>
-                    <li><p><strong>User Search Resource JS Controller</strong> contains a bunch of JS-Code to interact between the HTML-View and the User REST Resource.</p></li>
-                    <li><p><strong>Kitchen Duty Planning Resource JS Controller</strong> contains a bunch of JS-Code to interact between the HTML-View and the Kitchen Duty REST Resource.</p></li>
-                    <li><p><strong>HTML View</strong> is our template that provides basic HTML components for the JavaScript Controller to hook into.</p></li>
-                </ul>
-            </li>
-            <li><p><strong>User Search REST Resource</strong> provides REST Resources for searching JIRA usernames via <a href="https://de.wikipedia.org/wiki/Java_API_for_XML_Web_Services" target="_blank">JAX-WS</a>.</p></li>
-            <li><p><strong>User Search Resource Model</strong> is our simple Pojo Model which we use to persist Data and also use as JSON representation in the JavaScript controller.</p></li>
-            <li><p><strong>Kitchen Duty Planning REST Resource</strong> provides REST Resources for CRUD operations on the KitchenDutyPlanningModel via <a href="https://de.wikipedia.org/wiki/Java_API_for_XML_Web_Services" target="_blank">JAX-WS</a>.</p></li>
-            <li><p><strong>Kitchen Duty Planning Model</strong> is our simple Pojo Model which we use to persist Data and also use as JSON representation in the JavaScript controller.</p></li>
-
-
-        </ul>
-
-        <div class="cs-v-spacer cs-v-spacer--big"></div>
-        <div class="cs-v-spacer cs-v-spacer--big"></div>
-    </div>
-</div>
-
-
-
 </div>
 
 
@@ -374,14 +171,10 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 cs-pager cs-page-header--left-fix">
-                            <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/02-step-00-getting-started/"><i class="fa fa-angle-left"></i>
+                            <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira"><i class="fa fa-angle-left"></i>
                                 <span class="hidden-sm-down">previous page</span></a>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-xs-right cs-pager cs-page-header--right-fix">
-                            
-                                <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/04-step-01-planning-page--webwork-action-and-html-view/">
-                                    <span class="hidden-sm-down">next page</span>
-                                    <i class="fa fa-angle-right"></i></a>
                             
                         </div>
                     </div>

@@ -1,173 +1,51 @@
-{% set bodyClass = "cs-tutorial-body" %}
-{% extends layoutSourceDir + "/layout_base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    
+    
 
-{% set pages = [
-('0', '/'),
-('1', '/tutorial/01-introduction/'),
-('2', '/tutorial/02-step-00-getting-started/'),
-('3', '/tutorial/03-story-workshop-for-planning-page/'),
-('4', '/tutorial/04-step-01-planning-page--webwork-action-and-html-view/'),
-('5', '/tutorial/05-step-02-planning-page--user-search-rest-resource/'),
-('6', '/tutorial/06-step-03-planning-page--user-search-js-controller/'),
-('7', '/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/'),
-('8', '/tutorial/08-step-05-planning-page--kitchen-duty-planning-js-controller/'),
-('9', '/tutorial/09-story-workshop-for-overview-page/')
+    
+    <meta property="og:title" content="Kitchen Duty Plugin for Atlassian JIRA® by comSysto" />
+    <meta property="og:image" content="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-plugin--social.jpg" />
+    <meta property="og:description" content="An interactive tutorial on how to write Plugins for Atlassian JIRA® by comSysto" />
 
-] %}
+    
+    <link rel="canonical" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira//Users/clouless/git/kitchen-duty-GHPAGES/_page/layout/layout_with_sidebar.html" />
 
-{% macro pageSidebar(currentPageId) %}
-    <div id="toc">
-        <ul>
 
-            {# -------------------------------------------------------------------------------- #}
 
-            <li class="toc-h2 {{ "toc-active" if 1 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[1] }}">
-                    Introduction
-                </a>
-            </li>
-            <li class="toc-h2 {{ "toc-active" if 2 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[2] }}">
-                    <span class="cs-step-badge pull-right">0</span>
-                    Getting Started
-                </a>
-            </li>
+    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.css" rel="stylesheet">
 
-            {# -------------------------------------------------------------------------------- #}
+    <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-256.png" type="image/png" sizes="256x256">
+    <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon.svg" type="image/svg+xml">
 
-            <li class="toc-h2-divider">Part I: Kitchen Duty Planning Page</li>
-
-            <li class="toc-h2 {{ "toc-active" if 3 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[3] }}">
-                    Story Workshop for Planning Page
-                </a>
-            </li>
-            <li class="toc-h2 {{ "toc-active" if 4 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[4] }}">
-                    <span class="cs-step-badge pull-right">1</span>
-                    Webwork Action and HTML View
-                </a>
-            </li>
-            <li class="toc-h2 {{ "toc-active" if 5 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[5] }}">
-                    <span class="cs-step-badge pull-right">2</span>
-                    User Search REST Resource
-                </a>
-            </li>
-            <li class="toc-h2 {{ "toc-active" if 6 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[6] }}">
-                    <span class="cs-step-badge pull-right">3</span>
-                    User Search JS Controller
-                </a>
-            </li>
-            <li class="toc-h2 {{ "toc-active" if 7 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[7] }}">
-                    <span class="cs-step-badge pull-right">4</span>
-                    Kitchen Duty Planning REST Resource
-                </a>
-            </li>
-            <li class="toc-h2 {{ "toc-active" if 8 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[8] }}">
-                    <span class="cs-step-badge pull-right">5</span>
-                    Kitchen Duty Planning JS Controller
-                </a>
-            </li>
-            {% if CURRENT_PAGE_ID >= 3 and CURRENT_PAGE_ID <= 8 %}
-            <li>
-                {% if CURRENT_PAGE_ID == 3 %}
-                        {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ ],
-                    "markedAsTodo": [ ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-                        %}
-                    {% endif %}
-                    {% if CURRENT_PAGE_ID == 4 %}
-                        {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ ],
-                    "markedAsTodo": [ "webwork-action", "html-view" ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-                        %}
-                    {% endif %}
-                    {% if CURRENT_PAGE_ID == 5 %}
-                        {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ "webwork-action", "html-view" ],
-                    "markedAsTodo": [ "user-resource", "user-search-resource-model" ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-                        %}
-                    {% endif %}
-                    {% if CURRENT_PAGE_ID == 6 %}
-                        {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model" ],
-                    "markedAsTodo": [ "user-js-controller" ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-                        %}
-                    {% endif %}
-                    {% if CURRENT_PAGE_ID == 7 %}
-                        {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller" ],
-                    "markedAsTodo": [ "kitchen-duty-resource", "kitchen-duty-planning-model" ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-                        %}
-                    {% endif %}
-                    {% if CURRENT_PAGE_ID == 8 %}
-                        {% set infoGraphicComponentOverviewSettings = '{
-                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller", "kitchen-duty-resource", "kitchen-duty-planning-model"  ],
-                    "markedAsTodo": [ "kitchen-duty-js-controller" ],
-                    "markedAsGrayedOut": [ ],
-                    "onClick": [ ]
-                }'
-                        %}
-                {% endif %}
-                <p>&nbsp;</p>
-                <div class="cs-toc-infographic-wrapper">
-                    {{ interactiveGraphic('navSvg11', 'kitchen-duty-planning-page--component-overview', infoGraphicComponentOverviewSettings )}}
-                </div>
-            </li>
-            {% endif %}
-
-            {# -------------------------------------------------------------------------------- #}
-
-            <li class="toc-h2-divider">Part II: Kitchen Duty Overview Page</li>
-            <li class="toc-h2 {{ "toc-active" if 9 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[9] }}">
-                    Story Workshop for Overview Page
-                </a>
-            </li>
-        </ul>
+    <script>var postLoadMethods = [];</script>
+</head>
+<body class="cs-tutorial-body">
 
 
 
 
-    </div>
-
-{% endmacro %}
 
 
 
 
-{% macro weAreWorkingOnIt() %}
-    <div class="cs-working-on-it">
-        We are working on it. Please visit again some time.
-    </div>
-
-    <a href="http://dilbert.com/strip/2003-01-22" target="_blank">
-        <img src="http://assets.amuniversal.com/304f90806d5901301d7d001dd8b71c47">
-    </a>
-{% endmacro %}
 
 
-{% macro interactiveGraphic(id, name, jsonData) %}
-    <svg class="cs-interactive-graphic"
-         id="{{ id }}"
-         data-json-settings="{{ jsonData }}"
-         data-svg-to-load="{{ name }}"
-         viewBox="0 0 1043 654"
-         preserveAspectRatio="xMaxYMax">
-    </svg>
-{% endmacro %}
 
-{% block contentLayout %}
+
+
+
+
+
+
+
+
 
 
 
@@ -204,13 +82,78 @@
 
 
 <div class="cs-sidebar-wrapper hidden-md-down">
-            {{ pageSidebar(CURRENT_PAGE_ID) }}
+            
+    <div id="toc">
+        <ul>
+
+            
+
+            <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/01-introduction/">
+                    Introduction
+                </a>
+            </li>
+            <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/02-step-00-getting-started/">
+                    <span class="cs-step-badge pull-right">0</span>
+                    Getting Started
+                </a>
+            </li>
+
+            
+
+            <li class="toc-h2-divider">Part I: Kitchen Duty Planning Page</li>
+
+            <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/">
+                    Story Workshop for Planning Page
+                </a>
+            </li>
+            <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/04-step-01-planning-page--webwork-action-and-html-view/">
+                    <span class="cs-step-badge pull-right">1</span>
+                    Webwork Action and HTML View
+                </a>
+            </li>
+            <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/05-step-02-planning-page--user-search-rest-resource/">
+                    <span class="cs-step-badge pull-right">2</span>
+                    User Search REST Resource
+                </a>
+            </li>
+            <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/06-step-03-planning-page--user-search-js-controller/">
+                    <span class="cs-step-badge pull-right">3</span>
+                    User Search JS Controller
+                </a>
+            </li>
+            <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/">
+                    <span class="cs-step-badge pull-right">4</span>
+                    Kitchen Duty Planning REST Resource
+                </a>
+            </li>
+            <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/08-step-05-planning-page--kitchen-duty-planning-js-controller/">
+                    <span class="cs-step-badge pull-right">5</span>
+                    Kitchen Duty Planning JS Controller
+                </a>
+            </li>
+            
+
+            
+
+            <li class="toc-h2-divider">Part II: Kitchen Duty Overview Page</li>
+            <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/09-story-workshop-for-overview-page/">
+                    Story Workshop for Overview Page
+                </a>
+            </li>
+        </ul>
+
+
+
+
+    </div>
+
+
 </div>
 
 <div class="cs-content-wrapper">
-    {% block content %}
+    
 
-    {% endblock %}
+    
 </div>
 
 
@@ -228,15 +171,11 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 cs-pager cs-page-header--left-fix">
-                            <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[CURRENT_PAGE_ID-1] }}"><i class="fa fa-angle-left"></i>
+                            <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira"><i class="fa fa-angle-left"></i>
                                 <span class="hidden-sm-down">previous page</span></a>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-xs-right cs-pager cs-page-header--right-fix">
-                            {% if CURRENT_PAGE_ID < pages.length-1 %}
-                                <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[CURRENT_PAGE_ID+1] }}">
-                                    <span class="hidden-sm-down">next page</span>
-                                    <i class="fa fa-angle-right"></i></a>
-                            {% endif %}
+                            
                         </div>
                     </div>
                 </div>
@@ -249,4 +188,29 @@
 
 
 
-{% endblock %}
+
+
+
+<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js" async></script>
+
+
+
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+            ':35729/livereload.js?snipver=2"></' + 'script>')</script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+<script>
+    WebFont.load({
+        google: {
+            families: [ 'Menlo',
+                        'Open+Sans:400,300,600,700,800',
+                        'Roboto:400,900,700',
+                        'Source+Sans+Pro:400,300,600',
+                        'Patrick+Hand'
+                      ]
+        }
+    });
+</script>
+</body>
+</html>

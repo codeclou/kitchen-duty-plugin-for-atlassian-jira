@@ -13,7 +13,18 @@
     <div class="col-md-12">
         {{ headline('News', 'm') }}
 
-        {{ newsItemsArray }}
+        <a href="/kitchen-duty-plugin-for-atlassian-jira/news_rss.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS Feed</a>
+        <br /><br />
+
+        <!-- SEE: news_rss.xml -->
+        <ul>
+        {% for news in newsItemsArray %}
+            <li>
+                <a href="{{ news.link }}"><strong>{{ news.title }}</strong></a> - <em>{{ news.pubDate }}</em>
+                <br/>{{ news.description }}<br/><br/>
+            </li>
+        {% endfor %}
+        </ul>
     </div>
 </div>
 

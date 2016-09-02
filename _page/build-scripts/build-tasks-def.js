@@ -148,6 +148,9 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
         });
         env.addGlobal('newsItemsArray', options.newsItemsArray);
         env.addGlobal('csStringHelper', csStringHelper);
+        env.addFilter('json', function JSONstringify(obj) {
+            return JSON.stringify(obj);
+        });
         env.addFilter('formatSourceCodeForCopyClipboardDataAttribute', function(code) {
             var ret = '';
             var lines = code.split('\n');

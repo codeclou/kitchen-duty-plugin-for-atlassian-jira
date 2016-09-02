@@ -1,0 +1,20 @@
+{% set CURRENT_PAGE_ID = 97 %}
+{% extends layoutSourceDir + "/layout_with_sidebar.html" %}
+{% block head %}
+   <title>News | Kitchen Duty Plugin for Atlassian JIRA® by comSysto</title>
+   <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by comSysto">
+   <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block content %}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        {{ headline('News', 'm') }}
+
+        {{ newsItemsArray }}
+    </div>
+</div>
+
+{% endblock %}

@@ -146,6 +146,7 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
         var env = nunjucks.configure(options.htmlLayoutSourceDir, {
             noCache: true
         });
+        env.addGlobal('newsItemsArray', options.newsItemsArray);
         env.addGlobal('csStringHelper', csStringHelper);
         env.addFilter('formatSourceCodeForCopyClipboardDataAttribute', function(code) {
             var ret = '';

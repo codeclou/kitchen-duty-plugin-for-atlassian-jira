@@ -40,6 +40,7 @@
     "shelljs": "^0.5.3",
     "through2": "^2.0.0",
     "uglify-js": "latest",
+    "xml2js": "^0.4.17",
     "yargs": "latest"
   },
   "scripts": {

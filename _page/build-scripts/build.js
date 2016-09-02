@@ -86,7 +86,8 @@ var htmlTaskOptions = {
     htmlSourceDir: '_page/pages/',
     htmlTargetDir: buildDir,
     htmlLayoutSourceDir: '_page/layout/',
-    htmlIsLocalhost: false
+    htmlIsLocalhost: false,
+    newsItemsArray: [],
 };
 if (environment === 'dev') {
     htmlTaskOptions.htmlIsLocalhost = true;
@@ -138,11 +139,29 @@ var watchers = [
 // TASK RUN DEFINITIONS
 // ////////////////////////////////////////////////////////////////
 
+
 async.waterfall([
     function(waterfallProceed) {
         tasks.preBuild(preBuildTaskOptions);
         waterfallProceed(null, 'pre');
     },
+    function(previousStepName, waterfallProceed) {
+        // PARSE NEWS XML
+        var fs = require('fs');
+        var parseString = require('xml2js').parseString;
+        fs.readFile('./news_rss.xml', 'utf8', function (err, rssData) {
+            if (err) {
+                console.log("parsing news failed");
+            } else {
+                parseString(rssData, function (err, result) {
+                    htmlTaskOptions.newsItemsArray = result.rss.channel[0].item;
+                    waterfallProceed(null, 'parsenews');
+                });
+            }
+        });
+    },
+
+
     function(previousStepName, waterfallProceed) {
         async.parallel(
             [

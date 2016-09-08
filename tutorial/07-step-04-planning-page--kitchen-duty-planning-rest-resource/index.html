@@ -227,7 +227,7 @@
                     The <strong>Week</strong> will be the actual week number in the year. With a little thinking ahead of how I want to use it in the JS Controller
                     I basically will select a week via a date picker and <a href="http://momentjs.com/docs/#/get-set/iso-week/">calculate the isoWeek in the frontend using moment.js</a></p>
                 <p>
-                    The <strong>User</strong> part is obvious. We will need to store a list of usernames in the database in relation with a isoWeek (<a href="https://en.wikibooks.org/wiki/Java_Persistence/OneToMany"><code>@OneToMany</code></a>).
+                    The <strong>User</strong> part is obvious. We will need to store a list of usernames in the database in relation with a isoWeek (<a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/onetomany-relationship"><code>@OneToMany</code></a>).
                 </p>
                 <p>
                     Concerning the <strong>REST Endpoint</strong> I will want to have an URL which I can fire
@@ -256,59 +256,228 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>isoWeek: Integer</td>
+                        <td>isoWeek:&nbsp;Integer</td>
                         <td class="cs-table-uml--blank"></td>
-                        <td>username: String</td>
+                        <td>username:&nbsp;String</td>
                     </tr>
                     </tbody>
                 </table>
                 <br>
                 <br>
-                <div style="padding:0 60px 0 60px">
-                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/persist-me-senpai.jpg" class="img-fluid" style="max-width:250px">
+                <div style="padding:0 30px 0 30px">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/persist-me-senpai.jpg" class="img-fluid" style="max-width:400px">
                 </div>
             </div>
         </div>
 
         <h3 class="cs-headline cs-headline--s">How exactly do we persist our data?</h3>
 
-        <div class="row">
-            <div class="col-md-7">
 
-                <p>Alright we now how we want to use our REST Endpoint from the perspective of the JS Controller. And we have some kind of clue
-                    on how the data should be stored theoretically.</p>
+        <p>Alright we know how we want to use our REST Endpoint from the perspective of the JS Controller. And we have some kind of clue
+            on how the data should be stored theoretically.</p>
 
-                <p>There are some possibilities to persist data in JIRA. </p>
+        <p>There are <strong>two main possibilities to persist data in JIRA</strong>.</p>
 
-                <!--
-                TODO:
-                <p>SAL + PluginSettingsFactory
-                    <hr>
-                    https://developer.atlassian.com/docs/common-coding-tasks/storing-plugin-settings</p>
+        <p>
+            <ul>
+                <li>
+                    Using the <strong><a href="https://developer.atlassian.com/docs/common-coding-tasks/storing-plugin-settings">PluginSettingsFactory</a></strong> you
+                    have an easy way to persist data. But you have queries and cannot build relationships like you can with a real Database.
+                    So this is good if you just want to store simple stuff when you always know how to retrieve data from the PluginSettingsFactory (for example by a fixed key).
+                    <br />&nbsp;
+                </li>
+                <li>
+                    Then there are <strong><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects">Active Objects</a></strong> which let you use
+                    a real database with an ORM Interface. And that is definitely the choice we want to make here.
+                    So you might want to stroll around the Active Objects documents a little to get a grasp of it or just continue reading since I will also introduce you to it step by step.
+                </li>
+            </ul>
+        </p>
 
-                <p>
-                    Active Objects:
-                    <hr>
-                    Reasons why: https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects
-                    <hr>
-                    https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/getting-started-with-active-objects
-                    <hr>
-                    https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects
-                </p>
-                -->
 
-            </div>
-            <div class="col-md-5">
-                <div style="padding:0 60px 0 60px">
-                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/persist-data-in-jira.jpg" class="img-fluid" style="max-width:250px">
-                </div>
-            </div>
-        </div>
+        <h3 class="cs-headline cs-headline--s">Enabling Active Objects on our Project</h3>
+
+        <p>
+            All I will be writing about Active Objects I have taken from the <em><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects">Developing your plugin with Active Objects Guide</a></em> and the <em><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/getting-started-with-active-objects">Getting Started with Active Objects Guide</a></em>.
+        </p>
+
+        <p>Add <a href="https://maven.atlassian.com/content/repositories/atlassian-public/com/atlassian/activeobjects/activeobjects-plugin/">Active Objects dependency</a> to your pom.xml</p>
+
+        
+
+<div class="cs-code-filename">
+    
+    pom.xml
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/pom.xml" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="&lt;dependency&gt;
+   &lt;groupId&gt;com.atlassian.activeobjects&lt;/groupId&gt;
+   &lt;artifactId&gt;activeobjects-plugin&lt;/artifactId&gt;
+   &lt;version&gt;1.1.5&lt;/version&gt;
+   &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">groupId</span>&gt;</span>com.atlassian.activeobjects<span class="hljs-tag">&lt;/<span class="hljs-title">groupId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>activeobjects-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>1.1.5<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-title">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-title">scope</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span></code></pre>
+
+
+
+        <p>Now we need to add a section to our atlassian-plugin.xml file listing all our Entity classes which we will create.</p>
+
+
+        
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/resources/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/">.../</span>atlassian-plugin.xml
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="&lt;ao key=&quot;ao-module&quot;&gt;
+    &lt;description&gt;The module configuring the Active Objects service used by this plugin&lt;/description&gt;
+    &lt;entity&gt;com.comsysto.kitchen.duty.ao.Week&lt;/entity&gt;
+&lt;/ao&gt;"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">ao</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"ao-module"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">description</span>&gt;</span>The module configuring the Active Objects service used by this plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>com.comsysto.kitchen.duty.ao.Week<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ao</span>&gt;</span></code></pre>
+
+
+
+        <p>We need a Component Import for ActiveObjects which will be the object we use to access the database.</p>
+
+        <p>
+            
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/impl/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/impl/">.../</span>MyPluginComponentImpl.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+
+import com.atlassian.activeobjects.external.ActiveObjects;
+import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+...
+
+@Named (&quot;myPluginComponent&quot;)
+public class MyPluginComponentImpl implements MyPluginComponent {
+   ...
+   @ComponentImport
+   private ActiveObjects activeObjects;
+   ...
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
+<span class="hljs-keyword">import</span> com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+...
+
+<span class="hljs-annotation">@Named</span> (<span class="hljs-string">"myPluginComponent"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPluginComponentImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MyPluginComponent</span> </span>{
+   ...
+   <span class="hljs-annotation">@ComponentImport</span>
+   <span class="hljs-keyword">private</span> ActiveObjects activeObjects;
+   ...
+}</code></pre>
+
+        </p>
+
+        <p>Now we create our first entity Week and define the week as integer via getter/setter. Note that we have already defined the class in the atlassian-plugin.xml in the new ao-section earlier.</p>
+
+        <p>
+            
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>Week.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/Week.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+
+import net.java.ao.Entity;
+import net.java.ao.Preload;
+
+@Preload
+public interface Week extends Entity {
+    Integer getWeek();
+
+    void setWeek(Integer week);
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+
+<span class="hljs-keyword">import</span> net.java.ao.Entity;
+<span class="hljs-keyword">import</span> net.java.ao.Preload;
+
+<span class="hljs-annotation">@Preload</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Week</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Entity</span> </span>{
+    <span class="hljs-function">Integer <span class="hljs-title">getWeek</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setWeek</span><span class="hljs-params">(Integer week)</span></span>;
+}</code></pre>
+
+        </p>
+
+
 
 
         <h3 class="cs-headline cs-headline--s">Creating the Kitchen Duty Planning REST Resource</h3>
 
         <p>We will create the Kitchen Duty Planning REST Resource which will interact with the JS Controller to load and store the Kitchen Duty Planning REST Model.</p>
+
+        <p>Alright we now create the <strong>persistTest</strong> Endpoint to persist Week Objects to test our Active Objects Setup.
+        Therefore we also Inject the ActiveObjects Object via the Constructor. </p>
 
         
 
@@ -330,7 +499,11 @@
        title="Copy file content to clipboard"
        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
 
+import com.atlassian.activeobjects.external.ActiveObjects;
+import com.atlassian.jira.bc.user.search.UserSearchService;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+import com.atlassian.sal.api.transaction.TransactionCallback;
+import com.comsysto.kitchen.duty.ao.Week;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -349,6 +522,36 @@ import java.util.List;
 @Path(&quot;/planning&quot;)
 public class KitchenDutyPlanningResource {
 
+    private ActiveObjects activeObjects;
+
+    @Inject
+    public KitchenDutyPlanningResource(ActiveObjects activeObjects) {
+        this.activeObjects = activeObjects;
+    }
+
+    public KitchenDutyPlanningResource() {
+    }
+
+
+    @GET
+    @Path(&quot;/persistTest&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response persistTest() {
+        activeObjects.executeInTransaction(new TransactionCallback&lt;Week&gt;()
+        {
+            @Override
+            public Week doInTransaction()
+            {
+                final Week testWeek = activeObjects.create(Week.class);
+                testWeek.setWeek(42);
+                testWeek.save();
+                return testWeek;
+            }
+        });
+        return Response.ok(&quot;ok&quot;).build();
+    }
+
 
     @GET
     @Path(&quot;/health&quot;)
@@ -363,7 +566,11 @@ public class KitchenDutyPlanningResource {
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
 
+<span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
+<span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchService;
 <span class="hljs-keyword">import</span> com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+<span class="hljs-keyword">import</span> com.atlassian.sal.api.transaction.TransactionCallback;
+<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.ao.Week;
 
 <span class="hljs-keyword">import</span> javax.inject.Inject;
 <span class="hljs-keyword">import</span> javax.inject.Named;
@@ -382,6 +589,36 @@ public class KitchenDutyPlanningResource {
 <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/planning"</span>)
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyPlanningResource</span> </span>{
 
+    <span class="hljs-keyword">private</span> ActiveObjects activeObjects;
+
+    <span class="hljs-annotation">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">KitchenDutyPlanningResource</span><span class="hljs-params">(ActiveObjects activeObjects)</span> </span>{
+        <span class="hljs-keyword">this</span>.activeObjects = activeObjects;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">KitchenDutyPlanningResource</span><span class="hljs-params">()</span> </span>{
+    }
+
+
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/persistTest"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">persistTest</span><span class="hljs-params">()</span> </span>{
+        activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Week&gt;()
+        {
+            <span class="hljs-annotation">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Week <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span>
+            </span>{
+                <span class="hljs-keyword">final</span> Week testWeek = activeObjects.create(Week.class);
+                testWeek.setWeek(<span class="hljs-number">42</span>);
+                testWeek.save();
+                <span class="hljs-keyword">return</span> testWeek;
+            }
+        });
+        <span class="hljs-keyword">return</span> Response.ok(<span class="hljs-string">"ok"</span>).build();
+    }
+
 
     <span class="hljs-annotation">@GET</span>
     <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/health"</span>)
@@ -392,6 +629,51 @@ public class KitchenDutyPlanningResource {
     }
 
 }</code></pre>
+
+
+
+
+        <p>Login to JIRA and then open this URL: http://wawa.gruenewaldt.de:2990/jira/rest/kitchenduty/1.0/planning/persistTest</p>
+
+
+        <p>The URL should return 'ok' and in the background our week object got persisted to the database.</p>
+
+
+        <p>We will look into the H2 Database now. Therefore we need to</p>
+
+        <p>(1) Stop JIRA via killing the atlas-run process</p>
+        <p>(2) Connect to the built in H2 Database (yes H2 and not HSQLDB!)</p>
+        <p>(2.1) Go into the project Dir where you just killed atlas-run and execute the h2.jar to open the H2 console</p>
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="java -jar target/container/tomcat8x/cargo-jira-home/webapps/jira/WEB-INF/lib/h2-1.4.185.jar"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        java -jar target/container/tomcat8x/cargo-jira-home/webapps/jira/WEB-INF/lib/h2-1.4.185.jar<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs"></code></pre>
+
+    </div>
+</div>
+
+
+        <p>(2.2) Now you must search the output of atlas-run (at best grep it) and look for 'Database URL'</p>
+        <code>[INFO] [talledLocalContainer]          Database URL                                  : jdbc:h2:file:/Users/clouless/git/kitchen-duty-plugin-for-atlassian-jira/step-04-kitchen-duty-plugin/target/jira/home/database/h2db</code>
+        <p>(2.3) COnnect the console to the JIRA H2 Database URL. In my case <code>jdbc:h2:file:/Users/clouless/git/kitchen-duty-plugin-for-atlassian-jira/step-04-kitchen-duty-plugin/target/jira/home/database/h2db</code></p>
+
+        <p>(3) Look for our Week table. It will be named <code>AO_hash_WEEK</code> and do a query for the entries</p>
+
+        <p>You should see this</p>
+
+
+        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;">
+
+        <p>You can see the whole process in the gif:</p>
+
+        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-jira-connect.gif" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;border:1px solid #ccc;">
+
 
 
         <h3 class="cs-headline cs-headline--s">Creating the Kitchen Duty Planning REST Model</h3>

@@ -227,7 +227,7 @@
                     The <strong>Week</strong> will be the actual week number in the year. With a little thinking ahead of how I want to use it in the JS Controller
                     I basically will select a week via a date picker and <a href="http://momentjs.com/docs/#/get-set/iso-week/">calculate the isoWeek in the frontend using moment.js</a></p>
                 <p>
-                    The <strong>User</strong> part is obvious. We will need to store a list of usernames in the database in relation with a isoWeek (<a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/onetomany-relationship"><code>@OneToMany</code></a>).
+                    The <strong>User</strong> part is obvious. We will need to store a list of usernames in the database in relation with a isoWeek (<a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/manytomany-relationship"><code>@ManyToMany</code></a>).
                 </p>
                 <p>
                     Concerning the <strong>REST Endpoint</strong> I will want to have an URL which I can fire
@@ -249,7 +249,7 @@
                     <tr>
                         <th>Week</th>
                         <th class="cs-table-uml--connector">
-                            n&nbsp;&nbsp;&nbsp;&nbsp;1
+                            n&nbsp;&nbsp;&nbsp;&nbsp;m
                         </th>
                         <th>User</th>
                     </tr>
@@ -348,7 +348,7 @@
                                                             title="src/main/resources/">.../</span>atlassian-plugin.xml
     
     
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
     
@@ -382,7 +382,7 @@
                                                             title="src/main/java/com/comsysto/kitchen/duty/impl/">.../</span>MyPluginComponentImpl.java
     
     
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
     
@@ -434,7 +434,7 @@ public class MyPluginComponentImpl implements MyPluginComponent {
                                                             title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>Week.java
     
     
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/Week.java" target="_blank"
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/Week.java" target="_blank"
        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
     
@@ -472,7 +472,7 @@ public interface Week extends Entity {
 
 
 
-        <h3 class="cs-headline cs-headline--s">Creating the Kitchen Duty Planning REST Resource</h3>
+        <h3 class="cs-headline cs-headline--s">Creating a basic Week Entity and a persist-Endpoint</h3>
 
         <p>We will create the Kitchen Duty Planning REST Resource which will interact with the JS Controller to load and store the Kitchen Duty Planning REST Model.</p>
 
@@ -489,7 +489,7 @@ public interface Week extends Entity {
                                                             title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
     
     
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
     
@@ -633,17 +633,16 @@ public class KitchenDutyPlanningResource {
 
 
 
-        <p>Login to JIRA and then open this URL: http://wawa.gruenewaldt.de:2990/jira/rest/kitchenduty/1.0/planning/persistTest</p>
-
+        <p>Login to JIRA and then open this URL: <a href="http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest">http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest</a></p>
 
         <p>The URL should return 'ok' and in the background our week object got persisted to the database.</p>
 
 
-        <p>We will look into the H2 Database now. Therefore we need to</p>
+        <p>We will <strong>look into the H2 Database now</strong>. Therefore we need to:</p>
 
         <p>(1) Stop JIRA via killing the atlas-run process</p>
         <p>(2) Connect to the built in H2 Database (yes H2 and not HSQLDB!)</p>
-        <p>(2.1) Go into the project Dir where you just killed atlas-run and execute the h2.jar to open the H2 console</p>
+        <p>(2.1) Go into the project Dir where you just killed atlas-run and execute the h2.jar to open the H2 console (a browser Tab opens)</p>
         
 <div class="cs-shell">
     <div class="cs-shell__inner">
@@ -665,8 +664,27 @@ public class KitchenDutyPlanningResource {
 
         <p>(3) Look for our Week table. It will be named <code>AO_hash_WEEK</code> and do a query for the entries</p>
 
+
+
+        <div class="cs-blockquote">
+            <p>
+                Please remember to always just look into the database.
+                You should never alter the Database with SQL Statements since JIRA manages autoincrement IDs and some other Caches
+                and you will surely run into strange errors if you still do so.<br/>
+                <strong>Number One Rule: Only alter the Database through Active Objects.</strong>
+            </p>
+        </div>
+
+
         <p>You should see this</p>
 
+        <!--
+        [INFO] [talledLocalContainer] INFORMATION: Server startup in 38377 ms
+        [INFO] [talledLocalContainer] Tomcat 8.x started on port [2990]
+        [INFO] jira started successfully in 58s at http://localhost:2990/jira
+        [INFO] Type Ctrl-D to shutdown gracefully
+        [INFO] Type Ctrl-C to exit
+        -->
 
         <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;">
 
@@ -676,21 +694,209 @@ public class KitchenDutyPlanningResource {
 
 
 
-        <h3 class="cs-headline cs-headline--s">Creating the Kitchen Duty Planning REST Model</h3>
 
-        <p>Now we create the model which will be used to persist data to the database.</p>
 
-        
+        <h3 class="cs-headline cs-headline--s">Adding User Class and Many-to-Many Relationship</h3>
+
+        <p>Since we got Active Objects running successfully we now want to add a <a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/manytomany-relationship"><code>@ManyToMany</code></a> relationship between <code>User</code> an <code>Week</code>.</p>
+        <p>And when you have read the docs you will note that we need a Mapping Entity for that case. We will call it <code>UserToWeek</code>.</p>
+
+        <p>Do a <code>atlas-clean</code> before the next <code>atlas-run</code> so that the database gets purged. Otherwise you might run into <code> Unique index or primary key violation</code> errors since we have 4 week entries already all with week 42 values.</p>
+
+
+
+        <p>
+            
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>Week.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/Week.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+
+import net.java.ao.Entity;
+import net.java.ao.ManyToMany;
+import net.java.ao.Preload;
+import net.java.ao.schema.NotNull;
+import net.java.ao.schema.Unique;
+
+@Preload
+public interface Week extends Entity {
+
+    @NotNull
+    @Unique
+    Integer getWeek();
+    void setWeek(Integer week);
+
+    @ManyToMany(value = UserToWeek.class)
+    User[] getUsers();
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+
+<span class="hljs-keyword">import</span> net.java.ao.Entity;
+<span class="hljs-keyword">import</span> net.java.ao.ManyToMany;
+<span class="hljs-keyword">import</span> net.java.ao.Preload;
+<span class="hljs-keyword">import</span> net.java.ao.schema.NotNull;
+<span class="hljs-keyword">import</span> net.java.ao.schema.Unique;
+
+<span class="hljs-annotation">@Preload</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Week</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Entity</span> </span>{
+
+    <span class="hljs-annotation">@NotNull</span>
+    <span class="hljs-annotation">@Unique</span>
+    <span class="hljs-function">Integer <span class="hljs-title">getWeek</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setWeek</span><span class="hljs-params">(Integer week)</span></span>;
+
+    <span class="hljs-annotation">@ManyToMany</span>(value = UserToWeek.class)
+    User[] getUsers();
+}</code></pre>
+
+        </p>
+
+
+        <p>
+            
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>User.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/User.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+
+import net.java.ao.Entity;
+import net.java.ao.ManyToMany;
+import net.java.ao.Preload;
+import net.java.ao.schema.NotNull;
+import net.java.ao.schema.Unique;
+
+@Preload
+public interface User extends Entity {
+
+    @NotNull
+    @Unique
+    String getName();
+    void setName(String week);
+
+    @ManyToMany(value = UserToWeek.class)
+    Week[] getWeeks();
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+
+<span class="hljs-keyword">import</span> net.java.ao.Entity;
+<span class="hljs-keyword">import</span> net.java.ao.ManyToMany;
+<span class="hljs-keyword">import</span> net.java.ao.Preload;
+<span class="hljs-keyword">import</span> net.java.ao.schema.NotNull;
+<span class="hljs-keyword">import</span> net.java.ao.schema.Unique;
+
+<span class="hljs-annotation">@Preload</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Entity</span> </span>{
+
+    <span class="hljs-annotation">@NotNull</span>
+    <span class="hljs-annotation">@Unique</span>
+    <span class="hljs-function">String <span class="hljs-title">getName</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String week)</span></span>;
+
+    <span class="hljs-annotation">@ManyToMany</span>(value = UserToWeek.class)
+    Week[] getWeeks();
+}</code></pre>
+
+        </p>
+
+        <p>
+            
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>UserToWeek.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/UserToWeek.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+
+import net.java.ao.Entity;
+
+public interface UserToWeek extends Entity {
+
+    void setUser(User user);
+    User getUser();
+
+    void setWeek(Week week);
+    Week getWeek();
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+
+<span class="hljs-keyword">import</span> net.java.ao.Entity;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserToWeek</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Entity</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setUser</span><span class="hljs-params">(User user)</span></span>;
+    <span class="hljs-function">User <span class="hljs-title">getUser</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setWeek</span><span class="hljs-params">(Week week)</span></span>;
+    <span class="hljs-function">Week <span class="hljs-title">getWeek</span><span class="hljs-params">()</span></span>;
+}</code></pre>
+
+        </p>
+
+
+
+        <p>We defined the Week and the User as <code>@Unique</code> and <code>@NotNull</code> therefore we need to create
+            the Object with DBParams. See <em><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/creating-entities">'Creating an entity with "not null"-constraints'</a> in the docs.</em>
+            Therefore we <strong>change the testPersist Endpoint to now persist a full relationship and handle the not-null thingy by DBParams.</strong>
+        </p>
+
+        <p>
+            
 
 <div class="cs-code-filename">
     
     <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="hidden-lg-up"
                                                             data-toggle="tooltip"
                                                             data-placement="right"
-                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningModel.java
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
     
     
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningModel.java" target="_blank"
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/83e18b1e57beb1e9282b2b3781966f88efd2763f/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
     
@@ -699,49 +905,159 @@ public class KitchenDutyPlanningResource {
        data-title-orig="Copy file content to clipboard"
        title="Copy file content to clipboard"
        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+...
 
-import javax.xml.bind.annotation.*;
-@XmlRootElement(name = &quot;planning&quot;)
-@XmlAccessorType(XmlAccessType.FIELD)
-public class KitchenDutyPlanningModel {
+@Named
+@Path(&quot;/planning&quot;)
+public class KitchenDutyPlanningResource {
+...
 
-    @XmlElement
-    private Integer isoWeek;
+    @GET
+    @Path(&quot;/persistTest&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response persistTest() {
+        activeObjects.executeInTransaction(new TransactionCallback&lt;Week&gt;()
+        {
+            @Override
+            public Week doInTransaction()
+            {
+                final Week testWeek = activeObjects.create(
+                    Week.class,
+                    new DBParam(&quot;WEEK&quot;, 42));
+                testWeek.save();
 
-    @XmlElement
-    @XmlRootElement(name = &quot;users&quot;)
-    private List&lt;String&gt; users;
+                final User user = activeObjects.create(
+                    User.class,
+                    new DBParam(&quot;NAME&quot;, &quot;ichiban&quot;));
+                user.save();
 
-    public KitchenDutyPlanningModel() {
+                final UserToWeek relationship = activeObjects.create(UserToWeek.class);
+                relationship.setUser(user);
+                relationship.setWeek(testWeek);
+                relationship.save();
+
+                return testWeek;
+            }
+        });
+        return Response.ok(&quot;ok&quot;).build();
     }
-
-	// TODO: getters/setters
+...
 }"><i class="fa fa-files-o"></i></a>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+...
 
-<span class="hljs-keyword">import</span> javax.xml.bind.annotation.*;
-<span class="hljs-annotation">@XmlRootElement</span>(name = <span class="hljs-string">"planning"</span>)
-<span class="hljs-annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyPlanningModel</span> </span>{
+<span class="hljs-annotation">@Named</span>
+<span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/planning"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyPlanningResource</span> </span>{
+...
 
-    <span class="hljs-annotation">@XmlElement</span>
-    <span class="hljs-keyword">private</span> Integer isoWeek;
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/persistTest"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">persistTest</span><span class="hljs-params">()</span> </span>{
+        activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Week&gt;()
+        {
+            <span class="hljs-annotation">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Week <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span>
+            </span>{
+                <span class="hljs-keyword">final</span> Week testWeek = activeObjects.create(
+                    Week.class,
+                    <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"WEEK"</span>, <span class="hljs-number">42</span>));
+                testWeek.save();
 
-    <span class="hljs-annotation">@XmlElement</span>
-    <span class="hljs-annotation">@XmlRootElement</span>(name = <span class="hljs-string">"users"</span>)
-    <span class="hljs-keyword">private</span> List&lt;String&gt; users;
+                <span class="hljs-keyword">final</span> User user = activeObjects.create(
+                    User.class,
+                    <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"NAME"</span>, <span class="hljs-string">"ichiban"</span>));
+                user.save();
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">KitchenDutyPlanningModel</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-keyword">final</span> UserToWeek relationship = activeObjects.create(UserToWeek.class);
+                relationship.setUser(user);
+                relationship.setWeek(testWeek);
+                relationship.save();
+
+                <span class="hljs-keyword">return</span> testWeek;
+            }
+        });
+        <span class="hljs-keyword">return</span> Response.ok(<span class="hljs-string">"ok"</span>).build();
     }
-
-	<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> getters/setters</span>
+...
 }</code></pre>
 
+        </p>
 
-        <p>We will <strong>store the ISO Calender Week Number</strong> together with <strong>a list of users</strong>.
-            Such and entry represents a Kitchen Duty entry for a certain week with the persons that have Kitchen Duty.</p>
+
+        <p>We use <code>new DBParam("WEEK", 42));</code> in the <strong>activeObjects#create</strong> Method to prevent a not-null exception.</p>
+
+        <p>
+            We startup JIRA again and call the <a href="http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest">http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest</a> Endpoint again after logging in.
+        </p>
+        <p>
+            And by calling the testPersist endpoint a second time we will get a <strong>unique constraint exception</strong>.
+            But that is fine since that only show that the unique constraint works and we will be throwing away the persistTest Endpoint anyways.
+        </p>
+
+        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-unique-index-exception.png" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;">
+
+
+
+        <p>We shutdown JIRA again and fire up the H2 Console again to see what Tables have been created</p>
+
+        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-many-to-many-week-user.png" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;">
+
+
+
+
+
+
+
+
+        <h3 class="cs-headline cs-headline--s">Creating the real Kitchen Duty Planning REST Resource</h3>
+
+        <p>
+            Ok we have played around a little with active objects in the previous sections and now have our full
+            data model and entities in place. That means we can now create the real Endpoint Methods and throw away the testPersist Endpoint.
+        </p>
+
+
+
+
+        <!--
+                Queries: Spaces must be used!
+
+                Query.select().where("FOO = 'bar'");
+
+
+                AO 1.2.0 - Indexes example: https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/ao-1-2-0-upgrade-guide
+        -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         <div class="alert alert-danger">THIS PAGE IS UNDER CONSTRUCTION. WORK IN PROGRESS</div>

@@ -3,6 +3,7 @@ package com.comsysto.kitchen.duty.rest;
 import com.atlassian.activeobjects.external.ActiveObjects;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import com.atlassian.sal.api.transaction.TransactionCallback;
+import com.comsysto.kitchen.duty.ao.KitchenDutyActiveObjectHelper;
 import com.comsysto.kitchen.duty.ao.User;
 import com.comsysto.kitchen.duty.ao.UserToWeek;
 import com.comsysto.kitchen.duty.ao.Week;
@@ -11,10 +12,7 @@ import net.java.ao.Query;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -37,7 +35,7 @@ public class KitchenDutyPlanningResource {
 
 
     /**
-     * Get the Users assigned to the isoWeekNumber.
+     * Get all Users assigned to the isoWeekNumber.
      *
      * @param isoWeekNumber
      * @return
@@ -46,7 +44,7 @@ public class KitchenDutyPlanningResource {
     @Path("/week/{isoWeekNumber}/users")
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response persistTest(@PathParam("isoWeekNumber") final Integer isoWeekNumber) {
+    public Response getUsersForWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber) {
         Week[] weeks = activeObjects.executeInTransaction(new TransactionCallback<Week[]>() {
             @Override
             public Week[] doInTransaction() {
@@ -63,6 +61,106 @@ public class KitchenDutyPlanningResource {
     }
 
     /**
+     * Add the User to the Week
+     *
+     * @param isoWeekNumber
+     * @return
+     */
+    @PUT
+    @Path("/week/{isoWeekNumber}/users")
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response addUserToWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+                                  final KitchenDutyPlanningResourceUserModel userParam) {
+        activeObjects.executeInTransaction(new TransactionCallback<Void>() {
+            @Override
+            public Void doInTransaction() {
+                //
+                // WEEK
+                //
+                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+                if (week == null) {
+                    week = activeObjects.create(Week.class, new DBParam("WEEK", isoWeekNumber));
+                    week.save();
+                }
+
+                //
+                // USER
+                //
+                User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
+                if (user == null) {
+                    user = activeObjects.create(User.class, new DBParam("NAME", userParam.getUsername()));
+                    user.save();
+                }
+
+                //
+                // Establish ManyToMany Relationship
+                //
+                UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
+                if (relationship != null) {
+                    // relation already exists
+                    return null;
+                }
+                relationship = activeObjects.create(UserToWeek.class);
+                relationship.setUser(user);
+                relationship.setWeek(week);
+                relationship.save();
+
+                return null;
+            }
+        });
+        return Response.ok().build();
+    }
+
+
+    /**
+     * Remove the User from Week
+     *
+     * @param isoWeekNumber
+     * @return
+     */
+    @DELETE
+    @Path("/week/{isoWeekNumber}/users")
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response deleteUserFomWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+                                  final KitchenDutyPlanningResourceUserModel userParam) {
+        activeObjects.executeInTransaction(new TransactionCallback<Void>() {
+            @Override
+            public Void doInTransaction() {
+                //
+                // WEEK
+                //
+                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+                if (week == null) {
+                    // week does not exist => no relation to delete
+                    return null;
+                }
+
+                //
+                // USER
+                //
+                User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
+                if (user == null) {
+                    // user does not exist => no relation to delete
+                    return null;
+                }
+
+                //
+                // Delete ManyToMany Relationship
+                //
+                UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
+                if (relationship != null) {
+                    activeObjects.delete(relationship);
+                }
+
+                return null;
+            }
+        });
+        return Response.ok().build();
+    }
+
+    /**
      * Get the Weeks assigned to the User.
      *
      * @param isoWeekNumber
@@ -72,7 +170,7 @@ public class KitchenDutyPlanningResource {
     @Path("/user/{username}/weeks")
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response persistTest(@PathParam("username") final String username) {
+    public Response getWeeksForUser(@PathParam("username") final String username) {
         User[] users = activeObjects.executeInTransaction(new TransactionCallback<User[]>() {
             @Override
             public User[] doInTransaction() {

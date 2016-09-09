@@ -50,7 +50,8 @@ public class KitchenDutyPlanningResource {
                     new DBParam("WEEK", 42));
                 testWeek.save();
 
-                final User user = activeObjects.create(User.class,
+                final User user = activeObjects.create(
+                    User.class,
                     new DBParam("NAME", "ichiban"));
                 user.save();
 

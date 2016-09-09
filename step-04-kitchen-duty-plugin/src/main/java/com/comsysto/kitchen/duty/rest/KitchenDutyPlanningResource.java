@@ -7,6 +7,7 @@ import com.atlassian.sal.api.transaction.TransactionCallback;
 import com.comsysto.kitchen.duty.ao.User;
 import com.comsysto.kitchen.duty.ao.UserToWeek;
 import com.comsysto.kitchen.duty.ao.Week;
+import net.java.ao.DBParam;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,12 +45,13 @@ public class KitchenDutyPlanningResource {
         activeObjects.executeInTransaction(new TransactionCallback<Week>() {
             @Override
             public Week doInTransaction() {
-                final Week testWeek = activeObjects.create(Week.class);
-                testWeek.setWeek(42);
+                final Week testWeek = activeObjects.create(
+                    Week.class,
+                    new DBParam("WEEK", 42));
                 testWeek.save();
 
-                final User user = activeObjects.create(User.class);
-                user.setName("ichiban");
+                final User user = activeObjects.create(User.class,
+                    new DBParam("NAME", "ichiban"));
                 user.save();
 
                 final UserToWeek relationship = activeObjects.create(UserToWeek.class);

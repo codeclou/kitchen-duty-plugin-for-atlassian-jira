@@ -55,5 +55,7 @@
   <ao key="ao-module">
     <description>The module configuring the Active Objects service used by this plugin</description>
     <entity>com.comsysto.kitchen.duty.ao.Week</entity>
+    <entity>com.comsysto.kitchen.duty.ao.User</entity>
+    <entity>com.comsysto.kitchen.duty.ao.UserToWeek</entity>
   </ao>
 </atlassian-plugin>

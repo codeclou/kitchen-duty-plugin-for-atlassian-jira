@@ -4,6 +4,8 @@ import com.atlassian.activeobjects.external.ActiveObjects;
 import com.atlassian.jira.bc.user.search.UserSearchService;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import com.atlassian.sal.api.transaction.TransactionCallback;
+import com.comsysto.kitchen.duty.ao.User;
+import com.comsysto.kitchen.duty.ao.UserToWeek;
 import com.comsysto.kitchen.duty.ao.Week;
 
 import javax.inject.Inject;
@@ -45,6 +47,16 @@ public class KitchenDutyPlanningResource {
                 final Week testWeek = activeObjects.create(Week.class);
                 testWeek.setWeek(42);
                 testWeek.save();
+
+                final User user = activeObjects.create(User.class);
+                user.setName("ichiban");
+                user.save();
+
+                final UserToWeek relationship = activeObjects.create(UserToWeek.class);
+                relationship.setUser(user);
+                relationship.setWeek(testWeek);
+                relationship.save();
+
                 return testWeek;
             }
         });

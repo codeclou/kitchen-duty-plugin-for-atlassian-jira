@@ -42,15 +42,15 @@
                 </p>
                 <p>
                     Concerning the <strong>REST Endpoint</strong> I will want to have an URL which I can fire
-                    GET requests on something like <code>/planning/week/15</code> and receive a list of users.
+                    GET requests on something like <code>/planning/week/15/users</code> and receive a list of users.
                 </p>
                 <p>
-                    Obviously the other way round would be a POST request on <code>/planning/week/15</code> with a list of users
+                    Obviously the other way round would be a POST request on <code>/planning/week/15/users</code> with a list of users
                     as request body to store the user list for the week 15.
                 </p>
 
                 <p>
-                    And for our stretch-goal a GET request on <code>/planning/user/bob</code> should return a list of week numbers
+                    And for our stretch-goal a GET request on <code>/planning/user/bob/weeks</code> should return a list of week numbers
                     in which Bob has Kitchen Duty.
                 </p>
             </div>
@@ -467,10 +467,188 @@
 
 
 
-        <!--
-                Queries: Spaces must be used!
+        <p>
+            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e923ee619b945042bc37217e78b3aead2f8a4b44")), source='
+            |package com.comsysto.kitchen.duty.rest;
+            |...
+            |
+            |@Named
+            |@Path("/planning")
+            |public class KitchenDutyPlanningResource {
+            |...
+            |
+            |    /**
+            |     * Get the Users assigned to the isoWeekNumber.
+            |     *
+            |     * @param isoWeekNumber
+            |     * @return
+            |     */
+            |    @GET
+            |    @Path("/week/{isoWeekNumber}/users")
+            |    @Produces({MediaType.APPLICATION_JSON})
+            |    @AnonymousAllowed
+            |    public Response persistTest(@PathParam("isoWeekNumber") final Integer isoWeekNumber) {
+            |        Week[] weeks = activeObjects.executeInTransaction(new TransactionCallback<Week[]>() {
+            |            @Override
+            |            public Week[] doInTransaction() {
+            |                return activeObjects.find(Week.class, Query.select().where("WEEK = ?", isoWeekNumber));
+            |            }
+            |        });
+            |        List<KitchenDutyPlanningResourceUserModel> users = new ArrayList<>();
+            |        if (weeks != null && weeks.length > 0) {
+            |            for (User user : weeks[0].getUsers()) {
+            |                users.add(new KitchenDutyPlanningResourceUserModel(user.getID(), user.getName()));
+            |            }
+            |        }
+            |        return Response.ok(users).build();
+            |    }
+            |
+            |    /**
+            |     * Get the Weeks assigned to the User.
+            |     *
+            |     * @param isoWeekNumber
+            |     * @return
+            |     */
+            |    @GET
+            |    @Path("/user/{username}/weeks")
+            |    @Produces({MediaType.APPLICATION_JSON})
+            |    @AnonymousAllowed
+            |    public Response persistTest(@PathParam("username") final String username) {
+            |        User[] users = activeObjects.executeInTransaction(new TransactionCallback<User[]>() {
+            |            @Override
+            |            public User[] doInTransaction() {
+            |                return activeObjects.find(User.class, Query.select().where("NAME = ?", username));
+            |            }
+            |        });
+            |        List<KitchenDutyPlanningResourceWeekModel> weeks = new ArrayList<>();
+            |        if (users != null && users.length > 0) {
+            |            for (Week week : users[0].getWeeks()) {
+            |                weeks.add(new KitchenDutyPlanningResourceWeekModel(week.getID(), week.getWeek()));
+            |            }
+            |        }
+            |        return Response.ok(weeks).build();
+            |    }
+            |...
+            |}
+            ') }}
+        </p>
 
-                Query.select().where("FOO = 'bar'");
+
+        <p>
+            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResourceWeekModel.java", ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e923ee619b945042bc37217e78b3aead2f8a4b44")), source='
+            |package com.comsysto.kitchen.duty.rest;
+            |
+            |import javax.xml.bind.annotation.XmlAccessType;
+            |import javax.xml.bind.annotation.XmlAccessorType;
+            |import javax.xml.bind.annotation.XmlElement;
+            |import javax.xml.bind.annotation.XmlRootElement;
+            |
+            |@XmlRootElement(name = "weeks")
+            |@XmlAccessorType(XmlAccessType.FIELD)
+            |public class KitchenDutyPlanningResourceWeekModel {
+            |
+            |    @XmlElement
+            |    private Integer id;
+            |
+            |    @XmlElement
+            |    private Integer week;
+            |
+            |    KitchenDutyPlanningResourceWeekModel() { }
+            |
+            |    KitchenDutyPlanningResourceWeekModel(Integer id, Integer week) {
+            |        this.id = id;
+            |        this.week = week;
+            |    }
+            |
+            |    public Integer getId() {
+            |        return id;
+            |    }
+            |
+            |    public void setId(Integer id) {
+            |        this.id = id;
+            |    }
+            |
+            |    public Integer getWeek() {
+            |        return week;
+            |    }
+            |
+            |    public void setWeek(Integer week) {
+            |        this.week = week;
+            |    }
+            |}
+            ') }}
+        </p>
+
+
+        <p>
+            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResourceUserModel.java", ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e923ee619b945042bc37217e78b3aead2f8a4b44")), source='
+            |package com.comsysto.kitchen.duty.rest;
+            |
+            |import javax.xml.bind.annotation.XmlAccessType;
+            |import javax.xml.bind.annotation.XmlAccessorType;
+            |import javax.xml.bind.annotation.XmlElement;
+            |import javax.xml.bind.annotation.XmlRootElement;
+            |
+            |@XmlRootElement(name = "users")
+            |@XmlAccessorType(XmlAccessType.FIELD)
+            |public class KitchenDutyPlanningResourceUserModel {
+            |
+            |    @XmlElement
+            |    private Integer id;
+            |
+            |    @XmlElement
+            |    private String username;
+            |
+            |    KitchenDutyPlanningResourceUserModel() { }
+            |
+            |    KitchenDutyPlanningResourceUserModel(Integer id, String username) {
+            |        this.id = id;
+            |        this.username = username;
+            |    }
+            |
+            |    public Integer getId() {
+            |        return id;
+            |    }
+            |
+            |    public void setId(Integer id) {
+            |        this.id = id;
+            |    }
+            |
+            |    public String getUsername() {
+            |        return username;
+            |    }
+            |
+            |    public void setUsername(String username) {
+            |        this.username = username;
+            |    }
+            |}
+            ') }}
+        </p>
+
+        <p>Now we can query</p>
+
+        <p><strong>List assigned users for week 42.</strong></p>
+
+        {{ csShell(shellCmd='curl --user admin:admin -H \'Content-Type: application/json\' http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users', shellCmdOutput='
+        |[{"id":2,"username":"ichiban"}]
+        ') }}
+
+        <p><strong>List weeks for user ichiban.</strong></p>
+
+        {{ csShell(shellCmd='curl --user admin:admin -H \'Content-Type: application/json\' http://localhost:2990/jira/rest/kitchenduty/1.0/planning/user/ichiban/weeks', shellCmdOutput='
+        |[{"id":2,"week":42}]
+        ') }}
+
+
+        <p>
+            We can discuss REST API URL structure all day and you can do the crazy stuff on your project but here we want to keep things
+            simple. Therefore we will just add two more Endpoint types DELETE and PUT on /week/42/users.
+            /user/{username}/weeks will stay with GET since this is just a convinience aggregation Endpoint.
+        </p>
+
+
+        <!--
+
 
 
                 AO 1.2.0 - Indexes example: https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/ao-1-2-0-upgrade-guide
@@ -480,22 +658,188 @@
 
 
 
+        <p>
+            Now we add the functionality to <strong>add users to weeks and remove them from weeks</strong>.
+            Therefore we will need a <strong>DELETE and PUT Endpoint</strong> which we add to <code>KitchenDutyPlanningResource</code> Class.
+        </p>
+
+        <p>
+            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e90e472228d0512b90d6ef2f6f1b9f3cae91c542")), source='
+            |    /**
+            |     * Add the User to the Week
+            |     *
+            |     * @param isoWeekNumber
+            |     * @return
+            |     */
+            |    @PUT
+            |    @Path("/week/{isoWeekNumber}/users")
+            |    @Produces({MediaType.APPLICATION_JSON})
+            |    @AnonymousAllowed
+            |    public Response addUserToWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+            |                                  final KitchenDutyPlanningResourceUserModel userParam) {
+            |        activeObjects.executeInTransaction(new TransactionCallback<Void>() {
+            |            @Override
+            |            public Void doInTransaction() {
+            |                //
+            |                // WEEK
+            |                //
+            |                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+            |                if (week == null) {
+            |                    week = activeObjects.create(Week.class, new DBParam("WEEK", isoWeekNumber));
+            |                    week.save();
+            |                }
+            |
+            |                //
+            |                // USER
+            |                //
+            |                User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
+            |                if (user == null) {
+            |                    user = activeObjects.create(User.class, new DBParam("NAME", userParam.getUsername()));
+            |                    user.save();
+            |                }
+            |
+            |                //
+            |                // Establish ManyToMany Relationship
+            |                //
+            |                UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
+            |                if (relationship != null) {
+            |                    // relation already exists
+            |                    return null;
+            |                }
+            |                relationship = activeObjects.create(UserToWeek.class);
+            |                relationship.setUser(user);
+            |                relationship.setWeek(week);
+            |                relationship.save();
+            |
+            |                return null;
+            |            }
+            |        });
+            |        return Response.ok().build();
+            |    }
+            |
+            |
+            |    /**
+            |     * Remove the User from Week
+            |     *
+            |     * @param isoWeekNumber
+            |     * @return
+            |     */
+            |    @DELETE
+            |    @Path("/week/{isoWeekNumber}/users")
+            |    @Produces({MediaType.APPLICATION_JSON})
+            |    @AnonymousAllowed
+            |    public Response deleteUserFomWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+            |                                  final KitchenDutyPlanningResourceUserModel userParam) {
+            |        activeObjects.executeInTransaction(new TransactionCallback<Void>() {
+            |            @Override
+            |            public Void doInTransaction() {
+            |                //
+            |                // WEEK
+            |                //
+            |                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+            |                if (week == null) {
+            |                    // week does not exist => no relation to delete
+            |                    return null;
+            |                }
+            |
+            |                //
+            |                // USER
+            |                //
+            |                User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
+            |                if (user == null) {
+            |                    // user does not exist => no relation to delete
+            |                    return null;
+            |                }
+            |
+            |                //
+            |                // Delete ManyToMany Relationship
+            |                //
+            |                UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
+            |                if (relationship != null) {
+            |                    activeObjects.delete(relationship);
+            |                }
+            |
+            |                return null;
+            |            }
+            |        });
+            |        return Response.ok().build();
+            |    }
+            ') }}
+        </p>
+
+        <p>I moved some common data access spaghetti code to some static Methods a <code>KitchenDutyActiveObjectHelper</code> Class.</p>
+
+        <p>
+            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/ao/", filename="KitchenDutyActiveObjectHelper.java", ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e90e472228d0512b90d6ef2f6f1b9f3cae91c542")), source='
+            |package com.comsysto.kitchen.duty.ao;
+            |
+            |import com.atlassian.activeobjects.external.ActiveObjects;
+            |import net.java.ao.Query;
+            |
+            |public class KitchenDutyActiveObjectHelper {
+            |
+            |    public static Week findUniqueWeek(ActiveObjects activeObjects, Integer isoWeekNumber) {
+            |        Week[] weekRes = activeObjects.find(Week.class, Query.select().where("WEEK = ?", isoWeekNumber));
+            |        if ((weekRes != null && weekRes.length > 0)) {
+            |            return weekRes[0];
+            |        }
+            |        return null;
+            |    }
+            |
+            |    public static User findUniqueUser(ActiveObjects activeObjects, String username) {
+            |        User[] userRes = activeObjects.find(User.class, Query.select().where("NAME = ?", username));
+            |        if ((userRes != null && userRes.length > 0)) {
+            |            return userRes[0];
+            |        }
+            |        return null;
+            |    }
+            |
+            |    public static UserToWeek findRelationship(ActiveObjects activeObjects, User user, Week week) {
+            |        UserToWeek[] relationships = activeObjects.find(UserToWeek.class, Query.select().where("USER_ID = ? AND WEEK_ID = ?", user.getID(), week.getID()));
+            |        if ((relationships  != null && relationships .length > 0)) {
+            |            return relationships[0];
+            |        }
+            |        return null;
+            |    }
+            |}
+            ') }}
+        </p>
+
+        <p>Basically we query the table with unique constraints on the columns of the where clause so we get either one result or no result.</p>
+        <p>Note that these Queries need to be spaced (at least the doc says so) otherwise Exceptions will punch you.</p>
 
 
 
+        <p>Now we can fire up <code>atlas-run</code> once more and wait for JIRA startup.</p>
 
+        <p><strong>Let's add a user called jimmy to a week 42</strong>. Fire up this curl command and you should return a HTTP 200 telling you it worked.
+        We have written our Endpoints in a way so that the CURLs are idemponent. So if you fire it a second time you will get a HTTP 200 as well but since jimmy already is assigned to week 42 nothing happens internally.</p>
 
+        <p>And by the way, we don't need to pass an ID for user since we don't know it and since the username has a unique constraint which makes it our technical primary key.</p>
 
+        {{ csShell(shellCmd='curl -i --user admin:admin -H \'Content-Type: application/json\' -X PUT -d \'{ "username": "jimmy" }\' http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users', shellCmdOutput='
+        |HTTP/1.1 200 OK
+        |...
+        |Content-Type: application/json;charset=UTF-8
+        |Content-Length: 0
+        |Date: Fri, 09 Sep 2016 16:52:06 GMT
+        ') }}
 
+        <p><strong>Let's remove a user called ichiban from week 42.</strong></p>
 
+        {{ csShell(shellCmd='curl -i --user admin:admin -H \'Content-Type: application/json\' -X DELETE -d \'{ "username": "ichiban" }\' http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users', shellCmdOutput='
+        |HTTP/1.1 200 OK
+        |...
+        |Content-Type: application/json;charset=UTF-8
+        |Content-Length: 0
+        |Date: Fri, 09 Sep 2016 16:52:06 GMT
+        ') }}
 
+        <p><strong>List assigned users for week 42.</strong></p>
 
-
-
-
-
-
-
+        {{ csShell(shellCmd='curl --user admin:admin -H \'Content-Type: application/json\' http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users', shellCmdOutput='
+        |[{"id":3,"username":"jimmy"}]
+        ') }}
 
 
 

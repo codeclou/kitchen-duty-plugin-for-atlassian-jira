@@ -231,15 +231,15 @@
                 </p>
                 <p>
                     Concerning the <strong>REST Endpoint</strong> I will want to have an URL which I can fire
-                    GET requests on something like <code>/planning/week/15</code> and receive a list of users.
+                    GET requests on something like <code>/planning/week/15/users</code> and receive a list of users.
                 </p>
                 <p>
-                    Obviously the other way round would be a POST request on <code>/planning/week/15</code> with a list of users
+                    Obviously the other way round would be a POST request on <code>/planning/week/15/users</code> with a list of users
                     as request body to store the user list for the week 15.
                 </p>
 
                 <p>
-                    And for our stretch-goal a GET request on <code>/planning/user/bob</code> should return a list of week numbers
+                    And for our stretch-goal a GET request on <code>/planning/user/bob/weeks</code> should return a list of week numbers
                     in which Bob has Kitchen Duty.
                 </p>
             </div>
@@ -1025,10 +1025,408 @@ public class KitchenDutyPlanningResource {
 
 
 
-        <!--
-                Queries: Spaces must be used!
+        <p>
+            
 
-                Query.select().where("FOO = 'bar'");
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e923ee619b945042bc37217e78b3aead2f8a4b44/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+...
+
+@Named
+@Path(&quot;/planning&quot;)
+public class KitchenDutyPlanningResource {
+...
+
+    /**
+     * Get the Users assigned to the isoWeekNumber.
+     *
+     * @param isoWeekNumber
+     * @return
+     */
+    @GET
+    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response persistTest(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber) {
+        Week[] weeks = activeObjects.executeInTransaction(new TransactionCallback&lt;Week[]&gt;() {
+            @Override
+            public Week[] doInTransaction() {
+                return activeObjects.find(Week.class, Query.select().where(&quot;WEEK = ?&quot;, isoWeekNumber));
+            }
+        });
+        List&lt;KitchenDutyPlanningResourceUserModel&gt; users = new ArrayList&lt;&gt;();
+        if (weeks != null &amp;&amp; weeks.length &gt; 0) {
+            for (User user : weeks[0].getUsers()) {
+                users.add(new KitchenDutyPlanningResourceUserModel(user.getID(), user.getName()));
+            }
+        }
+        return Response.ok(users).build();
+    }
+
+    /**
+     * Get the Weeks assigned to the User.
+     *
+     * @param isoWeekNumber
+     * @return
+     */
+    @GET
+    @Path(&quot;/user/{username}/weeks&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response persistTest(@PathParam(&quot;username&quot;) final String username) {
+        User[] users = activeObjects.executeInTransaction(new TransactionCallback&lt;User[]&gt;() {
+            @Override
+            public User[] doInTransaction() {
+                return activeObjects.find(User.class, Query.select().where(&quot;NAME = ?&quot;, username));
+            }
+        });
+        List&lt;KitchenDutyPlanningResourceWeekModel&gt; weeks = new ArrayList&lt;&gt;();
+        if (users != null &amp;&amp; users.length &gt; 0) {
+            for (Week week : users[0].getWeeks()) {
+                weeks.add(new KitchenDutyPlanningResourceWeekModel(week.getID(), week.getWeek()));
+            }
+        }
+        return Response.ok(weeks).build();
+    }
+...
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+...
+
+<span class="hljs-annotation">@Named</span>
+<span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/planning"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyPlanningResource</span> </span>{
+...
+
+    <span class="hljs-comment">/**
+     * Get the Users assigned to the isoWeekNumber.
+     *
+     * <span class="hljs-doctag">@param</span> isoWeekNumber
+     * <span class="hljs-doctag">@return</span>
+     */</span>
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">persistTest</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber) </span>{
+        Week[] weeks = activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Week[]&gt;() {
+            <span class="hljs-annotation">@Override</span>
+            <span class="hljs-keyword">public</span> Week[] doInTransaction() {
+                <span class="hljs-keyword">return</span> activeObjects.find(Week.class, Query.select().where(<span class="hljs-string">"WEEK = ?"</span>, isoWeekNumber));
+            }
+        });
+        List&lt;KitchenDutyPlanningResourceUserModel&gt; users = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        <span class="hljs-keyword">if</span> (weeks != <span class="hljs-keyword">null</span> &amp;&amp; weeks.length &gt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">for</span> (User user : weeks[<span class="hljs-number">0</span>].getUsers()) {
+                users.add(<span class="hljs-keyword">new</span> KitchenDutyPlanningResourceUserModel(user.getID(), user.getName()));
+            }
+        }
+        <span class="hljs-keyword">return</span> Response.ok(users).build();
+    }
+
+    <span class="hljs-comment">/**
+     * Get the Weeks assigned to the User.
+     *
+     * <span class="hljs-doctag">@param</span> isoWeekNumber
+     * <span class="hljs-doctag">@return</span>
+     */</span>
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/user/{username}/weeks"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">persistTest</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"username"</span>)</span> <span class="hljs-keyword">final</span> String username) </span>{
+        User[] users = activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;User[]&gt;() {
+            <span class="hljs-annotation">@Override</span>
+            <span class="hljs-keyword">public</span> User[] doInTransaction() {
+                <span class="hljs-keyword">return</span> activeObjects.find(User.class, Query.select().where(<span class="hljs-string">"NAME = ?"</span>, username));
+            }
+        });
+        List&lt;KitchenDutyPlanningResourceWeekModel&gt; weeks = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        <span class="hljs-keyword">if</span> (users != <span class="hljs-keyword">null</span> &amp;&amp; users.length &gt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">for</span> (Week week : users[<span class="hljs-number">0</span>].getWeeks()) {
+                weeks.add(<span class="hljs-keyword">new</span> KitchenDutyPlanningResourceWeekModel(week.getID(), week.getWeek()));
+            }
+        }
+        <span class="hljs-keyword">return</span> Response.ok(weeks).build();
+    }
+...
+}</code></pre>
+
+        </p>
+
+
+        <p>
+            
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResourceWeekModel.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e923ee619b945042bc37217e78b3aead2f8a4b44/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResourceWeekModel.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = &quot;weeks&quot;)
+@XmlAccessorType(XmlAccessType.FIELD)
+public class KitchenDutyPlanningResourceWeekModel {
+
+    @XmlElement
+    private Integer id;
+
+    @XmlElement
+    private Integer week;
+
+    KitchenDutyPlanningResourceWeekModel() { }
+
+    KitchenDutyPlanningResourceWeekModel(Integer id, Integer week) {
+        this.id = id;
+        this.week = week;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getWeek() {
+        return week;
+    }
+
+    public void setWeek(Integer week) {
+        this.week = week;
+    }
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessType;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessorType;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlElement;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlRootElement;
+
+<span class="hljs-annotation">@XmlRootElement</span>(name = <span class="hljs-string">"weeks"</span>)
+<span class="hljs-annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyPlanningResourceWeekModel</span> </span>{
+
+    <span class="hljs-annotation">@XmlElement</span>
+    <span class="hljs-keyword">private</span> Integer id;
+
+    <span class="hljs-annotation">@XmlElement</span>
+    <span class="hljs-keyword">private</span> Integer week;
+
+    KitchenDutyPlanningResourceWeekModel() { }
+
+    KitchenDutyPlanningResourceWeekModel(Integer id, Integer week) {
+        <span class="hljs-keyword">this</span>.id = id;
+        <span class="hljs-keyword">this</span>.week = week;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Integer <span class="hljs-title">getId</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> id;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setId</span><span class="hljs-params">(Integer id)</span> </span>{
+        <span class="hljs-keyword">this</span>.id = id;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Integer <span class="hljs-title">getWeek</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> week;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setWeek</span><span class="hljs-params">(Integer week)</span> </span>{
+        <span class="hljs-keyword">this</span>.week = week;
+    }
+}</code></pre>
+
+        </p>
+
+
+        <p>
+            
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResourceUserModel.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e923ee619b945042bc37217e78b3aead2f8a4b44/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResourceUserModel.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = &quot;users&quot;)
+@XmlAccessorType(XmlAccessType.FIELD)
+public class KitchenDutyPlanningResourceUserModel {
+
+    @XmlElement
+    private Integer id;
+
+    @XmlElement
+    private String username;
+
+    KitchenDutyPlanningResourceUserModel() { }
+
+    KitchenDutyPlanningResourceUserModel(Integer id, String username) {
+        this.id = id;
+        this.username = username;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessType;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessorType;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlElement;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlRootElement;
+
+<span class="hljs-annotation">@XmlRootElement</span>(name = <span class="hljs-string">"users"</span>)
+<span class="hljs-annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyPlanningResourceUserModel</span> </span>{
+
+    <span class="hljs-annotation">@XmlElement</span>
+    <span class="hljs-keyword">private</span> Integer id;
+
+    <span class="hljs-annotation">@XmlElement</span>
+    <span class="hljs-keyword">private</span> String username;
+
+    KitchenDutyPlanningResourceUserModel() { }
+
+    KitchenDutyPlanningResourceUserModel(Integer id, String username) {
+        <span class="hljs-keyword">this</span>.id = id;
+        <span class="hljs-keyword">this</span>.username = username;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Integer <span class="hljs-title">getId</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> id;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setId</span><span class="hljs-params">(Integer id)</span> </span>{
+        <span class="hljs-keyword">this</span>.id = id;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getUsername</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> username;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setUsername</span><span class="hljs-params">(String username)</span> </span>{
+        <span class="hljs-keyword">this</span>.username = username;
+    }
+}</code></pre>
+
+        </p>
+
+        <p>Now we can query</p>
+
+        <p><strong>List assigned users for week 42.</strong></p>
+
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="curl --user admin:admin -H &#39;Content-Type: application/json&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        curl --user admin:admin -H &#39;Content-Type: application/json&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">[{<span class="hljs-string">"id"</span>:<span class="hljs-number">2</span>,<span class="hljs-string">"username"</span>:<span class="hljs-string">"ichiban"</span>}]</code></pre>
+
+    </div>
+</div>
+
+
+        <p><strong>List weeks for user ichiban.</strong></p>
+
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="curl --user admin:admin -H &#39;Content-Type: application/json&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/user/ichiban/weeks"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        curl --user admin:admin -H &#39;Content-Type: application/json&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/user/ichiban/weeks<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">[{<span class="hljs-string">"id"</span>:<span class="hljs-number">2</span>,<span class="hljs-string">"week"</span>:<span class="hljs-number">42</span>}]</code></pre>
+
+    </div>
+</div>
+
+
+
+        <p>
+            We can discuss REST API URL structure all day and you can do the crazy stuff on your project but here we want to keep things
+            simple. Therefore we will just add two more Endpoint types DELETE and PUT on /week/42/users.
+            /user/{username}/weeks will stay with GET since this is just a convinience aggregation Endpoint.
+        </p>
+
+
+        <!--
+
 
 
                 AO 1.2.0 - Indexes example: https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/ao-1-2-0-upgrade-guide
@@ -1038,21 +1436,388 @@ public class KitchenDutyPlanningResource {
 
 
 
+        <p>
+            Now we add the functionality to <strong>add users to weeks and remove them from weeks</strong>.
+            Therefore we will need a <strong>DELETE and PUT Endpoint</strong> which we add to <code>KitchenDutyPlanningResource</code> Class.
+        </p>
+
+        <p>
+            
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e90e472228d0512b90d6ef2f6f1b9f3cae91c542/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="/**
+     * Add the User to the Week
+     *
+     * @param isoWeekNumber
+     * @return
+     */
+    @PUT
+    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response addUserToWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber,
+                                  final KitchenDutyPlanningResourceUserModel userParam) {
+        activeObjects.executeInTransaction(new TransactionCallback&lt;Void&gt;() {
+            @Override
+            public Void doInTransaction() {
+                //
+                // WEEK
+                //
+                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+                if (week == null) {
+                    week = activeObjects.create(Week.class, new DBParam(&quot;WEEK&quot;, isoWeekNumber));
+                    week.save();
+                }
+
+                //
+                // USER
+                //
+                User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
+                if (user == null) {
+                    user = activeObjects.create(User.class, new DBParam(&quot;NAME&quot;, userParam.getUsername()));
+                    user.save();
+                }
+
+                //
+                // Establish ManyToMany Relationship
+                //
+                UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
+                if (relationship != null) {
+                    // relation already exists
+                    return null;
+                }
+                relationship = activeObjects.create(UserToWeek.class);
+                relationship.setUser(user);
+                relationship.setWeek(week);
+                relationship.save();
+
+                return null;
+            }
+        });
+        return Response.ok().build();
+    }
+
+
+    /**
+     * Remove the User from Week
+     *
+     * @param isoWeekNumber
+     * @return
+     */
+    @DELETE
+    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response deleteUserFomWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber,
+                                  final KitchenDutyPlanningResourceUserModel userParam) {
+        activeObjects.executeInTransaction(new TransactionCallback&lt;Void&gt;() {
+            @Override
+            public Void doInTransaction() {
+                //
+                // WEEK
+                //
+                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+                if (week == null) {
+                    // week does not exist =&gt; no relation to delete
+                    return null;
+                }
+
+                //
+                // USER
+                //
+                User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
+                if (user == null) {
+                    // user does not exist =&gt; no relation to delete
+                    return null;
+                }
+
+                //
+                // Delete ManyToMany Relationship
+                //
+                UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
+                if (relationship != null) {
+                    activeObjects.delete(relationship);
+                }
+
+                return null;
+            }
+        });
+        return Response.ok().build();
+    }"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-comment">/**
+     * Add the User to the Week
+     *
+     * <span class="hljs-doctag">@param</span> isoWeekNumber
+     * <span class="hljs-doctag">@return</span>
+     */</span>
+    <span class="hljs-annotation">@PUT</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">addUserToWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber,
+                                  <span class="hljs-keyword">final</span> KitchenDutyPlanningResourceUserModel userParam) </span>{
+        activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Void&gt;() {
+            <span class="hljs-annotation">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Void <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-comment">//</span>
+                <span class="hljs-comment">// WEEK</span>
+                <span class="hljs-comment">//</span>
+                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+                <span class="hljs-keyword">if</span> (week == <span class="hljs-keyword">null</span>) {
+                    week = activeObjects.create(Week.class, <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"WEEK"</span>, isoWeekNumber));
+                    week.save();
+                }
+
+                <span class="hljs-comment">//</span>
+                <span class="hljs-comment">// USER</span>
+                <span class="hljs-comment">//</span>
+                User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
+                <span class="hljs-keyword">if</span> (user == <span class="hljs-keyword">null</span>) {
+                    user = activeObjects.create(User.class, <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"NAME"</span>, userParam.getUsername()));
+                    user.save();
+                }
+
+                <span class="hljs-comment">//</span>
+                <span class="hljs-comment">// Establish ManyToMany Relationship</span>
+                <span class="hljs-comment">//</span>
+                UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
+                <span class="hljs-keyword">if</span> (relationship != <span class="hljs-keyword">null</span>) {
+                    <span class="hljs-comment">// relation already exists</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+                }
+                relationship = activeObjects.create(UserToWeek.class);
+                relationship.setUser(user);
+                relationship.setWeek(week);
+                relationship.save();
+
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            }
+        });
+        <span class="hljs-keyword">return</span> Response.ok().build();
+    }
+
+
+    <span class="hljs-comment">/**
+     * Remove the User from Week
+     *
+     * <span class="hljs-doctag">@param</span> isoWeekNumber
+     * <span class="hljs-doctag">@return</span>
+     */</span>
+    <span class="hljs-annotation">@DELETE</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">deleteUserFomWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber,
+                                  <span class="hljs-keyword">final</span> KitchenDutyPlanningResourceUserModel userParam) </span>{
+        activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Void&gt;() {
+            <span class="hljs-annotation">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Void <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-comment">//</span>
+                <span class="hljs-comment">// WEEK</span>
+                <span class="hljs-comment">//</span>
+                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+                <span class="hljs-keyword">if</span> (week == <span class="hljs-keyword">null</span>) {
+                    <span class="hljs-comment">// week does not exist =&gt; no relation to delete</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+                }
+
+                <span class="hljs-comment">//</span>
+                <span class="hljs-comment">// USER</span>
+                <span class="hljs-comment">//</span>
+                User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
+                <span class="hljs-keyword">if</span> (user == <span class="hljs-keyword">null</span>) {
+                    <span class="hljs-comment">// user does not exist =&gt; no relation to delete</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+                }
+
+                <span class="hljs-comment">//</span>
+                <span class="hljs-comment">// Delete ManyToMany Relationship</span>
+                <span class="hljs-comment">//</span>
+                UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
+                <span class="hljs-keyword">if</span> (relationship != <span class="hljs-keyword">null</span>) {
+                    activeObjects.delete(relationship);
+                }
+
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            }
+        });
+        <span class="hljs-keyword">return</span> Response.ok().build();
+    }</code></pre>
+
+        </p>
+
+        <p>I moved some common data access spaghetti code to some static Methods a <code>KitchenDutyActiveObjectHelper</code> Class.</p>
+
+        <p>
+            
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>KitchenDutyActiveObjectHelper.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e90e472228d0512b90d6ef2f6f1b9f3cae91c542/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/KitchenDutyActiveObjectHelper.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+
+import com.atlassian.activeobjects.external.ActiveObjects;
+import net.java.ao.Query;
+
+public class KitchenDutyActiveObjectHelper {
+
+    public static Week findUniqueWeek(ActiveObjects activeObjects, Integer isoWeekNumber) {
+        Week[] weekRes = activeObjects.find(Week.class, Query.select().where(&quot;WEEK = ?&quot;, isoWeekNumber));
+        if ((weekRes != null &amp;&amp; weekRes.length &gt; 0)) {
+            return weekRes[0];
+        }
+        return null;
+    }
+
+    public static User findUniqueUser(ActiveObjects activeObjects, String username) {
+        User[] userRes = activeObjects.find(User.class, Query.select().where(&quot;NAME = ?&quot;, username));
+        if ((userRes != null &amp;&amp; userRes.length &gt; 0)) {
+            return userRes[0];
+        }
+        return null;
+    }
+
+    public static UserToWeek findRelationship(ActiveObjects activeObjects, User user, Week week) {
+        UserToWeek[] relationships = activeObjects.find(UserToWeek.class, Query.select().where(&quot;USER_ID = ? AND WEEK_ID = ?&quot;, user.getID(), week.getID()));
+        if ((relationships  != null &amp;&amp; relationships .length &gt; 0)) {
+            return relationships[0];
+        }
+        return null;
+    }
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+
+<span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
+<span class="hljs-keyword">import</span> net.java.ao.Query;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyActiveObjectHelper</span> </span>{
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Week <span class="hljs-title">findUniqueWeek</span><span class="hljs-params">(ActiveObjects activeObjects, Integer isoWeekNumber)</span> </span>{
+        Week[] weekRes = activeObjects.find(Week.class, Query.select().where(<span class="hljs-string">"WEEK = ?"</span>, isoWeekNumber));
+        <span class="hljs-keyword">if</span> ((weekRes != <span class="hljs-keyword">null</span> &amp;&amp; weekRes.length &gt; <span class="hljs-number">0</span>)) {
+            <span class="hljs-keyword">return</span> weekRes[<span class="hljs-number">0</span>];
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> User <span class="hljs-title">findUniqueUser</span><span class="hljs-params">(ActiveObjects activeObjects, String username)</span> </span>{
+        User[] userRes = activeObjects.find(User.class, Query.select().where(<span class="hljs-string">"NAME = ?"</span>, username));
+        <span class="hljs-keyword">if</span> ((userRes != <span class="hljs-keyword">null</span> &amp;&amp; userRes.length &gt; <span class="hljs-number">0</span>)) {
+            <span class="hljs-keyword">return</span> userRes[<span class="hljs-number">0</span>];
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> UserToWeek <span class="hljs-title">findRelationship</span><span class="hljs-params">(ActiveObjects activeObjects, User user, Week week)</span> </span>{
+        UserToWeek[] relationships = activeObjects.find(UserToWeek.class, Query.select().where(<span class="hljs-string">"USER_ID = ? AND WEEK_ID = ?"</span>, user.getID(), week.getID()));
+        <span class="hljs-keyword">if</span> ((relationships  != <span class="hljs-keyword">null</span> &amp;&amp; relationships .length &gt; <span class="hljs-number">0</span>)) {
+            <span class="hljs-keyword">return</span> relationships[<span class="hljs-number">0</span>];
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    }
+}</code></pre>
+
+        </p>
+
+        <p>Basically we query the table with unique constraints on the columns of the where clause so we get either one result or no result.</p>
+        <p>Note that these Queries need to be spaced (at least the doc says so) otherwise Exceptions will punch you.</p>
 
 
 
+        <p>Now we can fire up <code>atlas-run</code> once more and wait for JIRA startup.</p>
+
+        <p><strong>Let's add a user called jimmy to a week 42</strong>. Fire up this curl command and you should return a HTTP 200 telling you it worked.
+        We have written our Endpoints in a way so that the CURLs are idemponent. So if you fire it a second time you will get a HTTP 200 as well but since jimmy already is assigned to week 42 nothing happens internally.</p>
+
+        <p>And by the way, we don't need to pass an ID for user since we don't know it and since the username has a unique constraint which makes it our technical primary key.</p>
+
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="curl -i --user admin:admin -H &#39;Content-Type: application/json&#39; -X PUT -d &#39;{ &quot;username&quot;: &quot;jimmy&quot; }&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        curl -i --user admin:admin -H &#39;Content-Type: application/json&#39; -X PUT -d &#39;{ &quot;username&quot;: &quot;jimmy&quot; }&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">HTTP/<span class="hljs-number">1.1</span> <span class="hljs-number">200</span> OK
+...
+Content-Type: application/json;charset=UTF-<span class="hljs-number">8</span>
+Content-Length: <span class="hljs-number">0</span>
+Date: Fri, <span class="hljs-number">09</span> Sep <span class="hljs-number">2016</span> <span class="hljs-number">16</span>:<span class="hljs-number">52</span>:<span class="hljs-number">06</span> GMT</code></pre>
+
+    </div>
+</div>
 
 
+        <p><strong>Let's remove a user called ichiban from week 42.</strong></p>
+
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="curl -i --user admin:admin -H &#39;Content-Type: application/json&#39; -X DELETE -d &#39;{ &quot;username&quot;: &quot;ichiban&quot; }&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        curl -i --user admin:admin -H &#39;Content-Type: application/json&#39; -X DELETE -d &#39;{ &quot;username&quot;: &quot;ichiban&quot; }&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">HTTP/<span class="hljs-number">1.1</span> <span class="hljs-number">200</span> OK
+...
+Content-Type: application/json;charset=UTF-<span class="hljs-number">8</span>
+Content-Length: <span class="hljs-number">0</span>
+Date: Fri, <span class="hljs-number">09</span> Sep <span class="hljs-number">2016</span> <span class="hljs-number">16</span>:<span class="hljs-number">52</span>:<span class="hljs-number">06</span> GMT</code></pre>
+
+    </div>
+</div>
 
 
+        <p><strong>List assigned users for week 42.</strong></p>
 
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="curl --user admin:admin -H &#39;Content-Type: application/json&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
 
+        curl --user admin:admin -H &#39;Content-Type: application/json&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/week/42/users<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">[{<span class="hljs-string">"id"</span>:<span class="hljs-number">3</span>,<span class="hljs-string">"username"</span>:<span class="hljs-string">"jimmy"</span>}]</code></pre>
 
-
-
-
-
-
+    </div>
+</div>
 
 
 

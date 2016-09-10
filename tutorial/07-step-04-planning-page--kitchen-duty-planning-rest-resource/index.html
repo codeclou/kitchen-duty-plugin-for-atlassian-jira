@@ -136,6 +136,8 @@
         Kitchen Duty Planning JS Controller
     </a>
         </li>
+
+<!-- DISABLE SVG STATUS FOR NOW
         
         <li>
             
@@ -165,6 +167,7 @@
             </div>
         </li>
         
+-->
 
         
 
@@ -293,6 +296,14 @@
             </ul>
         </p>
 
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+
+
+
+
+
 
         <h3 class="cs-headline cs-headline--s">Enabling Active Objects on our Project</h3>
 
@@ -391,8 +402,9 @@ public class MyPluginComponentImpl implements MyPluginComponent {
 
         <p>Now we <strong>create our first Entity <code>Week</code></strong> and define the week as integer via getter/setter.</p>
 
-        <p>
-            
+        <div class="row">
+            <div class="col-md-8">
+                
 
 <div class="cs-code-filename">
     
@@ -415,8 +427,8 @@ public class MyPluginComponentImpl implements MyPluginComponent {
 import net.java.ao.Entity;
 import net.java.ao.Preload;
 
-@Preload
-public interface Week extends Entity {
+@Preload 
+public interface Week extends Entity { 
     Integer getWeek();
 
     void setWeek(Integer week);
@@ -428,17 +440,31 @@ public interface Week extends Entity {
 <span class="hljs-keyword">import</span> net.java.ao.Entity;
 <span class="hljs-keyword">import</span> net.java.ao.Preload;
 
-<span class="hljs-annotation">@Preload</span>
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Week</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Entity</span> </span>{
+<span class="hljs-annotation">@Preload</span> <span class="cs-source-point" data-cs-source-point-id="h768go8gdfssfdsbo8gv8gbu909" data-cs-source-point-number="1"></span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Week</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Entity</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="h768go8gdfssfdsbo8gv8gbu909" data-cs-source-point-number="2"></span>
     <span class="hljs-function">Integer <span class="hljs-title">getWeek</span><span class="hljs-params">()</span></span>;
 
     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setWeek</span><span class="hljs-params">(Integer week)</span></span>;
 }</code></pre>
 
-        </p>
 
+            </div>
+            <div class="col-md-4">
+                <div class="list-group cs-source-point-list" data-source-target="h768go8gdfssfdsbo8gv8gbu909">
+                    <div class="list-group-item cs-source-point-list__item">
+                        We annotate our class with <code>@Preload</code> which I think makes it not lazy loaded ... but you have
+                        to read the docs if you want to know in detail.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The important thing is that we extend <code>Entity</code> that makes our Class automatically have <code>getID()</code>
+                        so we just need to define our fields which is currently only the isoWeek.
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <p>23 xxNow we need to add a section to our atlassian-plugin.xml file listing all our Entity classes which we will create.</p>
+        <p>We just created the <code>Week</code> Entity now and we need to tell the Active Objects module of our Plugin where he can find our Entity.
+            Therefore we add a section to our <code>atlassian-plugin.xml</code> file listing the Entities (Maybe there is some kind of nice Annotation to skip that step, but since the docs are very thin on that I don't know. So if you find out please tell me).</p>
 
 
         
@@ -471,15 +497,23 @@ public interface Week extends Entity {
 <span class="hljs-tag">&lt;/<span class="hljs-title">ao</span>&gt;</span></code></pre>
 
 
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+
+
+
+
 
         <h3 class="cs-headline cs-headline--s">Creating a basic Week Entity and a persist-Endpoint</h3>
 
-        <p>We will create the Kitchen Duty Planning REST Resource which will interact with the JS Controller to load and store the Kitchen Duty Planning REST Model.</p>
+        <p>We are agile coders and wanna see basic results now of what we did. Therefore we will create a very basic persistTest-Endpoint to try out the ORM stuff provided by Active Objects.
+            We will get rid of the endpoint later we just use it to get a feel of how Active Objects works.</p>
 
-        <p>Alright we now create the <strong>persistTest</strong> Endpoint to persist Week Objects to test our Active Objects Setup.
-        Therefore we also Inject the ActiveObjects Object via the Constructor. </p>
 
-        
+        <div class="row">
+            <div class="col-md-8">
+                
 
 <div class="cs-code-filename">
     
@@ -522,9 +556,9 @@ import java.util.List;
 @Path(&quot;/planning&quot;)
 public class KitchenDutyPlanningResource {
 
-    private ActiveObjects activeObjects;
+    private ActiveObjects activeObjects; 
 
-    @Inject
+    @Inject 
     public KitchenDutyPlanningResource(ActiveObjects activeObjects) {
         this.activeObjects = activeObjects;
     }
@@ -534,16 +568,16 @@ public class KitchenDutyPlanningResource {
 
 
     @GET
-    @Path(&quot;/persistTest&quot;)
+    @Path(&quot;/persistTest&quot;) 
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
     public Response persistTest() {
-        activeObjects.executeInTransaction(new TransactionCallback&lt;Week&gt;()
+        activeObjects.executeInTransaction(new TransactionCallback&lt;Week&gt;() 
         {
             @Override
-            public Week doInTransaction()
+            public Week doInTransaction() 
             {
-                final Week testWeek = activeObjects.create(Week.class);
+                final Week testWeek = activeObjects.create(Week.class); 
                 testWeek.setWeek(42);
                 testWeek.save();
                 return testWeek;
@@ -589,9 +623,9 @@ public class KitchenDutyPlanningResource {
 <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/planning"</span>)
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyPlanningResource</span> </span>{
 
-    <span class="hljs-keyword">private</span> ActiveObjects activeObjects;
+    <span class="hljs-keyword">private</span> ActiveObjects activeObjects; <span class="cs-source-point" data-cs-source-point-id="kdpr11464" data-cs-source-point-number="1"></span>
 
-    <span class="hljs-annotation">@Inject</span>
+    <span class="hljs-annotation">@Inject</span> <span class="cs-source-point" data-cs-source-point-id="kdpr11464" data-cs-source-point-number="2"></span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">KitchenDutyPlanningResource</span><span class="hljs-params">(ActiveObjects activeObjects)</span> </span>{
         <span class="hljs-keyword">this</span>.activeObjects = activeObjects;
     }
@@ -601,16 +635,16 @@ public class KitchenDutyPlanningResource {
 
 
     <span class="hljs-annotation">@GET</span>
-    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/persistTest"</span>)
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/persistTest"</span>) <span class="cs-source-point" data-cs-source-point-id="kdpr11464" data-cs-source-point-number="3"></span>
     <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
     <span class="hljs-annotation">@AnonymousAllowed</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">persistTest</span><span class="hljs-params">()</span> </span>{
-        activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Week&gt;()
+        activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Week&gt;() <span class="cs-source-point" data-cs-source-point-id="kdpr11464" data-cs-source-point-number="4"></span>
         {
             <span class="hljs-annotation">@Override</span>
-            <span class="hljs-function"><span class="hljs-keyword">public</span> Week <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span>
-            </span>{
-                <span class="hljs-keyword">final</span> Week testWeek = activeObjects.create(Week.class);
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Week <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span> </span><span class="cs-source-point" data-cs-source-point-id="kdpr11464" data-cs-source-point-number="5"></span>
+            {
+                <span class="hljs-keyword">final</span> Week testWeek = activeObjects.create(Week.class); <span class="cs-source-point" data-cs-source-point-id="kdpr11464" data-cs-source-point-number="6"></span>
                 testWeek.setWeek(<span class="hljs-number">42</span>);
                 testWeek.save();
                 <span class="hljs-keyword">return</span> testWeek;
@@ -631,18 +665,128 @@ public class KitchenDutyPlanningResource {
 }</code></pre>
 
 
+            </div>
+            <div class="col-md-4">
+                <div class="list-group cs-source-point-list" data-source-target="kdpr11464">
+                    <div class="list-group-item cs-source-point-list__item">
+                        Define <code>ActiveObjects</code> as property so that we can use it.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Add an <code>@Inject</code> to the constructor so that we get it injected via DI.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Define a Endpoint with path <code>persistTest</code> and Method <code>@Get</code>
+                        which we will use to play with the ORM.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We start a Transaction <em>(... this should be done with Annotations ... but we have to deal with it ...)</em>
+                        And here we would need to define our return type which in our case is <code>Week</code>. You could set it to Void here too.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We need to override <code>doInTransaction</code> and inside here we can do actual
+                        Active Objects ORM stuff. Obviously here we could override more methods to handle transaction rollbacks
+                        and usually we should wrap all these shenanigans inside a try-catch block and do proper exception handling
+                        BUT we are currently just playing around so it is fine.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now that we are deep inside the rabbit hole we can start to <strong>persist our first <code>Week</code> object</strong>.
+                        We call <code>activeObjects.create(..)</code> and pass our Class-Type.
+                        After that we set our week value and call <code>.save()</code>.
+                        Now our week is persisted to the Database. Banzai!
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-        <p>Login to JIRA and then open this URL: <a href="http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest">http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest</a></p>
+        <p>Alright now startup JIRA with <code>atlas-run</code> but <strong>capture the output a file called <code>jira-stdout.log</code> so that we can grep it later</strong>. You need to have <a href="https://de.wikipedia.org/wiki/Tee_(Unix)">tee</a> installed.
 
-        <p>The URL should return 'ok' and in the background our week object got persisted to the database.</p>
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="atlas-run | tee jira-stdout.log"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        atlas-run | tee jira-stdout.log<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">...
+[INFO] [talledLocalContainer] INFORMATION: Server startup <span class="hljs-keyword">in</span> <span class="hljs-number">38377</span> ms
+[INFO] [talledLocalContainer] Tomcat <span class="hljs-number">8</span>.x started on port [<span class="hljs-number">2990</span>]
+[INFO] jira started successfully <span class="hljs-keyword">in</span> <span class="hljs-number">58</span>s at http://localhost:<span class="hljs-number">2990</span>/jira
+[INFO] Type Ctrl-D to shutdown gracefully
+[INFO] Type Ctrl-C to <span class="hljs-built_in">exit</span></code></pre>
+
+    </div>
+</div>
 
 
-        <p>We will <strong>look into the H2 Database now</strong>. Therefore we need to:</p>
+        <p>Open another terminal to execute some CURL commands and once JIRA has started up execute a GET Request to our persistTest Endpoint.</p>
 
-        <p>(1) Stop JIRA via killing the atlas-run process</p>
-        <p>(2) Connect to the built in H2 Database (yes H2 and not HSQLDB!)</p>
-        <p>(2.1) Go into the project Dir where you just killed atlas-run and execute the h2.jar to open the H2 console (a browser Tab opens)</p>
+
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="curl --user admin:admin -H &#39;Content-Type: application/json&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        curl --user admin:admin -H &#39;Content-Type: application/json&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">ok</code></pre>
+
+    </div>
+</div>
+
+
+        <p>Now our Week object with week 42 should have been persisted to the table Week in the database</p>
+
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+
+
+
+
+
+
+
+
+        <h3 class="cs-headline cs-headline--s">Let's have a look into the Database</h3>
+
+        <p>Alright now you need to know that <strong>JIRA runs a <a href="http://www.h2database.com/">H2 Database</a></strong> when started with <code>atlas-run</code>. And it <strong>does NOT use <a href="http://hsqldb.org/">HSQLDB</a> anymore</strong> even though it has used HSQLDB up to some version of JIRA - but those days seem over.</p>
+
+        <p>
+            You might have wondered why you needed to capture the STDOUT of JIRA previously to <code>jira-stdout.log</code>.
+            Because on line 12131415 of one trillion overall lines that atlas-run echos you will find a line starting containing <code>Database URL</code> which
+            tells you the location of the H2 Database.
+            And since we want to have a look we need to know where the Database resides in order to connect.
+        </p>
+
+        <p>
+            Now stop the <code>atlas-run</code> by pressing CTRL+C <em>(we can only look into the H2 DB if no other process uses it)</em>.
+            And <strong>grep for the Database URL in the captured STDOUT</strong>.
+        </p>
+
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="grep &quot;Database URL&quot; jira-stdout.log"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        grep &quot;Database URL&quot; jira-stdout.log<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">[INFO] [talledLocalContainer]     Database URL   : jdbc:h2:file:/Users/...../target/jira/home/database/h2db</code></pre>
+
+    </div>
+</div>
+
+
+        <p>Copy the whole <code>jdbc:h2:file:/Users/...../target/jira/home/database/h2db</code> JDBC URL (I have shortened the path here)</p>
+
+        <p>In the same terminal we now <strong>start the H2 Database Console</strong> by executing the h2.jar file. <em>(Depending on your SDK version it should be somehwere around that location and might have an alternate version number.)</em></p>
+
         
 <div class="cs-shell">
     <div class="cs-shell__inner">
@@ -658,39 +802,47 @@ public class KitchenDutyPlanningResource {
 </div>
 
 
-        <p>(2.2) Now you must search the output of atlas-run (at best grep it) and look for 'Database URL'</p>
-        <code>[INFO] [talledLocalContainer]          Database URL                                  : jdbc:h2:file:/Users/clouless/git/kitchen-duty-plugin-for-atlassian-jira/step-04-kitchen-duty-plugin/target/jira/home/database/h2db</code>
-        <p>(2.3) COnnect the console to the JIRA H2 Database URL. In my case <code>jdbc:h2:file:/Users/clouless/git/kitchen-duty-plugin-for-atlassian-jira/step-04-kitchen-duty-plugin/target/jira/home/database/h2db</code></p>
+        <p>Now a Browser Tab opens with the console and you just paste the JDBC URL and click connect.</p>
 
-        <p>(3) Look for our Week table. It will be named <code>AO_hash_WEEK</code> and do a query for the entries</p>
-
-
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-login.png" data-lightbox="00-step-intellij" data-title="Step 4 - H2 Database Console Login">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-login.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - H2 Database Console Login">
+                    </a>
+                </p>
+            </div>
+        </div>
 
         <div class="cs-blockquote">
             <p>
                 Please remember to always just look into the database.
                 You should never alter the Database with SQL Statements since JIRA manages autoincrement IDs and some other Caches
-                and you will surely run into strange errors if you still do so.<br/>
+                and you will surely run into strange errors if you still do so. When using Object Relational Mappers it is best not to fiddle with the Database.
                 <strong>Number One Rule: Only alter the Database through Active Objects.</strong>
             </p>
         </div>
 
 
-        <p>You should see this</p>
+        <p>You should see our Week table and if you execute a SELECT Statement on it you can see contents.</p>
 
         <!--
-        [INFO] [talledLocalContainer] INFORMATION: Server startup in 38377 ms
-        [INFO] [talledLocalContainer] Tomcat 8.x started on port [2990]
-        [INFO] jira started successfully in 58s at http://localhost:2990/jira
-        [INFO] Type Ctrl-D to shutdown gracefully
-        [INFO] Type Ctrl-C to exit
+
         -->
 
         <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;">
 
-        <p>You can see the whole process in the gif:</p>
+        <p>You can see the whole process of calling the testPersist Endpoint and connecting to the H2 Database in the following gif.</p>
 
         <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-jira-connect.gif" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;border:1px solid #ccc;">
+
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
+
+
+
+
+
+
 
 
 

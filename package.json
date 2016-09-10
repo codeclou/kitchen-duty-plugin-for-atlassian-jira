@@ -48,7 +48,7 @@
     "lint:sass": "sass-lint -c .sass-lint.yml --verbose",
     "lint:js": "eslint -c .eslintrc _page/js/*.js",
     "watch": "node _page/build-scripts/build.js --environment dev --watch true & npm run watch:browsersync",
-    "watch:browsersync": "./node_modules/.bin/browser-sync start --proxy 'localhost:7788' --files \"_page\"",
+    "watch:browsersync": "./node_modules/.bin/browser-sync start --proxy 'localhost:7788' --files images generated news tutorial \"impressum-and-datenschutz\" \"index.html\"",
     "build": "node _page/build-scripts/build.js --environment dev",
     "build:prod": "node _page/build-scripts/build.js --environment prod",
     "build:img": "node _page/build-scripts/build-img.js",

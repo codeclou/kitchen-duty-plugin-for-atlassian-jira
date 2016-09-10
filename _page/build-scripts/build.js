@@ -178,10 +178,6 @@ async.waterfall([
     function(previousStepName, waterfallProceed) {
         if (!lodash.isUndefined(watch) && !lodash.isNull(watch) && watch === 'true') {
 
-            console.log(('>> livereload started on port 35676').yellow);
-            shell.exec('node node_modules/livereloadx/bin/livereloadx.js ' + buildDir + ' ', {async:true, silent:false});
-
-
             /* https://www.npmjs.com/package/local-web-server */
             console.log(('>> http-server started on port 7788').yellow);
             console.log(('>> go to http://localhost:7788/kitchen-duty-plugin-for-atlassian-jira/').yellow);

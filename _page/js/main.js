@@ -249,7 +249,7 @@ var initInteractiveGraphics = function () {
 /* ================================================================================================ */
 
 var redirectToSsl = function () {
-    if (!_startsWith(window.location.protocol, 'https') && !_startsWith(window.location.href, 'http://localhost')) {
+    if (!_startsWith(window.location.protocol, 'https') && !_startsWith(window.location.href, 'http://localhost') && !_startsWith(window.location.href, 'http://192')) {
         window.location.href = "https://" + window.location.hostname + window.location.pathname + window.location.search;
     }
 };

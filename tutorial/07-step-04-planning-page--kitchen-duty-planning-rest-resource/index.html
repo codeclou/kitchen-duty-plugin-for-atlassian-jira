@@ -72,7 +72,7 @@
             </a>
 
             <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira/news/" target="_blank">
-                <span class="cs-news-right hidden-md-down">news</span>
+                <span class="cs-news-right">news</span>
             </a>
         </div>
         <div class="col-md-4  hidden-sm-down cs-page-header-cs-logo text-xs-right cs-page-header--right-fix">
@@ -207,8 +207,6 @@
         
         
 
-        <div class="alert alert-danger">THIS PAGE IS UNDER CONSTRUCTION. WORK IN PROGRESS</div>
-
         <p>Basically we will build the <strong>Kitchen Duty Planning REST Resource</strong> and the <strong>Kitchen Duty Planning REST Model</strong>
             which will persist our selected weeks and users to the database.</p>
 
@@ -224,17 +222,18 @@
                     After some serious brain usage on how to store the actual data of <strong>&laquo;who has Kitchen Duty in which week?&raquo;</strong>
                     I came up with the <strong>Data-Model</strong> seen on the right.</p>
                 <p>
-                    The <strong>Week</strong> will be the actual week number in the year. With a little thinking ahead of how I want to use it in the JS Controller
+                    The <strong>Week</strong> will be the actual week number in the year, and we don't care about the year in this tutorial. So if you had kitchen duty in week 24 this year you will have it the years after as well.
+                    With a little thinking ahead of how I want to use it in the JS Controller
                     I basically will select a week via a date picker and <a href="http://momentjs.com/docs/#/get-set/iso-week/">calculate the isoWeek in the frontend using moment.js</a></p>
                 <p>
-                    The <strong>User</strong> part is obvious. We will need to store a list of usernames in the database in relation with a isoWeek (<a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/manytomany-relationship"><code>@ManyToMany</code></a>).
+                    The <strong>User</strong> part is obvious. We will need to store a list of usernames in the database in relation with Weeks (<a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/manytomany-relationship"><code>@ManyToMany</code></a>).
                 </p>
                 <p>
                     Concerning the <strong>REST Endpoint</strong> I will want to have an URL which I can fire
                     GET requests on something like <code>/planning/week/15/users</code> and receive a list of users.
                 </p>
                 <p>
-                    Obviously the other way round would be a POST request on <code>/planning/week/15/users</code> with a list of users
+                    Obviously the other way round would be a PUT request on <code>/planning/week/15/users</code> with a list of users
                     as request body to store the user list for the week 15.
                 </p>
 
@@ -282,7 +281,7 @@
             <ul>
                 <li>
                     Using the <strong><a href="https://developer.atlassian.com/docs/common-coding-tasks/storing-plugin-settings">PluginSettingsFactory</a></strong> you
-                    have an easy way to persist data. But you have queries and cannot build relationships like you can with a real Database.
+                    have an easy way to persist data. But you don't have queries and cannot build relationships like you can with a real Database.
                     So this is good if you just want to store simple stuff when you always know how to retrieve data from the PluginSettingsFactory (for example by a fixed key).
                     <br />&nbsp;
                 </li>
@@ -298,10 +297,12 @@
         <h3 class="cs-headline cs-headline--s">Enabling Active Objects on our Project</h3>
 
         <p>
-            All I will be writing about Active Objects I have taken from the <em><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects">Developing your plugin with Active Objects Guide</a></em> and the <em><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/getting-started-with-active-objects">Getting Started with Active Objects Guide</a></em>.
+            All I will be writing about Active Objects is taken from the <em><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects">Developing your plugin with Active Objects Guide</a></em> and the <em><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/getting-started-with-active-objects">Getting Started with Active Objects Guide</a></em>.
         </p>
 
-        <p>Add <a href="https://maven.atlassian.com/content/repositories/atlassian-public/com/atlassian/activeobjects/activeobjects-plugin/">Active Objects dependency</a> to your pom.xml</p>
+        <p>
+            First of all add <a href="https://maven.atlassian.com/content/repositories/atlassian-public/com/atlassian/activeobjects/activeobjects-plugin/">Active Objects dependency</a> to your pom.xml.
+        </p>
 
         
 
@@ -335,41 +336,8 @@
 
 
 
-        <p>Now we need to add a section to our atlassian-plugin.xml file listing all our Entity classes which we will create.</p>
 
-
-        
-
-<div class="cs-code-filename">
-    
-    <span class="hidden-md-down">src/main/resources/</span><span class="hidden-lg-up"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="src/main/resources/">.../</span>atlassian-plugin.xml
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="&lt;ao key=&quot;ao-module&quot;&gt;
-    &lt;description&gt;The module configuring the Active Objects service used by this plugin&lt;/description&gt;
-    &lt;entity&gt;com.comsysto.kitchen.duty.ao.Week&lt;/entity&gt;
-&lt;/ao&gt;"><i class="fa fa-files-o"></i></a>
-</div>
-
-<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">ao</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"ao-module"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">description</span>&gt;</span>The module configuring the Active Objects service used by this plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>com.comsysto.kitchen.duty.ao.Week<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">ao</span>&gt;</span></code></pre>
-
-
-
-        <p>We need a Component Import for ActiveObjects which will be the object we use to access the database.</p>
+        <p>We need a <strong>Component Import for <code>ActiveObjects</code></strong> which will be the object we use to access the database.</p>
 
         <p>
             
@@ -421,7 +389,7 @@ public class MyPluginComponentImpl implements MyPluginComponent {
 
         </p>
 
-        <p>Now we create our first entity Week and define the week as integer via getter/setter. Note that we have already defined the class in the atlassian-plugin.xml in the new ao-section earlier.</p>
+        <p>Now we <strong>create our first Entity <code>Week</code></strong> and define the week as integer via getter/setter.</p>
 
         <p>
             
@@ -469,6 +437,38 @@ public interface Week extends Entity {
 
         </p>
 
+
+        <p>23 xxNow we need to add a section to our atlassian-plugin.xml file listing all our Entity classes which we will create.</p>
+
+
+        
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/resources/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/">.../</span>atlassian-plugin.xml
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="&lt;ao key=&quot;ao-module&quot;&gt;
+    &lt;description&gt;The module configuring the Active Objects service used by this plugin&lt;/description&gt;
+    &lt;entity&gt;com.comsysto.kitchen.duty.ao.Week&lt;/entity&gt;
+&lt;/ao&gt;"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">ao</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"ao-module"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">description</span>&gt;</span>The module configuring the Active Objects service used by this plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>com.comsysto.kitchen.duty.ao.Week<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ao</span>&gt;</span></code></pre>
 
 
 
@@ -877,6 +877,40 @@ public interface UserToWeek extends Entity {
 }</code></pre>
 
         </p>
+
+        
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/resources/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/">.../</span>atlassian-plugin.xml
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="&lt;ao key=&quot;ao-module&quot;&gt;
+    &lt;description&gt;The module configuring the Active Objects service used by this plugin&lt;/description&gt;
+    &lt;entity&gt;com.comsysto.kitchen.duty.ao.Week&lt;/entity&gt;
+    &lt;entity&gt;com.comsysto.kitchen.duty.ao.User&lt;/entity&gt;
+    &lt;entity&gt;com.comsysto.kitchen.duty.ao.UserToWeek&lt;/entity&gt;
+&lt;/ao&gt;"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">ao</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"ao-module"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">description</span>&gt;</span>The module configuring the Active Objects service used by this plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>com.comsysto.kitchen.duty.ao.Week<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>com.comsysto.kitchen.duty.ao.User<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>com.comsysto.kitchen.duty.ao.UserToWeek<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">ao</span>&gt;</span></code></pre>
+
 
 
 
@@ -1911,8 +1945,6 @@ Date: Fri, <span class="hljs-number">09</span> Sep <span class="hljs-number">201
 
 
 <script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js" async></script>
-
-
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>

@@ -106,11 +106,6 @@ content
 <script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js" async></script>
 {% block postJs %}
 {% endblock %}
-{% if isLocalhost %}
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
-    ':35729/livereload.js?snipver=2"></' + 'script>')</script>
-{% endif %}
-
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
 <script>
     WebFont.load({

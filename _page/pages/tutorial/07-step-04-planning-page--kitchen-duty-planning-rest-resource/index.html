@@ -74,8 +74,8 @@
                 </table>
                 <br>
                 <br>
-                <div style="padding:0 30px 0 30px">
-                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/persist-me-senpai.jpg" class="img-fluid" style="max-width:400px">
+                <div style="padding:0 0 0 30px">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/persist-me-senpai.jpg" class="img-fluid">
                 </div>
             </div>
         </div>
@@ -346,7 +346,6 @@
 
 
 
-
         <h3 class="cs-headline cs-headline--s">Let's have a look into the Database</h3>
 
         <p>Alright now you need to know that <strong>JIRA runs a <a href="http://www.h2database.com/">H2 Database</a></strong> when started with <code>atlas-run</code>. And it <strong>does NOT use <a href="http://hsqldb.org/">HSQLDB</a> anymore</strong> even though it has used HSQLDB up to some version of JIRA - but those days seem over.</p>
@@ -397,15 +396,27 @@
 
         <p>You should see our Week table and if you execute a SELECT Statement on it you can see contents.</p>
 
-        <!--
-
-        -->
-
-        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" data-lightbox="00-step-intellij" data-title="Step 4 - H2 Database Console Select Result on Table Week">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - H2 Database Console Select Result on Table Week">
+                    </a>
+                </p>
+            </div>
+        </div>
 
         <p>You can see the whole process of calling the testPersist Endpoint and connecting to the H2 Database in the following gif.</p>
 
-        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-jira-connect.gif" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;border:1px solid #ccc;">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-jira-connect.gif" data-lightbox="00-step-intellij" data-title="Step 4 - H2 Database Console Select Result on Table Week">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-jira-connect.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - H2 Database Console Select Result on Table Week">
+                    </a>
+                </p>
+            </div>
+        </div>
 
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 
@@ -415,6 +426,7 @@
 
 
 
+        <div class="alert alert-danger">QA done until HERE</div>
 
 
 

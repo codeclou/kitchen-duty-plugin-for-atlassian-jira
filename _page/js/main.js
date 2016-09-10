@@ -270,6 +270,18 @@ var initStarsOnGitHub = function() {
 /* SIDEBAR */
 /* ================================================================================================ */
 
+var initToggleSidebarByState = function() {
+    var contentWrapper = $('.cs-content-wrapper');
+    var sidebarWrapper = $('.cs-sidebar-wrapper');
+    var sidebarState = sessionStorage.getItem('cs-kitchen-duty-sidebar-open');
+    if (sidebarState !== undefined && sidebarState === 'closed') {
+        contentWrapper.removeClass('cs-content-wrapper--isopen');
+        sidebarWrapper.removeClass('cs-sidebar-wrapper--isopen');
+    } else {
+        contentWrapper.addClass('cs-content-wrapper--isopen');
+        sidebarWrapper.addClass('cs-sidebar-wrapper--isopen');
+    }
+};
 var toggleSidebar = function() {
     var contentWrapper = $('.cs-content-wrapper');
     var sidebarWrapper = $('.cs-sidebar-wrapper');
@@ -277,9 +289,11 @@ var toggleSidebar = function() {
     if (contentWrapper.hasClass('cs-content-wrapper--isopen')) {
         contentWrapper.removeClass('cs-content-wrapper--isopen');
         sidebarWrapper.removeClass('cs-sidebar-wrapper--isopen');
+        sessionStorage.setItem('cs-kitchen-duty-sidebar-open', 'closed');
     } else {
         contentWrapper.addClass('cs-content-wrapper--isopen');
         sidebarWrapper.addClass('cs-sidebar-wrapper--isopen');
+        sessionStorage.setItem('cs-kitchen-duty-sidebar-open', 'open');
     }
 };
 
@@ -303,5 +317,7 @@ $(function () {
     initCsSourcePointerHover();
 
     initStarsOnGitHub();
+
+    initToggleSidebarByState();
 
 });

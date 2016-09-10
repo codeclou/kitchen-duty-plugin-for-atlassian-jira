@@ -23,7 +23,7 @@
 
 
 
-    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.css" rel="stylesheet">
+    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.css?v2016-09-12--20-49" rel="stylesheet">
 
     <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-256.png" type="image/png" sizes="256x256">
@@ -90,7 +90,7 @@
 
 
 
-<div class="cs-sidebar-wrapper cs-sidebar-wrapper--isopen">
+<div class="cs-sidebar-wrapper">
     
 <div id="toc">
     <ul>
@@ -190,7 +190,7 @@
 
 </div>
 
-<div class="cs-content-wrapper cs-content-wrapper--isopen">
+<div class="cs-content-wrapper">
     
 
 
@@ -270,8 +270,8 @@
                 </table>
                 <br>
                 <br>
-                <div style="padding:0 30px 0 30px">
-                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/persist-me-senpai.jpg" class="img-fluid" style="max-width:400px">
+                <div style="padding:0 0 0 30px">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/persist-me-senpai.jpg" class="img-fluid">
                 </div>
             </div>
         </div>
@@ -755,7 +755,6 @@ public class KitchenDutyPlanningResource {
 
 
 
-
         <h3 class="cs-headline cs-headline--s">Let's have a look into the Database</h3>
 
         <p>Alright now you need to know that <strong>JIRA runs a <a href="http://www.h2database.com/">H2 Database</a></strong> when started with <code>atlas-run</code>. And it <strong>does NOT use <a href="http://hsqldb.org/">HSQLDB</a> anymore</strong> even though it has used HSQLDB up to some version of JIRA - but those days seem over.</p>
@@ -830,15 +829,27 @@ public class KitchenDutyPlanningResource {
 
         <p>You should see our Week table and if you execute a SELECT Statement on it you can see contents.</p>
 
-        <!--
-
-        -->
-
-        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" data-lightbox="00-step-intellij" data-title="Step 4 - H2 Database Console Select Result on Table Week">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - H2 Database Console Select Result on Table Week">
+                    </a>
+                </p>
+            </div>
+        </div>
 
         <p>You can see the whole process of calling the testPersist Endpoint and connecting to the H2 Database in the following gif.</p>
 
-        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-jira-connect.gif" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;border:1px solid #ccc;">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-jira-connect.gif" data-lightbox="00-step-intellij" data-title="Step 4 - H2 Database Console Select Result on Table Week">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-jira-connect.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - H2 Database Console Select Result on Table Week">
+                    </a>
+                </p>
+            </div>
+        </div>
 
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 
@@ -848,6 +859,7 @@ public class KitchenDutyPlanningResource {
 
 
 
+        <div class="alert alert-danger">QA done until HERE</div>
 
 
 
@@ -2100,7 +2112,7 @@ Date: Fri, <span class="hljs-number">09</span> Sep <span class="hljs-number">201
 
 
 
-<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js" async></script>
+<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js?v2016-09-12--20-49" async></script>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>

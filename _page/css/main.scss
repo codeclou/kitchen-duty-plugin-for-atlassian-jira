@@ -79,12 +79,15 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin-top:90px;
     margin-bottom:60px;
-    margin-left:350px;
+    margin-left:0;
     margin-right:0;
     overflow-x: hidden;
     /*overflow-y: scroll;*/
     padding: 0 30px 30px 30px;
     background-color: #fff;
+}
+.cs-content-wrapper--isopen {
+    margin-left:350px;
 }
 @include media-breakpoint-down(md) {
     .cs-content-wrapper {
@@ -99,13 +102,20 @@ body {
 .cs-sidebar-wrapper {
     top:90px;
     bottom:60px;
-    left:0;
+    left:-350px;
     width:350px;
     padding: 0;
     position: fixed;
     overflow-x: hidden;
     overflow-y: auto;
     background-color: #3C99B3;
+}
+.cs-sidebar-wrapper--isopen {
+    left:0;
+}
+
+.cs-burger-button {
+    user-select: none;
 }
 
 .cs-sidebar-wrapper ul {

@@ -267,6 +267,23 @@ var initStarsOnGitHub = function() {
 };
 
 /* ================================================================================================ */
+/* SIDEBAR */
+/* ================================================================================================ */
+
+var toggleSidebar = function() {
+    var contentWrapper = $('.cs-content-wrapper');
+    var sidebarWrapper = $('.cs-sidebar-wrapper');
+
+    if (contentWrapper.hasClass('cs-content-wrapper--isopen')) {
+        contentWrapper.removeClass('cs-content-wrapper--isopen');
+        sidebarWrapper.removeClass('cs-sidebar-wrapper--isopen');
+    } else {
+        contentWrapper.addClass('cs-content-wrapper--isopen');
+        sidebarWrapper.addClass('cs-sidebar-wrapper--isopen');
+    }
+};
+
+/* ================================================================================================ */
 /* ONLOAD */
 /* ================================================================================================ */
 

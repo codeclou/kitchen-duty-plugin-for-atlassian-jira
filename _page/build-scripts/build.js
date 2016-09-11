@@ -65,6 +65,7 @@ var jsTaskOptions = {
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './node_modules/snapsvg/dist/snap.svg.js',
         './node_modules/toastr/toastr.js',
+        './node_modules/sticky-kit/dist/sticky-kit.js',
         './_page/js/main.js'
     ],
     jsBundle: buildDir + '/generated/bundle.js',

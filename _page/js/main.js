@@ -302,7 +302,8 @@ var toggleSidebar = function() {
 /* ================================================================================================ */
 
 var initStickyDivs = function() {
-    $('.cs-sticky-in-parent').stick_in_parent({ offset_top: 90 /* the site-header height */  });
+    /** SEE: http://leafo.net/sticky-kit/ */
+    $('.cs-sticky-in-parent').stick_in_parent({ offset_top: 90 /* the site-header height */, bottoming: true  });
 };
 
 
@@ -331,5 +332,13 @@ $(function () {
     initToggleSidebarByState();
 
     initStickyDivs();
+
+    console.log('deploy info: ',
+        {
+            branch:    '___BRANCH___',
+            commit:    '___COMMIT___',
+            buildTime: '___TIMEST___'
+        }
+    );
 
 });

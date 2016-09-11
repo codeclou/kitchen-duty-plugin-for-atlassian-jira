@@ -32,6 +32,7 @@
     "killport": "^1.0.1",
     "moment": "^2.10.6",
     "moment-duration-format": "^1.3.0",
+    "node-deploy-essentials": "0.0.6",
     "node-sass": "latest",
     "nunjucks": "latest",
     "opener": "latest",
@@ -53,7 +54,8 @@
     "build": "node _page/build-scripts/build.js --environment dev",
     "build:prod": "node _page/build-scripts/build.js --environment prod",
     "build:img": "node _page/build-scripts/build-img.js",
-    "start:prod": "node _page/build-scripts/build.js --environment prod --start true"
+    "start:prod": "node _page/build-scripts/build.js --environment prod --start true",
+    "ndes": "node ./node_modules/.bin/ndes"
   },
   "repository": {
     "type": "git",

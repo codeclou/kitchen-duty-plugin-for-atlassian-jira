@@ -29,7 +29,7 @@ var start = yargs.argv.start;
 var environment = yargs.argv.environment;
 var hashids = new Hashids("fooSaltBar", 8);
 var uniqueVersionHash = hashids.encode(moment().millisecond());
-var buildDir = '.';
+var buildDir = './build/';
 
 
 // PRE
@@ -94,6 +94,12 @@ if (environment === 'dev') {
     htmlTaskOptions.htmlIsLocalhost = true;
 }
 
+// STATIC
+var staticTaskOptions = {
+    sourceDir: './_static/*',
+    targetDir: buildDir + '/'
+};
+
 // FONTS
 var fontsTaskOptions = [
     {
@@ -147,10 +153,15 @@ async.waterfall([
         waterfallProceed(null, 'pre');
     },
     function(previousStepName, waterfallProceed) {
+        console.log(('>> copy _static contents').yellow);
+        shell.cp('-Rf', staticTaskOptions.sourceDir, staticTaskOptions.targetDir);
+        waterfallProceed(null, 'copystatic');
+    },
+    function(previousStepName, waterfallProceed) {
         // PARSE NEWS XML
         var fs = require('fs');
         var parseString = require('xml2js').parseString;
-        fs.readFile('./news_rss.xml', 'utf8', function (err, rssData) {
+        fs.readFile('./_static/news_rss.xml', 'utf8', function (err, rssData) {
             if (err) {
                 console.log("parsing news failed");
             } else {

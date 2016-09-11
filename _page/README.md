@@ -8,26 +8,28 @@ Have Node.js installed and run
 npm install
 ```
 
-!!! DO ONLY EDIT FILES IN `_images` and `_page` ALL OTHER FILES MIGHT GET OVERWRITTEN !!!
-
 ## Building the images
 
-Images will be processed manually from `/_images/` to `/images/`. Run:
+Images will be copied from `/_images/` to `/build/images/` and optimized in size. Run:
 
 ```
 npm run build:img
 ```
 
+  * :bangbang: Jenkins runs this before *build:prod*
+  * Locally you don't need to run it since the images from `_images` will be proxied through to `http://localhost:port/kitchen-duty-plugin-for-atlassian-jira/images/` when running `npm run watch`
+  * Only when you want locally start prod env you need to to run it.
 
 ## Building the page
 
-Pages will be processed from `/_page/` to `/`
+Pages will be processed from `/_page/` to `/build/`
 
 ### a) for Production
 
 Build for production
 
 ```
+npm run build:img
 npm run build:prod
 ```
 

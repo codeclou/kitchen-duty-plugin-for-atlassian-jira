@@ -725,22 +725,21 @@
 
 
 
-        <div class="alert alert-danger">QA done until HERE</div>
 
 
 
         <h3 class="cs-headline cs-headline--s">Creating the real Kitchen Duty Planning REST Resource with GET Endpoints for User and Week</h3>
 
         <p>
-            Ok we have played around a little with active objects in the previous sections and now have our full
-            data model and entities in place. That means we can now create the real Endpoint Methods and throw away the testPersist Endpoint.
+            Ok we have played around a little with active objects so far and now have our data model and entities in place.
+            That means we can now create the real Endpoint Methods and throw away the testPersist Endpoint.
         </p>
 
 
 
-
-        <p>
-            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e923ee619b945042bc37217e78b3aead2f8a4b44")), source='
+        <div class="row">
+            <div class="col-md-8">
+            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", uniqueId='xtrfdg54ze56dhr', ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e923ee619b945042bc37217e78b3aead2f8a4b44")), source='
             |package com.comsysto.kitchen.duty.rest;
             |...
             |
@@ -760,19 +759,26 @@
             |    @Produces({MediaType.APPLICATION_JSON})
             |    @AnonymousAllowed
             |    public Response getUsersForWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber) {
-            |        Week[] weeks = activeObjects.executeInTransaction(new TransactionCallback<Week[]>() {
+            |        Week[] weeks = activeObjects.executeInTransaction(new TransactionCallback<Week[]>() { {{{point::1}}}
             |            @Override
             |            public Week[] doInTransaction() {
-            |                return activeObjects.find(Week.class, Query.select().where("WEEK = ?", isoWeekNumber));
+            |                return activeObjects.find( {{{point::2}}}
+            |                           Week.class,
+            |                           Query.select().where("WEEK = ?", isoWeekNumber)); {{{point::3}}}
             |            }
             |        });
-            |        List<KitchenDutyPlanningResourceUserModel> users = new ArrayList<>();
-            |        if (weeks != null && weeks.length > 0) {
-            |            for (User user : weeks[0].getUsers()) {
-            |                users.add(new KitchenDutyPlanningResourceUserModel(user.getID(), user.getName()));
+            |        List<KitchenDutyPlanningResourceUserModel> users = new ArrayList<>(); {{{point::4}}}
+            |        if (weeks != null && weeks.length > 0) { {{{point::5}}}
+            |            for (User user : weeks[0].getUsers()) { {{{point::6}}}
+            |                users.add(
+            |                   new KitchenDutyPlanningResourceUserModel( {{{point::7}}}
+            |                            user.getID(),
+            |                            user.getName()
+            |                   )
+            |                );
             |            }
             |        }
-            |        return Response.ok(users).build();
+            |        return Response.ok(users).build(); {{{point::8}}}
             |    }
             |
             |    /**
@@ -785,7 +791,7 @@
             |    @Path("/user/{username}/weeks")
             |    @Produces({MediaType.APPLICATION_JSON})
             |    @AnonymousAllowed
-            |    public Response getWeeksForUser(@PathParam("username") final String username) {
+            |    public Response getWeeksForUser(@PathParam("username") final String username) { {{{point::9}}}
             |        User[] users = activeObjects.executeInTransaction(new TransactionCallback<User[]>() {
             |            @Override
             |            public User[] doInTransaction() {
@@ -803,8 +809,59 @@
             |...
             |}
             ') }}
-        </p>
+            </div>
+            <div class="col-md-4">
+                <!-- no sticky here since block is too big -->
+                <div class="list-group cs-source-point-list" data-source-target="xtrfdg54ze56dhr">
+                    <div class="list-group-item cs-source-point-list__item">
+                        In our new <strong><code>/week/{isoWeekNumber}/users</code> Endpoint</strong>
+                        we start a Transaction and specify <code>Week[]</code> as return type since there is no way <em>(at least I did not find one)</em>
+                        to get only one entity from the Database. We always get a List. Since we are having our unique constraints setup our lists will most likely
+                        only contain one value.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we use a new method <code>find(...)</code> of the Active Objects class which will return a List of Weeks
+                        found in the database.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Via the <code>Query.select().where(...)</code> we define that we only want to get records that have
+                        the week number set we passed as the Endpoints <code>@PathParam</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        What are we doing now? We just received a Week-Array from the activeObjects object most likely being cglib-proxy objects
+                        that might be lazy <em>(even though we specified <code>@Preload</code>)</em>.
+                        That being said and me being very paranoid when it comes to my REST APIs I always want to seperate the Data Model that is populate
+                        to the User via the API from my internal Data Model used by the Database. Therefore I always setup simple POJOs that get a copy of the relevant database values.
+                        For example your REST-API User object might not contain a password property even though your Database User object does.
+                        <em>(And yes we could hide it with some kind of Hide-Json-Annotation, but a clear separation is what worked best for me so far.)</em>
+                        If you like you can try to skip out this step and directly pass your Database Entitiy objects out via the REST Endpoint.
+                        You might need to setup the JAX-WS Annotations on your Entities then.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We simply check if we got an empty result from out database lookup and if not we continue.
+                        And if we got an empty result we return the empty List as Endpoint response.
+                        This is always better as passing NULL and having trouble in your JS Controller handling these shenanigans.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We iterate over our Results with a for-loop. And if you want to be fancy you can do this in a more fashioned way ...
+                        I already see the scala nerds roll their eyes .... anyways we are fine with it.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we create such a REST-API-Pojo via a convenience constructor to copy the needed values
+                        from our database entity.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Lastly we return our list of users as Endpoint response.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The exact same thing is done for the <strong><code>/user/{username}/weeks</code> Endpoint</strong>. The same explanations apply.
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <p>We have just used the <strong>REST-API-Pojos</strong> which we will define right now. No magic just getters and setters and some JAX-WS Annotations you have seen in previous steps of the tutorial already.
+        The only fancy thing is the convenience constructor but yeah ... just copy paste those two since it's not a big deal.</p>
 
         <p>
             {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResourceWeekModel.java", ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e923ee619b945042bc37217e78b3aead2f8a4b44")), source='
@@ -897,7 +954,12 @@
             ') }}
         </p>
 
-        <p>Now we can query</p>
+        <p>Alright we again are at a point where we want to start JIRA and fire some request against our API to check it out.</p>
+
+        {{ csShell(shellCmd='atlas-run') }}
+
+
+        <p>Now we can query these two endpoints with the following example requests.</p>
 
         <p><strong>List assigned users for week 42.</strong></p>
 
@@ -913,23 +975,23 @@
 
 
         <p>
-            We can discuss REST API URL structure all day and you can do the crazy stuff on your project but here we want to keep things
-            simple. Therefore we will just add two more Endpoint types DELETE and PUT on /week/42/users.
-            /user/{username}/weeks will stay with GET since this is just a convinience aggregation Endpoint.
+            That is working fine. In the next section we will deal with assigning Users to Weeks and removing assignments.
         </p>
-
-
-        <!--
-
-
-
-                AO 1.2.0 - Indexes example: https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/ao-1-2-0-upgrade-guide
-        -->
 
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
 
+
+
+        <!--
+        AO 1.2.0 - Indexes example: https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/ao-1-2-0-upgrade-guide
+        -->
+
+
+
+
+        <div class="alert alert-danger">QA done until HERE</div>
 
 
         <h3 class="cs-headline cs-headline--s">Add the PUT and DELETE Endpoints to add a User to a Week or remove it</h3>

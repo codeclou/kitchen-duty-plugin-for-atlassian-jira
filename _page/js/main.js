@@ -333,12 +333,12 @@ $(function () {
 
     initStickyDivs();
 
-    console.log('deploy info: ',
+    console.log('deploy info: ' + JSON.stringify(
         {
             branch:    '___BRANCH___',
             commit:    '___COMMIT___',
             buildTime: '___TIMEST___'
         }
-    );
+    ));
 
 });

@@ -729,7 +729,7 @@
 
 
 
-        <h3 class="cs-headline cs-headline--s">Creating the real Kitchen Duty Planning REST Resource</h3>
+        <h3 class="cs-headline cs-headline--s">Creating the real Kitchen Duty Planning REST Resource with GET Endpoints for User and Week</h3>
 
         <p>
             Ok we have played around a little with active objects in the previous sections and now have our full
@@ -759,7 +759,7 @@
             |    @Path("/week/{isoWeekNumber}/users")
             |    @Produces({MediaType.APPLICATION_JSON})
             |    @AnonymousAllowed
-            |    public Response persistTest(@PathParam("isoWeekNumber") final Integer isoWeekNumber) {
+            |    public Response getUsersForWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber) {
             |        Week[] weeks = activeObjects.executeInTransaction(new TransactionCallback<Week[]>() {
             |            @Override
             |            public Week[] doInTransaction() {
@@ -785,7 +785,7 @@
             |    @Path("/user/{username}/weeks")
             |    @Produces({MediaType.APPLICATION_JSON})
             |    @AnonymousAllowed
-            |    public Response persistTest(@PathParam("username") final String username) {
+            |    public Response getWeeksForUser(@PathParam("username") final String username) {
             |        User[] users = activeObjects.executeInTransaction(new TransactionCallback<User[]>() {
             |            @Override
             |            public User[] doInTransaction() {
@@ -926,8 +926,13 @@
                 AO 1.2.0 - Indexes example: https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/ao-1-2-0-upgrade-guide
         -->
 
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
+
+
+
+        <h3 class="cs-headline cs-headline--s">Add the PUT and DELETE Endpoints to add a User to a Week or remove it</h3>
 
 
         <p>

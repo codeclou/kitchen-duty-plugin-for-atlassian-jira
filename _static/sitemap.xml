@@ -86,4 +86,14 @@
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
+    <url>
+        <loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/</loc>
+        <image:image>
+            <image:loc>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/drawings/do-you-even-left-join-bro.jpg</image:loc>
+            <image:caption>Active Objects in JIRA ~ Kitchen Duty Plugin for Atlassian JIRA® by comSysto</image:caption>
+        </image:image>
+        <lastmod>2016-09-11</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
 </urlset>

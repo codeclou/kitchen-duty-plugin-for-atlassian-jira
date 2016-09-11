@@ -205,6 +205,10 @@ async.waterfall([
 
             var app = express();
 
+            app.use('/kitchen-duty-plugin-for-atlassian-jira/images/', serveStatic('./_images/', {
+                maxAge: '1d'
+            }));
+
             app.use('/kitchen-duty-plugin-for-atlassian-jira', serveStatic(buildDir, {
                 maxAge: '1d'
             }));

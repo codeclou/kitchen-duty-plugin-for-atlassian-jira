@@ -18,30 +18,32 @@ function runCallback(err, files) {
     }
 }
 
+var imageDestinationBaseDir = 'build/images';
+
 new Imagemin()
     .src('_images/*.{gif,jpg,png,svg}')
-    .dest('images')
+    .dest(imageDestinationBaseDir)
     .use(Imagemin.jpegtran({progressive: true}))
     .use(imageminOptipng({optimizationLevel: 3}))
     .run(runCallback);
 
 new Imagemin()
     .src('_images/doc/*.{gif,jpg,png,svg}')
-    .dest('images/doc/')
+    .dest(imageDestinationBaseDir + '/doc/')
     .use(Imagemin.jpegtran({progressive: true}))
     .use(imageminOptipng({optimizationLevel: 3}))
     .run(runCallback);
 
 new Imagemin()
     .src('_images/drawings/*.{gif,jpg,png,svg}')
-    .dest('images/drawings/')
+    .dest(imageDestinationBaseDir + '/drawings/')
     .use(Imagemin.jpegtran({progressive: true}))
     .use(imageminOptipng({optimizationLevel: 3}))
     .run(runCallback);
 
 new Imagemin()
     .src('_images/interactive/*.{gif,jpg,png,svg}')
-    .dest('images/interactive/')
+    .dest(imageDestinationBaseDir + '/interactive/')
     .use(Imagemin.jpegtran({progressive: true}))
     .use(imageminOptipng({optimizationLevel: 3}))
     .run(runCallback);

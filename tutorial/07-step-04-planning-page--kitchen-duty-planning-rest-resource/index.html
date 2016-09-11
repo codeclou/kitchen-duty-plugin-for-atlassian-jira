@@ -865,7 +865,6 @@ public class KitchenDutyPlanningResource {
 
 
 
-        <div class="alert alert-danger">QA done until HERE</div>
 
 
 
@@ -873,14 +872,15 @@ public class KitchenDutyPlanningResource {
         <h3 class="cs-headline cs-headline--s">Adding User Class and Many-to-Many Relationship</h3>
 
         <p>Since we got Active Objects running successfully we now want to add a <a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/manytomany-relationship"><code>@ManyToMany</code></a> relationship between <code>User</code> an <code>Week</code>.</p>
-        <p>And when you have read the docs you will note that we need a Mapping Entity for that case. We will call it <code>UserToWeek</code>.</p>
 
-        <p>Do a <code>atlas-clean</code> before the next <code>atlas-run</code> so that the database gets purged. Otherwise you might run into <code> Unique index or primary key violation</code> errors since we have 4 week entries already all with week 42 values.</p>
-
+        <p>And when you have read the docs you will note that <strong>we need a Mapping Entity</strong> for that case. We will call it <code>UserToWeek</code>.</p>
 
 
-        <p>
-            
+        <p>But first we want to define the week and username as unique to avoid duplicate entries which are developers nightmares.</p>
+
+        <div class="row">
+            <div class="col-md-8">
+                
 
 <div class="cs-code-filename">
     
@@ -909,12 +909,12 @@ import net.java.ao.schema.Unique;
 @Preload
 public interface Week extends Entity {
 
-    @NotNull
-    @Unique
+    @NotNull  
+    @Unique  
     Integer getWeek();
     void setWeek(Integer week);
 
-    @ManyToMany(value = UserToWeek.class)
+    @ManyToMany(value = UserToWeek.class)  
     User[] getUsers();
 }"><i class="fa fa-files-o"></i></a>
 </div>
@@ -930,19 +930,38 @@ public interface Week extends Entity {
 <span class="hljs-annotation">@Preload</span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Week</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Entity</span> </span>{
 
-    <span class="hljs-annotation">@NotNull</span>
-    <span class="hljs-annotation">@Unique</span>
+    <span class="hljs-annotation">@NotNull</span>  <span class="cs-source-point" data-cs-source-point-id="x235325" data-cs-source-point-number="1"></span>
+    <span class="hljs-annotation">@Unique</span>  <span class="cs-source-point" data-cs-source-point-id="x235325" data-cs-source-point-number="2"></span>
     <span class="hljs-function">Integer <span class="hljs-title">getWeek</span><span class="hljs-params">()</span></span>;
     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setWeek</span><span class="hljs-params">(Integer week)</span></span>;
 
-    <span class="hljs-annotation">@ManyToMany</span>(value = UserToWeek.class)
+    <span class="hljs-annotation">@ManyToMany</span>(value = UserToWeek.class)  <span class="cs-source-point" data-cs-source-point-id="x235325" data-cs-source-point-number="3"></span>
     User[] getUsers();
 }</code></pre>
 
-        </p>
+            </div>
+            <div class="col-md-4 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="x235325">
+                    <div class="list-group-item cs-source-point-list__item">
+                        First we define week <code>@NotNull</code> which does not allow NULL values anymore.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Secondly we define week <code>@Unique</code> which does not allow duplicate values anymore.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Thirdly we define the Many-To-Many relationship on <code>getUsers()</code>
+                        with <code>@ManyToMany</code>. The <code>value = UserToWeek.class</code> defines which
+                        entity is used to map this relationship. You might know that you always need a mapping-table in the database
+                        when mapping to objects many-to-many since the relational paradigma can only map one-to-many.
+                        We will create <code>UserToWeek</code> a little further down below.
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-        <p>
+        <div class="row">
+            <div class="col-md-8">
             
 
 <div class="cs-code-filename">
@@ -972,12 +991,12 @@ import net.java.ao.schema.Unique;
 @Preload
 public interface User extends Entity {
 
-    @NotNull
-    @Unique
+    @NotNull 
+    @Unique 
     String getName();
     void setName(String week);
 
-    @ManyToMany(value = UserToWeek.class)
+    @ManyToMany(value = UserToWeek.class) 
     Week[] getWeeks();
 }"><i class="fa fa-files-o"></i></a>
 </div>
@@ -993,18 +1012,37 @@ public interface User extends Entity {
 <span class="hljs-annotation">@Preload</span>
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Entity</span> </span>{
 
-    <span class="hljs-annotation">@NotNull</span>
-    <span class="hljs-annotation">@Unique</span>
+    <span class="hljs-annotation">@NotNull</span> <span class="cs-source-point" data-cs-source-point-id="x543534r34" data-cs-source-point-number="1"></span>
+    <span class="hljs-annotation">@Unique</span> <span class="cs-source-point" data-cs-source-point-id="x543534r34" data-cs-source-point-number="2"></span>
     <span class="hljs-function">String <span class="hljs-title">getName</span><span class="hljs-params">()</span></span>;
     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String week)</span></span>;
 
-    <span class="hljs-annotation">@ManyToMany</span>(value = UserToWeek.class)
+    <span class="hljs-annotation">@ManyToMany</span>(value = UserToWeek.class) <span class="cs-source-point" data-cs-source-point-id="x543534r34" data-cs-source-point-number="3"></span>
     Week[] getWeeks();
 }</code></pre>
 
-        </p>
+            </div>
+            <div class="col-md-4 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="x543534r34">
+                    <div class="list-group-item cs-source-point-list__item">
+                        First we define the username <code>@NotNull</code> which does not allow NULL values anymore.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Secondly we define the username <code>@Unique</code> which does not allow duplicate values anymore.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Thirdly we define the Many-To-Many relationship on <code>getWeeks()</code>
+                        with <code>@ManyToMany</code>. It works the same way as in <code>Week</code> just the other way round.
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <p>
+        <p>We just defined our real entities and the relation they have through <code>UserToWeek</code> so all that is left is to define the mapping entity.</p>
+
+
+        <div class="row">
+            <div class="col-md-8">
             
 
 <div class="cs-code-filename">
@@ -1027,12 +1065,12 @@ public interface User extends Entity {
 
 import net.java.ao.Entity;
 
-public interface UserToWeek extends Entity {
+public interface UserToWeek extends Entity { 
 
-    void setUser(User user);
+    void setUser(User user); 
     User getUser();
 
-    void setWeek(Week week);
+    void setWeek(Week week); 
     Week getWeek();
 }"><i class="fa fa-files-o"></i></a>
 </div>
@@ -1041,16 +1079,32 @@ public interface UserToWeek extends Entity {
 
 <span class="hljs-keyword">import</span> net.java.ao.Entity;
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserToWeek</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Entity</span> </span>{
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserToWeek</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Entity</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="x457458754646" data-cs-source-point-number="1"></span>
 
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setUser</span><span class="hljs-params">(User user)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setUser</span><span class="hljs-params">(User user)</span></span>; <span class="cs-source-point" data-cs-source-point-id="x457458754646" data-cs-source-point-number="2"></span>
     <span class="hljs-function">User <span class="hljs-title">getUser</span><span class="hljs-params">()</span></span>;
 
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setWeek</span><span class="hljs-params">(Week week)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setWeek</span><span class="hljs-params">(Week week)</span></span>; <span class="cs-source-point" data-cs-source-point-id="x457458754646" data-cs-source-point-number="3"></span>
     <span class="hljs-function">Week <span class="hljs-title">getWeek</span><span class="hljs-params">()</span></span>;
 }</code></pre>
 
-        </p>
+            </div>
+            <div class="col-md-4 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="x457458754646">
+                    <div class="list-group-item cs-source-point-list__item">
+                        The <code>UserToWeek</code> also extends <code>Entity</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We define getter and setter for <code>User</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We define getter and setter for <code>Week</code>.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>That was all we needed to do to map the Many-To-Many relationship with Active Objects. And now <strong>don't forget to list the entities in the <code>ao</code> section of your <code>atlassian-plugin.xml</code></strong>.</p>
 
         
 
@@ -1086,14 +1140,12 @@ public interface UserToWeek extends Entity {
 <span class="hljs-tag">&lt;/<span class="hljs-title">ao</span>&gt;</span></code></pre>
 
 
+        <p>&nbsp;</p>
 
+        <p>We <strong>change the testPersist Endpoint to now persist a full relationship.</strong></p>
 
-        <p>We defined the Week and the User as <code>@Unique</code> and <code>@NotNull</code> therefore we need to create
-            the Object with DBParams. See <em><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/creating-entities">'Creating an entity with "not null"-constraints'</a> in the docs.</em>
-            Therefore we <strong>change the testPersist Endpoint to now persist a full relationship and handle the not-null thingy by DBParams.</strong>
-        </p>
-
-        <p>
+        <div class="row">
+            <div class="col-md-6">
             
 
 <div class="cs-code-filename">
@@ -1131,17 +1183,18 @@ public class KitchenDutyPlanningResource {
             public Week doInTransaction()
             {
                 final Week testWeek = activeObjects.create(
-                    Week.class,
-                    new DBParam(&quot;WEEK&quot;, 42));
+                    Week.class, 
+                    new DBParam(&quot;WEEK&quot;, 42)); 
                 testWeek.save();
 
                 final User user = activeObjects.create(
-                    User.class,
-                    new DBParam(&quot;NAME&quot;, &quot;ichiban&quot;));
+                    User.class, 
+                    new DBParam(&quot;NAME&quot;, &quot;ichiban&quot;)); 
                 user.save();
 
-                final UserToWeek relationship = activeObjects.create(UserToWeek.class);
-                relationship.setUser(user);
+                final UserToWeek relationship =
+                           activeObjects.create(UserToWeek.class); 
+                relationship.setUser(user); 
                 relationship.setWeek(testWeek);
                 relationship.save();
 
@@ -1173,17 +1226,18 @@ public class KitchenDutyPlanningResource {
             <span class="hljs-function"><span class="hljs-keyword">public</span> Week <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span>
             </span>{
                 <span class="hljs-keyword">final</span> Week testWeek = activeObjects.create(
-                    Week.class,
-                    <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"WEEK"</span>, <span class="hljs-number">42</span>));
+                    Week.class, <span class="cs-source-point" data-cs-source-point-id="x3eewr867987ij" data-cs-source-point-number="1"></span>
+                    <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"WEEK"</span>, <span class="hljs-number">42</span>)); <span class="cs-source-point" data-cs-source-point-id="x3eewr867987ij" data-cs-source-point-number="2"></span>
                 testWeek.save();
 
                 <span class="hljs-keyword">final</span> User user = activeObjects.create(
-                    User.class,
-                    <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"NAME"</span>, <span class="hljs-string">"ichiban"</span>));
+                    User.class, <span class="cs-source-point" data-cs-source-point-id="x3eewr867987ij" data-cs-source-point-number="3"></span>
+                    <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"NAME"</span>, <span class="hljs-string">"ichiban"</span>)); <span class="cs-source-point" data-cs-source-point-id="x3eewr867987ij" data-cs-source-point-number="4"></span>
                 user.save();
 
-                <span class="hljs-keyword">final</span> UserToWeek relationship = activeObjects.create(UserToWeek.class);
-                relationship.setUser(user);
+                <span class="hljs-keyword">final</span> UserToWeek relationship =
+                           activeObjects.create(UserToWeek.class); <span class="cs-source-point" data-cs-source-point-id="x3eewr867987ij" data-cs-source-point-number="5"></span>
+                relationship.setUser(user); <span class="cs-source-point" data-cs-source-point-id="x3eewr867987ij" data-cs-source-point-number="6"></span>
                 relationship.setWeek(testWeek);
                 relationship.save();
 
@@ -1195,31 +1249,145 @@ public class KitchenDutyPlanningResource {
 ...
 }</code></pre>
 
-        </p>
+            </div>
+            <div class="col-md-6 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="x3eewr867987ij">
+                    <div class="list-group-item cs-source-point-list__item">
+                        This is not new to you, we use <code>activeObjects#create(...)</code> to create a <code>Week</code> object with reference to the Database.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        But this is new. <code>DBParam</code> is used to immediately set the <code>@NotNull</code> values when creating the object.
+                        Why do we need this? You can read <em><a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/creating-entities">'Creating an entity with "not null"-constraints'</a></em>
+                        OR let me explain. What does actually happen when <code>activeObjects#create(...)</code> is called? Usually the Active Objects
+                        does an INSERT into the database with null values and the autoincrement ID of the table row is then the only thing set (except for default values).
+                        So right after <code>create(Week.class)</code> the week object already has an ID when calling <code>getID()</code>.
+                        And now comes the tricky part. If you have defined a property as <code>@NotNull</code> Active Objects also just tries
+                        to do a INSERT into the table to write the ID back to the object BUT WAIT an <strong><code>ActiveObjectsSqlException</code> is thrown</strong> since our field
+                        is null and it is not allowed to be null. <strong>SOLUTION</strong>: We use <code>DBParams</code> to immediately set the NotNull-Values
+                        so that the initial INSERT that is triggered by <code>create(...)</code> contains actual values for our NotNull-Fields.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We create a <code>User</code> object mapped to a Database Table row as we just did with <code>Week</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We also need to set the <code>NAME</code> value initially for our NotNull-Fields.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We create a <code>UserToWeek</code> object mapped to a Database Table row as we just did with <code>User</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we need to set the <code>User</code> and <code>Week</code> objects as reference and save.
+                        By that the Many-To-Many relation between <code>User</code> and <code>Week</code> is now established.
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
 
-        <p>We use <code>new DBParam("WEEK", 42));</code> in the <strong>activeObjects#create</strong> Method to prevent a not-null exception.</p>
+        <p>&nbsp;</p>
 
         <p>
-            We startup JIRA again and call the <a href="http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest">http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest</a> Endpoint again after logging in.
+            We are all set now to start JIRA again and to test if we can really save our relationship.
+            But before we do that do a quick <code>atlas-clean</code> before the next <code>atlas-run</code> so that the database gets purged.
+            Otherwise you might run into <code>Unique index or primary key violation</code> errors since we have 4 week entries already all with <em>week=42</em> values.
         </p>
+
         <p>
-            And by calling the testPersist endpoint a second time we will get a <strong>unique constraint exception</strong>.
-            But that is fine since that only show that the unique constraint works and we will be throwing away the persistTest Endpoint anyways.
+            
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="atlas-clean"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        atlas-clean<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs"></code></pre>
+
+    </div>
+</div>
+
         </p>
 
-        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-unique-index-exception.png" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;">
+
+        <p>
+            We startup JIRA again and call the persistTest Endpoint again.
+        </p>
+
+        <p>
+            
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="atlas-run"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        atlas-run<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs"></code></pre>
+
+    </div>
+</div>
+
+        </p>
+
+        <p>
+            
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="curl --user admin:admin -H &#39;Content-Type: application/json&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
+
+        curl --user admin:admin -H &#39;Content-Type: application/json&#39; http://localhost:2990/jira/rest/kitchenduty/1.0/planning/persistTest<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">ok</code></pre>
+
+    </div>
+</div>
+
+        </p>
+
+        <p>
+            And by calling the testPersist endpoint a second time we will get a <strong>unique constraint exception</strong> as expected.
+            That is fine since that only shows that the unique constraint works and we will be throwing away the persistTest Endpoint anyways.
+        </p>
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-unique-index-exception.png" data-lightbox="00-step-intellij" data-title="Step 4 - Unique Index Violation on second request">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-unique-index-exception.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - Unique Index Violation on second request">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <p>We shutdown JIRA again and fire up the H2 Console again to see what tables have been created.</p>
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-many-to-many-week-user.png" data-lightbox="00-step-intellij" data-title="Step 4 - ManyToMany Relationship between User and Week mapped by three Tables in Database">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-many-to-many-week-user.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - ManyToMany Relationship between User and Week mapped by three Tables in Database">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
 
-        <p>We shutdown JIRA again and fire up the H2 Console again to see what Tables have been created</p>
-
-        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-many-to-many-week-user.png" class="img-fluid" style="width:60%;margin-left:20%;margin-bottom:30px;margin-top:30px;">
 
 
 
 
 
+
+
+        <div class="alert alert-danger">QA done until HERE</div>
 
 
 

@@ -1391,7 +1391,7 @@ public class KitchenDutyPlanningResource {
 
 
 
-        <h3 class="cs-headline cs-headline--s">Creating the real Kitchen Duty Planning REST Resource</h3>
+        <h3 class="cs-headline cs-headline--s">Creating the real Kitchen Duty Planning REST Resource with GET Endpoints for User and Week</h3>
 
         <p>
             Ok we have played around a little with active objects in the previous sections and now have our full
@@ -1438,7 +1438,7 @@ public class KitchenDutyPlanningResource {
     @Path(&quot;/week/{isoWeekNumber}/users&quot;)
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response persistTest(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber) {
+    public Response getUsersForWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber) {
         Week[] weeks = activeObjects.executeInTransaction(new TransactionCallback&lt;Week[]&gt;() {
             @Override
             public Week[] doInTransaction() {
@@ -1464,7 +1464,7 @@ public class KitchenDutyPlanningResource {
     @Path(&quot;/user/{username}/weeks&quot;)
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response persistTest(@PathParam(&quot;username&quot;) final String username) {
+    public Response getWeeksForUser(@PathParam(&quot;username&quot;) final String username) {
         User[] users = activeObjects.executeInTransaction(new TransactionCallback&lt;User[]&gt;() {
             @Override
             public User[] doInTransaction() {
@@ -1501,7 +1501,7 @@ public class KitchenDutyPlanningResource {
     <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
     <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
     <span class="hljs-annotation">@AnonymousAllowed</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">persistTest</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber) </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">getUsersForWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber) </span>{
         Week[] weeks = activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Week[]&gt;() {
             <span class="hljs-annotation">@Override</span>
             <span class="hljs-keyword">public</span> Week[] doInTransaction() {
@@ -1527,7 +1527,7 @@ public class KitchenDutyPlanningResource {
     <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/user/{username}/weeks"</span>)
     <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
     <span class="hljs-annotation">@AnonymousAllowed</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">persistTest</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"username"</span>)</span> <span class="hljs-keyword">final</span> String username) </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">getWeeksForUser</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"username"</span>)</span> <span class="hljs-keyword">final</span> String username) </span>{
         User[] users = activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;User[]&gt;() {
             <span class="hljs-annotation">@Override</span>
             <span class="hljs-keyword">public</span> User[] doInTransaction() {
@@ -1808,8 +1808,13 @@ public class KitchenDutyPlanningResourceUserModel {
                 AO 1.2.0 - Indexes example: https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/ao-1-2-0-upgrade-guide
         -->
 
+        <div class="cs-v-spacer cs-v-spacer--big"></div>
 
 
+
+
+
+        <h3 class="cs-headline cs-headline--s">Add the PUT and DELETE Endpoints to add a User to a Week or remove it</h3>
 
 
         <p>

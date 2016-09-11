@@ -331,7 +331,12 @@ $(function () {
 
     initToggleSidebarByState();
 
-    initStickyDivs();
+    /* Disbale Sticky divs on localhost since they interfere with browsersync! Page scrolls to top on Update! */
+    if (!_startsWith(window.location.href, 'http://localhost') && !_startsWith(window.location.href, 'http://192')) {
+        initStickyDivs();
+    } else {
+        console.log('Sticky Divs are disabled on localhost due to browsersync-scroll-up-bug');
+    }
 
     console.log('deploy info: ' + JSON.stringify(
         {

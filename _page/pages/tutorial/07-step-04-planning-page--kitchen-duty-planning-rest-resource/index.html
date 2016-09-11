@@ -826,6 +826,7 @@
                     <div class="list-group-item cs-source-point-list__item">
                         Via the <code>Query.select().where(...)</code> we define that we only want to get records that have
                         the week number set we passed as the Endpoints <code>@PathParam</code>.
+                        And please be aware that you HAVE TO add spaces in <code>"WEEK = ?"</code> otherwise it is Exception-Day for you.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         What are we doing now? We just received a Week-Array from the activeObjects object most likely being cglib-proxy objects
@@ -991,122 +992,241 @@
 
 
 
-        <div class="alert alert-danger">QA done until HERE</div>
 
 
-        <h3 class="cs-headline cs-headline--s">Add the PUT and DELETE Endpoints to add a User to a Week or remove it</h3>
+        <h3 class="cs-headline cs-headline--s">Add the PUT and DELETE Endpoints to add a User to a Week or remove him</h3>
 
 
         <p>
             Now we add the functionality to <strong>add users to weeks and remove them from weeks</strong>.
-            Therefore we will need a <strong>DELETE and PUT Endpoint</strong> which we add to <code>KitchenDutyPlanningResource</code> Class.
+            Therefore we will need a <strong>DELETE and PUT Endpoint</strong> which we add to the <code>KitchenDutyPlanningResource</code> Class.
         </p>
+        <p>
+            We <strong>start with the PUT Endpoint to assign Users to Weeks</strong>.
+        </p>
+
+        <div class="row">
+            <div class="col-md-8">
+                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", uniqueId='x890uji9099n', ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e90e472228d0512b90d6ef2f6f1b9f3cae91c542")), source='
+                |...
+                |    /**
+                |     * Add the User to the Week
+                |     *
+                |     * @param isoWeekNumber
+                |     * @return
+                |     */
+                |    @PUT {{{point::1}}}
+                |    @Path("/week/{isoWeekNumber}/users")
+                |    @Produces({MediaType.APPLICATION_JSON})
+                |    @AnonymousAllowed
+                |    public Response addUserToWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber, {{{point::2}}}
+                |                                  final KitchenDutyPlanningResourceUserModel userParam) { {{{point::3}}}
+                |        activeObjects.executeInTransaction(new TransactionCallback<Void>() { {{{point::4}}}
+                |            @Override
+                |            public Void doInTransaction() {
+                |                //
+                |                // WEEK
+                |                //
+                |                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek( {{{point::5}}}
+                |                                 activeObjects,
+                |                                 isoWeekNumber
+                |                );
+                |                if (week == null) {
+                |                    week = activeObjects.create(
+                |                                 Week.class,
+                |                                 new DBParam("WEEK", isoWeekNumber) {{{point::6}}}
+                |                    );
+                |                    week.save();
+                |                }
+                |
+                |                //
+                |                // USER
+                |                //
+                |                User user = KitchenDutyActiveObjectHelper.findUniqueUser( {{{point::7}}}
+                |                                 activeObjects,
+                |                                 userParam.getUsername()
+                |                );
+                |                if (user == null) {
+                |                    user = activeObjects.create(
+                |                                 User.class,
+                |                                 new DBParam("NAME", userParam.getUsername())
+                |                    );
+                |                    user.save();
+                |                }
+                |
+                |                //
+                |                // Establish ManyToMany Relationship
+                |                //
+                |                UserToWeek relationship = KitchenDutyActiveObjectHelper
+                |                                             .findRelationship(activeObjects, user, week); {{{point::8}}}
+                |                if (relationship != null) {
+                |                    // relation already exists
+                |                    return null; {{{point::9}}}
+                |                }
+                |                relationship = activeObjects.create(UserToWeek.class); {{{point::10}}}
+                |                relationship.setUser(user);
+                |                relationship.setWeek(week);
+                |                relationship.save();
+                |
+                |                return null;
+                |            }
+                |        });
+                |        return Response.ok().build(); {{{point::11}}}
+                |    }
+                |...
+                ') }}
+            </div>
+            <div class="col-md-4">
+                <!-- no sticky here since block is too big -->
+                <div class="list-group cs-source-point-list" data-source-target="x890uji9099n">
+                    <div class="list-group-item cs-source-point-list__item">
+                        We define our new <strong><code>PUT /week/{isoWeekNumber}/users</code> Endpoint</strong>
+                        with method <code>@PUT</code> <em>(you can also use <code>@Patch</code> which would be more appropriate since we are sending increments to the Endpoints but it is up to you)</em>.
+                        There is nothing more time consuming as to argue with colleagues about REST API design ... at best you look at the <a href="https://developer.github.com/v3/">GitHub REST API</a> or
+                        the <a href="http://spring.io/guides/gs/accessing-data-rest/">Spring Data REST Docs</a> to get a feel for good API design. And if you
+                        are ever in the position to nag about someones API just ask him <em>"Does it come with <a href="http://spring.io/understanding/HATEOAS">HATEOAS</a>?"</em> and you will immediately sound
+                        like an expert. Then take a deep sip of your coffee, lean back and nod your head constantly to everything beeing said as if everything
+                        being said is boring you ....
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <code>iswoWeekNumber</code> is a <code>@PathParam</code> again.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Since it is a PUT Endpoint we will send some JSON-Request-Body from our JS-Controller or our CURL commands.
+                        This JSON-Body is being automatically parsed by JAX-WS into the <code>KitchenDutyPlanningResourceUserModel</code> and you can access it via <code>userParam</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We start a Transaction again but this time we choose <code>Void</code> as return type since we will do all our shenanigans inside the
+                        transaction.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Get the week by the isoWeekNumber using our <code>findUniqueWeek</code> helper method which we will define later - just trust me that
+                        it will return one for the isoWeekNumber passed or null.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        If the week is null we just create it on the fly and continue.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Same goes for the <code>User</code>. First try to find the existing user and if the user does not exist create it.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we lookup if there is an existing many-to-many relationship between <code>User</code> and <code>Week</code> mapped by <code>UserToWeek</code>.
+                        Therefore I create a helper method <code>findRelationship</code> which returns an <code>UserToWeek</code> object representing an existing relationship or null.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        If the relationship is not null we skip out here since the relationship already exists.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        If the relationship is null we simply create it.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We always return HTTP 200 because in case an Exception is thrown JAX-WS will return HTTP 500 anyway.
+                        If you are designing a real API add a try/catch block and return some wrapped human readable errors
+                        and define HTTP Response codes for different error types. We are fine if we can check for HTTP 200 in our JS-Controller,
+                        and if the response code is not 200 we know something went wrong anyway.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <p>To break this up a little concerning readability now follows the <strong>DELETE Endpoint to remove Week assignments of Users</strong> in the same file.</p>
+
+        <div class="row">
+            <div class="col-md-8">
+                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", uniqueId='x890uji9099n', ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e90e472228d0512b90d6ef2f6f1b9f3cae91c542")), source='
+                |...
+                |
+                |    /**
+                |     * Remove the User from Week
+                |     *
+                |     * @param isoWeekNumber
+                |     * @return
+                |     */
+                |    @DELETE {{{point::1}}}
+                |    @Path("/week/{isoWeekNumber}/users")
+                |    @Produces({MediaType.APPLICATION_JSON})
+                |    @AnonymousAllowed
+                |    public Response deleteUserFomWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+                |                                  final KitchenDutyPlanningResourceUserModel userParam) { {{{point::2}}}
+                |        activeObjects.executeInTransaction(new TransactionCallback<Void>() {
+                |            @Override
+                |            public Void doInTransaction() {
+                |                //
+                |                // WEEK
+                |                //
+                |                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek( {{{point::3}}}
+                |                                 activeObjects,
+                |                                 isoWeekNumber
+                |                );
+                |                if (week == null) {
+                |                    // week does not exist => no relation to delete
+                |                    return null;
+                |                }
+                |
+                |                //
+                |                // USER
+                |                //
+                |                User user = KitchenDutyActiveObjectHelper.findUniqueUser( {{{point::4}}}
+                |                                 activeObjects,
+                |                                 userParam.getUsername()
+                |                );
+                |                if (user == null) {
+                |                    // user does not exist => no relation to delete
+                |                    return null;
+                |                }
+                |
+                |                //
+                |                // Delete ManyToMany Relationship
+                |                //
+                |                UserToWeek relationship = KitchenDutyActiveObjectHelper
+                |                                             .findRelationship(activeObjects, user, week); {{{point::5}}}
+                |                if (relationship != null) {
+                |                    activeObjects.delete(relationship); {{{point::6}}}
+                |                }
+                |
+                |                return null;
+                |            }
+                |        });
+                |        return Response.ok().build();
+                |    }
+                |...
+                ') }}
+            </div>
+            <div class="col-md-4">
+                <!-- no sticky here since block is too big -->
+                <div class="list-group cs-source-point-list" data-source-target="x890uji9099n">
+                    <div class="list-group-item cs-source-point-list__item">
+                        We define our Endpoint with method <code>@DELETE</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The JSON-Request-Body will be parsed into our POJO the same way as in the Endpoint above.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        In the same way as in the PUT Endpoint we try to find an existing Week by our <code>findUniqueWeek</code>
+                        helper method. And if it is null it indicates that there cannot be any existing relation between user and week
+                        and that we can skip out here.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Same goes for the User. Find existing user by <code>findUniqueUser</code>
+                        helper method. And if it is null it indicates that there cannot be any existing relation between user and week
+                        and that we can skip out here.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        If both user and week already exist try to find an existing relation by <code>findRelationship</code>
+                        helper method. And if it is not null delete the relationship.
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <p>
-            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e90e472228d0512b90d6ef2f6f1b9f3cae91c542")), source='
-            |    /**
-            |     * Add the User to the Week
-            |     *
-            |     * @param isoWeekNumber
-            |     * @return
-            |     */
-            |    @PUT
-            |    @Path("/week/{isoWeekNumber}/users")
-            |    @Produces({MediaType.APPLICATION_JSON})
-            |    @AnonymousAllowed
-            |    public Response addUserToWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
-            |                                  final KitchenDutyPlanningResourceUserModel userParam) {
-            |        activeObjects.executeInTransaction(new TransactionCallback<Void>() {
-            |            @Override
-            |            public Void doInTransaction() {
-            |                //
-            |                // WEEK
-            |                //
-            |                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
-            |                if (week == null) {
-            |                    week = activeObjects.create(Week.class, new DBParam("WEEK", isoWeekNumber));
-            |                    week.save();
-            |                }
-            |
-            |                //
-            |                // USER
-            |                //
-            |                User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
-            |                if (user == null) {
-            |                    user = activeObjects.create(User.class, new DBParam("NAME", userParam.getUsername()));
-            |                    user.save();
-            |                }
-            |
-            |                //
-            |                // Establish ManyToMany Relationship
-            |                //
-            |                UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
-            |                if (relationship != null) {
-            |                    // relation already exists
-            |                    return null;
-            |                }
-            |                relationship = activeObjects.create(UserToWeek.class);
-            |                relationship.setUser(user);
-            |                relationship.setWeek(week);
-            |                relationship.save();
-            |
-            |                return null;
-            |            }
-            |        });
-            |        return Response.ok().build();
-            |    }
-            |
-            |
-            |    /**
-            |     * Remove the User from Week
-            |     *
-            |     * @param isoWeekNumber
-            |     * @return
-            |     */
-            |    @DELETE
-            |    @Path("/week/{isoWeekNumber}/users")
-            |    @Produces({MediaType.APPLICATION_JSON})
-            |    @AnonymousAllowed
-            |    public Response deleteUserFomWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
-            |                                  final KitchenDutyPlanningResourceUserModel userParam) {
-            |        activeObjects.executeInTransaction(new TransactionCallback<Void>() {
-            |            @Override
-            |            public Void doInTransaction() {
-            |                //
-            |                // WEEK
-            |                //
-            |                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
-            |                if (week == null) {
-            |                    // week does not exist => no relation to delete
-            |                    return null;
-            |                }
-            |
-            |                //
-            |                // USER
-            |                //
-            |                User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
-            |                if (user == null) {
-            |                    // user does not exist => no relation to delete
-            |                    return null;
-            |                }
-            |
-            |                //
-            |                // Delete ManyToMany Relationship
-            |                //
-            |                UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
-            |                if (relationship != null) {
-            |                    activeObjects.delete(relationship);
-            |                }
-            |
-            |                return null;
-            |            }
-            |        });
-            |        return Response.ok().build();
-            |    }
-            ') }}
+            To prevent code duplication and improve readability of Endpoint-code I <strong>moved some common data-access-spaghetti-code into some static Methods</strong> of the <code>KitchenDutyActiveObjectHelper</code> Class.
+            It should be pretty self-explanatory.
         </p>
-
-        <p>I moved some common data access spaghetti code to some static Methods a <code>KitchenDutyActiveObjectHelper</code> Class.</p>
 
         <p>
             {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/ao/", filename="KitchenDutyActiveObjectHelper.java", ghBaseUrl=(gitHubBaseUrlForStep4 | replace("__COMMIT__", "e90e472228d0512b90d6ef2f6f1b9f3cae91c542")), source='
@@ -1144,14 +1264,11 @@
             ') }}
         </p>
 
-        <p>Basically we query the table with unique constraints on the columns of the where clause so we get either one result or no result.</p>
-        <p>Note that these Queries need to be spaced (at least the doc says so) otherwise Exceptions will punch you.</p>
-
 
 
         <p>Now we can fire up <code>atlas-run</code> once more and wait for JIRA startup.</p>
 
-        <p><strong>Let's add a user called jimmy to a week 42</strong>. Fire up this curl command and you should return a HTTP 200 telling you it worked.
+        <p><strong>Let's add a user called jimmy to a week 42</strong>. Fire up this curl command and it should return a HTTP 200 telling you it worked <em>(we use the CURL <code>-i</code> parameter to echo out the response headers and return code)</code></em>.
         We have written our Endpoints in a way so that the CURLs are idemponent. So if you fire it a second time you will get a HTTP 200 as well but since jimmy already is assigned to week 42 nothing happens internally.</p>
 
         <p>And by the way, we don't need to pass an ID for user since we don't know it and since the username has a unique constraint which makes it our technical primary key.</p>
@@ -1180,41 +1297,41 @@
         |[{"id":3,"username":"jimmy"}]
         ') }}
 
+        <p>&nbsp;</p>
+
+        <p>Now we have all our Endpoints in place and can continue to the next step. There we will actually use our Endpoints from the JS-Controller.</p>
 
 
 
 
 
-        <div class="alert alert-danger">THIS PAGE IS UNDER CONSTRUCTION. WORK IN PROGRESS</div>
 
+        <div class="cs-v-spacer"></div>
+        <div class="cs-tutorial-step-review">
+            <div class="cs-tutorial-step-review__headline">
+                <strong>You have completed Step 4.</strong> Good Job! You can check out this steps solution on GitHub
+            </div>
+            <div class="cs-tutorial-step-review__link">
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin">
+                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin
+                </a>
+            </div>
+        </div>
+        <div class="cs-v-spacer"></div>
+        <p>The graphic shows marked green <strong>which components we implemented in this section</strong>.</p>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
+                {{ interactiveGraphic('p07-ig01', 'kitchen-duty-planning-page--component-overview',
+                '{
+                    "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller", "kitchen-duty-resource", "kitchen-duty-planning-model" ],
+                    "markedAsTodo": [  ],
+                    "markedAsGrayedOut": [ ],
+                    "onClick": [ ]
+                }')
+                }}
+            </div>
+        </div>
 
-        <!--
-                <div class="cs-v-spacer"></div>
-                <div class="cs-tutorial-step-review">
-                    <div class="cs-tutorial-step-review__headline">
-                        <strong>You have completed Step 4.</strong> Good Job! You can check out this steps solution on GitHub
-                    </div>
-                    <div class="cs-tutorial-step-review__link">
-                        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin">
-                            https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin
-                        </a>
-                    </div>
-                </div>
-                <div class="cs-v-spacer"></div>
-                <p>The graphic shows marked green <strong>which components we implemented in this section</strong>.</p>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1 col-xl-8 col-xl-offset-2">
-                        {{ interactiveGraphic('p07-ig01', 'kitchen-duty-planning-page--component-overview',
-                        '{
-                            "markedAsDone": [ "webwork-action", "html-view", "user-resource", "user-search-resource-model", "user-js-controller", "kitchen-duty-resource", "kitchen-duty-planning-model" ],
-                            "markedAsTodo": [  ],
-                            "markedAsGrayedOut": [ ],
-                            "onClick": [ ]
-                        }')
-                        }}
-                    </div>
-                </div>
-        -->
         <div class="cs-v-spacer cs-v-spacer--big"></div>
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 

@@ -62,14 +62,12 @@ abort_build_if_previous_command_terminated_with_error
 # NPM DEPLOY
 #
 
-# FIXME: FIRST TEST BUILD THEN DEPLOY
-
-#npm run ndes deployToGitHubPages \
-#    as "jenkins" \
-#    withEmail "noreply@comsysto.com" \
-#    withGitHubAuthUsername $GITHUB_AUTH_USER \
-#    withGitHubAuthToken $GITHUB_AUTH_TOKEN \
-#    toRepository https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira.git \
-#    fromSource "./build"
-#abort_build_if_previous_command_terminated_with_error
-#echo "Deployed to https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/"
+npm run ndes deployToGitHubPages \
+    as "jenkins" \
+    withEmail "noreply@comsysto.com" \
+    withGitHubAuthUsername $GITHUB_AUTH_USER \
+    withGitHubAuthToken $GITHUB_AUTH_TOKEN \
+    toRepository https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira.git \
+    fromSource "./build"
+abort_build_if_previous_command_terminated_with_error
+echo "Deployed to https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/"

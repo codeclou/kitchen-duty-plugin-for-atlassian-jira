@@ -5,6 +5,12 @@
         <link>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/</link>
         <description>An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by comSysto</description>
         <item>
+            <title>Atlassian announces React JS as new UI Kit</title>
+            <link>https://bitbucket.org/atlassian/aui-react</link>
+            <description>Atlassian has announced the future of AUI will be based on React JS.</description>
+            <pubDate>Thu, 26th Jan 2017</pubDate>
+        </item>
+        <item>
             <title>Kitchen Duty Planning REST Resource (step 4) finished</title>
             <link>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/</link>
             <description>Step 4 of the tutorial is finished and describes how to persist Data with Active Objects and provide a REST API on top of that.</description>

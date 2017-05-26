@@ -77,7 +77,7 @@ body {
 
 .cs-content-wrapper {
     font-family: 'Open Sans', sans-serif;
-    margin-top:90px;
+    margin-top:130px;
     margin-bottom:60px;
     margin-left:0;
     margin-right:0;
@@ -100,7 +100,7 @@ body {
 }
 
 .cs-sidebar-wrapper {
-    top:90px;
+    top:130px;
     bottom:60px;
     left:-350px;
     width:350px;
@@ -278,11 +278,29 @@ body {
     color:#efefef !important;
 }
 
+.cs-page-info-banner {
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:40px;
+    background-color: #FFB800;
+    z-index:500;
+    overflow:hidden;
+}
+.cs-page-info-banner-inner {
+    padding:6px;
+    color:#555;
+}
+.cs-page-info-banner-inner a {
+    color:#555;
+    text-decoration: underline;
+}
 
 /* NORMAL PAGE */
 .cs-page-header {
     position:fixed;
-    top:0px;
+    top:40px;
     left:0px;
     width:100%;
     z-index:500;
@@ -299,7 +317,7 @@ body {
 @include media-breakpoint-down(md) {
     .cs-page-header {
         position: relative;
-        top:0;
+        top:40px;
         bottom:0;
         left:0;
         right:0;

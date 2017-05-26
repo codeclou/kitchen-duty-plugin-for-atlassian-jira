@@ -5,8 +5,14 @@
         <link>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/</link>
         <description>An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by comSysto</description>
         <item>
+            <title>Atlassian Summit 2017 was awesome!</title>
+            <link>https://www.atlassian.com/atlascamp/2017/archives/build-addons/creating-your-own-server-add-on-that-customizes-confluence-or-jira</link>
+            <description>Checkout the must watch AtlasCamp 2017 Sessions on how to build Server AddOns.</description>
+            <pubDate>Fri, 26th May 2017</pubDate>
+        </item>
+        <item>
             <title>Atlassian announces React JS as new UI Kit</title>
-            <link>https://bitbucket.org/atlassian/aui-react</link>
+            <link>https://atlaskit.atlassian.com/</link>
             <description>Atlassian has announced the future of AUI will be based on React JS.</description>
             <pubDate>Thu, 26th Jan 2017</pubDate>
         </item>

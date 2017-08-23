@@ -310,7 +310,7 @@
                         We want that all REST Endpoints of our REST Controller will have an URL-prefix <code>/user</code>, therefore we use the <code>@Path</code> annotation.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        The <code>UserSearchService</code> is a JIRA Service which will provide us methods to search for users. This Servie needs to be imported from a foreign OSGi bundle, we will see about that later.
+                        The <code>UserSearchService</code> is a JIRA Service which will provide us methods to search for users. This Service needs to be imported from a foreign OSGi bundle, we will see about that later.
                         Why not use <code>@ComponentImport</code> here you ask? Well try and if it works for you that would be nice. But I am getting some strange WADLGenerator Exceptions when running <code>atlas-integration-test</code>.
                         Therefore I use a little trick and import the component somewhere else. Once it is imported somewhere inside our bundle we can use it here. We will see about that later.
                     </div>

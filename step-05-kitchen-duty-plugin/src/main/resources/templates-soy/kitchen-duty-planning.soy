@@ -1,29 +1,66 @@
 {namespace JIRA.Templates.KDP}
 /**
+ * Kitchen Duty Planning Page - Base Template
+ */
+{template .planningPage}
+    <form class="aui" id="kdp-user-select-form">
+        <div id="kdp-planning-page-week-container"></div>
+        <div id="kdp-planning-page-week-users-container"></div>
+    </form>
+{/template}
+
+/**
+ * Kitchen Duty Planning Page - Week Select Template
+ */
+{template .planningPageWeek}
+    <h4 class="kdp-step-headline">1. Select Week</h4>
+    <div class="kdp-step-content">
+        <input
+          class="aui-date-picker aui-button"
+          id="week-picker"
+          type="date"
+          max="2050-01-25"
+          min="2011-12-25"
+        />
+    </div>
+{/template}
+
+/**
  * Kitchen Duty Planning Page - User Search Template
  */
-{template .userSearch}
-<form class="aui" id="kdp-user-select-form">
-
-    <div class="field-group">
-        <label for="kdp-user-select">Users</label>
-        <div id="kdp-user-select"
-                 name="kdp-user-select"
-                 class="kdp-aui-select"
-                 multiple=""
-                 placeholder="start typing a username ...">
-        </div>
-        <div class="description">The users that should have kitchen duty.</div>
+{template .planningPageWeekUsers}
+    {@param? isoWeek: int}
+    <h4 class="kdp-step-headline">
+        2. Kitchen Duty for Week&nbsp;
+        {if $isoWeek != null }
+            <aui-badge class="aui-badge-primary">
+                <span id="iso-week-label">{isoWeek}</span>
+            </aui-badge>
+        {else}
+            <aui-badge><span id="iso-week-label">...</span></aui-badge>
+        {/if}
+    </h4>
+    <div class="kdp-step-content">
+        {if $isoWeek == null }
+            <div>- no week selected -</div>
+        {else}
+            <div >Users on kitchen duty for selected week:</div>
+            <div
+              id="kdp-user-select"
+              name="kdp-user-select"
+              class="kdp-aui-select"
+              multiple=""
+              placeholder="start typing a username ..."
+            ></div>
+            <br/><br/>
+            <input
+              class="button submit"
+              type="submit"
+              id="kdp-user-select-save-button"
+              value="save"
+            />
+        {/if}
     </div>
-    <div class="buttons-container">
-        <div class="buttons">
-            <input class="button submit" type="submit"
-                   id="kdp-user-select-save-button"
-                   value="show"/>
-        </div>
-    </div>
-
-</form>
 {/template}
 
 

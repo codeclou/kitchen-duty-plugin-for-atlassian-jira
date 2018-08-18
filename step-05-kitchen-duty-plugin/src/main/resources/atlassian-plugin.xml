@@ -22,11 +22,14 @@
     <dependency>com.atlassian.auiplugin:ajs</dependency>
     <dependency>com.atlassian.auiplugin:aui-select2</dependency>
     <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency>
+    <dependency>com.atlassian.auiplugin:aui-date-picker</dependency>
     <transformation extension="soy">
       <transformer key="soyTransformer">
         <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
       </transformer>
     </transformation>
+    <resource type="download" name="momentjs.js"
+              location="/js/3rdparty/moment-2.22.2.min.js"/>
     <resource type="download" name="kitchen-duty-planning-soy.js"
               location="templates-soy/kitchen-duty-planning.soy"/>
     <resource type="download" name="kitchen-duty-plugin--planning-page-controller.js"

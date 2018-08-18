@@ -23,8 +23,16 @@ public class KitchenDutyActiveObjectHelper {
 
     public static UserToWeek findRelationship(ActiveObjects activeObjects, User user, Week week) {
         UserToWeek[] relationships = activeObjects.find(UserToWeek.class, Query.select().where("USER_ID = ? AND WEEK_ID = ?", user.getID(), week.getID()));
-        if ((relationships  != null && relationships .length > 0)) {
+        if ((relationships != null && relationships.length > 0)) {
             return relationships[0];
+        }
+        return null;
+    }
+
+    public static UserToWeek[] findAllRelationships(ActiveObjects activeObjects, Week week) {
+        UserToWeek[] relationships = activeObjects.find(UserToWeek.class, Query.select().where("WEEK_ID = ?", week.getID()));
+        if ((relationships != null && relationships.length > 0)) {
+            return relationships;
         }
         return null;
     }

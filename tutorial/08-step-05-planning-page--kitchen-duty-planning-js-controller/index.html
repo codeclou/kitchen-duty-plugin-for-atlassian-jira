@@ -64,7 +64,7 @@
                 <span class="cs-news-right" style="color:#fff;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i></span>
             </a>
         </div>
-        <div class="col-md-3 text-xs-center hidden-sm-down" style="padding-top:10px;">
+        <div class="col-md-3 text-center hidden-sm-down" style="padding-top:10px;">
 
             <!--
             <a class="btn btn-primary btn-borderless" href="/kitchen-duty-plugin-for-atlassian-jira/news/" target="_blank">
@@ -72,7 +72,7 @@
             </a>
             -->
         </div>
-        <div class="col-md-4  hidden-sm-down cs-page-header-cs-logo text-xs-right cs-page-header--right-fix">
+        <div class="col-md-4  hidden-sm-down cs-page-header-cs-logo text-right cs-page-header--right-fix">
             <a href="https://comsysto.com/leistungen/atlassian-solutions" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="Comsysto Reply" style="width:150px; margin-top:-20px;"/></a>
         </div>
     </div>
@@ -216,95 +216,832 @@
 </h2>
 
 
+        <!--             COMMIT BEFORE STEP 5: 9bffb0671a25637faa7641dc3393163a043614db -->
 
-
-<!--        <div class="alert alert-danger">THIS PAGE IS UNDER CONSTRUCTION. WORK IN PROGRESS</div>-->
-
-        <p>Some time has past since I worked on this Plugin tutorial, it is mid 2018 now, and we need to clarify some things [<a href="https://community.developer.atlassian.com/t/the-license-for-aui-7-is-changing">1</a>].</p>
-
-        <ul>
-            <li><strong><a href="https://atlaskit.atlassian.com/">AtlasKit library</a></strong> is based on ReactJS and is used for <strong><a href="https://developer.atlassian.com/cloud/jira/platform/integrating-with-jira-cloud/">Cloud Plugin Development</a></strong>.</li>
-            <li><strong><a href="https://docs.atlassian.com/aui/">AUI library</a></strong> is based on JQuery and is used for <strong>Server Plugin Development.</strong></li>
-        </ul>
-
-        <p>
-            That means we will continue using AUI for our plugin. And even though we could hit it with NPM, React, Angular, Webpack and all
-            that fancy shenanigans, we will write oldschool ES5 JavaScript code that directly executes in all browsers including ol' grandpa IE11.
-            I leave the crazy JavaScript build chain stuff up to you. The mechanisms explained in the tutorial are the same for both ways.
-        </p>
-
-
-
-
-        
-        
-        
-
-        
-        
-
-        
-
-        
+                
 <div class="cs-working-on-it">
     We are working on it. Please visit again some time.
 </div>
 
 
-        <!--
-        https://atlaskit.atlassian.com/
-
-        AtlasCamp 2017 Server Add-ons for Front-end Developers
-
-        https://www.atlassian.com/atlascamp/2017/archives/build-addons/server-add-ons-for-front-end-developers
-
-        WRM - Web Resource Manager
-
-          (1) Lazy loading AMD Module
-          (2) DataProvider wrm/data min 35:00 video
-          (3) QuickReload enable + quickreload.properties min 38:23 => load minfied js code
 
 
-        -->
+        <p>Some time has past since I worked on this Plugin tutorial - <strong>it is mid 2018 now</strong> - and we need to catch up to some things.</p>
+
+        <h3 class="cs-headline cs-headline--s">What changed?</h3>
+
+
+        <p><strong>1. <a href="https://community.developer.atlassian.com/t/the-license-for-aui-7-is-changing">State and future of AUI library</a>:</strong></p>
+        <ul>
+            <li><strong><a href="https://atlaskit.atlassian.com/">AtlasKit library</a></strong> is based on ReactJS and is used for <strong><a href="https://developer.atlassian.com/cloud/jira/platform/integrating-with-jira-cloud/">Cloud Plugin Development</a></strong>.</li>
+            <li><strong><a href="https://docs.atlassian.com/aui/">AUI library</a></strong> is based on JQuery and is used for <strong>Server Plugin Development.</strong></li>
+            <li>
+                That means we will continue using AUI for our plugin. And even though we could hit it with NPM, React, Angular, Webpack and all
+                that fancy shenanigans, we will write oldschool ES5 JavaScript code that directly executes in all browsers including ol' grandpa IE11.
+                I leave the crazy JavaScript build chain stuff up to you. The mechanisms explained in the tutorial are the same for both ways.
+            </li>
+        </ul>
+
+        <p><strong>2. AUI Redesign + JIRA version upgrade</strong></p>
+
+        <ul>
+            <li>We now compile against JIRA 7.10 and use Atlassian SDK version 6.3.10 (simply upgrade your SDK).</li>
+            <li>
+                JIRA Software underwent a redesign now looks like this. But all components of AUI just work the same way.<br>
+
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-jira-now.png" data-lightbox="05-step" data-title="Step 5 - JIRA Redesign">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-jira-now.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - JIRA Redesign">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+
+        <h3 class="cs-headline cs-headline--s">REST API Endpoint</h3>
+
+        <p>In step 4 we implemented logic to persist only one user for a week. We need to change that to multiple users per week.</p>
+
+        <p>
+            Therefore I have changed the endoints to do so. Basically I added just som for-each loops and some missing <code>activeObjects.flush(entity)</code> statements.
+            Since in the user selectfield (AUI Select) you can remove users and the HTTP PUT Request always contains a full list of users, we do not need the explicit delete-endpoint anymore.
+            We simply update the relationships in our <code>@PUT</code> endpoint.
+        </p>
+
+
+        <div class="row">
+            <div class="col-md-12">
+            
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
+    
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+...
+
+@Named
+@Path(&quot;/planning&quot;)
+public class KitchenDutyPlanningResource {
+...
+
+
+    /*
+     * Get all Users assigned to the isoWeekNumber.
+     */
+    @GET
+    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response getUsersForWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber) {
+        Week week = activeObjects.executeInTransaction(new TransactionCallback&lt;Week&gt;() {
+            @Override
+            public Week doInTransaction() {
+                Week[] weeks = activeObjects.find(Week.class, Query.select().where(&quot;WEEK = ?&quot;, isoWeekNumber));
+                if (weeks != null &amp;&amp; weeks.length &gt; 0) {
+                    return weeks[0];
+                }
+                return null;
+            }
+        });
+        List&lt;KitchenDutyPlanningResourceUserModel&gt; users = new ArrayList&lt;&gt;();
+        if (week != null) {
+            UserToWeek[] relationships = activeObjects.executeInTransaction(new TransactionCallback&lt;UserToWeek[]&gt;() {
+                @Override
+                public UserToWeek[] doInTransaction() {
+                    return KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
+                }
+            });
+            if (relationships != null) {
+                for (UserToWeek userToWeek : relationships) {
+                    users.add(new KitchenDutyPlanningResourceUserModel(userToWeek.getUser().getID(), userToWeek.getUser().getName()));
+                }
+            }
+        }
+        return Response.ok(users).build();
+    }
+
+    /*
+     * Add the Users to the Week
+     */
+    @PUT
+    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response addUserToWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber,
+                                  final List&lt;KitchenDutyPlanningResourceUserModel&gt; userParams) {
+        activeObjects.executeInTransaction(new TransactionCallback&lt;Void&gt;() {
+            @Override
+            public Void doInTransaction() {
+                //
+                // WEEK
+                //
+                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+                if (week == null) {
+                    week = activeObjects.create(Week.class, new DBParam(&quot;WEEK&quot;, isoWeekNumber));
+                    week.save();
+                    activeObjects.flush(week);
+                }
+
+                //
+                // CLEANUP EXISTING RELATIONSHIPS
+                //
+                UserToWeek[] existingRelationships = KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
+                if (existingRelationships != null) {
+                    for (UserToWeek existingRelationship : existingRelationships) {
+                        activeObjects.delete(existingRelationship);
+                        activeObjects.flush(existingRelationship);
+                    }
+                }
+
+                //
+                // USER
+                //
+                for (KitchenDutyPlanningResourceUserModel userParam : userParams) {
+                    User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
+                    if (user == null) {
+                        user = activeObjects.create(User.class, new DBParam(&quot;NAME&quot;, userParam.getUsername()));
+                        user.save();
+                        activeObjects.flush(user);
+                    }
+                    //
+                    // Establish ManyToMany Relationship
+                    //
+                    UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
+                    if (relationship == null) {
+                        relationship = activeObjects.create(UserToWeek.class);
+                        relationship.setUser(user);
+                        relationship.setWeek(week);
+                        relationship.save();
+                        activeObjects.flush(relationship);
+                    }
+                }
+
+                return null;
+            }
+        });
+        return Response.ok().build();
+    }"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+...
+
+<span class="hljs-annotation">@Named</span>
+<span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/planning"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyPlanningResource</span> </span>{
+...
+
+
+    <span class="hljs-comment">/*
+     * Get all Users assigned to the isoWeekNumber.
+     */</span>
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">getUsersForWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber) </span>{
+        Week week = activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Week&gt;() {
+            <span class="hljs-annotation">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Week <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span> </span>{
+                Week[] weeks = activeObjects.find(Week.class, Query.select().where(<span class="hljs-string">"WEEK = ?"</span>, isoWeekNumber));
+                <span class="hljs-keyword">if</span> (weeks != <span class="hljs-keyword">null</span> &amp;&amp; weeks.length &gt; <span class="hljs-number">0</span>) {
+                    <span class="hljs-keyword">return</span> weeks[<span class="hljs-number">0</span>];
+                }
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            }
+        });
+        List&lt;KitchenDutyPlanningResourceUserModel&gt; users = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        <span class="hljs-keyword">if</span> (week != <span class="hljs-keyword">null</span>) {
+            UserToWeek[] relationships = activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;UserToWeek[]&gt;() {
+                <span class="hljs-annotation">@Override</span>
+                <span class="hljs-keyword">public</span> UserToWeek[] doInTransaction() {
+                    <span class="hljs-keyword">return</span> KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
+                }
+            });
+            <span class="hljs-keyword">if</span> (relationships != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">for</span> (UserToWeek userToWeek : relationships) {
+                    users.add(<span class="hljs-keyword">new</span> KitchenDutyPlanningResourceUserModel(userToWeek.getUser().getID(), userToWeek.getUser().getName()));
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> Response.ok(users).build();
+    }
+
+    <span class="hljs-comment">/*
+     * Add the Users to the Week
+     */</span>
+    <span class="hljs-annotation">@PUT</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">addUserToWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber,
+                                  <span class="hljs-keyword">final</span> List&lt;KitchenDutyPlanningResourceUserModel&gt; userParams) </span>{
+        activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Void&gt;() {
+            <span class="hljs-annotation">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Void <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span> </span>{
+                <span class="hljs-comment">//</span>
+                <span class="hljs-comment">// WEEK</span>
+                <span class="hljs-comment">//</span>
+                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+                <span class="hljs-keyword">if</span> (week == <span class="hljs-keyword">null</span>) {
+                    week = activeObjects.create(Week.class, <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"WEEK"</span>, isoWeekNumber));
+                    week.save();
+                    activeObjects.flush(week);
+                }
+
+                <span class="hljs-comment">//</span>
+                <span class="hljs-comment">// CLEANUP EXISTING RELATIONSHIPS</span>
+                <span class="hljs-comment">//</span>
+                UserToWeek[] existingRelationships = KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
+                <span class="hljs-keyword">if</span> (existingRelationships != <span class="hljs-keyword">null</span>) {
+                    <span class="hljs-keyword">for</span> (UserToWeek existingRelationship : existingRelationships) {
+                        activeObjects.delete(existingRelationship);
+                        activeObjects.flush(existingRelationship);
+                    }
+                }
+
+                <span class="hljs-comment">//</span>
+                <span class="hljs-comment">// USER</span>
+                <span class="hljs-comment">//</span>
+                <span class="hljs-keyword">for</span> (KitchenDutyPlanningResourceUserModel userParam : userParams) {
+                    User user = KitchenDutyActiveObjectHelper.findUniqueUser(activeObjects, userParam.getUsername());
+                    <span class="hljs-keyword">if</span> (user == <span class="hljs-keyword">null</span>) {
+                        user = activeObjects.create(User.class, <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"NAME"</span>, userParam.getUsername()));
+                        user.save();
+                        activeObjects.flush(user);
+                    }
+                    <span class="hljs-comment">//</span>
+                    <span class="hljs-comment">// Establish ManyToMany Relationship</span>
+                    <span class="hljs-comment">//</span>
+                    UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
+                    <span class="hljs-keyword">if</span> (relationship == <span class="hljs-keyword">null</span>) {
+                        relationship = activeObjects.create(UserToWeek.class);
+                        relationship.setUser(user);
+                        relationship.setWeek(week);
+                        relationship.save();
+                        activeObjects.flush(relationship);
+                    }
+                }
+
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            }
+        });
+        <span class="hljs-keyword">return</span> Response.ok().build();
+    }</code></pre>
+
+            </div>
+        </div>
+
+        <h3 class="cs-headline cs-headline--s">Moment JS and AUI Preparations</h3>
+
+        <p>
+            We need to add the dependency for the <a href="https://docs.atlassian.com/aui/7.9.5/docs/date-picker.html">AUI date picker</a> to our <code>atlassian-plugin.xml</code>
+            and put a copy of <a href="http://momentjs.com/"><code>moment.min.js</code></a> inside <code>src/main/resources/js/3rdparty/</code>.
+        </p>
+        <p>
+        
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/resources/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/">.../</span>atlassian-plugin.xml
+    
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="&lt;web-resource key=&quot;kitchen-duty-plugin-resources--planning-page&quot; name=&quot;kitchen-duty-plugin Web Resources for Planning Page&quot;&gt;
+  &lt;dependency&gt;com.atlassian.auiplugin:ajs&lt;/dependency&gt;
+  &lt;dependency&gt;com.atlassian.auiplugin:aui-select2&lt;/dependency&gt;
+  &lt;dependency&gt;com.atlassian.auiplugin:aui-experimental-soy-templates&lt;/dependency&gt;
+  &lt;dependency&gt;com.atlassian.auiplugin:aui-date-picker&lt;/dependency&gt; 
+  &lt;transformation extension=&quot;soy&quot;&gt;
+    &lt;transformer key=&quot;soyTransformer&quot;&gt;
+      &lt;functions&gt;com.atlassian.confluence.plugins.soy:soy-core-functions&lt;/functions&gt;
+    &lt;/transformer&gt;
+  &lt;/transformation&gt;
+  &lt;resource type=&quot;download&quot; name=&quot;momentjs.js&quot;
+            location=&quot;/js/3rdparty/moment-2.22.2.min.js&quot;/&gt;
+  &lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-planning-soy.js&quot;
+            location=&quot;templates-soy/kitchen-duty-planning.soy&quot;/&gt;
+  &lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-plugin--planning-page-controller.js&quot;
+            location=&quot;/js/kitchen-duty-plugin--planning-page-controller.js&quot;/&gt; 
+  &lt;context&gt;kitchen-duty-plugin&lt;/context&gt;
+&lt;/web-resource&gt;"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">web-resource</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-plugin-resources--planning-page"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin Web Resources for Planning Page"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:ajs<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:aui-select2<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:aui-experimental-soy-templates<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:aui-date-picker<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span> <span class="cs-source-point" data-cs-source-point-id="u89hionbhvufghoijklnjbhg" data-cs-source-point-number="1"></span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">transformation</span> <span class="hljs-attribute">extension</span>=<span class="hljs-value">"soy"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">transformer</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"soyTransformer"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">functions</span>&gt;</span>com.atlassian.confluence.plugins.soy:soy-core-functions<span class="hljs-tag">&lt;/<span class="hljs-title">functions</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">transformer</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">transformation</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"momentjs.js"</span>
+            <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/3rdparty/moment-2.22.2.min.js"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-planning-soy.js"</span>
+            <span class="hljs-attribute">location</span>=<span class="hljs-value">"templates-soy/kitchen-duty-planning.soy"</span>/&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin--planning-page-controller.js"</span>
+            <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/kitchen-duty-plugin--planning-page-controller.js"</span>/&gt;</span> <span class="cs-source-point" data-cs-source-point-id="u89hionbhvufghoijklnjbhg" data-cs-source-point-number="2"></span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">context</span>&gt;</span>kitchen-duty-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">context</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">web-resource</span>&gt;</span></code></pre>
+
+        </p>
+
+        <h3 class="cs-headline cs-headline--s">JS Controller</h3>
+
+        <p>
+            We <strong>edit our Planning Page JS-Controller</strong> file in <code>/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</code>.
+            I have extended the existing code to load and save the users per week. This JS code uses now multiple soy templates which you will see below.
+        </p>
 
         
 
-        
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/resources/js/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/js/">.../</span>kitchen-duty-plugin--planning-page-controller.js
+    
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="var showSuccessFlag = function(message) {
+    require([&#39;aui/flag&#39;], function(flag) {
+        flag({
+            type: &#39;success&#39;,
+            title: &#39;Kitchen Duty Plugin&#39;,
+            close: &#39;auto&#39;,
+            body: message
+        });
+    });
+};
+var showErrorFlag = function(message) {
+    require([&#39;aui/flag&#39;], function(flag) {
+        flag({
+            type: &#39;error&#39;,
+            title: &#39;Kitchen Duty Plugin&#39;,
+            close: &#39;auto&#39;,
+            body: message
+        });
+    });
+};
+
+var initUserSearch = function(weekIsoWeekNumber) {
+    // Init SOY template
+    var planningPageWeekUsersTemplate = JIRA.Templates.KDP.planningPageWeekUsers({
+        isoWeek: weekIsoWeekNumber
+    });
+    AJS.$(&#39;#kdp-planning-page-week-users-container&#39;).html(planningPageWeekUsersTemplate);
+
+    // Init actions
+    var auiUserSelectOptions = {
+        ajax: {
+            url: function () { return window.KDPrestUrl + &#39;/user/search&#39;; },
+            dataType: &#39;json&#39;,
+            delay: 250,
+            data: function (searchTerm) { return { query: searchTerm }; },
+            results: function (data) { return { results: data }; },
+            cache: true
+        },
+        minimumInputLength: 1,
+        tags: &#39;true&#39;
+    };
+    AJS.$(&#39;#kdp-user-select&#39;).auiSelect2(auiUserSelectOptions);
+
+    // Load initial values from REST API and set for aui-select
+    if (weekIsoWeekNumber !== null) {
+        AJS.$.ajax({
+            url: window.KDPrestUrl + &#39;/planning/week/&#39; + weekIsoWeekNumber + &#39;/users&#39;,
+            dataType: &#39;json&#39;,
+            success: function(users) {
+                var selectedUserList = [];
+                if (users !== null) {
+                    users.forEach(function(user) {
+                        selectedUserList.push({ id: user.username, text: user.username });
+                    });
+                    AJS.$(&#39;#kdp-user-select&#39;).select2(&#39;data&#39;, selectedUserList);
+                }
+            }
+        });
+    }
+
+    // Save users on save button click
+    AJS.$(&#39;#kdp-user-select-form&#39;).off(); // remove previous listeners
+    AJS.$(&#39;#kdp-user-select-form&#39;).submit(function (e) {
+        e.preventDefault();
+        var selectedUserList = [];
+        AJS.$(AJS.$(&#39;#kdp-user-select&#39;).select2(&#39;data&#39;)).each(function () {
+            // we need to transform the JSON sent to the Endpoint since it
+            // has to be in specific format
+            selectedUserList.push({ username: this.text });
+        });
+        AJS.$.ajax({
+            url: window.KDPrestUrl + &#39;/planning/week/&#39; + weekIsoWeekNumber + &#39;/users&#39;,
+            type: &#39;PUT&#39;,
+            contentType: &#39;application/json&#39;,
+            data: JSON.stringify(selectedUserList),
+            processData: false,
+            success: function() {
+                showSuccessFlag(&#39;Saved users for Week &#39; + weekIsoWeekNumber);
+            },
+            error: function() {
+                showErrorFlag(&#39;Failed to save users for Week &#39; + weekIsoWeekNumber);
+            }
+        });
+    });
+};
+
+var initWeekPicker = function() {
+    // Init SOY template
+    var planningPageWeekTemplate = JIRA.Templates.KDP.planningPageWeek();
+    AJS.$(&#39;#kdp-planning-page-week-container&#39;).html(planningPageWeekTemplate);
+
+    // Init actions
+    AJS.$(&#39;#week-picker&#39;).off(); // remove previous listeners
+    AJS.$(&#39;#week-picker&#39;).datePicker({&#39;overrideBrowserDefault&#39;: true});
+    AJS.$(&#39;#week-picker&#39;).change(function() {
+        var isoWeek = moment(AJS.$(&#39;#week-picker&#39;).val()).isoWeek();
+        initUserSearch(isoWeek);
+    });
+};
+
+AJS.toInit(function(){
+    AJS.log(&#39;KDP: Planning Page Controller initializing ...&#39;);
+    var baseUrl = AJS.params.baseURL;
+    var restUrl = baseUrl + &#39;/rest/kitchenduty/1.0&#39;;
+    window.KDPrestUrl = restUrl;
+
+    // Init Base SOY template
+    var planningPageTemplate = JIRA.Templates.KDP.planningPage();
+    AJS.$(&#39;#kdp-planning-page-container&#39;).html(planningPageTemplate);
+
+    // Init child templates
+    initWeekPicker();
+    initUserSearch(null);
+});"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">var</span> showSuccessFlag = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">message</span>) </span>{
+    <span class="hljs-built_in">require</span>([<span class="hljs-string">'aui/flag'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">flag</span>) </span>{
+        flag({
+            type: <span class="hljs-string">'success'</span>,
+            title: <span class="hljs-string">'Kitchen Duty Plugin'</span>,
+            close: <span class="hljs-string">'auto'</span>,
+            body: message
+        });
+    });
+};
+<span class="hljs-keyword">var</span> showErrorFlag = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">message</span>) </span>{
+    <span class="hljs-built_in">require</span>([<span class="hljs-string">'aui/flag'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">flag</span>) </span>{
+        flag({
+            type: <span class="hljs-string">'error'</span>,
+            title: <span class="hljs-string">'Kitchen Duty Plugin'</span>,
+            close: <span class="hljs-string">'auto'</span>,
+            body: message
+        });
+    });
+};
+
+<span class="hljs-keyword">var</span> initUserSearch = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">weekIsoWeekNumber</span>) </span>{
+    <span class="hljs-comment">// Init SOY template</span>
+    <span class="hljs-keyword">var</span> planningPageWeekUsersTemplate = JIRA.Templates.KDP.planningPageWeekUsers({
+        isoWeek: weekIsoWeekNumber
+    });
+    AJS.$(<span class="hljs-string">'#kdp-planning-page-week-users-container'</span>).html(planningPageWeekUsersTemplate);
+
+    <span class="hljs-comment">// Init actions</span>
+    <span class="hljs-keyword">var</span> auiUserSelectOptions = {
+        ajax: {
+            url: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-built_in">window</span>.KDPrestUrl + <span class="hljs-string">'/user/search'</span>; },
+            dataType: <span class="hljs-string">'json'</span>,
+            delay: <span class="hljs-number">250</span>,
+            data: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">searchTerm</span>) </span>{ <span class="hljs-keyword">return</span> { query: searchTerm }; },
+            results: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>{ <span class="hljs-keyword">return</span> { results: data }; },
+            cache: <span class="hljs-literal">true</span>
+        },
+        minimumInputLength: <span class="hljs-number">1</span>,
+        tags: <span class="hljs-string">'true'</span>
+    };
+    AJS.$(<span class="hljs-string">'#kdp-user-select'</span>).auiSelect2(auiUserSelectOptions);
+
+    <span class="hljs-comment">// Load initial values from REST API and set for aui-select</span>
+    <span class="hljs-keyword">if</span> (weekIsoWeekNumber !== <span class="hljs-literal">null</span>) {
+        AJS.$.ajax({
+            url: <span class="hljs-built_in">window</span>.KDPrestUrl + <span class="hljs-string">'/planning/week/'</span> + weekIsoWeekNumber + <span class="hljs-string">'/users'</span>,
+            dataType: <span class="hljs-string">'json'</span>,
+            success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">users</span>) </span>{
+                <span class="hljs-keyword">var</span> selectedUserList = [];
+                <span class="hljs-keyword">if</span> (users !== <span class="hljs-literal">null</span>) {
+                    users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
+                        selectedUserList.push({ id: user.username, text: user.username });
+                    });
+                    AJS.$(<span class="hljs-string">'#kdp-user-select'</span>).select2(<span class="hljs-string">'data'</span>, selectedUserList);
+                }
+            }
+        });
+    }
+
+    <span class="hljs-comment">// Save users on save button click</span>
+    AJS.$(<span class="hljs-string">'#kdp-user-select-form'</span>).off(); <span class="hljs-comment">// remove previous listeners</span>
+    AJS.$(<span class="hljs-string">'#kdp-user-select-form'</span>).submit(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+        e.preventDefault();
+        <span class="hljs-keyword">var</span> selectedUserList = [];
+        AJS.$(AJS.$(<span class="hljs-string">'#kdp-user-select'</span>).select2(<span class="hljs-string">'data'</span>)).each(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+            <span class="hljs-comment">// we need to transform the JSON sent to the Endpoint since it</span>
+            <span class="hljs-comment">// has to be in specific format</span>
+            selectedUserList.push({ username: <span class="hljs-keyword">this</span>.text });
+        });
+        AJS.$.ajax({
+            url: <span class="hljs-built_in">window</span>.KDPrestUrl + <span class="hljs-string">'/planning/week/'</span> + weekIsoWeekNumber + <span class="hljs-string">'/users'</span>,
+            type: <span class="hljs-string">'PUT'</span>,
+            contentType: <span class="hljs-string">'application/json'</span>,
+            data: <span class="hljs-built_in">JSON</span>.stringify(selectedUserList),
+            processData: <span class="hljs-literal">false</span>,
+            success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                showSuccessFlag(<span class="hljs-string">'Saved users for Week '</span> + weekIsoWeekNumber);
+            },
+            error: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                showErrorFlag(<span class="hljs-string">'Failed to save users for Week '</span> + weekIsoWeekNumber);
+            }
+        });
+    });
+};
+
+<span class="hljs-keyword">var</span> initWeekPicker = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// Init SOY template</span>
+    <span class="hljs-keyword">var</span> planningPageWeekTemplate = JIRA.Templates.KDP.planningPageWeek();
+    AJS.$(<span class="hljs-string">'#kdp-planning-page-week-container'</span>).html(planningPageWeekTemplate);
+
+    <span class="hljs-comment">// Init actions</span>
+    AJS.$(<span class="hljs-string">'#week-picker'</span>).off(); <span class="hljs-comment">// remove previous listeners</span>
+    AJS.$(<span class="hljs-string">'#week-picker'</span>).datePicker({<span class="hljs-string">'overrideBrowserDefault'</span>: <span class="hljs-literal">true</span>});
+    AJS.$(<span class="hljs-string">'#week-picker'</span>).change(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">var</span> isoWeek = moment(AJS.$(<span class="hljs-string">'#week-picker'</span>).val()).isoWeek();
+        initUserSearch(isoWeek);
+    });
+};
+
+AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    AJS.log(<span class="hljs-string">'KDP: Planning Page Controller initializing ...'</span>);
+    <span class="hljs-keyword">var</span> baseUrl = AJS.params.baseURL;
+    <span class="hljs-keyword">var</span> restUrl = baseUrl + <span class="hljs-string">'/rest/kitchenduty/1.0'</span>;
+    <span class="hljs-built_in">window</span>.KDPrestUrl = restUrl;
+
+    <span class="hljs-comment">// Init Base SOY template</span>
+    <span class="hljs-keyword">var</span> planningPageTemplate = JIRA.Templates.KDP.planningPage();
+    AJS.$(<span class="hljs-string">'#kdp-planning-page-container'</span>).html(planningPageTemplate);
+
+    <span class="hljs-comment">// Init child templates</span>
+    initWeekPicker();
+    initUserSearch(<span class="hljs-literal">null</span>);
+});</code></pre>
 
 
-        <!--
-                <div class="cs-v-spacer"></div>
-                <div class="cs-tutorial-step-review">
-                    <div class="cs-tutorial-step-review__headline">
-                        <strong>You have completed Step 5.</strong> Good Job! You can check out this steps solution on GitHub
-                    </div>
-                    <div class="cs-tutorial-step-review__link">
-                        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin">
-                            https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin
-                        </a>
+        <p>There are now multiple soy templates. We even now have a <strong>parameterized soy template</strong> to pass the iso-week number to a template and render it conditionally.</p>
+
+        <div class="row">
+            <div class="col-md-8">
+                
+
+<div class="cs-code-filename">
+    
+    <span class="hidden-md-down">src/main/resources/templates-soy/</span><span class="hidden-lg-up"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/templates-soy/">.../</span>kitchen-duty-planning.soy
+    
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="{namespace JIRA.Templates.KDP}
+/**
+ * Kitchen Duty Planning Page - Base Template
+ */
+{template .planningPage} 
+    &lt;form class=&quot;aui&quot; id=&quot;kdp-user-select-form&quot;&gt;
+        &lt;div id=&quot;kdp-planning-page-week-container&quot;&gt;&lt;/div&gt;
+        &lt;div id=&quot;kdp-planning-page-week-users-container&quot;&gt;&lt;/div&gt;
+    &lt;/form&gt;
+{/template}
+
+/**
+ * Kitchen Duty Planning Page - Week Select Template
+ */
+{template .planningPageWeek}
+    &lt;h4 class=&quot;kdp-step-headline&quot;&gt;1. Select Week&lt;/h4&gt;
+    &lt;div class=&quot;kdp-step-content&quot;&gt;
+        &lt;input
+          class=&quot;aui-date-picker aui-button&quot;
+          id=&quot;week-picker&quot;
+          type=&quot;date&quot;
+          max=&quot;2050-01-25&quot;
+          min=&quot;2011-12-25&quot;
+        /&gt;
+    &lt;/div&gt;
+{/template}
+
+/**
+ * Kitchen Duty Planning Page - User Search Template
+ */
+{template .planningPageWeekUsers}
+    {@param? isoWeek: int}
+    &lt;h4 class=&quot;kdp-step-headline&quot;&gt;
+        2. Kitchen Duty for Week&amp;nbsp;
+        {if $isoWeek != null }
+            &lt;aui-badge class=&quot;aui-badge-primary&quot;&gt;
+                &lt;span id=&quot;iso-week-label&quot;&gt;{isoWeek}&lt;/span&gt;
+            &lt;/aui-badge&gt;
+        {else}
+            &lt;aui-badge&gt;&lt;span id=&quot;iso-week-label&quot;&gt;...&lt;/span&gt;&lt;/aui-badge&gt;
+        {/if}
+    &lt;/h4&gt;
+    &lt;div class=&quot;kdp-step-content&quot;&gt;
+        {if $isoWeek == null }
+            &lt;div&gt;- no week selected -&lt;/div&gt;
+        {else}
+            &lt;div &gt;Users on kitchen duty for selected week:&lt;/div&gt;
+            &lt;div
+              id=&quot;kdp-user-select&quot;
+              name=&quot;kdp-user-select&quot;
+              class=&quot;kdp-aui-select&quot;
+              multiple=&quot;&quot;
+              placeholder=&quot;start typing a username ...&quot;
+            &gt;&lt;/div&gt;
+            &lt;br/&gt;&lt;br/&gt;
+            &lt;input
+              class=&quot;button submit&quot;
+              type=&quot;submit&quot;
+              id=&quot;kdp-user-select-save-button&quot;
+              value=&quot;save&quot;
+            /&gt;
+        {/if}
+    &lt;/div&gt;
+{/template}
+
+
+/**
+ * Kitchen Duty Planning Page - Foo
+ */
+{template .foo}
+bar
+{/template}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">namespace</span> JIRA.Templates.KDP</span>}</span>
+<span class="hljs-comment">/**
+ * Kitchen Duty Planning Page - Base Template
+ */</span>
+<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .planningPage</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dfghs5zdfsfsdfdf" data-cs-source-point-number="1"></span>
+    &lt;form class=<span class="hljs-string">"aui"</span> id=<span class="hljs-string">"kdp-user-select-form"</span>&gt;
+        &lt;div id=<span class="hljs-string">"kdp-planning-page-week-container"</span>&gt;&lt;/div&gt;
+        &lt;div id=<span class="hljs-string">"kdp-planning-page-week-users-container"</span>&gt;&lt;/div&gt;
+    &lt;/form&gt;
+<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span>
+
+<span class="hljs-comment">/**
+ * Kitchen Duty Planning Page - Week Select Template
+ */</span>
+<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .planningPageWeek</span>}</span>
+    &lt;h4 class=<span class="hljs-string">"kdp-step-headline"</span>&gt;1. Select Week&lt;/h4&gt;
+    &lt;div class=<span class="hljs-string">"kdp-step-content"</span>&gt;
+        &lt;input
+          class=<span class="hljs-string">"aui-date-picker aui-button"</span>
+          id=<span class="hljs-string">"week-picker"</span>
+          type=<span class="hljs-string">"date"</span>
+          max=<span class="hljs-string">"2050-01-25"</span>
+          min=<span class="hljs-string">"2011-12-25"</span>
+        /&gt;
+    &lt;/div&gt;
+<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span>
+
+<span class="hljs-comment">/**
+ * Kitchen Duty Planning Page - User Search Template
+ */</span>
+<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .planningPageWeekUsers</span>}</span>
+    <span class="hljs-soyTag">{@<span class="hljs-tag">param</span>? isoWeek: int}</span>
+    &lt;h4 class=<span class="hljs-string">"kdp-step-headline"</span>&gt;
+        2. Kitchen Duty for Week&amp;nbsp;
+        <span class="hljs-soyTag">{<span class="hljs-keyword">if</span> <span class="hljs-symbol">$isoWeek</span> != null }</span>
+            &lt;aui-badge class=<span class="hljs-string">"aui-badge-primary"</span>&gt;
+                &lt;span id=<span class="hljs-string">"iso-week-label"</span>&gt;<span class="hljs-soyTag">{isoWeek}</span>&lt;/span&gt;
+            &lt;/aui-badge&gt;
+        <span class="hljs-soyTag">{<span class="hljs-keyword">else</span>}</span>
+            &lt;aui-badge&gt;&lt;span id=<span class="hljs-string">"iso-week-label"</span>&gt;...&lt;/span&gt;&lt;/aui-badge&gt;
+        <span class="hljs-soyTag">{/<span class="hljs-keyword">if</span>}</span>
+    &lt;/h4&gt;
+    &lt;div class=<span class="hljs-string">"kdp-step-content"</span>&gt;
+        <span class="hljs-soyTag">{<span class="hljs-keyword">if</span> <span class="hljs-symbol">$isoWeek</span> == null }</span>
+            &lt;div&gt;- no week selected -&lt;/div&gt;
+        <span class="hljs-soyTag">{<span class="hljs-keyword">else</span>}</span>
+            &lt;div &gt;Users on kitchen duty for selected week:&lt;/div&gt;
+            &lt;div
+              id=<span class="hljs-string">"kdp-user-select"</span>
+              name=<span class="hljs-string">"kdp-user-select"</span>
+              class=<span class="hljs-string">"kdp-aui-select"</span>
+              multiple=<span class="hljs-string">""</span>
+              placeholder=<span class="hljs-string">"start typing a username ..."</span>
+            &gt;&lt;/div&gt;
+            &lt;br/&gt;&lt;br/&gt;
+            &lt;input
+              class=<span class="hljs-string">"button submit"</span>
+              type=<span class="hljs-string">"submit"</span>
+              id=<span class="hljs-string">"kdp-user-select-save-button"</span>
+              value=<span class="hljs-string">"save"</span>
+            /&gt;
+        <span class="hljs-soyTag">{/<span class="hljs-keyword">if</span>}</span>
+    &lt;/div&gt;
+<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span>
+
+
+<span class="hljs-comment">/**
+ * Kitchen Duty Planning Page - Foo
+ */</span>
+<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .foo</span>}</span>
+bar
+<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span></code></pre>
+
+            </div>
+            <div class="col-md-4 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="dfghs5zdfsfsdfdf">
+                    <div class="list-group-item cs-source-point-list__item">
+                       todo             http://momentjs.com/docs/#/get-set/iso-week/
+
                     </div>
                 </div>
-                <div class="cs-v-spacer"></div>
-                <p>The graphic shows marked green <strong>which components we implemented in this section</strong>.</p>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-lg-offset-1 col-xl-8 col-xl-offset-2">
-                        
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" data-lightbox="05-step" data-title="Step 5 - Planning Page working">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page working">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+
+
+        <div class="cs-v-spacer"></div>
+        <div class="cs-tutorial-step-review">
+            <div class="cs-tutorial-step-review__headline">
+                <strong>You have completed Step 5.</strong> Good Job! You can check out this steps solution on GitHub
+            </div>
+            <div class="cs-tutorial-step-review__link">
+                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin">
+                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin
+                </a>
+            </div>
+        </div>
+        <div class="cs-v-spacer"></div>
+        <p>The graphic shows marked green <strong>which components we implemented in this section</strong>.</p>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
+                
 <svg class="cs-interactive-graphic"
-     id="p08-ig01"
+     id="p07-ig01"
      data-json-settings="{
-                            &quot;markedAsDone&quot;: [ &quot;webwork-action&quot;, &quot;html-view&quot;, &quot;user-resource&quot;, &quot;user-search-resource-model&quot;, &quot;user-js-controller&quot;, &quot;kitchen-duty-resource&quot;, &quot;kitchen-duty-planning-model&quot;, &quot;kitchen-duty-js-controller&quot; ],
-                            &quot;markedAsTodo&quot;: [  ],
-                            &quot;markedAsGrayedOut&quot;: [ ],
-                            &quot;onClick&quot;: [ ]
-                        }"
+                    &quot;markedAsDone&quot;: [ &quot;webwork-action&quot;, &quot;html-view&quot;, &quot;user-resource&quot;, &quot;user-search-resource-model&quot;, &quot;user-js-controller&quot;, &quot;kitchen-duty-resource&quot;, &quot;kitchen-duty-planning-model&quot;, &quot;kitchen-duty-js-controller&quot; ],
+                    &quot;markedAsTodo&quot;: [  ],
+                    &quot;markedAsGrayedOut&quot;: [ ],
+                    &quot;onClick&quot;: [ ]
+                }"
      data-svg-to-load="kitchen-duty-planning-page--component-overview"
      viewBox="0 0 1043 654"
      preserveAspectRatio="xMaxYMax">
 </svg>
 
-                    </div>
-                </div>
-        -->
+            </div>
+        </div>
+
         <div class="cs-v-spacer cs-v-spacer--big"></div>
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 
@@ -318,7 +1055,7 @@
 
 
 <div class="cs-footer">
-    <div class="text-xs-right cs-pager">
+    <div class="text-right cs-pager">
         <a class="btn btn-secondary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/">
             <i class="fa fa-angle-left"></i>
             <span class="hidden-sm-down">previous page</span>

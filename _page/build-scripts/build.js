@@ -59,6 +59,7 @@ var jsTaskOptions = {
         './node_modules/tether/dist/js/tether.js',
         './node_modules/clipboard/dist/clipboard.js',
         './node_modules/jquery/dist/jquery.js',
+        './node_modules/popper.js/dist/umd/popper.js',
         './node_modules/lightbox2/dist/js/lightbox.js',
 /*         './node_modules/retina.js/dist/retina.js', */
         './node_modules/webcomponents.js/CustomElements.js',
@@ -69,7 +70,9 @@ var jsTaskOptions = {
         './_page/js/main.js'
     ],
     jsBundle: buildDir + '/generated/bundle.js',
-    jsUglifyOptions: { }
+    jsUglifyOptions: {
+        mangle: false,
+    }
 };
 if (environment === 'dev') {
     jsTaskOptions.jsUglifyOptions = {

@@ -6,7 +6,7 @@ var sass = require('node-sass');
 var nunjucks = require('nunjucks');
 var cleancss = require('clean-css');
 var lodash = require('lodash');
-var uglifyjs2 = require('uglify-js');
+var uglifyjs3 = require('uglify-js');
 var colors = require('colors');
 var shell = require('shelljs');
 var async = require('async');
@@ -241,7 +241,13 @@ exports.buildJs = function(options, nextBuildStep) {
     options.jsFiles.forEach(function(jsfile) {
         jsFilesCopy.push(jsfile);
     });
-    var uglifiedResult = uglifyjs2.minify(glob.sync(jsFilesCopy), options.jsUglifyOptions);
+    var _allJsFiles = {};
+    var _allJsFilesGlob = glob.sync(jsFilesCopy);
+    _allJsFilesGlob.forEach(function(file) {
+        _allJsFiles[file] = fs.readFileSync(file, 'utf-8');
+    });
+    var uglifiedResult = uglifyjs3.minify(_allJsFiles);
+    console.log(uglifiedResult.error);
     fse.outputFile(options.jsBundle, uglifiedResult.code, function (err) {
         helpers.printSuccessOrError(err, 'js> write ' + options.jsBundle);
         helpers.proceedBuild(nextBuildStep, 'buildJs');

@@ -41,7 +41,7 @@ var preBuildTaskOptions = {
 // SCSS
 var scssTaskOptions = {
     cssScssInputFile: '_page/css/main.scss',
-    cssBundle: buildDir + '/generated/bundle.css',
+    cssBundle: buildDir + '/generated/bundlev2.css',
     cssReplaceInPlace: [
         /*{
          name: 'cep-field-type-font',

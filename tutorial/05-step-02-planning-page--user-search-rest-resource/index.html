@@ -23,7 +23,7 @@
 
 
 
-    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.css?v2017-05-26--20-49" rel="stylesheet">
+    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.css?v2018-08-18--20-49" rel="stylesheet">
 
     <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-256.png" type="image/png" sizes="256x256">
@@ -52,75 +52,50 @@
 
 
 
-
-
-<div class="container-fluid cs-page-info-banner">
-    <div class="cs-page-info-banner-inner">
-        <i class="fa fa-bullhorn fa-lg" aria-hidden="true"></i>
-
-        <a href="https://www.atlassian.com/company/events/summit-europe">Atlassian Summit 2017</a> was awesome!
-        A lot has changed, and I will update the tutorial soon.
-        Until then checkout the must watch
-        <a href="https://www.atlassian.com/atlascamp/2017/archives/featured/keynote">AtlasCamp 2017 Sessions</a>
-        especially
-        <a href="https://www.atlassian.com/atlascamp/2017/archives/build-addons/creating-your-own-server-add-on-that-customizes-confluence-or-jira">
-            <em>Creating Your Own Server Add-on that Customizes Confluence or JIRA</em>
-        </a>
-        and
-        <a href="https://www.atlassian.com/atlascamp/2017/archives/build-addons/server-add-ons-for-front-end-developers">
-             <em>Server Add-ons for Front-end Developers</em>
-        </a>
-    </div>
-</div>
-<div class="container-fluid cs-page-header">
-
+<div class="cs-page-header">
     <div class="row">
-        <div class="col-md-5 cs-page-header--left-fix">
+        <div class="col-md-5 cs-page-header-left">
             <a href="/kitchen-duty-plugin-for-atlassian-jira/" class="cs-page-logo">
                 <span class="cs-page-logo-img hidden-md-down"></span>
                 <h1>Kitchen Duty Plugin</h1>
                 <h2>for Atlassian JIRA® by Comsysto Reply</h2>
             </a>
+            <a class="btn btn-primary cs-burger-button" onclick="toggleSidebar()">
+                <span class="cs-news-right" style="color:#fff;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i></span>
+            </a>
         </div>
-        <div class="col-md-3 text-xs-center hidden-sm-down">
-            <a class="btn btn-primary hidden-md-down cs-burger-button" onclick="toggleSidebar()">
-                <span class="cs-news-right" style="color:#fff;"><i class="fa fa-bars" aria-hidden="true"></i></span>
-            </a>
+        <div class="col-md-3 text-xs-center hidden-sm-down" style="padding-top:10px;">
 
-            <a class="btn btn-primary cs-stars-on-github-give-star-button" href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
-                <span class="cs-stars-on-github-count-stars"></span>
-                <i class="fa fa-star"></i>
-            </a>
-
-            <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira/news/" target="_blank">
+            <!--
+            <a class="btn btn-primary btn-borderless" href="/kitchen-duty-plugin-for-atlassian-jira/news/" target="_blank">
                 <span class="cs-news-right">news</span>
             </a>
-
+            -->
         </div>
         <div class="col-md-4  hidden-sm-down cs-page-header-cs-logo text-xs-right cs-page-header--right-fix">
             <a href="https://comsysto.com/leistungen/atlassian-solutions" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="Comsysto Reply" style="width:150px; margin-top:-20px;"/></a>
         </div>
     </div>
-
 </div>
 
 <!-- CONTENT -->
 
 
-
-<div class="cs-sidebar-wrapper">
-    
+<div class="cs-content">
+    <div class="cs-sidebar-wrapper">
+        
 <div id="toc">
     <ul>
 
         
 
         <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/01-introduction/">
+        <span>&nbsp;</span>
         Introduction
     </a>
         </li>
         <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/02-step-00-getting-started/">
-        <span class="cs-step-badge pull-right">0</span>
+        <span class="cs-step-badge">0</span>
         Getting Started
     </a>
         </li>
@@ -130,31 +105,32 @@
         <li class="toc-h2-divider">Part I: Kitchen Duty Planning Page</li>
 
         <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/03-story-workshop-for-planning-page/">
+        <span>&nbsp;</span>
         Story Workshop for Planning Page
     </a>
         </li>
         <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/04-step-01-planning-page--webwork-action-and-html-view/">
-        <span class="cs-step-badge pull-right">1</span>
+        <span class="cs-step-badge">1</span>
         Webwork Action and HTML View
     </a>
         </li>
         <li class="toc-h2 toc-active"><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/05-step-02-planning-page--user-search-rest-resource/">
-        <span class="cs-step-badge pull-right">2</span>
+        <span class="cs-step-badge">2</span>
         User Search REST Resource
     </a>
         </li>
         <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/06-step-03-planning-page--user-search-js-controller/">
-        <span class="cs-step-badge pull-right">3</span>
+        <span class="cs-step-badge">3</span>
         User Search JS Controller
     </a>
         </li>
         <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/">
-        <span class="cs-step-badge pull-right">4</span>
+        <span class="cs-step-badge">4</span>
         Kitchen Duty Planning REST Resource
     </a>
         </li>
         <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/08-step-05-planning-page--kitchen-duty-planning-js-controller/">
-        <span class="cs-step-badge pull-right">5</span>
+        <span class="cs-step-badge">5</span>
         Kitchen Duty Planning JS Controller
     </a>
         </li>
@@ -195,21 +171,33 @@
 
         <li class="toc-h2-divider">Part II: Kitchen Duty Overview Page</li>
         <li class="toc-h2 "><a href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/09-story-workshop-for-overview-page/">
+        <span>&nbsp;</span>
         Story Workshop for Overview Page
     </a>
         </li>
     </ul>
 
 
+    <div class="cs-legal-box">
+        <a href="/kitchen-duty-plugin-for-atlassian-jira/author-and-license/">Author &amp; License</a>
+        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/impressum/">Impressum / Imprint</a>
+        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/datenschutz/">Datenschutzerklärung / Privacy</a>
+        <a class="btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
+            <span class="cs-stars-on-github-count-stars">...</span>
+            <i class="fa fa-star"></i> on GitHub
+        </a>
+    </div>
+
+
+
 
 
 </div>
 
 
-</div>
-
-<div class="cs-content-wrapper">
-    
+    </div>
+    <div class="cs-content-wrapper">
+        
 
 
 
@@ -1487,38 +1475,21 @@ Tests run: <span class="hljs-number">3</span>, Failures: <span class="hljs-numbe
 </div>
 
 
+    </div>
 </div>
-
 
 
 <div class="cs-footer">
-    <div class="cs-footer-left">
-        <a class="cs-grey-footer-link" href="/kitchen-duty-plugin-for-atlassian-jira/author-and-license/">Author &amp; License</a> &middot;
-        <a class="cs-grey-footer-link" href="https://legal.comsysto.com/comsysto.github.io/de/impressum/">Impressum / Imprint</a>
-        &middot;
-        <a class="cs-grey-footer-link" href="https://legal.comsysto.com/comsysto.github.io/de/datenschutz/">Datenschutzerklärung / Privacy</a>
-    </div>
-    <div class="cs-footer-right">
-        <div class="container-fluid ">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 cs-pager cs-page-header--left-fix">
-                            <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/04-step-01-planning-page--webwork-action-and-html-view/"><i class="fa fa-angle-left"></i>
-                                <span class="hidden-sm-down">previous page</span></a>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-xs-right cs-pager cs-page-header--right-fix">
-                            
-                            <a class="btn btn-primary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/06-step-03-planning-page--user-search-js-controller/">
-                                <span class="hidden-sm-down">next page</span>
-                                <i class="fa fa-angle-right"></i></a>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <div class="text-xs-right cs-pager">
+        <a class="btn btn-secondary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/04-step-01-planning-page--webwork-action-and-html-view/">
+            <i class="fa fa-angle-left"></i>
+            <span class="hidden-sm-down">previous page</span>
+        </a>
+        
+        <a class="btn btn-secondary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/06-step-03-planning-page--user-search-js-controller/">
+            <span class="hidden-sm-down">next page</span>
+            <i class="fa fa-angle-right"></i></a>
+        
     </div>
 </div>
 
@@ -1528,7 +1499,7 @@ Tests run: <span class="hljs-number">3</span>, Failures: <span class="hljs-numbe
 
 
 
-<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js?v2017-05-26--20-49" async></script>
+<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js?v2018-08-18--20-49" async></script>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>

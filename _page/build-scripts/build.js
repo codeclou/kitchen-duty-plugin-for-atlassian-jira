@@ -253,5 +253,5 @@ async.waterfall([
 ], function (err, result) {
     helpers.printBuildTime(buildStartTime, moment());
     helpers.printFileSize(jsTaskOptions.jsBundle, 'bundle.js');
-    helpers.printFileSize(scssTaskOptions.cssBundle, 'bundle.css');
+    helpers.printFileSize(scssTaskOptions.cssBundle, 'bundlev2.css');
 });

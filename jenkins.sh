@@ -57,6 +57,11 @@ yarn build:img
 yarn build:prod
 
 #
+# DISABLE JEKYLL ON GHPAGES
+#
+touch build/.nojekyll
+
+#
 # DEPLOY
 #
 yarn ndes deployToGitHubPages \

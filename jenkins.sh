@@ -1,11 +1,6 @@
 #!/bin/bash
 
-#
-# FUNCTIONS
-#
-function abort_build_if_previous_command_terminated_with_error {
-    if [ $? -ne 0 ]; then echo "ERROR. EXIT."; exit 1; fi
-}
+set -e
 
 #
 # PREREQUISITES
@@ -28,46 +23,47 @@ then
 fi
 
 #
-# INSTALL NPM
+# INSTALL NODE AND YARN
 #
-if [ ! -f "node-v6.3.1-linux-x64.tar.xz" ]
+if [ ! -f "node-v8.11.4-linux-x64.tar.xz" ]
 then
   cd $WORKSPACE
-  wget --no-check-certificate https://nodejs.org/dist/v6.3.1/node-v6.3.1-linux-x64.tar.xz
-  tar xf node-v6.3.1-linux-x64.tar.xz
+  wget --no-check-certificate https://nodejs.org/dist/v8.11.4/node-v8.11.4-linux-x64.tar.xz
+  tar xf node-v8.11.4-linux-x64.tar.xz
 fi
-export PATH=$WORKSPACE/node-v6.3.1-linux-x64/bin:$PATH
-
+export PATH=$WORKSPACE/node-v8.11.4-linux-x64/bin:$PATH
 npm -version
 
 #
+# INSTALL YARN
 #
-# NPM BUILD
-#
-npm install
-abort_build_if_previous_command_terminated_with_error
-
-npm run ndes replace "___TIMEST___" byCurrentTimetamp             in "_page/js/main.js" -s
-npm run ndes replace "___BRANCH___" byValue "$GITHUB_BRANCH_NAME" in "_page/js/main.js" -s
-npm run ndes replace "___COMMIT___" byValue "$GITHUB_COMMIT_HASH" in "_page/js/main.js" -s
-
-
-npm run build:img
-abort_build_if_previous_command_terminated_with_error
-
-npm run build:prod
-abort_build_if_previous_command_terminated_with_error
+curl -o- -L https://yarnpkg.com/install.sh | bash
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+yarn -v
 
 #
-# NPM DEPLOY
+# INSTALL DEPS
 #
+yarn install
 
-npm run ndes deployToGitHubPages \
+#
+# BUILD
+#
+yarn ndes replace "___TIMEST___" byCurrentTimetamp             in "_page/js/main.js" -s
+yarn ndes replace "___BRANCH___" byValue "$GITHUB_BRANCH_NAME" in "_page/js/main.js" -s
+yarn ndes replace "___COMMIT___" byValue "$GITHUB_COMMIT_HASH" in "_page/js/main.js" -s
+
+yarn build:img
+yarn build:prod
+
+#
+# DEPLOY
+#
+yarn ndes deployToGitHubPages \
     as "jenkins" \
     withEmail "noreply@comsysto.com" \
     withGitHubAuthUsername $GITHUB_AUTH_USER \
     withGitHubAuthToken $GITHUB_AUTH_TOKEN \
     toRepository https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira.git \
     fromSource "./build"
-abort_build_if_previous_command_terminated_with_error
 echo "Deployed to https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/"

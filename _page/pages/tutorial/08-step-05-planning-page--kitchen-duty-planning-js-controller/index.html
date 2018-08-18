@@ -15,7 +15,22 @@
 
 
 
-        <div class="alert alert-danger">THIS PAGE IS UNDER CONSTRUCTION. WORK IN PROGRESS</div>
+<!--        <div class="alert alert-danger">THIS PAGE IS UNDER CONSTRUCTION. WORK IN PROGRESS</div>-->
+
+        <p>Some time has past since I worked on this Plugin tutorial, it is mid 2018 now, and we need to clarify some things [<a href="https://community.developer.atlassian.com/t/the-license-for-aui-7-is-changing">1</a>].</p>
+
+        <ul>
+            <li><strong><a href="https://atlaskit.atlassian.com/">AtlasKit library</a></strong> is based on ReactJS and is used for <strong><a href="https://developer.atlassian.com/cloud/jira/platform/integrating-with-jira-cloud/">Cloud Plugin Development</a></strong>.</li>
+            <li><strong><a href="https://docs.atlassian.com/aui/">AUI library</a></strong> is based on JQuery and is used for <strong>Server Plugin Development.</strong></li>
+        </ul>
+
+        <p>
+            That means we will continue using AUI for our plugin. And even though we could hit it with NPM, React, Angular, Webpack and all
+            that fancy shenanigans, we will write oldschool ES5 JavaScript code that directly executes in all browsers including ol' grandpa IE11.
+            I leave the crazy JavaScript build chain stuff up to you. The mechanisms explained in the tutorial are the same for both ways.
+        </p>
+
+
 
 
         {# ############################################################# #}
@@ -24,7 +39,7 @@
 
         {# FUNNY IMAGE: https://pbs.twimg.com/media/Ce5nYp0W4AAxp5Z.jpg #}
         {# NPM WEBPACK BUILD + MAVEN + React: https://developer.atlassian.com/blog/2016/06/jira-add-on-dev-2016-part-1/ #}
-        
+
         {# TODO: MOMENTJS KALENDERWOCHE: moment().isoWeek(); #}
 
         {{ weAreWorkingOnIt() }}
@@ -33,18 +48,18 @@
         https://atlaskit.atlassian.com/
 
         AtlasCamp 2017 Server Add-ons for Front-end Developers
-        
+
         https://www.atlassian.com/atlascamp/2017/archives/build-addons/server-add-ons-for-front-end-developers
 
         WRM - Web Resource Manager
-        
+
           (1) Lazy loading AMD Module
           (2) DataProvider wrm/data min 35:00 video
           (3) QuickReload enable + quickreload.properties min 38:23 => load minfied js code
 
 
         -->
-        
+
         {# TODO: FURTHER READING
 
                     <h3 class="cs-headline cs-headline--s">Further Reading: Develop Faster</h3>

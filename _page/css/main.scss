@@ -1,9 +1,12 @@
 /* tooltip */
-$tooltip-bg: #1E9FCC;
+$tooltip-bg: #007571;
 $alert-border-radius: 0;
 $btn-primary-color:              #fff;
 $btn-primary-bg:                 transparent;
 $btn-primary-border:             #fff;
+$btn-secondary-color:              #00B6AF;
+$btn-secondary-bg:                 transparent;
+$btn-secondary-border:             #00B6AF;
 $btn-border-radius:              0;
 $btn-border-radius-lg:           0;
 $btn-border-radius-sm:           0;
@@ -40,11 +43,8 @@ pre {
 }
 
 html, body {
-    height:100%;
-    min-height:600px;
-}
-body {
     margin:0;
+    padding:0;
 }
 
 /** TYPO **/
@@ -56,7 +56,7 @@ body {
 
 .cs-headline--m {
     font-size:30px;
-    border-bottom: 1px solid #1E9FCC;
+    border-bottom: 1px solid #007571;
     margin-bottom:20px;
     margin-top:40px;
 }
@@ -64,58 +64,102 @@ body {
 .cs-headline--s {
     font-size:20px;
     margin-bottom:30px;
-    border-bottom:1px solid #1E9FCC;
+    border-bottom:1px solid #007571;
     display:inline-block;
 }
 
 
+/** SCROLLBAR **/
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #999;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #008E89;
+}
+
 /** BASE LAYOUT **/
 
 .cs-tutorial-body {
-
+    display:flex;
+    flex-direction: column;
 }
 
-.cs-content-wrapper {
-    font-family: 'Open Sans', sans-serif;
-    margin-top:130px;
-    margin-bottom:60px;
-    margin-left:0;
-    margin-right:0;
-    overflow-x: hidden;
-    /*overflow-y: scroll;*/
-    padding: 0 30px 30px 30px;
-    background-color: #fff;
-}
-.cs-content-wrapper--isopen {
-    margin-left:350px;
+.cs-content {
+    display:flex;
+    max-height: calc(100vh - 140px);
+    min-height: calc(100vh - 140px);
+    height: calc(100vh - 140px);
 }
 @include media-breakpoint-down(md) {
+    .cs-content {
+        flex-direction: column;
+        max-height: unset;
+        min-height: unset;
+        height: unset;
+    }
     .cs-content-wrapper {
-        position: relative;
-        margin-top:0;
-        margin-bottom:0;
-        margin-left:0;
-        margin-right:0;
+        overflow-y: unset !important;
+        max-height: unset !important;
+    }
+    .cs-sidebar-wrapper {
+        overflow-y: unset !important;
+        max-height: unset !important;
     }
 }
 
-.cs-sidebar-wrapper {
-    top:130px;
-    bottom:60px;
-    left:-350px;
-    width:350px;
-    padding: 0;
-    position: fixed;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: #3C99B3;
+
+.cs-content-wrapper {
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom:0;
+    margin-left:0;
+    margin-right:0;
+    overflow-y: scroll;
+    padding: 0 30px 30px 30px;
+    background-color: #fff;
+    max-height: calc(100vh - 140px);
+    width: 100%;
 }
-.cs-sidebar-wrapper--isopen {
-    left:0;
+.cs-content-wrapper--isopen {
+
 }
 
+.cs-stars-on-github-give-star-button {
+    color: #05B0AA;
+}
+.cs-sidebar-wrapper {
+    padding: 0;
+    overflow-y: auto;
+    background-color: #fff;
+    min-width: 310px;
+    display: none;
+    max-height: calc(100vh - 140px);
+    border-right:1px solid #efefef;
+}
+.cs-sidebar-wrapper--isopen {
+    display: block;
+}
+.btn-borderless {
+    border:0px;
+}
 .cs-burger-button {
     user-select: none;
+    display:flex;
+    border:0px;
+    justify-content: center;
+    align-items: center;
 }
 
 .cs-sidebar-wrapper ul {
@@ -130,7 +174,7 @@ body {
 }
 
 .cs-sidebar-wrapper a {
-    color: #fff;
+    color: #005D59;
     text-decoration: none;
     cursor: pointer;
     -webkit-touch-callout: none;
@@ -148,13 +192,21 @@ body {
 .toc-h2 {
     padding-left: 10px;
     font-size:16px;
+    display:flex;
+}
+.toc-h2 a {
+    display:flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
 }
 
 .toc-h2-divider {
     text-align:left;
     font-family: 'Source Sans Pro', sans-serif;
     font-weight:200;
-    color: #efefef;
+    color: #05B0AA;
     font-size:14px;
     margin-top:40px;
     padding:0 0 0 10px !important;
@@ -165,20 +217,22 @@ body {
 }
 
 .toc-active {
-    background-color: #fff;
-    color:#1E9FCC;
+    background-color: #05B0AA;
+    color:#fff;
 }
 
 .toc-active a {
-    color: #1E9FCC !important;
+    color: #fff !important;
 }
 .toc--appendix {
     font-size:12px;
 }
 
 .cs-step-badge {
-    background-color: #fff;
+    background-color: #efefef;
     border-radius: 50%;
+    display: block;
+    margin-left:5px;
     padding:4px;
     width:18px;
     height:18px;
@@ -186,69 +240,19 @@ body {
     font-size: 11px;
     text-align:center;
     line-height:10px;
-    color:#1E9FCC;
+    color:#007571;
 }
 .toc-active .cs-step-badge {
     color:#fff;
-    background-color: #1E9FCC;
+    background-color: #007571;
 }
 
 .cs-footer {
-    position:absolute;
-    bottom:0;
-    left:0;
     width:100%;
     height:60px;
-
-}
-.cs-footer-left {
-    width:340px;
-    position:fixed;
-    bottom:0;
-    left:0;
-    height:60px;
-    padding:20px;
-    color:#efefef;
-    font-size:12px;
-    background-color: #3C99B3;
-}
-.cs-footer-right {
-    position:fixed;
-    bottom:0;
-    left:300px;
-    right:0;
-    height:60px;
-    padding-left:40px;
-    background-color: #3C99B3;
-}
-@include media-breakpoint-down(md) {
-    .cs-footer {
-        position:relative;
-        bottom:0;
-        left:0;
-    }
-    .cs-footer-left {
-        position:relative;
-        bottom:0;
-        left:0;
-    }
-    .cs-footer-right {
-        position:relative;
-        bottom:0;
-        left:0;
-        right:0;
-        padding-left:0;
-    }
-}
-@include media-breakpoint-down(sm) {
-    .cs-footer-left {
-        width:240px;
-        padding:10px;
-    }
-    .cs-footer-right {
-        left:0;
-        padding-left:0;
-    }
+    max-height: 60px;
+    background-color: #303C3B;
+    padding: 8px;
 }
 
 
@@ -299,29 +303,20 @@ body {
 
 /* NORMAL PAGE */
 .cs-page-header {
-    position:fixed;
-    top:40px;
-    left:0px;
     width:100%;
     z-index:500;
-    height:90px;
-    padding-top:15px;
-    padding-bottom:30px;
-
-    background-image: linear-gradient(135deg,rgba(0,89,131,1),rgba(95,234,255,1));
-    background-size: auto;
-    background-repeat: repeat;
-    background-attachment: fixed;
+    height:80px;
+    max-height: 80px;
+    padding-top:10px;
+    padding-bottom:10px;
+    background-color: #007571;
+}
+.cs-page-header .row {
+    margin:0;
 }
 
-@include media-breakpoint-down(md) {
-    .cs-page-header {
-        position: relative;
-        top:40px;
-        bottom:0;
-        left:0;
-        right:0;
-    }
+.cs-page-header-left {
+    display:flex;
 }
 
 .cs-page-logo-img {
@@ -336,6 +331,13 @@ body {
 }
 .cs-page-logo {
     color:#fff;
+    display:block;
+    min-width: 380px;
+}
+@include media-breakpoint-down(md) {
+    .cs-page-logo {
+        min-width: 320px;
+    }
 }
 .cs-page-header-cs-logo {
     padding-top:15px;
@@ -373,7 +375,7 @@ body {
 
 .cs-divider {
     margin-top:40px;
-    border-color: #1E9FCC;
+    border-color: #007571;
 }
 
 .cs-meme-container {
@@ -401,11 +403,11 @@ body {
 }
 
 code {
-    color:#1E9FCC;
+    color:#007571;
 }
 
 a {
-    color:#1E9FCC;
+    color:#007571;
 }
 
 p {
@@ -547,14 +549,14 @@ p {
 }
 
 .cs-special {
-    color:#1E9FCC;
+    color:#007571;
     font-weight: 600;
     font-size:18px;
 }
 
 .cs-summary {
     background-color: rgba(29, 163, 204, 0.07);
-    border-color: #1E9FCC;
+    border-color: #007571;
 }
 .cs-summary__headline {
     font-size:20px;
@@ -736,24 +738,12 @@ p {
 }
 
 
-/* PAGER */
-.cs-pager {
-    margin-top:12px;
-}
-.cs-pager a {
-    color:#fff;
-}
-.cs-pager a:hover {
-    color:#fff;
-    text-decoration: none;
-}
-
 
 /* LANDINGPAGE */
 
 .cs-landing-header {
-    height:100%;
-    background-image: linear-gradient(135deg,rgba(0,89,131,.85),rgba(95,234,255,.85)),url(../images/kitchen-wallpaper.jpg);
+    height:100vh;
+    background-image: linear-gradient(135deg,rgba(0,117,113, .85),rgba(5,176,170.85)),url(../images/kitchen-wallpaper.jpg);
     background-size: auto,cover;
     background-repeat: repeat,no-repeat;
     background-attachment: scroll,fixed;
@@ -835,7 +825,7 @@ p {
 }
 
 .cs-landing-button:hover {
-    color:#1e9fcc;
+    color:#007571;
     background-color: #fff;
     text-decoration: none;
 }
@@ -954,9 +944,24 @@ p {
     border-left: 0px !important;
     border-top: 0px !important;
     border-right: 0px !important;
-    border-bottom:1px solid #1E9FCC !important;
-    color:#1E9FCC;
+    border-bottom:1px solid #007571 !important;
+    color:#007571;
 }
 .cs-table-uml--blank {
     border-width:0px !important;
+}
+
+
+.cs-pager {
+    padding-top:3px;
+}
+
+
+.cs-legal-box {
+    margin-top:100px;
+}
+
+.cs-legal-box a {
+    color: #839392;
+    font-size:12px;
 }

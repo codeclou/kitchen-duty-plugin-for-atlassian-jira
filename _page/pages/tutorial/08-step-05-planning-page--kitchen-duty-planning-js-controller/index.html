@@ -1,4 +1,5 @@
 {% set CURRENT_PAGE_ID = 8 %}
+{% set gitHubBaseUrlForStep5 = 'https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/__COMMIT__/step-05-kitchen-duty-plugin/' %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
     <title>Kitchen Duty Planning JS Controller ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
@@ -60,7 +61,7 @@
         <p>In step 4 we implemented logic to persist only one user for a week. We need to change that to multiple users per week.</p>
 
         <p>
-            Therefore I have changed the endoints to do so. Basically I added just som for-each loops and some missing <code>activeObjects.flush(entity)</code> statements.
+            Therefore I have changed the endoints to do so. Basically I added just some for-each loops and some missing <code>activeObjects.flush(entity)</code> statements.
             Since in the user selectfield (AUI Select) you can remove users and the HTTP PUT Request always contains a full list of users, we do not need the explicit delete-endpoint anymore.
             We simply update the relationships in our <code>@PUT</code> endpoint.
         </p>
@@ -68,7 +69,7 @@
 
         <div class="row">
             <div class="col-md-12">
-            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=gitHubBaseUrlForStep5, uniqueId='x3eewr8dsfsf67987ij', source='
+            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='x3eewr8dsfsf67987ij', source='
             |package com.comsysto.kitchen.duty.rest;
             |...
             |
@@ -185,7 +186,7 @@
             and put a copy of <a href="http://momentjs.com/"><code>moment.min.js</code></a> inside <code>src/main/resources/js/3rdparty/</code>.
         </p>
         <p>
-        {{ csSource(lang='xml', filepath="src/main/resources/", filename="atlassian-plugin.xml", ghBaseUrl=gitHubBaseUrlForStep5, uniqueId='u89hionbhvufghoijklnjbhg', source='
+        {{ csSource(lang='xml', filepath="src/main/resources/", filename="atlassian-plugin.xml", ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='u89hionbhvufghoijklnjbhg', source='
             |<web-resource key="kitchen-duty-plugin-resources--planning-page" name="kitchen-duty-plugin Web Resources for Planning Page">
             |  <dependency>com.atlassian.auiplugin:ajs</dependency>
             |  <dependency>com.atlassian.auiplugin:aui-select2</dependency>
@@ -214,7 +215,7 @@
             I have extended the existing code to load and save the users per week. This JS code uses now multiple soy templates which you will see below.
         </p>
 
-        {{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin--planning-page-controller.js", ghBaseUrl=gitHubBaseUrlForStep5, source="
+        {{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin--planning-page-controller.js", ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), source="
             |var showSuccessFlag = function(message) {
             |    require(['aui/flag'], function(flag) {
             |        flag({
@@ -337,7 +338,7 @@
         <div class="row">
             <div class="col-md-8">
                 {{ csSource(lang='soy', filepath="src/main/resources/templates-soy/", filename="kitchen-duty-planning.soy",
-                            ghBaseUrl=gitHubBaseUrlForStep3, uniqueId='dfghs5zdfsfsdfdf', source='
+                            ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='dfghs5zdfsfsdfdf', source='
                             |{namespace JIRA.Templates.KDP}
                             |/**
                             | * Kitchen Duty Planning Page - Base Template

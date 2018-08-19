@@ -4,6 +4,7 @@
 
 var sass = require('node-sass');
 var nunjucks = require('nunjucks');
+nunjucks.configure({ noCache : true  });
 var cleancss = require('clean-css');
 var lodash = require('lodash');
 var uglifyjs3 = require('uglify-js');
@@ -198,8 +199,6 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
                     callback();
                 }
             } else {
-
-
                 var htmlText = nunjucks.renderString(nunjucksTemplateData, {
                     htmlSourceDir: path.resolve(options.htmlSourceDir),
                     layoutSourceDir: path.resolve(options.htmlLayoutSourceDir),

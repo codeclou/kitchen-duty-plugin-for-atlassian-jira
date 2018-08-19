@@ -249,6 +249,9 @@ html, body {
 }
 
 .cs-footer {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
     width:100%;
     height:60px;
     max-height: 60px;
@@ -955,14 +958,23 @@ p {
 
 .cs-pager {
     padding-top:3px;
+    min-width:100px;
 }
 
 
 .cs-legal-box {
-    margin-top:100px;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .cs-legal-box a {
     color: #839392;
     font-size:12px;
+    margin-right:5px;
+    padding-right:5px;
+    border-right:1px solid #839392;
+}
+.cs-legal-box a:last-child {
+    border:0;
 }

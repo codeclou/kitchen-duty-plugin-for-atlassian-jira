@@ -242,7 +242,8 @@ async.waterfall([
             var app = express();
 
             app.use('/kitchen-duty-plugin-for-atlassian-jira', serveStatic(buildDir, {
-                maxAge: '1d'
+                etag: false,
+                maxAge: '1s'
             }));
 
             app.get('/', function(req, res){

@@ -236,19 +236,259 @@
         <p><strong>2. AUI Redesign + JIRA version upgrade</strong></p>
 
         <ul>
-            <li>We now compile against JIRA 7.10 and use Atlassian SDK version 6.3.10 (simply upgrade your SDK).</li>
+            <li>We now compile against JIRA 7.10 and use Atlassian SDK version 6.3.10 therefore upgrade your Atlassian SDK. Also are we now compiling against Java 8. Update your <code>pom.xml</code> accordingly.</li>
             <li>
                 JIRA Software underwent a redesign now looks like this. But all components of AUI just work the same way.<br>
 
             </li>
         </ul>
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
+        <div class="row  ml-2">
+            <div class="col-md-6">
                 <p>
                     <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-jira-now.png" data-lightbox="05-step" data-title="Step 5 - JIRA Redesign">
                         <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-jira-now.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - JIRA Redesign">
                     </a>
                 </p>
+            </div>
+            <div class="col-md-6">
+                
+
+<div class="cs-code-filename">
+    
+    pom.xml
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/502903955096146b308efbf5018c5457905f00bb/step-05-kitchen-duty-plugin/pom.xml" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="&lt;project&gt;
+    ...
+    &lt;build&gt;
+        &lt;plugins&gt;
+            ...
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;version&gt;3.3&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.8&lt;/source&gt;
+                    &lt;target&gt;1.8&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+    &lt;properties&gt;
+        &lt;jira.version&gt;7.10.0&lt;/jira.version&gt;
+        &lt;amps.version&gt;6.3.15&lt;/amps.version&gt;
+        ...
+    &lt;/properties&gt;
+&lt;/project&gt;"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">project</span>&gt;</span>
+    ...
+    <span class="hljs-tag">&lt;<span class="hljs-title">build</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">plugins</span>&gt;</span>
+            ...
+            <span class="hljs-tag">&lt;<span class="hljs-title">plugin</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">artifactId</span>&gt;</span>maven-compiler-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">artifactId</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">version</span>&gt;</span>3.3<span class="hljs-tag">&lt;/<span class="hljs-title">version</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">configuration</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">source</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-title">source</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">target</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-title">target</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">configuration</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">plugin</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">plugins</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">build</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">properties</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">jira.version</span>&gt;</span>7.10.0<span class="hljs-tag">&lt;/<span class="hljs-title">jira.version</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">amps.version</span>&gt;</span>6.3.15<span class="hljs-tag">&lt;/<span class="hljs-title">amps.version</span>&gt;</span>
+        ...
+    <span class="hljs-tag">&lt;/<span class="hljs-title">properties</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">project</span>&gt;</span></code></pre>
+
+            </div>
+        </div>
+
+
+        <h3 class="cs-headline cs-headline--s">What we want to achieve</h3>
+
+        <p>
+            Basically we want to first have the user select the week. Then we want to show a multi-select textfield containing
+            existing users for that week and beeing able to add or remove users for that week.
+            That means <strong>the template of the user selection loads conditionally by the week number</strong>.
+        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" data-lightbox="05-step" data-title="Step 5 - Planning Page working">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page working">
+                    </a>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-templates.png" data-lightbox="05-step" data-title="Step 5 - Planning Page working">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-templates.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page working">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+
+        <p>There are now multiple soy templates as shown in the graphic above which we will later use from our JavaScript code to render the planning page.</p>
+
+        <div class="row">
+            <div class="col-md-7">
+                
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/templates-soy/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/templates-soy/">.../</span>kitchen-duty-planning.soy
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/502903955096146b308efbf5018c5457905f00bb/step-05-kitchen-duty-plugin/src/main/resources/templates-soy/kitchen-duty-planning.soy" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="{namespace JIRA.Templates.KDP}
+
+{template .planningPage} 
+    &lt;form class=&quot;aui&quot; id=&quot;kdp-user-select-form&quot;&gt;
+        &lt;div id=&quot;kdp-planning-page-week-container&quot;&gt;&lt;/div&gt;
+        &lt;div id=&quot;kdp-planning-page-week-users-container&quot;&gt;&lt;/div&gt;
+    &lt;/form&gt;
+{/template}
+
+{template .planningPageWeek} 
+    &lt;h4 class=&quot;kdp-step-headline&quot;&gt;1. Select Week&lt;/h4&gt;
+    &lt;div class=&quot;kdp-step-content&quot;&gt;
+        &lt;input
+          class=&quot;aui-date-picker aui-button&quot;
+          id=&quot;week-picker&quot;
+          type=&quot;date&quot;
+          max=&quot;2050-01-25&quot;
+          min=&quot;2011-12-25&quot;
+        /&gt;
+    &lt;/div&gt;
+{/template}
+
+{template .planningPageWeekUsers} 
+    {@param? isoWeek: int} 
+    &lt;h4 class=&quot;kdp-step-headline&quot;&gt;
+        2. Kitchen Duty for Week&amp;nbsp;
+        {if $isoWeek != null } 
+            &lt;aui-badge class=&quot;aui-badge-primary&quot;&gt;
+                &lt;span id=&quot;iso-week-label&quot;&gt;{isoWeek}&lt;/span&gt;
+            &lt;/aui-badge&gt;
+        {else}
+            &lt;aui-badge&gt;
+                &lt;span id=&quot;iso-week-label&quot;&gt;...&lt;/span&gt;
+            &lt;/aui-badge&gt;
+        {/if}
+    &lt;/h4&gt;
+    &lt;div class=&quot;kdp-step-content&quot;&gt;
+        {if $isoWeek == null } 
+            &lt;div&gt;- no week selected -&lt;/div&gt;
+        {else}
+            &lt;div&gt;Users on kitchen duty for selected week:&lt;/div&gt;
+            &lt;div
+              id=&quot;kdp-user-select&quot;
+              name=&quot;kdp-user-select&quot;
+              class=&quot;kdp-aui-select&quot;
+              multiple=&quot;&quot;
+              placeholder=&quot;start typing a username ...&quot;
+            &gt;&lt;/div&gt;
+            &lt;br/&gt;&lt;br/&gt;
+            &lt;input
+              class=&quot;button submit&quot;
+              type=&quot;submit&quot;
+              id=&quot;kdp-user-select-save-button&quot;
+              value=&quot;save&quot;
+            /&gt;
+        {/if}
+    &lt;/div&gt;
+{/template}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">namespace</span> JIRA.Templates.KDP</span>}</span>
+
+<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .planningPage</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dfghs5zdfsfsdfdf" data-cs-source-point-number="1"></span>
+    &lt;form class=<span class="hljs-string">"aui"</span> id=<span class="hljs-string">"kdp-user-select-form"</span>&gt;
+        &lt;div id=<span class="hljs-string">"kdp-planning-page-week-container"</span>&gt;&lt;/div&gt;
+        &lt;div id=<span class="hljs-string">"kdp-planning-page-week-users-container"</span>&gt;&lt;/div&gt;
+    &lt;/form&gt;
+<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span>
+
+<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .planningPageWeek</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dfghs5zdfsfsdfdf" data-cs-source-point-number="2"></span>
+    &lt;h4 class=<span class="hljs-string">"kdp-step-headline"</span>&gt;1. Select Week&lt;/h4&gt;
+    &lt;div class=<span class="hljs-string">"kdp-step-content"</span>&gt;
+        &lt;input
+          class=<span class="hljs-string">"aui-date-picker aui-button"</span>
+          id=<span class="hljs-string">"week-picker"</span>
+          type=<span class="hljs-string">"date"</span>
+          max=<span class="hljs-string">"2050-01-25"</span>
+          min=<span class="hljs-string">"2011-12-25"</span>
+        /&gt;
+    &lt;/div&gt;
+<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span>
+
+<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .planningPageWeekUsers</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dfghs5zdfsfsdfdf" data-cs-source-point-number="3"></span>
+    <span class="hljs-soyTag">{@<span class="hljs-tag">param</span>? isoWeek: int}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dfghs5zdfsfsdfdf" data-cs-source-point-number="4"></span>
+    &lt;h4 class=<span class="hljs-string">"kdp-step-headline"</span>&gt;
+        2. Kitchen Duty for Week&amp;nbsp;
+        <span class="hljs-soyTag">{<span class="hljs-keyword">if</span> <span class="hljs-symbol">$isoWeek</span> != null }</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dfghs5zdfsfsdfdf" data-cs-source-point-number="5"></span>
+            &lt;aui-badge class=<span class="hljs-string">"aui-badge-primary"</span>&gt;
+                &lt;span id=<span class="hljs-string">"iso-week-label"</span>&gt;<span class="hljs-soyTag">{isoWeek}</span>&lt;/span&gt;
+            &lt;/aui-badge&gt;
+        <span class="hljs-soyTag">{<span class="hljs-keyword">else</span>}</span>
+            &lt;aui-badge&gt;
+                &lt;span id=<span class="hljs-string">"iso-week-label"</span>&gt;...&lt;/span&gt;
+            &lt;/aui-badge&gt;
+        <span class="hljs-soyTag">{/<span class="hljs-keyword">if</span>}</span>
+    &lt;/h4&gt;
+    &lt;div class=<span class="hljs-string">"kdp-step-content"</span>&gt;
+        <span class="hljs-soyTag">{<span class="hljs-keyword">if</span> <span class="hljs-symbol">$isoWeek</span> == null }</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dfghs5zdfsfsdfdf" data-cs-source-point-number="6"></span>
+            &lt;div&gt;- no week selected -&lt;/div&gt;
+        <span class="hljs-soyTag">{<span class="hljs-keyword">else</span>}</span>
+            &lt;div&gt;Users on kitchen duty for selected week:&lt;/div&gt;
+            &lt;div
+              id=<span class="hljs-string">"kdp-user-select"</span>
+              name=<span class="hljs-string">"kdp-user-select"</span>
+              class=<span class="hljs-string">"kdp-aui-select"</span>
+              multiple=<span class="hljs-string">""</span>
+              placeholder=<span class="hljs-string">"start typing a username ..."</span>
+            &gt;&lt;/div&gt;
+            &lt;br/&gt;&lt;br/&gt;
+            &lt;input
+              class=<span class="hljs-string">"button submit"</span>
+              type=<span class="hljs-string">"submit"</span>
+              id=<span class="hljs-string">"kdp-user-select-save-button"</span>
+              value=<span class="hljs-string">"save"</span>
+            /&gt;
+        <span class="hljs-soyTag">{/<span class="hljs-keyword">if</span>}</span>
+    &lt;/div&gt;
+<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span></code></pre>
+
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="dfghs5zdfsfsdfdf">
+                    <div class="list-group-item cs-source-point-list__item">
+                       todo
+We even now have a <strong>parameterized soy template</strong> to pass the iso-week number to a template and render it conditionally.
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -265,7 +505,7 @@
 
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
             
 
 <div class="cs-code-filename">
@@ -316,7 +556,7 @@ public class KitchenDutyPlanningResource {
             UserToWeek[] relationships = activeObjects.executeInTransaction(new TransactionCallback&lt;UserToWeek[]&gt;() {
                 @Override
                 public UserToWeek[] doInTransaction() {
-                    return KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
+                    return KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week); 
                 }
             });
             if (relationships != null) {
@@ -423,7 +663,7 @@ public class KitchenDutyPlanningResource {
             UserToWeek[] relationships = activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;UserToWeek[]&gt;() {
                 <span class="hljs-annotation">@Override</span>
                 <span class="hljs-keyword">public</span> UserToWeek[] doInTransaction() {
-                    <span class="hljs-keyword">return</span> KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
+                    <span class="hljs-keyword">return</span> KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week); <span class="cs-source-point" data-cs-source-point-id="x3eewr8dasdsfsf67987ij" data-cs-source-point-number="1"></span>
                 }
             });
             <span class="hljs-keyword">if</span> (relationships != <span class="hljs-keyword">null</span>) {
@@ -498,7 +738,16 @@ public class KitchenDutyPlanningResource {
     }</code></pre>
 
             </div>
+            <div class="col-md-4 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="x3eewr8dasdsfsf67987ij">
+                    <div class="list-group-item cs-source-point-list__item">
+                       We now query the UserToWeek objects by Week, to get all UserToWeek
+
+                    </div>
+                </div>
+            </div>
         </div>
+
 
         <h3 class="cs-headline cs-headline--s">Moment JS and AUI Preparations</h3>
 
@@ -823,197 +1072,8 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
 });</code></pre>
 
 
-        <p>There are now multiple soy templates. We even now have a <strong>parameterized soy template</strong> to pass the iso-week number to a template and render it conditionally.</p>
 
-        <div class="row">
-            <div class="col-md-8">
-                
-
-<div class="cs-code-filename">
-    
-    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/templates-soy/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="src/main/resources/templates-soy/">.../</span>kitchen-duty-planning.soy
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/502903955096146b308efbf5018c5457905f00bb/step-05-kitchen-duty-plugin/src/main/resources/templates-soy/kitchen-duty-planning.soy" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="{namespace JIRA.Templates.KDP}
-/**
- * Kitchen Duty Planning Page - Base Template
- */
-{template .planningPage} 
-    &lt;form class=&quot;aui&quot; id=&quot;kdp-user-select-form&quot;&gt;
-        &lt;div id=&quot;kdp-planning-page-week-container&quot;&gt;&lt;/div&gt;
-        &lt;div id=&quot;kdp-planning-page-week-users-container&quot;&gt;&lt;/div&gt;
-    &lt;/form&gt;
-{/template}
-
-/**
- * Kitchen Duty Planning Page - Week Select Template
- */
-{template .planningPageWeek}
-    &lt;h4 class=&quot;kdp-step-headline&quot;&gt;1. Select Week&lt;/h4&gt;
-    &lt;div class=&quot;kdp-step-content&quot;&gt;
-        &lt;input
-          class=&quot;aui-date-picker aui-button&quot;
-          id=&quot;week-picker&quot;
-          type=&quot;date&quot;
-          max=&quot;2050-01-25&quot;
-          min=&quot;2011-12-25&quot;
-        /&gt;
-    &lt;/div&gt;
-{/template}
-
-/**
- * Kitchen Duty Planning Page - User Search Template
- */
-{template .planningPageWeekUsers}
-    {@param? isoWeek: int}
-    &lt;h4 class=&quot;kdp-step-headline&quot;&gt;
-        2. Kitchen Duty for Week&amp;nbsp;
-        {if $isoWeek != null }
-            &lt;aui-badge class=&quot;aui-badge-primary&quot;&gt;
-                &lt;span id=&quot;iso-week-label&quot;&gt;{isoWeek}&lt;/span&gt;
-            &lt;/aui-badge&gt;
-        {else}
-            &lt;aui-badge&gt;&lt;span id=&quot;iso-week-label&quot;&gt;...&lt;/span&gt;&lt;/aui-badge&gt;
-        {/if}
-    &lt;/h4&gt;
-    &lt;div class=&quot;kdp-step-content&quot;&gt;
-        {if $isoWeek == null }
-            &lt;div&gt;- no week selected -&lt;/div&gt;
-        {else}
-            &lt;div &gt;Users on kitchen duty for selected week:&lt;/div&gt;
-            &lt;div
-              id=&quot;kdp-user-select&quot;
-              name=&quot;kdp-user-select&quot;
-              class=&quot;kdp-aui-select&quot;
-              multiple=&quot;&quot;
-              placeholder=&quot;start typing a username ...&quot;
-            &gt;&lt;/div&gt;
-            &lt;br/&gt;&lt;br/&gt;
-            &lt;input
-              class=&quot;button submit&quot;
-              type=&quot;submit&quot;
-              id=&quot;kdp-user-select-save-button&quot;
-              value=&quot;save&quot;
-            /&gt;
-        {/if}
-    &lt;/div&gt;
-{/template}
-
-
-/**
- * Kitchen Duty Planning Page - Foo
- */
-{template .foo}
-bar
-{/template}"><i class="fa fa-files-o"></i></a>
-</div>
-
-<pre class="cs-code"><code class="hljs"><span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">namespace</span> JIRA.Templates.KDP</span>}</span>
-<span class="hljs-comment">/**
- * Kitchen Duty Planning Page - Base Template
- */</span>
-<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .planningPage</span>}</span> <span class="hljs-soyTag"><span class="cs-source-point" data-cs-source-point-id="dfghs5zdfsfsdfdf" data-cs-source-point-number="1"></span>
-    &lt;form class=<span class="hljs-string">"aui"</span> id=<span class="hljs-string">"kdp-user-select-form"</span>&gt;
-        &lt;div id=<span class="hljs-string">"kdp-planning-page-week-container"</span>&gt;&lt;/div&gt;
-        &lt;div id=<span class="hljs-string">"kdp-planning-page-week-users-container"</span>&gt;&lt;/div&gt;
-    &lt;/form&gt;
-<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span>
-
-<span class="hljs-comment">/**
- * Kitchen Duty Planning Page - Week Select Template
- */</span>
-<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .planningPageWeek</span>}</span>
-    &lt;h4 class=<span class="hljs-string">"kdp-step-headline"</span>&gt;1. Select Week&lt;/h4&gt;
-    &lt;div class=<span class="hljs-string">"kdp-step-content"</span>&gt;
-        &lt;input
-          class=<span class="hljs-string">"aui-date-picker aui-button"</span>
-          id=<span class="hljs-string">"week-picker"</span>
-          type=<span class="hljs-string">"date"</span>
-          max=<span class="hljs-string">"2050-01-25"</span>
-          min=<span class="hljs-string">"2011-12-25"</span>
-        /&gt;
-    &lt;/div&gt;
-<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span>
-
-<span class="hljs-comment">/**
- * Kitchen Duty Planning Page - User Search Template
- */</span>
-<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .planningPageWeekUsers</span>}</span>
-    <span class="hljs-soyTag">{@<span class="hljs-tag">param</span>? isoWeek: int}</span>
-    &lt;h4 class=<span class="hljs-string">"kdp-step-headline"</span>&gt;
-        2. Kitchen Duty for Week&amp;nbsp;
-        <span class="hljs-soyTag">{<span class="hljs-keyword">if</span> <span class="hljs-symbol">$isoWeek</span> != null }</span>
-            &lt;aui-badge class=<span class="hljs-string">"aui-badge-primary"</span>&gt;
-                &lt;span id=<span class="hljs-string">"iso-week-label"</span>&gt;<span class="hljs-soyTag">{isoWeek}</span>&lt;/span&gt;
-            &lt;/aui-badge&gt;
-        <span class="hljs-soyTag">{<span class="hljs-keyword">else</span>}</span>
-            &lt;aui-badge&gt;&lt;span id=<span class="hljs-string">"iso-week-label"</span>&gt;...&lt;/span&gt;&lt;/aui-badge&gt;
-        <span class="hljs-soyTag">{/<span class="hljs-keyword">if</span>}</span>
-    &lt;/h4&gt;
-    &lt;div class=<span class="hljs-string">"kdp-step-content"</span>&gt;
-        <span class="hljs-soyTag">{<span class="hljs-keyword">if</span> <span class="hljs-symbol">$isoWeek</span> == null }</span>
-            &lt;div&gt;- no week selected -&lt;/div&gt;
-        <span class="hljs-soyTag">{<span class="hljs-keyword">else</span>}</span>
-            &lt;div &gt;Users on kitchen duty for selected week:&lt;/div&gt;
-            &lt;div
-              id=<span class="hljs-string">"kdp-user-select"</span>
-              name=<span class="hljs-string">"kdp-user-select"</span>
-              class=<span class="hljs-string">"kdp-aui-select"</span>
-              multiple=<span class="hljs-string">""</span>
-              placeholder=<span class="hljs-string">"start typing a username ..."</span>
-            &gt;&lt;/div&gt;
-            &lt;br/&gt;&lt;br/&gt;
-            &lt;input
-              class=<span class="hljs-string">"button submit"</span>
-              type=<span class="hljs-string">"submit"</span>
-              id=<span class="hljs-string">"kdp-user-select-save-button"</span>
-              value=<span class="hljs-string">"save"</span>
-            /&gt;
-        <span class="hljs-soyTag">{/<span class="hljs-keyword">if</span>}</span>
-    &lt;/div&gt;
-<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span>
-
-
-<span class="hljs-comment">/**
- * Kitchen Duty Planning Page - Foo
- */</span>
-<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .foo</span>}</span>
-bar
-<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span></code></pre>
-
-            </div>
-            <div class="col-md-4 cs-sticky-in-parent">
-                <div class="list-group cs-source-point-list" data-source-target="dfghs5zdfsfsdfdf">
-                    <div class="list-group-item cs-source-point-list__item">
-                       todo             http://momentjs.com/docs/#/get-set/iso-week/
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" data-lightbox="05-step" data-title="Step 5 - Planning Page working">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page working">
-                    </a>
-                </p>
-            </div>
-        </div>
+http://momentjs.com/docs/#/get-set/iso-week/
 
 
 

@@ -35,8 +35,8 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
     @Path("/year/{year}/month/{month}")
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response getUsersForWeek(@PathParam("year") final Integer year,
-                                    @PathParam("month") final Integer month) {
+    public Response getUsersForWeek(@PathParam("year") final Long year,
+                                    @PathParam("month") final Long month) {
         // AUTHENTICATION
         if (!this.isUserLoggedIn()) {
             return getUnauthorizedErrorResponse();
@@ -48,7 +48,12 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
             Week week = KitchenDutyActiveObjectHelper.getWeekByIsoWeekInTransaction(activeObjects, isoWeek);
             List<User> usersForWeek = KitchenDutyActiveObjectHelper.getUsersAssignedToWeekInTransaction(activeObjects, week);
             List<String> usernames = usersForWeek.stream().map(user -> user.getName()).collect(Collectors.toList());
-            responseList.add(new KitchenDutyOverviewPageMonthDutyModel(isoWeek, usernames));
+            responseList.add(new KitchenDutyOverviewPageMonthDutyModel(
+                isoWeek,
+                getFirstDayOfWeekOfYear(year, isoWeek).toString(),
+                getLastDayOfWeekOfYear(year, isoWeek).toString(),
+                usernames)
+            );
         }
 
         return Response.ok(responseList).build();

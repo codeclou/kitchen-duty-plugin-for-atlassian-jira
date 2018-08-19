@@ -17,6 +17,16 @@
 
         <div class="aui-page-panel">
             <div class="aui-page-panel-inner">
+                <div class="aui-page-panel-nav">
+                    <nav class="aui-navgroup aui-navgroup-vertical">
+                        <div class="aui-navgroup-inner">
+                            <ul class="aui-nav">
+                                <li class="aui-nav-selected"><a href="${req.contextPath}/secure/KitchenDutyOverviewPageWebworkAction.jspa">Overview Page</a></li>
+                                <li><a href="${req.contextPath}/secure/KitchenDutyPlanningWebworkAction.jspa">Planning Page</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
                 <section class="aui-page-panel-content">
                     <div id="kdp-overview-page-container"></div>
                 </section>

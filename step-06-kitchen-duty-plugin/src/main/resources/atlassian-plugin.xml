@@ -51,6 +51,10 @@
   <web-section key="admin_kitchen_duty_planning_section" name="admin_kitchen_duty_planning_section" location="admin_plugins_menu" weight="20" i18n-name-key="kitchen-duty-plugin.admin.planning.page.web.section.name">
     <label key="kitchen-duty-plugin.admin.planning.page.web.section.name"/>
   </web-section>
+  <web-item key="admin_kitchen_duty_overview_webitem" name="admin_kitchen_duty_overview_webitem" section="admin_plugins_menu/admin_kitchen_duty_planning_section" weight="14" i18n-name-key="kitchen-duty-plugin.admin.overview.page.web.item.name">
+    <label key="kitchen-duty-plugin.admin.overview.page.web.item.name"/>
+    <link linkId="admin_kitchen_duty_overview_webitem_link">/secure/KitchenDutyOverviewPageWebworkAction.jspa</link>
+  </web-item>
   <web-item key="admin_kitchen_duty_planning_webitem" name="admin_kitchen_duty_planning_webitem" section="admin_plugins_menu/admin_kitchen_duty_planning_section" weight="15" i18n-name-key="kitchen-duty-plugin.admin.planning.page.web.item.name">
     <label key="kitchen-duty-plugin.admin.planning.page.web.item.name"/>
     <link linkId="admin_kitchen_duty_planning_webitem_link">/secure/KitchenDutyPlanningWebworkAction.jspa</link>

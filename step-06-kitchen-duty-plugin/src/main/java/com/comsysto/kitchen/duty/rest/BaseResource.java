@@ -1,7 +1,6 @@
 package com.comsysto.kitchen.duty.rest;
 
 import com.atlassian.activeobjects.external.ActiveObjects;
-import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.atlassian.sal.api.user.UserProfile;
 
 import javax.ws.rs.core.Response;
@@ -51,22 +50,34 @@ public class BaseResource {
     }
 
     // See unit test
-    public static List<Long> getIsoWeeksOfMonth(Integer year, Integer month) {
+    public static List<Long> getIsoWeeksOfMonth(Long year, Long month) {
         List<Long> isoWeeks = new ArrayList<>();
-        isoWeeks.add(getWeekOfMonth(year, month, 1));
-        isoWeeks.add(getWeekOfMonth(year, month, 2));
-        isoWeeks.add(getWeekOfMonth(year, month, 3));
-        isoWeeks.add(getWeekOfMonth(year, month, 4));
-        isoWeeks.add(getWeekOfMonth(year, month, 5));
+        isoWeeks.add(getWeekOfMonth(year, month, 1L));
+        isoWeeks.add(getWeekOfMonth(year, month, 2L));
+        isoWeeks.add(getWeekOfMonth(year, month, 3L));
+        isoWeeks.add(getWeekOfMonth(year, month, 4L));
+        isoWeeks.add(getWeekOfMonth(year, month, 5L));
         return isoWeeks;
     }
 
-    protected static Long getWeekOfMonth(Integer year, Integer month, Integer weekInMonth) {
+    protected static Long getWeekOfMonth(Long year, Long month, Long weekInMonth) {
         // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
         WeekFields weekFields = WeekFields.ISO;
         return (long) LocalDate.now().with(weekFields.weekBasedYear(), year)
             .with(ChronoField.MONTH_OF_YEAR, month)
             .with(ChronoField.ALIGNED_WEEK_OF_MONTH, weekInMonth)
             .get(ChronoField.ALIGNED_WEEK_OF_YEAR);
+    }
+
+    public static LocalDate getFirstDayOfWeekOfYear(Long year, Long isoWeek) {
+        // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
+        WeekFields weekFields = WeekFields.ISO;
+        return LocalDate.now().with(weekFields.weekBasedYear(), year)
+            .with(ChronoField.ALIGNED_WEEK_OF_YEAR, isoWeek)
+            .with(ChronoField.DAY_OF_WEEK, 1).minusDays(1);
+    }
+
+    public static LocalDate getLastDayOfWeekOfYear(Long year, Long isoWeek) {
+        return getFirstDayOfWeekOfYear(year, isoWeek).plusDays(6);
     }
 }

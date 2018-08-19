@@ -207,25 +207,18 @@
 </h2>
 
 
-        <!--             COMMIT BEFORE STEP 5: 9bffb0671a25637faa7641dc3393163a043614db -->
-
-                
-<div class="cs-working-on-it">
-    We are working on it. Please visit again some time.
-</div>
-
-
-
+        <!-- COMMIT BEFORE STEP 5: 9bffb0671a25637faa7641dc3393163a043614db -->
 
         <p>Some time has passed since I worked on this Plugin tutorial - <strong>it is mid 2018 now</strong> - and we need to catch up to some things.</p>
 
-        <h3 class="cs-headline cs-headline--s">What changed?</h3>
+        <h3 class="cs-headline cs-headline--s">What has changed since 2017?</h3>
 
 
-        <p><strong>1. <a href="https://community.developer.atlassian.com/t/the-license-for-aui-7-is-changing">State and future of AUI library</a>:</strong></p>
+        <p><strong>1. State and future of AUI library:</strong></p>
         <ul>
             <li><strong><a href="https://atlaskit.atlassian.com/">AtlasKit library</a></strong> is based on ReactJS and is used for <strong><a href="https://developer.atlassian.com/cloud/jira/platform/integrating-with-jira-cloud/">Cloud Plugin Development</a></strong>.</li>
             <li><strong><a href="https://docs.atlassian.com/aui/">AUI library</a></strong> is based on JQuery and is used for <strong>Server Plugin Development.</strong></li>
+            <li><a href="https://community.developer.atlassian.com/t/the-license-for-aui-7-is-changing">AUI Library has now a more "closed-source" License</a>, meaning you cannot use AUI version greater 7 for non-Atlassian products. If you have a website or standalone product using AUI for your UI you should check the license terms.</a>
             <li>
                 That means we will continue using AUI for our plugin. And even though we could hit it with NPM, React, Angular, Webpack and all
                 that fancy shenanigans, we will write oldschool ES5 JavaScript code that directly executes in all browsers including ol' grandpa IE11.
@@ -485,21 +478,39 @@
             <div class="col-md-5 cs-sticky-in-parent">
                 <div class="list-group cs-source-point-list" data-source-target="dfghs5zdfsfsdfdf">
                     <div class="list-group-item cs-source-point-list__item">
-                       todo
-We even now have a <strong>parameterized soy template</strong> to pass the iso-week number to a template and render it conditionally.
+                       <strong>planningPage</strong> is the base template we inject into the page that has two divs with ids we later use to inject
+                       the other two rendered templates.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <strong>planningPageWeek</strong> is the template for the week selection. This template is only rendered once on page load.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <strong>planningPageWeekUsers</strong> is the template for the user to week selection.
+                        This template is re-rendered multiple times since it is a <strong>parameterized soy template</strong>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <strong>isoWeek parameter</strong> is used to pass the week number to the template.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        conditionally render the template for isoWeek being null (=no week selected) or isoWeek greater zero (=week selected).
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        when the isoWeek is null display a message, otherwise render the AUI Select 2 field for the user selection.
                     </div>
                 </div>
             </div>
         </div>
 
+        <p>We will later use the templates from our JavaScript code but for now we need again do something in Java.</p>
+
 
         <h3 class="cs-headline cs-headline--s">REST API Endpoint</h3>
 
-        <p>In step 4 we implemented logic to persist only one user for a week. We need to change that to multiple users per week.</p>
+        <p>In step four we implemented logic to persist only one user for a week. We need to change that to multiple users per week because of the way the <a href="https://docs.atlassian.com/aui/7.8.1/docs/auiselect2.html">AUI Select 2</a> works.</p>
 
         <p>
-            Therefore I have changed the endoints to do so. Basically I added just some for-each loops and some missing <code>activeObjects.flush(entity)</code> statements.
-            Since in the user selectfield (AUI Select) you can remove users and the HTTP PUT Request always contains a full list of users, we do not need the explicit delete-endpoint anymore.
+            Therefore I have changed the endoints to do so. Basically I added just some for-each loops and some missing <code>activeObjects.flush(entity)</code> statements that update the ID of the object after creating a new entity.
+            With the AUI Select 2 user field you can remove and add users. The HTTP PUT Request always contains a full list of users therefore we do not need the explicit delete-endpoint anymore.
             We simply update the relationships in our <code>@PUT</code> endpoint.
         </p>
 
@@ -533,9 +544,6 @@ public class KitchenDutyPlanningResource {
 ...
 
 
-    /*
-     * Get all Users assigned to the isoWeekNumber.
-     */
     @GET
     @Path(&quot;/week/{isoWeekNumber}/users&quot;)
     @Produces({MediaType.APPLICATION_JSON})
@@ -561,7 +569,7 @@ public class KitchenDutyPlanningResource {
             });
             if (relationships != null) {
                 for (UserToWeek userToWeek : relationships) {
-                    users.add(new KitchenDutyPlanningResourceUserModel(userToWeek.getUser().getID(), userToWeek.getUser().getName()));
+                     users.add(new KitchenDutyPlanningResourceUserModel(userToWeek.getUser().getID(), userToWeek.getUser().getName()));
                 }
             }
         }
@@ -581,9 +589,9 @@ public class KitchenDutyPlanningResource {
             @Override
             public Void doInTransaction() {
                 //
-                // WEEK
+                // WEEK 
                 //
-                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+               Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
                 if (week == null) {
                     week = activeObjects.create(Week.class, new DBParam(&quot;WEEK&quot;, isoWeekNumber));
                     week.save();
@@ -591,7 +599,7 @@ public class KitchenDutyPlanningResource {
                 }
 
                 //
-                // CLEANUP EXISTING RELATIONSHIPS
+                // CLEANUP EXISTING RELATIONSHIPS 
                 //
                 UserToWeek[] existingRelationships = KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
                 if (existingRelationships != null) {
@@ -612,7 +620,7 @@ public class KitchenDutyPlanningResource {
                         activeObjects.flush(user);
                     }
                     //
-                    // Establish ManyToMany Relationship
+                    // Establish ManyToMany Relationship 
                     //
                     UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
                     if (relationship == null) {
@@ -640,9 +648,6 @@ public class KitchenDutyPlanningResource {
 ...
 
 
-    <span class="hljs-comment">/*
-     * Get all Users assigned to the isoWeekNumber.
-     */</span>
     <span class="hljs-annotation">@GET</span>
     <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
     <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
@@ -668,7 +673,7 @@ public class KitchenDutyPlanningResource {
             });
             <span class="hljs-keyword">if</span> (relationships != <span class="hljs-keyword">null</span>) {
                 <span class="hljs-keyword">for</span> (UserToWeek userToWeek : relationships) {
-                    users.add(<span class="hljs-keyword">new</span> KitchenDutyPlanningResourceUserModel(userToWeek.getUser().getID(), userToWeek.getUser().getName()));
+                    <span class="cs-source-point" data-cs-source-point-id="x3eewr8dasdsfsf67987ij" data-cs-source-point-number="2"></span> users.add(<span class="hljs-keyword">new</span> KitchenDutyPlanningResourceUserModel(userToWeek.getUser().getID(), userToWeek.getUser().getName()));
                 }
             }
         }
@@ -688,9 +693,9 @@ public class KitchenDutyPlanningResource {
             <span class="hljs-annotation">@Override</span>
             <span class="hljs-function"><span class="hljs-keyword">public</span> Void <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span> </span>{
                 <span class="hljs-comment">//</span>
-                <span class="hljs-comment">// WEEK</span>
+                <span class="hljs-comment">// WEEK <span class="cs-source-point" data-cs-source-point-id="x3eewr8dasdsfsf67987ij" data-cs-source-point-number="3"></span></span>
                 <span class="hljs-comment">//</span>
-                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+               Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
                 <span class="hljs-keyword">if</span> (week == <span class="hljs-keyword">null</span>) {
                     week = activeObjects.create(Week.class, <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"WEEK"</span>, isoWeekNumber));
                     week.save();
@@ -698,7 +703,7 @@ public class KitchenDutyPlanningResource {
                 }
 
                 <span class="hljs-comment">//</span>
-                <span class="hljs-comment">// CLEANUP EXISTING RELATIONSHIPS</span>
+                <span class="hljs-comment">// CLEANUP EXISTING RELATIONSHIPS <span class="cs-source-point" data-cs-source-point-id="x3eewr8dasdsfsf67987ij" data-cs-source-point-number="4"></span></span>
                 <span class="hljs-comment">//</span>
                 UserToWeek[] existingRelationships = KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
                 <span class="hljs-keyword">if</span> (existingRelationships != <span class="hljs-keyword">null</span>) {
@@ -719,7 +724,7 @@ public class KitchenDutyPlanningResource {
                         activeObjects.flush(user);
                     }
                     <span class="hljs-comment">//</span>
-                    <span class="hljs-comment">// Establish ManyToMany Relationship</span>
+                    <span class="hljs-comment">// Establish ManyToMany Relationship <span class="cs-source-point" data-cs-source-point-id="x3eewr8dasdsfsf67987ij" data-cs-source-point-number="5"></span></span>
                     <span class="hljs-comment">//</span>
                     UserToWeek relationship = KitchenDutyActiveObjectHelper.findRelationship(activeObjects, user, week);
                     <span class="hljs-keyword">if</span> (relationship == <span class="hljs-keyword">null</span>) {
@@ -741,17 +746,37 @@ public class KitchenDutyPlanningResource {
             <div class="col-md-4 cs-sticky-in-parent">
                 <div class="list-group cs-source-point-list" data-source-target="x3eewr8dasdsfsf67987ij">
                     <div class="list-group-item cs-source-point-list__item">
-                       We now query the UserToWeek objects by Week, to get all UserToWeek
-
+                       We now query the UserToWeek objects by Week, to get all UserToWeek objects from which we get the all the users assigned to the week.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we wrap all users in a List of <code>KitchenDutyPlanningResourceUserModel</code> which procudes
+                        the JSON <code>[ { "id": 1, "username": "linda" }, { "id": 2, "username": "bob" } ]</code>
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        First we get the Week object or create it if it does not exist.
+                        The <code>activeObjects.flush(entity)</code> ensures that the ID gets updated for the week.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Next we remove all users from that week. Why? Let's say bob and steve have been assigned to that week before.
+                        Someone edited the users for that week and now it is steve and linda. So how can we tell that we need to remove bob
+                        when we do not even have the information about that? We cannot. Therefore we simply remove all users from that week to add
+                        the desginated users to that week later.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Assign the designated users to the week. This way we do not need the DELETE endpoint anymore since we simply always first remove
+                        all users for a week and then assign the new userlist to the week.
                     </div>
                 </div>
             </div>
         </div>
 
+        <p>Having done that we can move on again to our frontend code.<p>
 
         <h3 class="cs-headline cs-headline--s">Moment JS and AUI Preparations</h3>
 
         <p>
+            Since we want to calcuclate the week number from our date selected in the date picker we need some libraries to so. Date calculations
+            in JavaScript are best done with <a href="http://momentjs.com/">MomentJS</a>.
             We need to add the dependency for the <a href="https://docs.atlassian.com/aui/7.9.5/docs/date-picker.html">AUI date picker</a> to our <code>atlassian-plugin.xml</code>
             and put a copy of <a href="http://momentjs.com/"><code>moment.min.js</code></a> inside <code>src/main/resources/js/3rdparty/</code>.
         </p>
@@ -818,10 +843,12 @@ public class KitchenDutyPlanningResource {
         <h3 class="cs-headline cs-headline--s">JS Controller</h3>
 
         <p>
-            We <strong>edit our Planning Page JS-Controller</strong> file in <code>/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</code>.
-            I have extended the existing code to load and save the users per week. This JS code uses now multiple soy templates which you will see below.
+            We <strong>edit our existing Planning Page JS-Controller</strong> file in <code>/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</code>.
+            I have extended the existing code to load and save the users per week. This JS code now uses the soy templates we have defined above.
         </p>
 
+        <div class="row">
+            <div class="col-md-8">
         
 
 <div class="cs-code-filename">
@@ -861,12 +888,12 @@ var showErrorFlag = function(message) {
     });
 };
 
-var initUserSearch = function(weekIsoWeekNumber) {
+var initUserSearch = function(weekIsoWeekNumber) { 
     // Init SOY template
     var planningPageWeekUsersTemplate = JIRA.Templates.KDP.planningPageWeekUsers({
-        isoWeek: weekIsoWeekNumber
+        isoWeek: weekIsoWeekNumber 
     });
-    AJS.$(&#39;#kdp-planning-page-week-users-container&#39;).html(planningPageWeekUsersTemplate);
+    AJS.$(&#39;#kdp-planning-page-week-users-container&#39;).html(planningPageWeekUsersTemplate); 
 
     // Init actions
     var auiUserSelectOptions = {
@@ -884,13 +911,13 @@ var initUserSearch = function(weekIsoWeekNumber) {
     AJS.$(&#39;#kdp-user-select&#39;).auiSelect2(auiUserSelectOptions);
 
     // Load initial values from REST API and set for aui-select
-    if (weekIsoWeekNumber !== null) {
+    if (weekIsoWeekNumber !== null) { 
         AJS.$.ajax({
             url: window.KDPrestUrl + &#39;/planning/week/&#39; + weekIsoWeekNumber + &#39;/users&#39;,
             dataType: &#39;json&#39;,
             success: function(users) {
                 var selectedUserList = [];
-                if (users !== null) {
+                if (users !== null) { 
                     users.forEach(function(user) {
                         selectedUserList.push({ id: user.username, text: user.username });
                     });
@@ -910,7 +937,7 @@ var initUserSearch = function(weekIsoWeekNumber) {
             // has to be in specific format
             selectedUserList.push({ username: this.text });
         });
-        AJS.$.ajax({
+        AJS.$.ajax({ 
             url: window.KDPrestUrl + &#39;/planning/week/&#39; + weekIsoWeekNumber + &#39;/users&#39;,
             type: &#39;PUT&#39;,
             contentType: &#39;application/json&#39;,
@@ -926,7 +953,7 @@ var initUserSearch = function(weekIsoWeekNumber) {
     });
 };
 
-var initWeekPicker = function() {
+var initWeekPicker = function() { 
     // Init SOY template
     var planningPageWeekTemplate = JIRA.Templates.KDP.planningPageWeek();
     AJS.$(&#39;#kdp-planning-page-week-container&#39;).html(planningPageWeekTemplate);
@@ -935,7 +962,7 @@ var initWeekPicker = function() {
     AJS.$(&#39;#week-picker&#39;).off(); // remove previous listeners
     AJS.$(&#39;#week-picker&#39;).datePicker({&#39;overrideBrowserDefault&#39;: true});
     AJS.$(&#39;#week-picker&#39;).change(function() {
-        var isoWeek = moment(AJS.$(&#39;#week-picker&#39;).val()).isoWeek();
+        var isoWeek = moment(AJS.$(&#39;#week-picker&#39;).val()).isoWeek(); 
         initUserSearch(isoWeek);
     });
 };
@@ -946,11 +973,11 @@ AJS.toInit(function(){
     var restUrl = baseUrl + &#39;/rest/kitchenduty/1.0&#39;;
     window.KDPrestUrl = restUrl;
 
-    // Init Base SOY template
+    // Init Base SOY template 
     var planningPageTemplate = JIRA.Templates.KDP.planningPage();
     AJS.$(&#39;#kdp-planning-page-container&#39;).html(planningPageTemplate);
 
-    // Init child templates
+    // Init child templates 
     initWeekPicker();
     initUserSearch(null);
 });"><i class="fa fa-files-o"></i></a>
@@ -977,12 +1004,12 @@ AJS.toInit(function(){
     });
 };
 
-<span class="hljs-keyword">var</span> initUserSearch = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">weekIsoWeekNumber</span>) </span>{
+<span class="hljs-keyword">var</span> initUserSearch = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">weekIsoWeekNumber</span>) </span>{ <span class="cs-source-point" data-cs-source-point-id="sdfdfhg36ig" data-cs-source-point-number="1"></span>
     <span class="hljs-comment">// Init SOY template</span>
     <span class="hljs-keyword">var</span> planningPageWeekUsersTemplate = JIRA.Templates.KDP.planningPageWeekUsers({
-        isoWeek: weekIsoWeekNumber
+        isoWeek: weekIsoWeekNumber <span class="cs-source-point" data-cs-source-point-id="sdfdfhg36ig" data-cs-source-point-number="2"></span>
     });
-    AJS.$(<span class="hljs-string">'#kdp-planning-page-week-users-container'</span>).html(planningPageWeekUsersTemplate);
+    AJS.$(<span class="hljs-string">'#kdp-planning-page-week-users-container'</span>).html(planningPageWeekUsersTemplate); <span class="cs-source-point" data-cs-source-point-id="sdfdfhg36ig" data-cs-source-point-number="3"></span>
 
     <span class="hljs-comment">// Init actions</span>
     <span class="hljs-keyword">var</span> auiUserSelectOptions = {
@@ -1000,13 +1027,13 @@ AJS.toInit(function(){
     AJS.$(<span class="hljs-string">'#kdp-user-select'</span>).auiSelect2(auiUserSelectOptions);
 
     <span class="hljs-comment">// Load initial values from REST API and set for aui-select</span>
-    <span class="hljs-keyword">if</span> (weekIsoWeekNumber !== <span class="hljs-literal">null</span>) {
+    <span class="hljs-keyword">if</span> (weekIsoWeekNumber !== <span class="hljs-literal">null</span>) { <span class="cs-source-point" data-cs-source-point-id="sdfdfhg36ig" data-cs-source-point-number="4"></span>
         AJS.$.ajax({
             url: <span class="hljs-built_in">window</span>.KDPrestUrl + <span class="hljs-string">'/planning/week/'</span> + weekIsoWeekNumber + <span class="hljs-string">'/users'</span>,
             dataType: <span class="hljs-string">'json'</span>,
             success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">users</span>) </span>{
                 <span class="hljs-keyword">var</span> selectedUserList = [];
-                <span class="hljs-keyword">if</span> (users !== <span class="hljs-literal">null</span>) {
+                <span class="hljs-keyword">if</span> (users !== <span class="hljs-literal">null</span>) { <span class="cs-source-point" data-cs-source-point-id="sdfdfhg36ig" data-cs-source-point-number="5"></span>
                     users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
                         selectedUserList.push({ id: user.username, text: user.username });
                     });
@@ -1026,7 +1053,7 @@ AJS.toInit(function(){
             <span class="hljs-comment">// has to be in specific format</span>
             selectedUserList.push({ username: <span class="hljs-keyword">this</span>.text });
         });
-        AJS.$.ajax({
+        AJS.$.ajax({ <span class="cs-source-point" data-cs-source-point-id="sdfdfhg36ig" data-cs-source-point-number="6"></span>
             url: <span class="hljs-built_in">window</span>.KDPrestUrl + <span class="hljs-string">'/planning/week/'</span> + weekIsoWeekNumber + <span class="hljs-string">'/users'</span>,
             type: <span class="hljs-string">'PUT'</span>,
             contentType: <span class="hljs-string">'application/json'</span>,
@@ -1042,7 +1069,7 @@ AJS.toInit(function(){
     });
 };
 
-<span class="hljs-keyword">var</span> initWeekPicker = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+<span class="hljs-keyword">var</span> initWeekPicker = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="cs-source-point" data-cs-source-point-id="sdfdfhg36ig" data-cs-source-point-number="7"></span>
     <span class="hljs-comment">// Init SOY template</span>
     <span class="hljs-keyword">var</span> planningPageWeekTemplate = JIRA.Templates.KDP.planningPageWeek();
     AJS.$(<span class="hljs-string">'#kdp-planning-page-week-container'</span>).html(planningPageWeekTemplate);
@@ -1051,7 +1078,7 @@ AJS.toInit(function(){
     AJS.$(<span class="hljs-string">'#week-picker'</span>).off(); <span class="hljs-comment">// remove previous listeners</span>
     AJS.$(<span class="hljs-string">'#week-picker'</span>).datePicker({<span class="hljs-string">'overrideBrowserDefault'</span>: <span class="hljs-literal">true</span>});
     AJS.$(<span class="hljs-string">'#week-picker'</span>).change(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-        <span class="hljs-keyword">var</span> isoWeek = moment(AJS.$(<span class="hljs-string">'#week-picker'</span>).val()).isoWeek();
+        <span class="hljs-keyword">var</span> isoWeek = moment(AJS.$(<span class="hljs-string">'#week-picker'</span>).val()).isoWeek(); <span class="cs-source-point" data-cs-source-point-id="sdfdfhg36ig" data-cs-source-point-number="8"></span>
         initUserSearch(isoWeek);
     });
 };
@@ -1062,19 +1089,85 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
     <span class="hljs-keyword">var</span> restUrl = baseUrl + <span class="hljs-string">'/rest/kitchenduty/1.0'</span>;
     <span class="hljs-built_in">window</span>.KDPrestUrl = restUrl;
 
-    <span class="hljs-comment">// Init Base SOY template</span>
+    <span class="hljs-comment">// Init Base SOY template <span class="cs-source-point" data-cs-source-point-id="sdfdfhg36ig" data-cs-source-point-number="9"></span></span>
     <span class="hljs-keyword">var</span> planningPageTemplate = JIRA.Templates.KDP.planningPage();
     AJS.$(<span class="hljs-string">'#kdp-planning-page-container'</span>).html(planningPageTemplate);
 
-    <span class="hljs-comment">// Init child templates</span>
+    <span class="hljs-comment">// Init child templates <span class="cs-source-point" data-cs-source-point-id="sdfdfhg36ig" data-cs-source-point-number="10"></span></span>
     initWeekPicker();
     initUserSearch(<span class="hljs-literal">null</span>);
 });</code></pre>
 
+            </div>
+            <div class="col-md-4 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="x3eewr8dasdsfsf67987ij">
+                    <div class="list-group-item cs-source-point-list__item">
+                       <strong>initUserSearch function</strong> renders the
+                       <em>planningPageWeekUsers</em> soy template for the week number passed as parameter.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <strong>isoWeek soy template parameter</strong> is passed to template from JavaScript function parameter.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The rendered <em>planningPageWeekUsers</em> soy template is injected into the DOM.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        If the <em>weekIsoWeekNumber</em> variable is not null (meaning user has selected a date), then
+                        load existing users for that week from our REST Endpoint via HTTP GET.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        If we get a non empty userlist from the API (meaning there are already users assigned for that week),
+                        we build us a custom array to pass to the AUI Select 2 field. With the <strong>select2 function</strong>
+                        on the DOM element of the AUI Select 2 you can pass in initial data like so:
+                        <code>AJS.$('#id').select2('data', [ { id: 'foo', text: 'foo' } ]);</code>
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        When the form is submitted (meaning user clicked save button), then
+                        we first build ourselves a userlist in the format the API can handle <code>selectedUserList.push({ username: this.text });</code>.
+                        Then we send the userlist via HTTP PUT to our Endpoint for the selected week.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <strong>initWeekPicker function</strong> renders the
+                        <em>planningPageWeek</em> soy template. This template is only rendered once on page load.
+                        It initializes the <a href="https://docs.atlassian.com/aui/7.8.1/docs/date-picker.html">AUI Date picker</a> for our textfield.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        This is the real magic now. We register a <strong>change listener</strong> to our date picker field,
+                        meaning that once the user selects a date the function is called.
+                        Inside that function we get the selected date from the date picker and pass it to the
+                        <a href="http://momentjs.com/docs/#/get-set/iso-week/">MomentJS isoWeek() function</a> which returns us
+                        the iso week number for that date.
+                        And once we have the iso week number we <strong>trigger a re-render of the <em>planningPageWeekUsers</em> template</strong> for that week.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        In our <code>AJS.toInit()</code> function (which is executed after the DOM has loaded),
+                        we render the base <em>planningPage</em> soy template.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Right after that we initially render the child templates.
+                        First the <code>initWeekPicker()</code> and secondly
+                        the <code>initUserSearch()</code> with a <code>null</code> parameter,
+                        telling the function that the user has not yet selected a date.
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-http://momentjs.com/docs/#/get-set/iso-week/
 
+
+        <p>That's it. Now we can run our plugin with <code>atlas-run</code> and when navigating to <a href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa</a>
+        it should work as you can see below. <strong>We are completely done implementing the Kitchen Duty Planning Page</strong>.</p>
+
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" data-lightbox="05-step" data-title="Step 5 - Planning Page working">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page working">
+                    </a>
+                </p>
+            </div>
+        </div>
 
 
         <div class="cs-v-spacer"></div>

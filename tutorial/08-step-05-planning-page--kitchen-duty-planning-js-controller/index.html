@@ -509,7 +509,7 @@
         <p>In step four we implemented logic to persist only one user for a week. We need to change that to multiple users per week because of the way the <a href="https://docs.atlassian.com/aui/7.8.1/docs/auiselect2.html">AUI Select 2</a> works.</p>
 
         <p>
-            Therefore I have changed the endoints to do so. Basically I added just some for-each loops and some missing <code>activeObjects.flush(entity)</code> statements that update the ID of the object after creating a new entity.
+            Therefore I have changed the endpoints to do so. Basically I added just some for-each loops and some missing <code>activeObjects.flush(entity)</code> statements that update the ID of the object after creating a new entity.
             With the AUI Select 2 user field you can remove and add users. The HTTP PUT Request always contains a full list of users therefore we do not need the explicit delete-endpoint anymore.
             We simply update the relationships in our <code>@PUT</code> endpoint.
         </p>
@@ -775,7 +775,7 @@ public class KitchenDutyPlanningResource {
         <h3 class="cs-headline cs-headline--s">Moment JS and AUI Preparations</h3>
 
         <p>
-            Since we want to calcuclate the week number from our date selected in the date picker we need some libraries to so. Date calculations
+            Since we want to calcuclate the week number from our date selected in the date picker we need some libraries to do so. Date calculations
             in JavaScript are best done with <a href="http://momentjs.com/">MomentJS</a>.
             We need to add the dependency for the <a href="https://docs.atlassian.com/aui/7.9.5/docs/date-picker.html">AUI date picker</a> to our <code>atlassian-plugin.xml</code>
             and put a copy of <a href="http://momentjs.com/"><code>moment.min.js</code></a> inside <code>src/main/resources/js/3rdparty/</code>.
@@ -844,7 +844,7 @@ public class KitchenDutyPlanningResource {
 
         <p>
             We <strong>edit our existing Planning Page JS-Controller</strong> file in <code>/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js</code>.
-            I have extended the existing code to load and save the users per week. This JS code now uses the soy templates we have defined above.
+            I have extended the existing code to load and save the users per week. This JS code now uses the soy templates defined above.
         </p>
 
         <div class="row">

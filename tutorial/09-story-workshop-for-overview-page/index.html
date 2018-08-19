@@ -195,14 +195,67 @@
 </h2>
 
 
+        <h3 class="cs-headline cs-headline--s">What does the Overview Page really need to do? </h3>
 
-        
-<div class="cs-working-on-it">
-    We are working on it. Please visit again some time.
-</div>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-kitchen-duty-overview-page_big.jpg" data-lightbox="user-stories" data-title="Kitchen Duty Planning Page Mockup">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-kitchen-duty-overview-page.jpg" class="img-fluid cs-image" alt="Kitchen Duty Planning Page Mockup">
+                </a>
+            </div>
+            <div class="col-md-8">
+                <ul>
+                    <li>We need a way to display a huge calender with a full month view.</li>
+                    <li>We need a way to select any month.</li>
+                    <li>We need to be able to get a list of all JIRA usernames for all weeks of current month.</li>
+                </ul>
+
+                <p>
+                    Ok does not sound so complex.
+                </p>
+            </div>
+        </div>
 
 
-https://fullcalendar.io/
+        <h3 class="cs-headline cs-headline--s">UX Components</h3>
+
+        <p>
+            Since there is no big calender widget in the AUI library we took our time and found a good one
+            which has a MIT license and sounds stable and well documented.
+            The <strong><a href="https://fullcalendar.io/">FullCalendar</a> library</strong> seems to be the best choice.
+        </p>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li>We can use a <a href="https://fullcalendar.io/docs/weekNumbers-demo">month-view with week numbers</a>.</li>
+                    <li>We can use the <a href="https://fullcalendar.io/docs/events-function">Events Functions</a> to add the users to each week.</li>
+                    <li>We need a page that can be accessed by all JIRA users to display the calendar (aka the Overview Page)</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-06-fullcalendar-month-demo.png" data-lightbox="06-step" data-title="Full Calendar Month View Demo">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-06-fullcalendar-month-demo.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Full Calendar Month View Demo">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+
+        <h3 class="cs-headline cs-headline--s">Component Planning</h3>
+
+
+        <p>We know now what we want to do - now let's see how we plan our components.</p>
+
+        <ul>
+            <li><p><strong>Kitchen Duty Overview Page Webwork Action</strong> - A page that can be viewed by all logged in JIRA users.</p></li>
+            <li><p><strong>Kitchen Duty Overview Page JS Controller</strong> - Some JavaScript logic to display the calender with data from REST Endpoints on the page.</p></li>
+            <li><p><strong>Kitchen Duty Overview Page REST Resource</strong> - An Endpoint that returns all weeks with users for a selected month.</p></li>
+            <li><p><strong>Kitchen Duty Overview Page WebSection/WebItem</strong> - A navigation link to Overview Page from JIRA projects top nav.</p></li>
+        </ul>
+
 
 
 

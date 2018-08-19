@@ -56,7 +56,7 @@
     <div class="row">
         <div class="col-md-5 cs-page-header-left">
             <a href="/kitchen-duty-plugin-for-atlassian-jira/" class="cs-page-logo">
-                <span class="cs-page-logo-img hidden-md-down"></span>
+                <span class="cs-page-logo-img d-none d-lg-inline"></span>
                 <h1>Kitchen Duty Plugin</h1>
                 <h2>for Atlassian JIRA® by Comsysto Reply</h2>
             </a>
@@ -64,7 +64,7 @@
                 <span class="cs-news-right" style="color:#fff;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i></span>
             </a>
         </div>
-        <div class="col-md-3 text-center hidden-sm-down" style="padding-top:10px;">
+        <div class="col-md-3 text-center d-none d-sm-block" style="padding-top:10px;">
 
             <!--
             <a class="btn btn-primary btn-borderless" href="/kitchen-duty-plugin-for-atlassian-jira/news/" target="_blank">
@@ -72,8 +72,8 @@
             </a>
             -->
         </div>
-        <div class="col-md-4  hidden-sm-down cs-page-header-cs-logo text-right cs-page-header--right-fix">
-            <a href="https://comsysto.com/leistungen/atlassian-solutions" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="Comsysto Reply" style="width:150px; margin-top:-20px;"/></a>
+        <div class="col-md-4  d-none d-sm-block cs-page-header-cs-logo text-right cs-page-header--right-fix">
+            <a href="https://comsystoreply.de" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="Comsysto Reply" style="width:150px; margin-top:-20px;"/></a>
         </div>
     </div>
 </div>
@@ -178,15 +178,6 @@
     </ul>
 
 
-    <div class="cs-legal-box">
-        <a href="/kitchen-duty-plugin-for-atlassian-jira/author-and-license/">Author &amp; License</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/impressum/">Impressum / Imprint</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/datenschutz/">Datenschutzerklärung / Privacy</a>
-        <a class="btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
-            <span class="cs-stars-on-github-count-stars">...</span>
-            <i class="fa fa-star"></i> on GitHub
-        </a>
-    </div>
 
 
 
@@ -267,7 +258,7 @@
         <p>In step 4 we implemented logic to persist only one user for a week. We need to change that to multiple users per week.</p>
 
         <p>
-            Therefore I have changed the endoints to do so. Basically I added just som for-each loops and some missing <code>activeObjects.flush(entity)</code> statements.
+            Therefore I have changed the endoints to do so. Basically I added just some for-each loops and some missing <code>activeObjects.flush(entity)</code> statements.
             Since in the user selectfield (AUI Select) you can remove users and the HTTP PUT Request always contains a full list of users, we do not need the explicit delete-endpoint anymore.
             We simply update the relationships in our <code>@PUT</code> endpoint.
         </p>
@@ -279,11 +270,15 @@
 
 <div class="cs-code-filename">
     
-    <span class="hidden-md-down">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="hidden-lg-up"
+    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                             data-toggle="tooltip"
                                                             data-placement="right"
                                                             title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
     
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/502903955096146b308efbf5018c5457905f00bb/step-05-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
     
     <a class="cs-code-copylink cs--trigger-copy-clipboard"
        data-toggle="tooltip" data-placement="left"
@@ -516,11 +511,15 @@ public class KitchenDutyPlanningResource {
 
 <div class="cs-code-filename">
     
-    <span class="hidden-md-down">src/main/resources/</span><span class="hidden-lg-up"
+    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                             data-toggle="tooltip"
                                                             data-placement="right"
                                                             title="src/main/resources/">.../</span>atlassian-plugin.xml
     
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/502903955096146b308efbf5018c5457905f00bb/step-05-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
     
     <a class="cs-code-copylink cs--trigger-copy-clipboard"
        data-toggle="tooltip" data-placement="left"
@@ -578,11 +577,15 @@ public class KitchenDutyPlanningResource {
 
 <div class="cs-code-filename">
     
-    <span class="hidden-md-down">src/main/resources/js/</span><span class="hidden-lg-up"
+    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/js/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                             data-toggle="tooltip"
                                                             data-placement="right"
                                                             title="src/main/resources/js/">.../</span>kitchen-duty-plugin--planning-page-controller.js
     
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/502903955096146b308efbf5018c5457905f00bb/step-05-kitchen-duty-plugin/src/main/resources/js/kitchen-duty-plugin--planning-page-controller.js" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
     
     <a class="cs-code-copylink cs--trigger-copy-clipboard"
        data-toggle="tooltip" data-placement="left"
@@ -828,11 +831,15 @@ AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span
 
 <div class="cs-code-filename">
     
-    <span class="hidden-md-down">src/main/resources/templates-soy/</span><span class="hidden-lg-up"
+    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/templates-soy/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                             data-toggle="tooltip"
                                                             data-placement="right"
                                                             title="src/main/resources/templates-soy/">.../</span>kitchen-duty-planning.soy
     
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/502903955096146b308efbf5018c5457905f00bb/step-05-kitchen-duty-plugin/src/main/resources/templates-soy/kitchen-duty-planning.soy" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
     
     <a class="cs-code-copylink cs--trigger-copy-clipboard"
        data-toggle="tooltip" data-placement="left"
@@ -1055,14 +1062,24 @@ bar
 
 
 <div class="cs-footer">
+    <div class="cs-legal-box">
+        <a href="/kitchen-duty-plugin-for-atlassian-jira/author-and-license/">Author &amp; License</a>
+        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/impressum/">Impressum / Imprint</a>
+        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/datenschutz/">Datenschutzerklärung / Privacy</a>
+        <a class="d-none d-sm-inline btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
+            <span class="cs-stars-on-github-count-stars">...</span>
+            stars on GitHub
+        </a>
+    </div>
+
     <div class="text-right cs-pager">
         <a class="btn btn-secondary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/">
             <i class="fa fa-angle-left"></i>
-            <span class="hidden-sm-down">previous page</span>
+            <span class="d-none d-md-inline">previous page</span>
         </a>
         
         <a class="btn btn-secondary" href="/kitchen-duty-plugin-for-atlassian-jira/tutorial/09-story-workshop-for-overview-page/">
-            <span class="hidden-sm-down">next page</span>
+            <span class="d-none d-md-inline">next page</span>
             <i class="fa fa-angle-right"></i></a>
         
     </div>

@@ -39,19 +39,146 @@
         <p><strong>2. AUI Redesign + JIRA version upgrade</strong></p>
 
         <ul>
-            <li>We now compile against JIRA 7.10 and use Atlassian SDK version 6.3.10 (simply upgrade your SDK).</li>
+            <li>We now compile against JIRA 7.10 and use Atlassian SDK version 6.3.10 therefore upgrade your Atlassian SDK. Also are we now compiling against Java 8. Update your <code>pom.xml</code> accordingly.</li>
             <li>
                 JIRA Software underwent a redesign now looks like this. But all components of AUI just work the same way.<br>
 
             </li>
         </ul>
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
+        <div class="row  ml-2">
+            <div class="col-md-6">
                 <p>
                     <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-jira-now.png" data-lightbox="05-step" data-title="Step 5 - JIRA Redesign">
                         <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-jira-now.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - JIRA Redesign">
                     </a>
                 </p>
+            </div>
+            <div class="col-md-6">
+                {{ csSource(lang='xml', filepath="", filename="pom.xml", ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='x3eewr8dadfdfsdsfsf6df7987ij', source='
+                    |<project>
+                    |    ...
+                    |    <build>
+                    |        <plugins>
+                    |            ...
+                    |            <plugin>
+                    |                <artifactId>maven-compiler-plugin</artifactId>
+                    |                <version>3.3</version>
+                    |                <configuration>
+                    |                    <source>1.8</source>
+                    |                    <target>1.8</target>
+                    |                </configuration>
+                    |            </plugin>
+                    |        </plugins>
+                    |    </build>
+                    |    <properties>
+                    |        <jira.version>7.10.0</jira.version>
+                    |        <amps.version>6.3.15</amps.version>
+                    |        ...
+                    |    </properties>
+                    |</project>
+                ') }}
+            </div>
+        </div>
+
+
+        <h3 class="cs-headline cs-headline--s">What we want to achieve</h3>
+
+        <p>
+            Basically we want to first have the user select the week. Then we want to show a multi-select textfield containing
+            existing users for that week and beeing able to add or remove users for that week.
+            That means <strong>the template of the user selection loads conditionally by the week number</strong>.
+        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" data-lightbox="05-step" data-title="Step 5 - Planning Page working">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page working">
+                    </a>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-templates.png" data-lightbox="05-step" data-title="Step 5 - Planning Page working">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-templates.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page working">
+                    </a>
+                </p>
+            </div>
+        </div>
+
+
+        <p>There are now multiple soy templates as shown in the graphic above which we will later use from our JavaScript code to render the planning page.</p>
+
+        <div class="row">
+            <div class="col-md-7">
+                {{ csSource(lang='soy', filepath="src/main/resources/templates-soy/", filename="kitchen-duty-planning.soy",
+                            ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='dfghs5zdfsfsdfdf', source='
+                            |{namespace JIRA.Templates.KDP}
+                            |
+                            |{template .planningPage} {{{point::1}}}
+                            |    <form class="aui" id="kdp-user-select-form">
+                            |        <div id="kdp-planning-page-week-container"></div>
+                            |        <div id="kdp-planning-page-week-users-container"></div>
+                            |    </form>
+                            |{/template}
+                            |
+                            |{template .planningPageWeek} {{{point::2}}}
+                            |    <h4 class="kdp-step-headline">1. Select Week</h4>
+                            |    <div class="kdp-step-content">
+                            |        <input
+                            |          class="aui-date-picker aui-button"
+                            |          id="week-picker"
+                            |          type="date"
+                            |          max="2050-01-25"
+                            |          min="2011-12-25"
+                            |        />
+                            |    </div>
+                            |{/template}
+                            |
+                            |{template .planningPageWeekUsers} {{{point::3}}}
+                            |    {@param? isoWeek: int} {{{point::4}}}
+                            |    <h4 class="kdp-step-headline">
+                            |        2. Kitchen Duty for Week&nbsp;
+                            |        {if $isoWeek != null } {{{point::5}}}
+                            |            <aui-badge class="aui-badge-primary">
+                            |                <span id="iso-week-label">{isoWeek}</span>
+                            |            </aui-badge>
+                            |        {else}
+                            |            <aui-badge>
+                            |                <span id="iso-week-label">...</span>
+                            |            </aui-badge>
+                            |        {/if}
+                            |    </h4>
+                            |    <div class="kdp-step-content">
+                            |        {if $isoWeek == null } {{{point::6}}}
+                            |            <div>- no week selected -</div>
+                            |        {else}
+                            |            <div>Users on kitchen duty for selected week:</div>
+                            |            <div
+                            |              id="kdp-user-select"
+                            |              name="kdp-user-select"
+                            |              class="kdp-aui-select"
+                            |              multiple=""
+                            |              placeholder="start typing a username ..."
+                            |            ></div>
+                            |            <br/><br/>
+                            |            <input
+                            |              class="button submit"
+                            |              type="submit"
+                            |              id="kdp-user-select-save-button"
+                            |              value="save"
+                            |            />
+                            |        {/if}
+                            |    </div>
+                            |{/template}
+                ') }}
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="dfghs5zdfsfsdfdf">
+                    <div class="list-group-item cs-source-point-list__item">
+                       todo
+We even now have a <strong>parameterized soy template</strong> to pass the iso-week number to a template and render it conditionally.
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -68,8 +195,8 @@
 
 
         <div class="row">
-            <div class="col-md-12">
-            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='x3eewr8dsfsf67987ij', source='
+            <div class="col-md-8">
+            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='x3eewr8dasdsfsf67987ij', source='
             |package com.comsysto.kitchen.duty.rest;
             |...
             |
@@ -102,7 +229,7 @@
             |            UserToWeek[] relationships = activeObjects.executeInTransaction(new TransactionCallback<UserToWeek[]>() {
             |                @Override
             |                public UserToWeek[] doInTransaction() {
-            |                    return KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
+            |                    return KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week); {{{point::1}}}
             |                }
             |            });
             |            if (relationships != null) {
@@ -177,7 +304,16 @@
             |    }
             ') }}
             </div>
+            <div class="col-md-4 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="x3eewr8dasdsfsf67987ij">
+                    <div class="list-group-item cs-source-point-list__item">
+                       We now query the UserToWeek objects by Week, to get all UserToWeek
+
+                    </div>
+                </div>
+            </div>
         </div>
+
 
         <h3 class="cs-headline cs-headline--s">Moment JS and AUI Preparations</h3>
 
@@ -333,108 +469,8 @@
             |
         ") }}
 
-        <p>There are now multiple soy templates. We even now have a <strong>parameterized soy template</strong> to pass the iso-week number to a template and render it conditionally.</p>
 
-        <div class="row">
-            <div class="col-md-8">
-                {{ csSource(lang='soy', filepath="src/main/resources/templates-soy/", filename="kitchen-duty-planning.soy",
-                            ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='dfghs5zdfsfsdfdf', source='
-                            |{namespace JIRA.Templates.KDP}
-                            |/**
-                            | * Kitchen Duty Planning Page - Base Template
-                            | */
-                            |{template .planningPage} {{{point::1}}}
-                            |    <form class="aui" id="kdp-user-select-form">
-                            |        <div id="kdp-planning-page-week-container"></div>
-                            |        <div id="kdp-planning-page-week-users-container"></div>
-                            |    </form>
-                            |{/template}
-                            |
-                            |/**
-                            | * Kitchen Duty Planning Page - Week Select Template
-                            | */
-                            |{template .planningPageWeek}
-                            |    <h4 class="kdp-step-headline">1. Select Week</h4>
-                            |    <div class="kdp-step-content">
-                            |        <input
-                            |          class="aui-date-picker aui-button"
-                            |          id="week-picker"
-                            |          type="date"
-                            |          max="2050-01-25"
-                            |          min="2011-12-25"
-                            |        />
-                            |    </div>
-                            |{/template}
-                            |
-                            |/**
-                            | * Kitchen Duty Planning Page - User Search Template
-                            | */
-                            |{template .planningPageWeekUsers}
-                            |    {@param? isoWeek: int}
-                            |    <h4 class="kdp-step-headline">
-                            |        2. Kitchen Duty for Week&nbsp;
-                            |        {if $isoWeek != null }
-                            |            <aui-badge class="aui-badge-primary">
-                            |                <span id="iso-week-label">{isoWeek}</span>
-                            |            </aui-badge>
-                            |        {else}
-                            |            <aui-badge><span id="iso-week-label">...</span></aui-badge>
-                            |        {/if}
-                            |    </h4>
-                            |    <div class="kdp-step-content">
-                            |        {if $isoWeek == null }
-                            |            <div>- no week selected -</div>
-                            |        {else}
-                            |            <div >Users on kitchen duty for selected week:</div>
-                            |            <div
-                            |              id="kdp-user-select"
-                            |              name="kdp-user-select"
-                            |              class="kdp-aui-select"
-                            |              multiple=""
-                            |              placeholder="start typing a username ..."
-                            |            ></div>
-                            |            <br/><br/>
-                            |            <input
-                            |              class="button submit"
-                            |              type="submit"
-                            |              id="kdp-user-select-save-button"
-                            |              value="save"
-                            |            />
-                            |        {/if}
-                            |    </div>
-                            |{/template}
-                            |
-                            |
-                            |/**
-                            | * Kitchen Duty Planning Page - Foo
-                            | */
-                            |{template .foo}
-                            |bar
-                            |{/template}
-                            |
-                ') }}
-            </div>
-            <div class="col-md-4 cs-sticky-in-parent">
-                <div class="list-group cs-source-point-list" data-source-target="dfghs5zdfsfsdfdf">
-                    <div class="list-group-item cs-source-point-list__item">
-                       todo             http://momentjs.com/docs/#/get-set/iso-week/
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" data-lightbox="05-step" data-title="Step 5 - Planning Page working">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page working">
-                    </a>
-                </p>
-            </div>
-        </div>
+http://momentjs.com/docs/#/get-set/iso-week/
 
 
 

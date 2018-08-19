@@ -229,7 +229,6 @@ var _extractElementTypeFromElementId = function(elementId) {
             var onClickGroupName = Object.keys(onClickSettings)[0];
             $('#' + onClickGroupName).click(function () {
                 console.log('ig: ' + onClickGroupName + ' clicked');
-                // ouuuuu that can be misused bla bla bla .... I know! You can always provide a pull request :)
                 window[onClickSettings[onClickGroupName]]();
             });
             // pointer on mouseover of group (note for future me: if there are "unfilled" areas inside group, point will not work in that area. Ergo: Always have filled rect in background of group.)
@@ -333,11 +332,12 @@ $(function () {
     initToggleSidebarByState();
 
     /* Disbale Sticky divs on localhost since they interfere with browsersync! Page scrolls to top on Update! */
-    if (!_startsWith(window.location.href, 'http://localhost') && !_startsWith(window.location.href, 'http://192')) {
+    /* 2018-08: BrowserSync completely disabled! */
+    /* if (!_startsWith(window.location.href, 'http://localhost') && !_startsWith(window.location.href, 'http://192')) {*/
         initStickyDivs();
-    } else {
+    /*} else {
         console.log('Sticky Divs are disabled on localhost due to browsersync-scroll-up-bug');
-    }
+    }*/
 
     console.log('deploy info: ' + JSON.stringify(
         {

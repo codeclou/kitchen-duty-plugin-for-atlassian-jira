@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>$i18n.getText("kitchen-duty-plugin.user.overview.page.title")</title>
+    <meta name="decorator" content="atl.general"/>
+</head>
+<body>
+<div id="page">
+    <section id="content" role="main">
+
+        <header class="aui-page-header">
+            <div class="aui-page-header-inner">
+                <div class="aui-page-header-main">
+                    <h1>Kitchen Duty</h1>
+                </div>
+            </div>
+        </header>
+
+        <div class="aui-page-panel">
+            <div class="aui-page-panel-inner">
+                <section class="aui-page-panel-content">
+                    <div id="kdp-overview-page-container"></div>
+                </section>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

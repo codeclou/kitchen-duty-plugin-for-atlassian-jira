@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+  <!-- add our i18n resource -->
+  <resource type="i18n" name="i18n" location="kitchen-duty-plugin"/>
+  <!-- add our web resources -->
+  <web-resource key="kitchen-duty-plugin-resources" name="kitchen-duty-plugin Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="kitchen-duty-plugin.css" location="/css/kitchen-duty-plugin.css"/>
+    <resource type="download" name="kitchen-duty-plugin.js" location="/js/kitchen-duty-plugin.js"/>
+    <resource type="download" name="images/" location="/images"/>
+    <context>kitchen-duty-plugin</context>
+  </web-resource>
+
+  <!-- ====================== -->
+  <!-- PLANNING PAGE -->
+  <!-- ====================== -->
+  <web-resource key="kitchen-duty-plugin-resources--planning-page" name="kitchen-duty-plugin Web Resources for Planning Page">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <dependency>com.atlassian.auiplugin:aui-select2</dependency>
+    <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency>
+    <dependency>com.atlassian.auiplugin:aui-date-picker</dependency>
+    <transformation extension="soy">
+      <transformer key="soyTransformer">
+        <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+      </transformer>
+    </transformation>
+    <resource type="download" name="momentjs.js"
+              location="/js/3rdparty/moment-2.22.2.min.js"/>
+    <resource type="download" name="kitchen-duty-planning-soy.js"
+              location="templates-soy/kitchen-duty-planning.soy"/>
+    <resource type="download" name="kitchen-duty-plugin--planning-page-controller.js"
+              location="/js/kitchen-duty-plugin--planning-page-controller.js"/>
+    <context>kitchen-duty-plugin</context>
+  </web-resource>
+  <webwork1 key="kitchen-duty-planning-webwork-module" name="Kitchen Duty Planning Webwork Module" i18n-name-key="kitchen-duty-planning-webwork-module.name" roles-required="admin">
+    <description key="kitchen-duty-planning-webwork-module.description">The Kitchen Duty Planning Webwork Module Plugin</description>
+    <actions>
+      <action name="com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction" alias="KitchenDutyPlanningWebworkAction">
+        <view name="kitchen-duty-planning-success">/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+  <web-section key="admin_kitchen_duty_planning_section" name="admin_kitchen_duty_planning_section" location="admin_plugins_menu" weight="20" i18n-name-key="kitchen-duty-plugin.admin.planning.page.web.section.name">
+    <label key="kitchen-duty-plugin.admin.planning.page.web.section.name"/>
+  </web-section>
+  <web-item key="admin_kitchen_duty_planning_webitem" name="admin_kitchen_duty_planning_webitem" section="admin_plugins_menu/admin_kitchen_duty_planning_section" weight="15" i18n-name-key="kitchen-duty-plugin.admin.planning.page.web.item.name">
+    <label key="kitchen-duty-plugin.admin.planning.page.web.item.name"/>
+    <link linkId="admin_kitchen_duty_planning_webitem_link">/secure/KitchenDutyPlanningWebworkAction.jspa</link>
+  </web-item>
+
+  <!-- ====================== -->
+  <!-- OVERVIEW PAGE -->
+  <!-- ====================== -->
+  <web-resource key="kitchen-duty-plugin-resources--overview-page" name="kitchen-duty-plugin Web Resources for Overview Page">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency>
+    <transformation extension="soy">
+      <transformer key="soyTransformer">
+        <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+      </transformer>
+    </transformation>
+    <resource type="download" name="momentjs.js"
+              location="/js/3rdparty/moment-2.22.2.min.js"/>
+    <resource type="download" name="fullcalendar.js"
+              location="/js/3rdparty/fullcalendar-3.9.0.min.js"/>
+    <resource type="download" name="fullcalendar.css"
+              location="/css/3rdparty/fullcalendar-3.9.0.min.css"/>
+    <resource type="download" name="kitchen-duty-overview-soy.js"
+              location="templates-soy/kitchen-duty-overview.soy"/>
+    <resource type="download" name="kitchen-duty-plugin--overview-page-controller.js"
+              location="/js/kitchen-duty-plugin--overview-page-controller.js"/>
+    <context>kitchen-duty-plugin</context>
+  </web-resource>
+  <webwork1 key="kitchen-duty-overview-page-webwork-module" name="Kitchen Duty Overview Page Webwork Module" i18n-name-key="kitchen-duty-overview-page-webwork-module.name" roles-required="use">
+    <description key="kitchen-duty-overview-page-webwork-module.description">The Kitchen Duty Overview Page Webwork Module Plugin</description>
+    <actions>
+      <action name="com.comsysto.kitchen.duty.webwork.KitchenDutyOverviewPageWebworkAction" alias="KitchenDutyOverviewPageWebworkAction">
+        <view name="kitchen-duty-overview-page-success">/templates/kitchen-duty-overview-page-webwork-module/kitchen-duty-overview-page-success.vm</view>
+      </action>
+    </actions>
+  </webwork1>
+  <web-item key="user_kitchen_duty_overview_webitem" name="user_kitchen_duty_overview_webitem" section="system.top.navigation.bar" weight="60" i18n-name-key="kitchen-duty-plugin.user.overview.page.web.item.name">
+    <label key="kitchen-duty-plugin.user.overview.page.web.item.name"/>
+    <link linkId="user_kitchen_duty_overview_webitem_link">/secure/KitchenDutyOverviewPageWebworkAction.jspa</link>
+  </web-item>
+  <!-- ====================== -->
+  <!-- REST -->
+  <!-- ====================== -->
+  <rest name="Kitchen Duty Resources" i18n-name-key="kitchen-duty-plugin.rest.resources.name" key="kitchen-duty-resources" path="/kitchenduty" version="1.0">
+    <description key="kitchen-duty-plugin.rest.resources.description">All Kitchen Duty REST Resources</description>
+    <package>com.comsysto.kitchen.duty.rest</package>
+  </rest>
+
+  <!-- ====================== -->
+  <!-- DATABASE -->
+  <!-- ====================== -->
+  <ao key="ao-module">
+    <description>The module configuring the Active Objects service used by this plugin</description>
+    <entity>com.comsysto.kitchen.duty.ao.Week</entity>
+    <entity>com.comsysto.kitchen.duty.ao.User</entity>
+    <entity>com.comsysto.kitchen.duty.ao.UserToWeek</entity>
+  </ao>
+</atlassian-plugin>

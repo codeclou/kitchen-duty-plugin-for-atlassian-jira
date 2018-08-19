@@ -196,21 +196,116 @@
 </h2>
 
 
-        tbd
 
         
 <div class="cs-working-on-it">
     We are working on it. Please visit again some time.
 </div>
 
+<!--
 
         <ul>
             <li><p><strong>Kitchen Duty Overview Page Webwork Action</strong> - A page that can be viewed by all logged in JIRA users.</p></li>
             <li><p><strong>Kitchen Duty Overview Page JS Controller</strong> - Some JavaScript logic to display the calender with data from REST Endpoints on the page.</p></li>
             <li><p><strong>Kitchen Duty Overview Page REST Resource</strong> - An Endpoint that returns all weeks with users for a selected month.</p></li>
-            <li><p><strong>Kitchen Duty Overview Page WebSection/WebItem</strong> - A navigation link to Overview Page from JIRA projects top nav.</p></li>
+            <li><p><strong>Kitchen Duty Overview Page WebItem</strong></p></li>
         </ul>
-<!--
+
+
+====
+ALSO TODO: Secure PlanningEndpoints with adminOnly!
+ => BaseResource
+ => authGuards
+
+
+====
+KitchenDutyActiveObjectHelper
+ => Transactional nullsafe DB Methods
+
+====
+public class MyPluginComponentImpl implements MyPluginComponent
+{
+
+    @ComponentImport
+    protected com.atlassian.sal.api.user.UserManager userManager;
+====
+
+New KitchenDutyOverviewPageMonthDutyModel
+New KitchenDutyOverviewPageResource
+New BaseResource => isoDate Function + UnitTest
+
+
+http://localhost:2990/jira/rest/kitchenduty/1.0/overview_page/year/2018/month/9
+
+Response
+
+====
+[
+  {
+    "isoWeek": 10,
+    "start": "2018-03-04",
+    "end": "2018-03-10",
+    "users": [
+
+    ]
+  },
+  {
+    "isoWeek": 11,
+    "start": "2018-03-11",
+    "end": "2018-03-17",
+    "users": [ "admin" ]
+  },
+  {
+    "isoWeek": 12,
+    "start": "2018-03-18",
+    "end": "2018-03-24",
+    "users": [
+
+    ]
+  },
+  {
+    "isoWeek": 13,
+    "start": "2018-03-25",
+    "end": "2018-03-31",
+    "users": [
+
+    ]
+  },
+  {
+    "isoWeek": 14,
+    "start": "2018-04-01",
+    "end": "2018-04-07",
+    "users": [
+
+    ]
+  }
+]
+====
+
+KitchenDutyOverviewPageWebworkAction
+ => atlas.xml => Roles-Required="use" => https://developer.atlassian.com/server/jira/platform/webwork/#Webworkpluginmodule-RolesRequired
+ => velocity.vm
+ => js controller file /js/kitchen-duty-plugin-...-planning-overview-controller.js
+ => i18n kitchen-duty-plugin.properties
+ => new soy file
+ => fullcalendar needs moment.js!
+ => https://fullcalendar.io/ js file to js/3rdparty/ and css/3rdparty  => CDN =>
+    https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js
+    https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css
+
+
+Cleanup: Move flag stuff to common js file from kitchen-duty-plugin-...-planning-page-controller.js
+
+
+
+WebItem: https://developer.atlassian.com/server/jira/platform/web-item/
+ - atlas.xml + i18n => top nav bar
+
+Also a WebItem for Admin to link back to overview page
+
+
+
+
 https://fullcalendar.io/
 
 

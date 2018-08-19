@@ -11,8 +11,8 @@
 ('6', '/tutorial/06-step-03-planning-page--user-search-js-controller/'),
 ('7', '/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/'),
 ('8', '/tutorial/08-step-05-planning-page--kitchen-duty-planning-js-controller/'),
-('9', '/tutorial/09-story-workshop-for-overview-page/')
-
+('9', '/tutorial/09-story-workshop-for-overview-page/'),
+('10', '/tutorial/10-step-06-overview-page--implementation/')
 ] %}
 
 {% macro pageSidebar(currentPageId) %}
@@ -21,51 +21,60 @@
 
         {# -------------------------------------------------------------------------------- #}
 
-        <li class="toc-h2 {{ "toc-active" if 1 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[1] }}">
-        <span>&nbsp;</span>
-        Introduction
-    </a>
+        <li class="toc-h2 {{ "toc-active" if 1 == CURRENT_PAGE_ID }}">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[1] }}">
+                <span>&nbsp;</span>
+                Introduction
+            </a>
         </li>
-        <li class="toc-h2 {{ "toc-active" if 2 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[2] }}">
-        <span class="cs-step-badge">0</span>
-        Getting Started
-    </a>
+        <li class="toc-h2 {{ "toc-active" if 2 == CURRENT_PAGE_ID }}">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[2] }}">
+                <span class="cs-step-badge">0</span>
+                Getting Started
+            </a>
         </li>
 
         {# -------------------------------------------------------------------------------- #}
 
         <li class="toc-h2-divider">Part I: Kitchen Duty Planning Page</li>
 
-        <li class="toc-h2 {{ "toc-active" if 3 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[3] }}">
-        <span>&nbsp;</span>
-        Story Workshop for Planning Page
-    </a>
+        <li class="toc-h2 {{ "toc-active" if 3 == CURRENT_PAGE_ID }}">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[3] }}">
+                <span>&nbsp;</span>
+                Story Workshop for Planning Page
+            </a>
         </li>
-        <li class="toc-h2 {{ "toc-active" if 4 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[4] }}">
-        <span class="cs-step-badge">1</span>
-        Webwork Action and HTML View
-    </a>
+        <li class="toc-h2 {{ "toc-active" if 4 == CURRENT_PAGE_ID }}">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[4] }}">
+                <span class="cs-step-badge">1</span>
+                Webwork Action and HTML View
+            </a>
         </li>
-        <li class="toc-h2 {{ "toc-active" if 5 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[5] }}">
-        <span class="cs-step-badge">2</span>
-        User Search REST Resource
-    </a>
+        <li class="toc-h2 {{ "toc-active" if 5 == CURRENT_PAGE_ID }}">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[5] }}">
+                <span class="cs-step-badge">2</span>
+                User Search REST Resource
+            </a>
         </li>
-        <li class="toc-h2 {{ "toc-active" if 6 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[6] }}">
-        <span class="cs-step-badge">3</span>
-        User Search JS Controller
-    </a>
+        <li class="toc-h2 {{ "toc-active" if 6 == CURRENT_PAGE_ID }}">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[6] }}">
+                <span class="cs-step-badge">3</span>
+                User Search JS Controller
+            </a>
         </li>
-        <li class="toc-h2 {{ "toc-active" if 7 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[7] }}">
-        <span class="cs-step-badge">4</span>
-        Kitchen Duty Planning REST Resource
-    </a>
+        <li class="toc-h2 {{ "toc-active" if 7 == CURRENT_PAGE_ID }}">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[7] }}">
+                <span class="cs-step-badge">4</span>
+                Kitchen Duty Planning REST Resource
+            </a>
         </li>
-        <li class="toc-h2 {{ "toc-active" if 8 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[8] }}">
-        <span class="cs-step-badge">5</span>
-        Kitchen Duty Planning JS Controller
-    </a>
+        <li class="toc-h2 {{ "toc-active" if 8 == CURRENT_PAGE_ID }}">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[8] }}">
+                <span class="cs-step-badge">5</span>
+                Kitchen Duty Planning JS Controller
+            </a>
         </li>
+
 
 <!-- DISABLE SVG STATUS FOR NOW
         {% if CURRENT_PAGE_ID >= 3 and CURRENT_PAGE_ID <= 8 %}
@@ -135,11 +144,19 @@
         {# -------------------------------------------------------------------------------- #}
 
         <li class="toc-h2-divider">Part II: Kitchen Duty Overview Page</li>
-        <li class="toc-h2 {{ "toc-active" if 9 == CURRENT_PAGE_ID }}"><a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[9] }}">
-        <span>&nbsp;</span>
-        Story Workshop for Overview Page
-    </a>
+        <li class="toc-h2 {{ "toc-active" if 9 == CURRENT_PAGE_ID }}">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[9] }}">
+                <span>&nbsp;</span>
+                Story Workshop for Overview Page
+            </a>
         </li>
+        <li class="toc-h2 {{ "toc-active" if 10 == CURRENT_PAGE_ID }}">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira{{ pages[10] }}">
+                <span class="cs-step-badge">6</span>
+                Kitchen Duty Overview Page
+            </a>
+        </li>
+
     </ul>
 
 
@@ -219,9 +236,9 @@
 
 <div class="cs-footer">
     <div class="cs-legal-box">
-        <a href="/kitchen-duty-plugin-for-atlassian-jira/author-and-license/">Author &amp; License</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/impressum/">Impressum / Imprint</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/datenschutz/">Datenschutzerklärung / Privacy</a>
+        <a href="/kitchen-duty-plugin-for-atlassian-jira/author-and-license/">Author &middot; License</a>
+        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/impressum/">Impressum &middot; Imprint</a>
+        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/datenschutz/">Datenschutz &middot; Privacy</a>
         <a class="d-none d-sm-inline btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
             <span class="cs-stars-on-github-count-stars">...</span>
             stars on GitHub

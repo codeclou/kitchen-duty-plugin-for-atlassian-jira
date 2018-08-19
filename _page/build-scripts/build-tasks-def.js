@@ -4,7 +4,6 @@
 
 var sass = require('node-sass');
 var nunjucks = require('nunjucks');
-nunjucks.configure({ noCache : true  });
 var cleancss = require('clean-css');
 var lodash = require('lodash');
 var uglifyjs3 = require('uglify-js');
@@ -144,8 +143,10 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
         var sourceFile = path.resolve(curFile);
         var targetFile = options.htmlTargetDir + '/' + currentFileWithStrippedHtmlSourceDir;
         var fullFilePath = path.resolve(targetFile);
-        var env = nunjucks.configure(options.htmlLayoutSourceDir, {
-            noCache: true
+        var env = nunjucks.configure('_page', {
+            web: {
+                noCache: true,
+            }
         });
         env.addGlobal('newsItemsArray', options.newsItemsArray);
         env.addGlobal('csStringHelper', csStringHelper);
@@ -192,39 +193,36 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
             }
             return highlightedSource;
         });
-        fs.readFile(sourceFile, 'utf8', function (err, nunjucksTemplateData) {
-            if (err) {
-                helpers.printError('html> read ' + currentFileWithStrippedHtmlSourceDir + ' failed');
-                if (lodash.isFunction(callback)) {
-                    callback();
-                }
-            } else {
-                var htmlText = nunjucks.renderString(nunjucksTemplateData, {
-                    htmlSourceDir: path.resolve(options.htmlSourceDir),
-                    layoutSourceDir: path.resolve(options.htmlLayoutSourceDir),
-                    isLocalhost: options.htmlIsLocalhost,
-                    activePageUrl: activePageUrl,
-                    isActivePage: function(url) {
-                        if (activePageUrl == url) {
-                            return true;
-                        }
-                        return false;
-                    },
-                    isActiveParentPage: function(url) {
-                        if (activePageUrl.substring(0, url.length) == url) {
-                            return true;
-                        }
-                        return false;
+        var relativeSourceFile = sourceFile.replace(/^.*?_page\/(.*)$/, '$1');
+        //console.log(relativeSourceFile)
+        env.render(relativeSourceFile, {
+                layoutSourceDir: 'layout',
+                isLocalhost: options.htmlIsLocalhost,
+                activePageUrl: activePageUrl,
+                isActivePage: function(url) {
+                    if (activePageUrl == url) {
+                        return true;
                     }
-                });
-                fse.outputFile(fullFilePath, htmlText, function (err) {
-                    helpers.printSuccessOrError(err, 'html> write ' + targetFile);
+                    return false;
+                },
+                isActiveParentPage: function(url) {
+                    if (activePageUrl.substring(0, url.length) == url) {
+                        return true;
+                    }
+                    return false;
+                }
+            }, function(err, res) {
+                if (err) {
+                    console.log('ERROR NUNJUCKS FOR FILE: ' + sourceFile, err);
+                    throw Error('exit');
+                }
+                fse.outputFile(fullFilePath, res, function (err2) {
+                    helpers.printSuccessOrError(err2, 'html> write ' + targetFile);
                     if (lodash.isFunction(callback)) {
                         callback();
                     }
                 });
-            }
-        });
+            });
     } else {
         if (lodash.isFunction(callback)) {
             callback();

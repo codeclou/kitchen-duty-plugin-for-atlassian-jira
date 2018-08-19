@@ -1,0 +1,42 @@
+{% set CURRENT_PAGE_ID = 10 %}
+{% set gitHubBaseUrlForStep6 = 'https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/__COMMIT__/step-06-kitchen-duty-plugin/' %}
+{% extends layoutSourceDir + "/layout_with_sidebar.html" %}
+{% block head %}
+    <title>Kitchen Duty Planning Implementation ~ Overview Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
+    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by Comsysto Reply">
+    <meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block content %}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        {{ headline('Kitchen Duty Overview Page', 'm') }}
+
+        tbd
+
+        {{ weAreWorkingOnIt() }}
+
+<!--
+https://fullcalendar.io/
+
+
+Week Numbers in the months view.
+https://fullcalendar.io/docs/week-numbers
+https://fullcalendar.io/docs/weekNumbers-demo
+
+  $('#calendar').fullCalendar({
+    defaultView: 'month',
+    weekNumbers: true
+  });
+
+
+events https://fullcalendar.io/docs/events-function
+-->
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -202,38 +202,756 @@
     We are working on it. Please visit again some time.
 </div>
 
-<!--
-
-        <ul>
-            <li><p><strong>Kitchen Duty Overview Page Webwork Action</strong> - A page that can be viewed by all logged in JIRA users.</p></li>
-            <li><p><strong>Kitchen Duty Overview Page JS Controller</strong> - Some JavaScript logic to display the calender with data from REST Endpoints on the page.</p></li>
-            <li><p><strong>Kitchen Duty Overview Page REST Resource</strong> - An Endpoint that returns all weeks with users for a selected month.</p></li>
-            <li><p><strong>Kitchen Duty Overview Page WebItem</strong></p></li>
-        </ul>
 
 
-====
-ALSO TODO: Secure PlanningEndpoints with adminOnly!
- => BaseResource
- => authGuards
+        <p>
+            Ok before we continue any further we need to clean up some <strong>technical debt</strong>.
+            I just realised the <strong>REST API Endpoints are not secured</strong> also the <strong>database spaghetti code</strong>
+            really bugs me out. Therefore here are some completely unrelated but necessary things we need to do.
+        </p>
+
+        <h3 class="cs-headline cs-headline--s">BaseResource and AuthGuards for KitchenDutyPlanningResource Endpoint</h3>
+
+        <p>
+            Since we will get more Endpoints now for our Overview Page we will have common code. Therefore we will create a base-class all endpoints extend from.
+            We move the common code there. The first thing is the dependencies to <code>UserManager</code> and <code>ActiveObjects</code>.
+            Next are the two <strong>AuthGuard methods</strong> we will use to secure every endpoint <code>isUserLoggedIn()</code> and <code>isUserNotAdmin()</code>.
+            Lastly we need some convenience methods to serve certain HTTP Error codes as JSON - therefore we now have <code>getUnauthorizedErrorResponse()</code> and <code>getForbiddenErrorResponse()</code>.
+        </p>
+
+        
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>BaseResource.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/BaseResource.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+
+import com.atlassian.activeobjects.external.ActiveObjects;
+import com.atlassian.sal.api.user.UserProfile;
+
+import javax.ws.rs.core.Response;
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.WeekFields;
+import java.util.ArrayList;
+import java.util.List;
+
+public class BaseResource {
+
+    protected com.atlassian.sal.api.user.UserManager userManager;
+    protected ActiveObjects activeObjects;
+
+    protected Boolean isUserLoggedIn() {
+        UserProfile user = userManager.getRemoteUser();
+        if (user != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean isUserNotAdmin() {
+        UserProfile user = userManager.getRemoteUser();;
+        return (user == null || !userManager.isAdmin(user.getUserKey()));
+    }
+
+    protected Response getUnauthorizedErrorResponse() {
+        return Response.serverError()
+            .entity(new RestError(
+                RestError.errorText401,
+                401001,
+                Response.Status.UNAUTHORIZED.getStatusCode()))
+            .status(Response.Status.UNAUTHORIZED)
+            .build();
+    }
+
+    protected Response getForbiddenErrorResponse() {
+        return Response.serverError()
+            .entity(new RestError(
+                RestError.errorText403,
+                403001,
+                Response.Status.FORBIDDEN.getStatusCode()))
+            .status(Response.Status.FORBIDDEN)
+            .build();
+    }
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
+<span class="hljs-keyword">import</span> com.atlassian.sal.api.user.UserProfile;
+
+<span class="hljs-keyword">import</span> javax.ws.rs.core.Response;
+<span class="hljs-keyword">import</span> java.time.LocalDate;
+<span class="hljs-keyword">import</span> java.time.temporal.ChronoField;
+<span class="hljs-keyword">import</span> java.time.temporal.WeekFields;
+<span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseResource</span> </span>{
+
+    <span class="hljs-keyword">protected</span> com.atlassian.sal.api.user.UserManager userManager;
+    <span class="hljs-keyword">protected</span> ActiveObjects activeObjects;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> Boolean <span class="hljs-title">isUserLoggedIn</span><span class="hljs-params">()</span> </span>{
+        UserProfile user = userManager.getRemoteUser();
+        <span class="hljs-keyword">if</span> (user != <span class="hljs-keyword">null</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Boolean <span class="hljs-title">isUserNotAdmin</span><span class="hljs-params">()</span> </span>{
+        UserProfile user = userManager.getRemoteUser();;
+        <span class="hljs-keyword">return</span> (user == <span class="hljs-keyword">null</span> || !userManager.isAdmin(user.getUserKey()));
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> Response <span class="hljs-title">getUnauthorizedErrorResponse</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> Response.serverError()
+            .entity(<span class="hljs-keyword">new</span> RestError(
+                RestError.errorText401,
+                <span class="hljs-number">401001</span>,
+                Response.Status.UNAUTHORIZED.getStatusCode()))
+            .status(Response.Status.UNAUTHORIZED)
+            .build();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> Response <span class="hljs-title">getForbiddenErrorResponse</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> Response.serverError()
+            .entity(<span class="hljs-keyword">new</span> RestError(
+                RestError.errorText403,
+                <span class="hljs-number">403001</span>,
+                Response.Status.FORBIDDEN.getStatusCode()))
+            .status(Response.Status.FORBIDDEN)
+            .build();
+    }
+}</code></pre>
 
 
-====
-KitchenDutyActiveObjectHelper
- => Transactional nullsafe DB Methods
+        <p>You might have already seen that we use a class <code>RestError</code>. This is a simple pojo to serve our errors as JSON.</p>
 
-====
-public class MyPluginComponentImpl implements MyPluginComponent
-{
+        
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>RestError.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/RestError.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = &quot;status&quot;)
+@XmlAccessorType(XmlAccessType.FIELD)
+public class RestError {
+
+    public static final String errorText401 = &quot;Unauthorized (no user is authenticated).&quot;;
+    public static final String errorText403 = &quot;Permission Denied (insufficient rights).&quot;;
+
+    @XmlElement(name = &quot;statusCode&quot;)
+    private Integer statusCode;
+
+    @XmlElement(name = &quot;subCode&quot;)
+    private Integer subCode;
+
+    @XmlElement
+    private String message;
+
+    public RestError() {    }
+
+    public RestError(String message, Integer subCode, Integer statusCode) {
+        this.setMessage(message);
+        this.setStatusCode(statusCode);
+        this.setSubCode(subCode);
+    }
+
+    public Integer getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Integer getSubCode() {
+        return subCode;
+    }
+
+    public void setSubCode(Integer subCode) {
+        this.subCode = subCode;
+    }
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessType;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessorType;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlElement;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlRootElement;
+
+<span class="hljs-annotation">@XmlRootElement</span>(name = <span class="hljs-string">"status"</span>)
+<span class="hljs-annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RestError</span> </span>{
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String errorText401 = <span class="hljs-string">"Unauthorized (no user is authenticated)."</span>;
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String errorText403 = <span class="hljs-string">"Permission Denied (insufficient rights)."</span>;
+
+    <span class="hljs-annotation">@XmlElement</span>(name = <span class="hljs-string">"statusCode"</span>)
+    <span class="hljs-keyword">private</span> Integer statusCode;
+
+    <span class="hljs-annotation">@XmlElement</span>(name = <span class="hljs-string">"subCode"</span>)
+    <span class="hljs-keyword">private</span> Integer subCode;
+
+    <span class="hljs-annotation">@XmlElement</span>
+    <span class="hljs-keyword">private</span> String message;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RestError</span><span class="hljs-params">()</span> </span>{    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RestError</span><span class="hljs-params">(String message, Integer subCode, Integer statusCode)</span> </span>{
+        <span class="hljs-keyword">this</span>.setMessage(message);
+        <span class="hljs-keyword">this</span>.setStatusCode(statusCode);
+        <span class="hljs-keyword">this</span>.setSubCode(subCode);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Integer <span class="hljs-title">getStatusCode</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> statusCode;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setStatusCode</span><span class="hljs-params">(Integer statusCode)</span> </span>{
+        <span class="hljs-keyword">this</span>.statusCode = statusCode;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getMessage</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> message;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMessage</span><span class="hljs-params">(String message)</span> </span>{
+        <span class="hljs-keyword">this</span>.message = message;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Integer <span class="hljs-title">getSubCode</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> subCode;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setSubCode</span><span class="hljs-params">(Integer subCode)</span> </span>{
+        <span class="hljs-keyword">this</span>.subCode = subCode;
+    }
+}</code></pre>
+
+
+            <p>Ok now we need our existing <code>KitchenDutyPlanningResource</code> <strong>to extend the <code>BaseResource</code> and use the AuthGuards</strong>.</p>
+            <div class="row">
+                <div class="col-md-7">
+                    
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+
+...
+
+@Named
+@Path(&quot;/planning&quot;)
+public class KitchenDutyPlanningResource extends BaseResource { 
+
+    @Inject
+    public KitchenDutyPlanningResource(ActiveObjects activeObjects, 
+                                       UserManager userManager) {
+        this.activeObjects = activeObjects;
+        this.userManager = userManager;
+    }
+
+    public KitchenDutyPlanningResource() {
+    }
+
+    @GET
+    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response getUsersForWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber) {
+        // AUTHENTICATION
+        if (!this.isUserLoggedIn()) { 
+            return getUnauthorizedErrorResponse();
+        }
+        // AUTHORIZATION
+        if (this.isUserNotAdmin()) { 
+            return getForbiddenErrorResponse();
+        }
+        // BUSINESS LOGIC
+        ...
+    }
+
+    @PUT
+    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed 
+    public Response addUserToWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber,
+                                  final List&lt;KitchenDutyPlanningResourceUserModel&gt; userParams) {
+        // AUTHENTICATION
+        if (!this.isUserLoggedIn()) {
+            return getUnauthorizedErrorResponse();
+        }
+        // AUTHORIZATION
+        if (this.isUserNotAdmin()) {
+            return getForbiddenErrorResponse();
+        }
+        // BUSINESS LOGIC
+        ...
+    }
+
+    @DELETE
+    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response deleteUserFomWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber,
+                                  final KitchenDutyPlanningResourceUserModel userParam) {
+        // AUTHENTICATION
+        if (!this.isUserLoggedIn()) {
+            return getUnauthorizedErrorResponse();
+        }
+        // AUTHORIZATION
+        if (this.isUserNotAdmin()) {
+            return getForbiddenErrorResponse();
+        }
+        // BUSINESS LOGIC
+        ...
+    }
+
+    @GET
+    @Path(&quot;/user/{username}/weeks&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response getWeeksForUser(@PathParam(&quot;username&quot;) final String username) {
+        // AUTHENTICATION
+        if (!this.isUserLoggedIn()) {
+            return getUnauthorizedErrorResponse();
+        }
+        // AUTHORIZATION
+        if (this.isUserNotAdmin()) {
+            return getForbiddenErrorResponse();
+        }
+        // BUSINESS LOGIC
+        ...
+    }
+
+
+    @GET
+    @Path(&quot;/health&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response health() {
+        return Response.ok(&quot;ok&quot;).build();
+    }
+
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+...
+
+<span class="hljs-annotation">@Named</span>
+<span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/planning"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyPlanningResource</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseResource</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="fsdsdasfggfsd5" data-cs-source-point-number="1"></span>
+
+    <span class="hljs-annotation">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">KitchenDutyPlanningResource</span><span class="hljs-params">(ActiveObjects activeObjects, <span class="cs-source-point" data-cs-source-point-id="fsdsdasfggfsd5" data-cs-source-point-number="2"></span>
+                                       UserManager userManager)</span> </span>{
+        <span class="hljs-keyword">this</span>.activeObjects = activeObjects;
+        <span class="hljs-keyword">this</span>.userManager = userManager;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">KitchenDutyPlanningResource</span><span class="hljs-params">()</span> </span>{
+    }
+
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">getUsersForWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber) </span>{
+        <span class="hljs-comment">// AUTHENTICATION</span>
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isUserLoggedIn()) { <span class="cs-source-point" data-cs-source-point-id="fsdsdasfggfsd5" data-cs-source-point-number="3"></span>
+            <span class="hljs-keyword">return</span> getUnauthorizedErrorResponse();
+        }
+        <span class="hljs-comment">// AUTHORIZATION</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isUserNotAdmin()) { <span class="cs-source-point" data-cs-source-point-id="fsdsdasfggfsd5" data-cs-source-point-number="4"></span>
+            <span class="hljs-keyword">return</span> getForbiddenErrorResponse();
+        }
+        <span class="hljs-comment">// BUSINESS LOGIC</span>
+        ...
+    }
+
+    <span class="hljs-annotation">@PUT</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span> <span class="cs-source-point" data-cs-source-point-id="fsdsdasfggfsd5" data-cs-source-point-number="5"></span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">addUserToWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber,
+                                  <span class="hljs-keyword">final</span> List&lt;KitchenDutyPlanningResourceUserModel&gt; userParams) </span>{
+        <span class="hljs-comment">// AUTHENTICATION</span>
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isUserLoggedIn()) {
+            <span class="hljs-keyword">return</span> getUnauthorizedErrorResponse();
+        }
+        <span class="hljs-comment">// AUTHORIZATION</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isUserNotAdmin()) {
+            <span class="hljs-keyword">return</span> getForbiddenErrorResponse();
+        }
+        <span class="hljs-comment">// BUSINESS LOGIC</span>
+        ...
+    }
+
+    <span class="hljs-annotation">@DELETE</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">deleteUserFomWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber,
+                                  <span class="hljs-keyword">final</span> KitchenDutyPlanningResourceUserModel userParam) </span>{
+        <span class="hljs-comment">// AUTHENTICATION</span>
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isUserLoggedIn()) {
+            <span class="hljs-keyword">return</span> getUnauthorizedErrorResponse();
+        }
+        <span class="hljs-comment">// AUTHORIZATION</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isUserNotAdmin()) {
+            <span class="hljs-keyword">return</span> getForbiddenErrorResponse();
+        }
+        <span class="hljs-comment">// BUSINESS LOGIC</span>
+        ...
+    }
+
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/user/{username}/weeks"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">getWeeksForUser</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"username"</span>)</span> <span class="hljs-keyword">final</span> String username) </span>{
+        <span class="hljs-comment">// AUTHENTICATION</span>
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isUserLoggedIn()) {
+            <span class="hljs-keyword">return</span> getUnauthorizedErrorResponse();
+        }
+        <span class="hljs-comment">// AUTHORIZATION</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isUserNotAdmin()) {
+            <span class="hljs-keyword">return</span> getForbiddenErrorResponse();
+        }
+        <span class="hljs-comment">// BUSINESS LOGIC</span>
+        ...
+    }
+
+
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/health"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">health</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> Response.ok(<span class="hljs-string">"ok"</span>).build();
+    }
+
+}</code></pre>
+
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="fsdsdasfggfsd5">
+                    <div class="list-group-item cs-source-point-list__item">
+                       Class needs to extend <code>BaseResource</code> now.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                       Constructor now needs to do dependency injection for <code>UserManager</code> and <code>ActiveObjects</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                       AuthGuard to ensure user is logged in. Otherwise error HTTP 401 Unauthorized is served.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                       AuthGuard to ensure user is administrator. Otherwise error HTTP 403 Forbidden is served.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <strong>Why not just remove <code>@AnonymousAllowed</code></strong>? You can do that - then JIRA will do the authentication and error handling and most likely send you HTML errors instead of JSON.
+                        Just do Authentication and Authorization the way you see it fits best for you. This is just one way to do so, but it is also risky if you forget the AuthGuards for some methods.
+                        You should always have automated REST API tests ensure your plugin is really secure.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>
+
+        </p>
+
+        <p>You might have noticed that we use a <code>UserManager</code> that <strong>comes from the SAL API</strong>. We have already learned that we need to add a <code>@ComponentImport</code> for that.</p>
+
+
+        
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/impl/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/impl/">.../</span>MyPluginComponentImpl.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.impl;
+
+...
+
+@ExportAsService ({MyPluginComponent.class})
+@Named (&quot;myPluginComponent&quot;)
+public class MyPluginComponentImpl implements MyPluginComponent {
 
     @ComponentImport
     protected com.atlassian.sal.api.user.UserManager userManager;
+    ...
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.impl;
+
+...
+
+<span class="hljs-annotation">@ExportAsService</span> ({MyPluginComponent.class})
+<span class="hljs-annotation">@Named</span> (<span class="hljs-string">"myPluginComponent"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPluginComponentImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MyPluginComponent</span> </span>{
+
+    <span class="hljs-annotation">@ComponentImport</span>
+    <span class="hljs-keyword">protected</span> com.atlassian.sal.api.user.UserManager userManager;
+    ...
+}</code></pre>
+
+
+        <p>&nbsp;</p>
+
+
+
+
+
+
+
+
+
+
+
+        <h3 class="cs-headline cs-headline--s">KitchenDutyActiveObjectHelper - or howto move data access spaghetti code somewhere else</h3>
+
+        <p>
+        We have previously seen out REST Endpoints full of ugly trsactional data access code.
+        We want to move that stuff somewhere else and have clean REST Endpoints that just call some methods and do not care about transactions.
+        The code simply moves into <strong><code>KitchenDutyActiveObjectHelper</code></strong>. There it can be ugly and we do not have to see it all the time.
+        </p>
+
+
+
+        <div class="row">
+            <div class="col-md-7">
+                
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>KitchenDutyActiveObjectHelper.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/KitchenDutyActiveObjectHelper.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+
+...
+import java.util.ArrayList;
+import java.util.List;
+
+public class KitchenDutyActiveObjectHelper {
+
+    ....
+
+    //
+    // TRANSACTIONAL
+    //
+
+    public static Week getWeekByIsoWeekInTransaction(ActiveObjects activeObjects, Long isoWeekNumber) { 
+        return activeObjects.executeInTransaction(new TransactionCallback&lt;Week&gt;() {
+            @Override
+            public Week doInTransaction() {
+                Week[] weeks = activeObjects.find(Week.class, Query.select().where(&quot;WEEK = ?&quot;, isoWeekNumber));
+                if (weeks != null &amp;&amp; weeks.length &gt; 0) {
+                    return weeks[0];
+                }
+                return null;
+            }
+        });
+    }
+
+    public static List&lt;User&gt; getUsersAssignedToWeekInTransaction(ActiveObjects activeObjects, Week week) { 
+        List&lt;User&gt; users = new ArrayList&lt;&gt;(); 
+        if (week != null) {
+            UserToWeek[] relationships = activeObjects.executeInTransaction(new TransactionCallback&lt;UserToWeek[]&gt;() {
+                @Override
+                public UserToWeek[] doInTransaction() {
+                    return KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
+                }
+            });
+            if (relationships != null) {
+                for (UserToWeek userToWeek : relationships) {
+                    users.add(userToWeek.getUser());
+                }
+            }
+        }
+        return users;
+    }
+
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+
+...
+<span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyActiveObjectHelper</span> </span>{
+
+    ....
+
+    <span class="hljs-comment">//</span>
+    <span class="hljs-comment">// TRANSACTIONAL</span>
+    <span class="hljs-comment">//</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Week <span class="hljs-title">getWeekByIsoWeekInTransaction</span><span class="hljs-params">(ActiveObjects activeObjects, Long isoWeekNumber)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="fsdsdasfggfsddfsdffej5" data-cs-source-point-number="1"></span>
+        <span class="hljs-keyword">return</span> activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Week&gt;() {
+            <span class="hljs-annotation">@Override</span>
+            <span class="hljs-function"><span class="hljs-keyword">public</span> Week <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span> </span>{
+                Week[] weeks = activeObjects.find(Week.class, Query.select().where(<span class="hljs-string">"WEEK = ?"</span>, isoWeekNumber));
+                <span class="hljs-keyword">if</span> (weeks != <span class="hljs-keyword">null</span> &amp;&amp; weeks.length &gt; <span class="hljs-number">0</span>) {
+                    <span class="hljs-keyword">return</span> weeks[<span class="hljs-number">0</span>];
+                }
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+            }
+        });
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;User&gt; <span class="hljs-title">getUsersAssignedToWeekInTransaction</span><span class="hljs-params">(ActiveObjects activeObjects, Week week)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="fsdsdasfggfsddfsdffej5" data-cs-source-point-number="2"></span>
+        List&lt;User&gt; users = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(); <span class="cs-source-point" data-cs-source-point-id="fsdsdasfggfsddfsdffej5" data-cs-source-point-number="3"></span>
+        <span class="hljs-keyword">if</span> (week != <span class="hljs-keyword">null</span>) {
+            UserToWeek[] relationships = activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;UserToWeek[]&gt;() {
+                <span class="hljs-annotation">@Override</span>
+                <span class="hljs-keyword">public</span> UserToWeek[] doInTransaction() {
+                    <span class="hljs-keyword">return</span> KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
+                }
+            });
+            <span class="hljs-keyword">if</span> (relationships != <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">for</span> (UserToWeek userToWeek : relationships) {
+                    users.add(userToWeek.getUser());
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> users;
+    }
+
+}</code></pre>
+
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="fsdsdasfggfsddfsdffej5">
+                    <div class="list-group-item cs-source-point-list__item">
+                       <strong><code>getWeekByIsoWeekInTransaction()</code></strong> gives us either an object of <code>Week</code> or <code>null</code> for a certain iso week.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                       <strong><code>getUsersAssignedToWeekInTransaction()</code></strong> gives us either a list of <code>List&lt;User&gt;</code> or and empty list for a certain week.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                       Note that we never return null for lists. It is always convenient in the upper layers of our code (e.g. the REST Endpoints) to not always have to null check everything.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>These two methods are needed for our Overview Page REST Endpoint. If you are brave enough you can refactor the Planning Page REST Endpoint in the same way and move
+        the code to <code>KitchenDutyActiveObjectHelper</code>.</p>
+
+        <p>&nbsp;</p>
+
+        <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page REST Resource</h3>
+
+        <p>An Endpoint that returns all weeks with users for a selected month.</p>
+
+        
+<div class="cs-working-on-it">
+    We are working on it. Please visit again some time.
+</div>
+
+
+<!--
+
+
+
+
 ====
 
 New KitchenDutyOverviewPageMonthDutyModel
 New KitchenDutyOverviewPageResource
 New BaseResource => isoDate Function + UnitTest
-
 
 http://localhost:2990/jira/rest/kitchenduty/1.0/overview_page/year/2018/month/9
 
@@ -281,7 +999,18 @@ Response
   }
 ]
 ====
+-->
 
+    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page Webwork Action</h3>
+        
+<div class="cs-working-on-it">
+    We are working on it. Please visit again some time.
+</div>
+
+
+
+
+<!--
 KitchenDutyOverviewPageWebworkAction
  => atlas.xml => Roles-Required="use" => https://developer.atlassian.com/server/jira/platform/webwork/#Webworkpluginmodule-RolesRequired
  => velocity.vm
@@ -295,16 +1024,42 @@ KitchenDutyOverviewPageWebworkAction
 
 
 Cleanup: Move flag stuff to common js file from kitchen-duty-plugin-...-planning-page-controller.js
+-->
 
 
 
+
+    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page WebItem</h3>
+
+        
+<div class="cs-working-on-it">
+    We are working on it. Please visit again some time.
+</div>
+
+
+
+<!--
 WebItem: https://developer.atlassian.com/server/jira/platform/web-item/
  - atlas.xml + i18n => top nav bar
+ - Also a WebItem for Admin to link back to overview page
+-->
 
-Also a WebItem for Admin to link back to overview page
 
 
 
+
+    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page JS Controller</h3>
+
+    <p>Some JavaScript logic to display the calender with data from REST Endpoints on the page.</p>
+
+        
+<div class="cs-working-on-it">
+    We are working on it. Please visit again some time.
+</div>
+
+
+
+<!--
 
 https://fullcalendar.io/
 
@@ -321,6 +1076,108 @@ https://fullcalendar.io/docs/weekNumbers-demo
 
 events https://fullcalendar.io/docs/events-function
 -->
+
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/js/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/js/">.../</span>kitchen-duty-plugin--overview-page-controller.js
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/js/kitchen-duty-plugin--overview-page-controller.js" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="AJS.toInit(function(){
+    AJS.log(&#39;KDP: Overview Page Controller initializing ...&#39;);
+    var baseUrl = AJS.params.baseURL;
+    var restUrl = baseUrl + &#39;/rest/kitchenduty/1.0&#39;;
+    window.KDPrestUrl = restUrl;
+
+    // Init Base SOY template
+    var overviewPageTemplate = JIRA.Templates.KDPO.overviewPage();
+    AJS.$(&#39;#kdp-overview-page-container&#39;).html(overviewPageTemplate);
+
+    AJS.$(&#39;#kdp-calendar&#39;).fullCalendar({
+        defaultView: &#39;month&#39;,
+        weekNumbers: true,
+        height: 500,
+        fixedWeekCount: false,
+        events: function(start, end, timezone, callback) {
+            var year = moment(start).format(&#39;YYYY&#39;);
+            // Full Calender always starts month with days of previous month.
+            // We add 10 days to get month we want.
+            var month = moment(start).add(&#39;days&#39;, 10).format(&#39;M&#39;);
+            AJS.$.ajax({
+                url: window.KDPrestUrl + &#39;/overview_page/year/&#39; + year + &#39;/month/&#39; + month,
+                dataType: &#39;json&#39;,
+                success: function(rawEvents) {
+                    var events = [];
+                    AJS.$(rawEvents).each(function() {
+                        var users = AJS.$(this).attr(&#39;users&#39;);
+                        events.push({
+                            title: users.join(&#39;, &#39;),
+                            start: AJS.$(this).attr(&#39;start&#39;),
+                            end: AJS.$(this).attr(&#39;end&#39;),
+                            color: users.length &gt; 0 ? &#39;#36B37E&#39; : &#39;#FFAB00&#39;,
+                        });
+                    });
+                    callback(events);
+                }
+            });
+        }
+    });
+});"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs">AJS.toInit(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+    AJS.log(<span class="hljs-string">'KDP: Overview Page Controller initializing ...'</span>);
+    <span class="hljs-keyword">var</span> baseUrl = AJS.params.baseURL;
+    <span class="hljs-keyword">var</span> restUrl = baseUrl + <span class="hljs-string">'/rest/kitchenduty/1.0'</span>;
+    <span class="hljs-built_in">window</span>.KDPrestUrl = restUrl;
+
+    <span class="hljs-comment">// Init Base SOY template</span>
+    <span class="hljs-keyword">var</span> overviewPageTemplate = JIRA.Templates.KDPO.overviewPage();
+    AJS.$(<span class="hljs-string">'#kdp-overview-page-container'</span>).html(overviewPageTemplate);
+
+    AJS.$(<span class="hljs-string">'#kdp-calendar'</span>).fullCalendar({
+        defaultView: <span class="hljs-string">'month'</span>,
+        weekNumbers: <span class="hljs-literal">true</span>,
+        height: <span class="hljs-number">500</span>,
+        fixedWeekCount: <span class="hljs-literal">false</span>,
+        events: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">start, end, timezone, callback</span>) </span>{
+            <span class="hljs-keyword">var</span> year = moment(start).format(<span class="hljs-string">'YYYY'</span>);
+            <span class="hljs-comment">// Full Calender always starts month with days of previous month.</span>
+            <span class="hljs-comment">// We add 10 days to get month we want.</span>
+            <span class="hljs-keyword">var</span> month = moment(start).add(<span class="hljs-string">'days'</span>, <span class="hljs-number">10</span>).format(<span class="hljs-string">'M'</span>);
+            AJS.$.ajax({
+                url: <span class="hljs-built_in">window</span>.KDPrestUrl + <span class="hljs-string">'/overview_page/year/'</span> + year + <span class="hljs-string">'/month/'</span> + month,
+                dataType: <span class="hljs-string">'json'</span>,
+                success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">rawEvents</span>) </span>{
+                    <span class="hljs-keyword">var</span> events = [];
+                    AJS.$(rawEvents).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                        <span class="hljs-keyword">var</span> users = AJS.$(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'users'</span>);
+                        events.push({
+                            title: users.join(<span class="hljs-string">', '</span>),
+                            start: AJS.$(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'start'</span>),
+                            end: AJS.$(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'end'</span>),
+                            color: users.length &gt; <span class="hljs-number">0</span> ? <span class="hljs-string">'#36B37E'</span> : <span class="hljs-string">'#FFAB00'</span>,
+                        });
+                    });
+                    callback(events);
+                }
+            });
+        }
+    });
+});</code></pre>
+
+
 
     </div>
 </div>

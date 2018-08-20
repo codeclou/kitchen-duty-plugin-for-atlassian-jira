@@ -16,38 +16,396 @@
 
 
         {{ weAreWorkingOnIt() }}
+
+
+        <p>
+            Ok before we continue any further we need to clean up some <strong>technical debt</strong>.
+            I just realised the <strong>REST API Endpoints are not secured</strong> also the <strong>database spaghetti code</strong>
+            really bugs me out. Therefore here are some completely unrelated but necessary things we need to do.
+        </p>
+
+        <h3 class="cs-headline cs-headline--s">BaseResource and AuthGuards for KitchenDutyPlanningResource Endpoint</h3>
+
+        <p>
+            Since we will get more Endpoints now for our Overview Page we will have common code. Therefore we will create a base-class all endpoints extend from.
+            We move the common code there. The first thing is the dependencies to <code>UserManager</code> and <code>ActiveObjects</code>.
+            Next are the two <strong>AuthGuard methods</strong> we will use to secure every endpoint <code>isUserLoggedIn()</code> and <code>isUserNotAdmin()</code>.
+            Lastly we need some convenience methods to serve certain HTTP Error codes as JSON - therefore we now have <code>getUnauthorizedErrorResponse()</code> and <code>getForbiddenErrorResponse()</code>.
+        </p>
+
+        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="BaseResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsd5', source='
+            |package com.comsysto.kitchen.duty.rest;
+            |
+            |import com.atlassian.activeobjects.external.ActiveObjects;
+            |import com.atlassian.sal.api.user.UserProfile;
+            |
+            |import javax.ws.rs.core.Response;
+            |import java.time.LocalDate;
+            |import java.time.temporal.ChronoField;
+            |import java.time.temporal.WeekFields;
+            |import java.util.ArrayList;
+            |import java.util.List;
+            |
+            |public class BaseResource {
+            |
+            |    protected com.atlassian.sal.api.user.UserManager userManager;
+            |    protected ActiveObjects activeObjects;
+            |
+            |    protected Boolean isUserLoggedIn() {
+            |        UserProfile user = userManager.getRemoteUser();
+            |        if (user != null) {
+            |            return true;
+            |        } else {
+            |            return false;
+            |        }
+            |    }
+            |
+            |    public Boolean isUserNotAdmin() {
+            |        UserProfile user = userManager.getRemoteUser();;
+            |        return (user == null || !userManager.isAdmin(user.getUserKey()));
+            |    }
+            |
+            |    protected Response getUnauthorizedErrorResponse() {
+            |        return Response.serverError()
+            |            .entity(new RestError(
+            |                RestError.errorText401,
+            |                401001,
+            |                Response.Status.UNAUTHORIZED.getStatusCode()))
+            |            .status(Response.Status.UNAUTHORIZED)
+            |            .build();
+            |    }
+            |
+            |    protected Response getForbiddenErrorResponse() {
+            |        return Response.serverError()
+            |            .entity(new RestError(
+            |                RestError.errorText403,
+            |                403001,
+            |                Response.Status.FORBIDDEN.getStatusCode()))
+            |            .status(Response.Status.FORBIDDEN)
+            |            .build();
+            |    }
+            |}
+            ')}}
+
+        <p>You might have already seen that we use a class <code>RestError</code>. This is a simple pojo to serve our errors as JSON.</p>
+
+        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="RestError.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsdsdfsd5', source='
+            |package com.comsysto.kitchen.duty.rest;
+            |
+            |import javax.xml.bind.annotation.XmlAccessType;
+            |import javax.xml.bind.annotation.XmlAccessorType;
+            |import javax.xml.bind.annotation.XmlElement;
+            |import javax.xml.bind.annotation.XmlRootElement;
+            |
+            |@XmlRootElement(name = "status")
+            |@XmlAccessorType(XmlAccessType.FIELD)
+            |public class RestError {
+            |
+            |    public static final String errorText401 = "Unauthorized (no user is authenticated).";
+            |    public static final String errorText403 = "Permission Denied (insufficient rights).";
+            |
+            |    @XmlElement(name = "statusCode")
+            |    private Integer statusCode;
+            |
+            |    @XmlElement(name = "subCode")
+            |    private Integer subCode;
+            |
+            |    @XmlElement
+            |    private String message;
+            |
+            |    public RestError() {    }
+            |
+            |    public RestError(String message, Integer subCode, Integer statusCode) {
+            |        this.setMessage(message);
+            |        this.setStatusCode(statusCode);
+            |        this.setSubCode(subCode);
+            |    }
+            |
+            |    public Integer getStatusCode() {
+            |        return statusCode;
+            |    }
+            |
+            |    public void setStatusCode(Integer statusCode) {
+            |        this.statusCode = statusCode;
+            |    }
+            |
+            |    public String getMessage() {
+            |        return message;
+            |    }
+            |
+            |    public void setMessage(String message) {
+            |        this.message = message;
+            |    }
+            |
+            |    public Integer getSubCode() {
+            |        return subCode;
+            |    }
+            |
+            |    public void setSubCode(Integer subCode) {
+            |        this.subCode = subCode;
+            |    }
+            |}
+            |
+            ')}}
+
+            <p>Ok now we need our existing <code>KitchenDutyPlanningResource</code> <strong>to extend the <code>BaseResource</code> and use the AuthGuards</strong>.</p>
+            <div class="row">
+                <div class="col-md-7">
+                    {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsdsdasfggfsd5', source='
+                    |package com.comsysto.kitchen.duty.rest;
+                    |
+                    |...
+                    |
+                    |@Named
+                    |@Path("/planning")
+                    |public class KitchenDutyPlanningResource extends BaseResource { {{{point::1}}}
+                    |
+                    |    @Inject
+                    |    public KitchenDutyPlanningResource(ActiveObjects activeObjects, {{{point::2}}}
+                    |                                       UserManager userManager) {
+                    |        this.activeObjects = activeObjects;
+                    |        this.userManager = userManager;
+                    |    }
+                    |
+                    |    public KitchenDutyPlanningResource() {
+                    |    }
+                    |
+                    |    @GET
+                    |    @Path("/week/{isoWeekNumber}/users")
+                    |    @Produces({MediaType.APPLICATION_JSON})
+                    |    @AnonymousAllowed
+                    |    public Response getUsersForWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber) {
+                    |        // AUTHENTICATION
+                    |        if (!this.isUserLoggedIn()) { {{{point::3}}}
+                    |            return getUnauthorizedErrorResponse();
+                    |        }
+                    |        // AUTHORIZATION
+                    |        if (this.isUserNotAdmin()) { {{{point::4}}}
+                    |            return getForbiddenErrorResponse();
+                    |        }
+                    |        // BUSINESS LOGIC
+                    |        ...
+                    |    }
+                    |
+                    |    @PUT
+                    |    @Path("/week/{isoWeekNumber}/users")
+                    |    @Produces({MediaType.APPLICATION_JSON})
+                    |    @AnonymousAllowed {{{point::5}}}
+                    |    public Response addUserToWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+                    |                                  final List<KitchenDutyPlanningResourceUserModel> userParams) {
+                    |        // AUTHENTICATION
+                    |        if (!this.isUserLoggedIn()) {
+                    |            return getUnauthorizedErrorResponse();
+                    |        }
+                    |        // AUTHORIZATION
+                    |        if (this.isUserNotAdmin()) {
+                    |            return getForbiddenErrorResponse();
+                    |        }
+                    |        // BUSINESS LOGIC
+                    |        ...
+                    |    }
+                    |
+                    |    @DELETE
+                    |    @Path("/week/{isoWeekNumber}/users")
+                    |    @Produces({MediaType.APPLICATION_JSON})
+                    |    @AnonymousAllowed
+                    |    public Response deleteUserFomWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+                    |                                  final KitchenDutyPlanningResourceUserModel userParam) {
+                    |        // AUTHENTICATION
+                    |        if (!this.isUserLoggedIn()) {
+                    |            return getUnauthorizedErrorResponse();
+                    |        }
+                    |        // AUTHORIZATION
+                    |        if (this.isUserNotAdmin()) {
+                    |            return getForbiddenErrorResponse();
+                    |        }
+                    |        // BUSINESS LOGIC
+                    |        ...
+                    |    }
+                    |
+                    |    @GET
+                    |    @Path("/user/{username}/weeks")
+                    |    @Produces({MediaType.APPLICATION_JSON})
+                    |    @AnonymousAllowed
+                    |    public Response getWeeksForUser(@PathParam("username") final String username) {
+                    |        // AUTHENTICATION
+                    |        if (!this.isUserLoggedIn()) {
+                    |            return getUnauthorizedErrorResponse();
+                    |        }
+                    |        // AUTHORIZATION
+                    |        if (this.isUserNotAdmin()) {
+                    |            return getForbiddenErrorResponse();
+                    |        }
+                    |        // BUSINESS LOGIC
+                    |        ...
+                    |    }
+                    |
+                    |
+                    |    @GET
+                    |    @Path("/health")
+                    |    @Produces({MediaType.APPLICATION_JSON})
+                    |    @AnonymousAllowed
+                    |    public Response health() {
+                    |        return Response.ok("ok").build();
+                    |    }
+                    |
+                    |}
+                    ')}}
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="fsdsdasfggfsd5">
+                    <div class="list-group-item cs-source-point-list__item">
+                       Class needs to extend <code>BaseResource</code> now.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                       Constructor now needs to do dependency injection for <code>UserManager</code> and <code>ActiveObjects</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                       AuthGuard to ensure user is logged in. Otherwise error HTTP 401 Unauthorized is served.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                       AuthGuard to ensure user is administrator. Otherwise error HTTP 403 Forbidden is served.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <strong>Why not just remove <code>@AnonymousAllowed</code></strong>? You can do that - then JIRA will do the authentication and error handling and most likely send you HTML errors instead of JSON.
+                        Just do Authentication and Authorization the way you see it fits best for you. This is just one way to do so, but it is also risky if you forget the AuthGuards for some methods.
+                        You should always have automated REST API tests ensure your plugin is really secure.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>
+
+        </p>
+
+        <p>You might have noticed that we use a <code>UserManager</code> that <strong>comes from the SAL API</strong>. We have already learned that we need to add a <code>@ComponentImport</code> for that.</p>
+
+
+        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/impl/", filename="MyPluginComponentImpl.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsd5', source='
+                |package com.comsysto.kitchen.duty.impl;
+                |
+                |...
+                |
+                |@ExportAsService ({MyPluginComponent.class})
+                |@Named ("myPluginComponent")
+                |public class MyPluginComponentImpl implements MyPluginComponent {
+                |
+                |    @ComponentImport
+                |    protected com.atlassian.sal.api.user.UserManager userManager;
+                |    ...
+                |}
+            ')}}
+
+        <p>&nbsp;</p>
+
+
+
+
+
+
+
+
+
+
+
+        <h3 class="cs-headline cs-headline--s">KitchenDutyActiveObjectHelper - or howto move data access spaghetti code somewhere else</h3>
+
+        <p>
+        We have previously seen out REST Endpoints full of ugly trsactional data access code.
+        We want to move that stuff somewhere else and have clean REST Endpoints that just call some methods and do not care about transactions.
+        The code simply moves into <strong><code>KitchenDutyActiveObjectHelper</code></strong>. There it can be ugly and we do not have to see it all the time.
+        </p>
+
+
+
+        <div class="row">
+            <div class="col-md-7">
+                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/ao/", filename="KitchenDutyActiveObjectHelper.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsdsdasfggfsddfsdffej5', source='
+                    |package com.comsysto.kitchen.duty.ao;
+                    |
+                    |...
+                    |import java.util.ArrayList;
+                    |import java.util.List;
+                    |
+                    |public class KitchenDutyActiveObjectHelper {
+                    |
+                    |    ....
+                    |
+                    |    //
+                    |    // TRANSACTIONAL
+                    |    //
+                    |
+                    |    public static Week getWeekByIsoWeekInTransaction(ActiveObjects activeObjects, Long isoWeekNumber) { {{{point::1}}}
+                    |        return activeObjects.executeInTransaction(new TransactionCallback<Week>() {
+                    |            @Override
+                    |            public Week doInTransaction() {
+                    |                Week[] weeks = activeObjects.find(Week.class, Query.select().where("WEEK = ?", isoWeekNumber));
+                    |                if (weeks != null && weeks.length > 0) {
+                    |                    return weeks[0];
+                    |                }
+                    |                return null;
+                    |            }
+                    |        });
+                    |    }
+                    |
+                    |    public static List<User> getUsersAssignedToWeekInTransaction(ActiveObjects activeObjects, Week week) { {{{point::2}}}
+                    |        List<User> users = new ArrayList<>(); {{{point::3}}}
+                    |        if (week != null) {
+                    |            UserToWeek[] relationships = activeObjects.executeInTransaction(new TransactionCallback<UserToWeek[]>() {
+                    |                @Override
+                    |                public UserToWeek[] doInTransaction() {
+                    |                    return KitchenDutyActiveObjectHelper.findAllRelationships(activeObjects, week);
+                    |                }
+                    |            });
+                    |            if (relationships != null) {
+                    |                for (UserToWeek userToWeek : relationships) {
+                    |                    users.add(userToWeek.getUser());
+                    |                }
+                    |            }
+                    |        }
+                    |        return users;
+                    |    }
+                    |
+                    |}
+                ')}}
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="fsdsdasfggfsddfsdffej5">
+                    <div class="list-group-item cs-source-point-list__item">
+                       <strong><code>getWeekByIsoWeekInTransaction()</code></strong> gives us either an object of <code>Week</code> or <code>null</code> for a certain iso week.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                       <strong><code>getUsersAssignedToWeekInTransaction()</code></strong> gives us either a list of <code>List&lt;User&gt;</code> or and empty list for a certain week.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                       Note that we never return null for lists. It is always convenient in the upper layers of our code (e.g. the REST Endpoints) to not always have to null check everything.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>These two methods are needed for our Overview Page REST Endpoint. If you are brave enough you can refactor the Planning Page REST Endpoint in the same way and move
+        the code to <code>KitchenDutyActiveObjectHelper</code>.</p>
+
+        <p>&nbsp;</p>
+
+        <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page REST Resource</h3>
+
+        <p>An Endpoint that returns all weeks with users for a selected month.</p>
+
+        {{ weAreWorkingOnIt() }}
+
 <!--
 
-        <ul>
-            <li><p><strong>Kitchen Duty Overview Page Webwork Action</strong> - A page that can be viewed by all logged in JIRA users.</p></li>
-            <li><p><strong>Kitchen Duty Overview Page JS Controller</strong> - Some JavaScript logic to display the calender with data from REST Endpoints on the page.</p></li>
-            <li><p><strong>Kitchen Duty Overview Page REST Resource</strong> - An Endpoint that returns all weeks with users for a selected month.</p></li>
-            <li><p><strong>Kitchen Duty Overview Page WebItem</strong></p></li>
-        </ul>
 
 
-====
-ALSO TODO: Secure PlanningEndpoints with adminOnly!
- => BaseResource
- => authGuards
 
-
-====
-KitchenDutyActiveObjectHelper
- => Transactional nullsafe DB Methods
-
-====
-public class MyPluginComponentImpl implements MyPluginComponent
-{
-
-    @ComponentImport
-    protected com.atlassian.sal.api.user.UserManager userManager;
 ====
 
 New KitchenDutyOverviewPageMonthDutyModel
 New KitchenDutyOverviewPageResource
 New BaseResource => isoDate Function + UnitTest
-
 
 http://localhost:2990/jira/rest/kitchenduty/1.0/overview_page/year/2018/month/9
 
@@ -95,7 +453,14 @@ Response
   }
 ]
 ====
+-->
 
+    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page Webwork Action</h3>
+        {{ weAreWorkingOnIt() }}
+
+
+
+<!--
 KitchenDutyOverviewPageWebworkAction
  => atlas.xml => Roles-Required="use" => https://developer.atlassian.com/server/jira/platform/webwork/#Webworkpluginmodule-RolesRequired
  => velocity.vm
@@ -109,16 +474,34 @@ KitchenDutyOverviewPageWebworkAction
 
 
 Cleanup: Move flag stuff to common js file from kitchen-duty-plugin-...-planning-page-controller.js
+-->
 
 
 
+
+    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page WebItem</h3>
+
+        {{ weAreWorkingOnIt() }}
+
+
+<!--
 WebItem: https://developer.atlassian.com/server/jira/platform/web-item/
  - atlas.xml + i18n => top nav bar
+ - Also a WebItem for Admin to link back to overview page
+-->
 
-Also a WebItem for Admin to link back to overview page
 
 
 
+
+    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page JS Controller</h3>
+
+    <p>Some JavaScript logic to display the calender with data from REST Endpoints on the page.</p>
+
+        {{ weAreWorkingOnIt() }}
+
+
+<!--
 
 https://fullcalendar.io/
 
@@ -135,6 +518,49 @@ https://fullcalendar.io/docs/weekNumbers-demo
 
 events https://fullcalendar.io/docs/events-function
 -->
+{{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin--overview-page-controller.js", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fdg6dfg', source="
+    |AJS.toInit(function(){
+    |    AJS.log('KDP: Overview Page Controller initializing ...');
+    |    var baseUrl = AJS.params.baseURL;
+    |    var restUrl = baseUrl + '/rest/kitchenduty/1.0';
+    |    window.KDPrestUrl = restUrl;
+    |
+    |    // Init Base SOY template
+    |    var overviewPageTemplate = JIRA.Templates.KDPO.overviewPage();
+    |    AJS.$('#kdp-overview-page-container').html(overviewPageTemplate);
+    |
+    |    AJS.$('#kdp-calendar').fullCalendar({
+    |        defaultView: 'month',
+    |        weekNumbers: true,
+    |        height: 500,
+    |        fixedWeekCount: false,
+    |        events: function(start, end, timezone, callback) {
+    |            var year = moment(start).format('YYYY');
+    |            // Full Calender always starts month with days of previous month.
+    |            // We add 10 days to get month we want.
+    |            var month = moment(start).add('days', 10).format('M');
+    |            AJS.$.ajax({
+    |                url: window.KDPrestUrl + '/overview_page/year/' + year + '/month/' + month,
+    |                dataType: 'json',
+    |                success: function(rawEvents) {
+    |                    var events = [];
+    |                    AJS.$(rawEvents).each(function() {
+    |                        var users = AJS.$(this).attr('users');
+    |                        events.push({
+    |                            title: users.join(', '),
+    |                            start: AJS.$(this).attr('start'),
+    |                            end: AJS.$(this).attr('end'),
+    |                            color: users.length > 0 ? '#36B37E' : '#FFAB00',
+    |                        });
+    |                    });
+    |                    callback(events);
+    |                }
+    |            });
+    |        }
+    |    });
+    |});
+")}}
+
 
     </div>
 </div>

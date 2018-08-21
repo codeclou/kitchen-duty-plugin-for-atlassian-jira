@@ -327,10 +327,9 @@ html, body {
     background-image: url(../images/kitchen-duty-logo-single.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    display:inline-block;
     float:left;
-    width:50px;
-    height:50px;
+    width:60px;
+    height:60px;
     margin-right:5px;
 }
 .cs-page-logo {
@@ -365,6 +364,7 @@ html, body {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight:300;
     font-size:21px;
+    text-align: left;
 }
 
 
@@ -799,6 +799,7 @@ p {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight:300;
     white-space: nowrap;
+    text-align: left;
 }
 @include media-breakpoint-down(sm) {
     .cs-landing-logo h1 {

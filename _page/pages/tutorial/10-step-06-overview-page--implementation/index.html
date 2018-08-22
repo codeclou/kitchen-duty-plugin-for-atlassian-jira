@@ -26,66 +26,76 @@
 
         <h3 class="cs-headline cs-headline--s">BaseResource and AuthGuards for KitchenDutyPlanningResource Endpoint</h3>
 
-        <p>
-            Since we will get more Endpoints now for our Overview Page we will have common code. Therefore we will create a base-class all endpoints extend from.
-            We move the common code there. The first thing is the dependencies to <code>UserManager</code> and <code>ActiveObjects</code>.
-            Next are the two <strong>AuthGuard methods</strong> we will use to secure every endpoint <code>isUserLoggedIn()</code> and <code>isUserNotAdmin()</code>.
-            Lastly we need some convenience methods to serve certain HTTP Error codes as JSON - therefore we now have <code>getUnauthorizedErrorResponse()</code> and <code>getForbiddenErrorResponse()</code>.
-        </p>
+        <div class="row">
+            <div class="col-md-8">
+                <p>
+                    Since we will get more Endpoints now for our Overview Page we will have common code. Therefore we will create a base-class all endpoints extend from.
+                    We move the common code there. The first thing is the dependencies to <code>UserManager</code> and <code>ActiveObjects</code>.
+                    Next are the two <strong>AuthGuard methods</strong> we will use to secure every endpoint <code>isUserLoggedIn()</code> and <code>isUserNotAdmin()</code>.
+                    Lastly we need some convenience methods to serve certain HTTP Error codes as JSON - therefore we now have <code>getUnauthorizedErrorResponse()</code> and <code>getForbiddenErrorResponse()</code>.
+                </p>
 
-        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="BaseResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsd5', source='
-            |package com.comsysto.kitchen.duty.rest;
-            |
-            |import com.atlassian.activeobjects.external.ActiveObjects;
-            |import com.atlassian.sal.api.user.UserProfile;
-            |
-            |import javax.ws.rs.core.Response;
-            |import java.time.LocalDate;
-            |import java.time.temporal.ChronoField;
-            |import java.time.temporal.WeekFields;
-            |import java.util.ArrayList;
-            |import java.util.List;
-            |
-            |public class BaseResource {
-            |
-            |    protected com.atlassian.sal.api.user.UserManager userManager;
-            |    protected ActiveObjects activeObjects;
-            |
-            |    protected Boolean isUserLoggedIn() {
-            |        UserProfile user = userManager.getRemoteUser();
-            |        if (user != null) {
-            |            return true;
-            |        } else {
-            |            return false;
-            |        }
-            |    }
-            |
-            |    public Boolean isUserNotAdmin() {
-            |        UserProfile user = userManager.getRemoteUser();;
-            |        return (user == null || !userManager.isAdmin(user.getUserKey()));
-            |    }
-            |
-            |    protected Response getUnauthorizedErrorResponse() {
-            |        return Response.serverError()
-            |            .entity(new RestError(
-            |                RestError.errorText401,
-            |                401001,
-            |                Response.Status.UNAUTHORIZED.getStatusCode()))
-            |            .status(Response.Status.UNAUTHORIZED)
-            |            .build();
-            |    }
-            |
-            |    protected Response getForbiddenErrorResponse() {
-            |        return Response.serverError()
-            |            .entity(new RestError(
-            |                RestError.errorText403,
-            |                403001,
-            |                Response.Status.FORBIDDEN.getStatusCode()))
-            |            .status(Response.Status.FORBIDDEN)
-            |            .build();
-            |    }
-            |}
-            ')}}
+
+                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="BaseResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsd5', source='
+                    |package com.comsysto.kitchen.duty.rest;
+                    |
+                    |import com.atlassian.activeobjects.external.ActiveObjects;
+                    |import com.atlassian.sal.api.user.UserProfile;
+                    |
+                    |import javax.ws.rs.core.Response;
+                    |import java.time.LocalDate;
+                    |import java.time.temporal.ChronoField;
+                    |import java.time.temporal.WeekFields;
+                    |import java.util.ArrayList;
+                    |import java.util.List;
+                    |
+                    |public class BaseResource {
+                    |
+                    |    protected com.atlassian.sal.api.user.UserManager userManager;
+                    |    protected ActiveObjects activeObjects;
+                    |
+                    |    protected Boolean isUserLoggedIn() {
+                    |        UserProfile user = userManager.getRemoteUser();
+                    |        if (user != null) {
+                    |            return true;
+                    |        } else {
+                    |            return false;
+                    |        }
+                    |    }
+                    |
+                    |    public Boolean isUserNotAdmin() {
+                    |        UserProfile user = userManager.getRemoteUser();;
+                    |        return (user == null || !userManager.isAdmin(user.getUserKey()));
+                    |    }
+                    |
+                    |    protected Response getUnauthorizedErrorResponse() {
+                    |        return Response.serverError()
+                    |            .entity(new RestError(
+                    |                RestError.errorText401,
+                    |                401001,
+                    |                Response.Status.UNAUTHORIZED.getStatusCode()))
+                    |            .status(Response.Status.UNAUTHORIZED)
+                    |            .build();
+                    |    }
+                    |
+                    |    protected Response getForbiddenErrorResponse() {
+                    |        return Response.serverError()
+                    |            .entity(new RestError(
+                    |                RestError.errorText403,
+                    |                403001,
+                    |                Response.Status.FORBIDDEN.getStatusCode()))
+                    |            .status(Response.Status.FORBIDDEN)
+                    |            .build();
+                    |    }
+                    |}
+                    ')}}
+
+            </div>
+            <div class="col-md-4 text-center">
+                <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/06-fffecurity.svg" class="img-fluid" style="max-width:500px">
+            </div>
+        </div>
+
 
         <p>You might have already seen that we use a class <code>RestError</code>. This is a simple pojo to serve our errors as JSON.</p>
 
@@ -380,6 +390,9 @@
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                        Note that we never return null for lists. It is always convenient in the upper layers of our code (e.g. the REST Endpoints) to not always have to null check everything.
+                    </div>
+                    <div class="mt-3 text-center">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/06-al-dente.svg" class="img-fluid" style="max-width:400px">
                     </div>
                 </div>
             </div>

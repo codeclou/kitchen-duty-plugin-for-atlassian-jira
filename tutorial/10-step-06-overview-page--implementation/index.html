@@ -212,14 +212,17 @@
 
         <h3 class="cs-headline cs-headline--s">BaseResource and AuthGuards for KitchenDutyPlanningResource Endpoint</h3>
 
-        <p>
-            Since we will get more Endpoints now for our Overview Page we will have common code. Therefore we will create a base-class all endpoints extend from.
-            We move the common code there. The first thing is the dependencies to <code>UserManager</code> and <code>ActiveObjects</code>.
-            Next are the two <strong>AuthGuard methods</strong> we will use to secure every endpoint <code>isUserLoggedIn()</code> and <code>isUserNotAdmin()</code>.
-            Lastly we need some convenience methods to serve certain HTTP Error codes as JSON - therefore we now have <code>getUnauthorizedErrorResponse()</code> and <code>getForbiddenErrorResponse()</code>.
-        </p>
+        <div class="row">
+            <div class="col-md-8">
+                <p>
+                    Since we will get more Endpoints now for our Overview Page we will have common code. Therefore we will create a base-class all endpoints extend from.
+                    We move the common code there. The first thing is the dependencies to <code>UserManager</code> and <code>ActiveObjects</code>.
+                    Next are the two <strong>AuthGuard methods</strong> we will use to secure every endpoint <code>isUserLoggedIn()</code> and <code>isUserNotAdmin()</code>.
+                    Lastly we need some convenience methods to serve certain HTTP Error codes as JSON - therefore we now have <code>getUnauthorizedErrorResponse()</code> and <code>getForbiddenErrorResponse()</code>.
+                </p>
 
-        
+
+                
 
 <div class="cs-code-filename">
     
@@ -341,6 +344,13 @@ public class BaseResource {
             .build();
     }
 }</code></pre>
+
+
+            </div>
+            <div class="col-md-4 text-center">
+                <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/06-fffecurity.svg" class="img-fluid" style="max-width:500px">
+            </div>
+        </div>
 
 
         <p>You might have already seen that we use a class <code>RestError</code>. This is a simple pojo to serve our errors as JSON.</p>
@@ -922,6 +932,9 @@ public class KitchenDutyActiveObjectHelper {
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                        Note that we never return null for lists. It is always convenient in the upper layers of our code (e.g. the REST Endpoints) to not always have to null check everything.
+                    </div>
+                    <div class="mt-3 text-center">
+                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/06-al-dente.svg" class="img-fluid" style="max-width:400px">
                     </div>
                 </div>
             </div>

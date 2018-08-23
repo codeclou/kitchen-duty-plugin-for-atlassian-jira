@@ -380,15 +380,7 @@
 
         <p>Now a Browser Tab opens with the console and you just paste the JDBC URL and click connect.</p>
 
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-login.png" data-lightbox="00-step-intellij" data-title="Step 4 - H2 Database Console Login">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-login.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - H2 Database Console Login">
-                    </a>
-                </p>
-            </div>
-        </div>
+        {{ image('doc/step-04-h2-console-login.png', 'Step 4 - H2 Database Console Login', '60%') }}
 
         <div class="cs-blockquote">
             <p>
@@ -402,30 +394,14 @@
 
         <p>You should see our Week table and if you execute a SELECT Statement on it you can see contents.</p>
 
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" data-lightbox="00-step-intellij" data-title="Step 4 - H2 Database Console Select Result on Table Week">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-console-jira.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - H2 Database Console Select Result on Table Week">
-                    </a>
-                </p>
-            </div>
-        </div>
+
+        {{ image('doc/step-04-h2-console-jira.png', 'Step 4 - H2 Database Console Select Result on Table Week', '60%') }}
 
         <p>You can see the whole process of calling the testPersist Endpoint and connecting to the H2 Database in the following gif.</p>
 
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-jira-connect.gif" data-lightbox="00-step-intellij" data-title="Step 4 - H2 Database Console Select Result on Table Week">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-h2-jira-connect.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - H2 Database Console Select Result on Table Week">
-                    </a>
-                </p>
-            </div>
-        </div>
+        {{ image('doc/step-04-h2-jira-connect.gif', 'Step 4 - Interactive Demo: H2 Database Console Select Result on Table Week', '60%') }}
 
         <div class="cs-v-spacer cs-v-spacer--big"></div>
-
 
 
 
@@ -692,27 +668,11 @@
             That is fine since that only shows that the unique constraint works and we will be throwing away the persistTest Endpoint anyways.
         </p>
 
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-unique-index-exception.png" data-lightbox="00-step-intellij" data-title="Step 4 - Unique Index Violation on second request">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-unique-index-exception.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - Unique Index Violation on second request">
-                    </a>
-                </p>
-            </div>
-        </div>
+        {{ image('doc/step-04-unique-index-exception.png', 'Step 4 - Unique Index Violation on second request', '60%') }}
 
         <p>We shutdown JIRA again and fire up the H2 Console again to see what tables have been created.</p>
 
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-many-to-many-week-user.png" data-lightbox="00-step-intellij" data-title="Step 4 - ManyToMany Relationship between User and Week mapped by three Tables in Database">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-04-many-to-many-week-user.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 4 - ManyToMany Relationship between User and Week mapped by three Tables in Database">
-                    </a>
-                </p>
-            </div>
-        </div>
+        {{ image('doc/step-04-many-to-many-week-user.png', 'Step 4 - ManyToMany Relationship between User and Week mapped by three Tables in Database', '60%') }}
 
         <div class="cs-v-spacer cs-v-spacer--big"></div>
 
@@ -1309,7 +1269,7 @@
         <div class="cs-v-spacer"></div>
         <div class="cs-tutorial-step-review">
             <div class="cs-tutorial-step-review__headline">
-                <strong>You have completed Step 4.</strong> Good Job! You can check out this steps solution on GitHub
+                <strong>You have completed Step 4.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
                 <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin">

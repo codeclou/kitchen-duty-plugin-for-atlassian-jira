@@ -1,3 +1,8 @@
+import 'bootstrap';
+import { Bilderrahmen } from 'bilderrahmen';
+// snapsvg is special :D
+var Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
+
 
 /* ================================================================================================ */
 /* STUFF */
@@ -180,7 +185,7 @@ var _extractElementTypeFromElementId = function(elementId) {
 };
 
 /* See images/interactive/README.md for expected SVG format and conventions used here. */
- var _loadInteractiveGraphic = function (el) {
+var _loadInteractiveGraphic = function (el) {
     var svgId = $(el).attr('id');
     console.log('ig: loading svg graphic: ' + svgId);
     var jsonSettings = JSON.parse($(el).attr('data-json-settings'));
@@ -298,17 +303,6 @@ var toggleSidebar = function() {
 };
 
 /* ================================================================================================ */
-/* STICKY DIVS */
-/* ================================================================================================ */
-
-var initStickyDivs = function() {
-    /** SEE: http://leafo.net/sticky-kit/ */
-    $('.cs-sticky-in-parent').stick_in_parent({ offset_top: 90 /* the site-header height */, bottoming: true  });
-};
-
-
-
-/* ================================================================================================ */
 /* ONLOAD */
 /* ================================================================================================ */
 
@@ -331,13 +325,7 @@ $(function () {
 
     initToggleSidebarByState();
 
-    /* Disbale Sticky divs on localhost since they interfere with browsersync! Page scrolls to top on Update! */
-    /* 2018-08: BrowserSync completely disabled! */
-    /* if (!_startsWith(window.location.href, 'http://localhost') && !_startsWith(window.location.href, 'http://192')) {*/
-        initStickyDivs();
-    /*} else {
-        console.log('Sticky Divs are disabled on localhost due to browsersync-scroll-up-bug');
-    }*/
+    new Bilderrahmen({ closeOnOutsideClick: true });
 
     console.log('deploy info: ' + JSON.stringify(
         {

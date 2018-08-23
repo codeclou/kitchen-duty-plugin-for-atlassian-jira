@@ -109,17 +109,7 @@
 
         <p>Once JIRA is started <strong>browse to <a class="cs-do-wrap" href="http://server/jira/rest/kitchenduty/1.0/message" target="_blank">http://server/jira/rest/kitchenduty/1.0/message</a></strong> and you should see the following.</p>
 
-        <div class="row">
-            <div class="offset-md-2 col-md-8">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-02-rest-user-search-response-xml.png" data-lightbox="02-step" data-title="Step 2 - XML Response of User Search REST Resource">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-02-rest-user-search-response-xml.png" class="img-thumbnail img-fluid" alt="Step 2 - XML Response of User Search REST Resource">
-                    </a>
-                </p>
-            </div>
-        </div>
-
-
+        {{ image('doc/step-02-rest-user-search-response-xml.png', 'Step 2 - XML Response of User Search REST Resource', '60%') }}
 
         <p>That's nice. But now we need to understand what is going on. So here is a <strong>short recap of what has been created</strong>.</p>
 
@@ -222,7 +212,7 @@
         </p>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 {%  set uniqueIdUserSearchResourceStep2 = 'step2-usersearchresource' %}
                 {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="UserSearchResource.java", uniqueId=uniqueIdUserSearchResourceStep2, ghBaseUrl=gitHubBaseUrlForStep2, source='
                             |package com.comsysto.kitchen.duty.rest;
@@ -299,7 +289,7 @@
                             |}
                         ') }}
             </div>
-            <div class="col-md-6 cs-sticky-in-parent">
+            <div class="col-md-5 cs-sticky-in-parent">
 
                 <div class="list-group cs-source-point-list" data-source-target="{{ uniqueIdUserSearchResourceStep2 }}">
                     <div class="list-group-item cs-source-point-list__item">
@@ -581,7 +571,7 @@
 
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 {%  set idUserSearchResourceFuncTestStep2 = 'step2-usersearchresourcefunctest' %}
                 {{ csSource(lang='java', filepath="src/test/java/it/com/comsysto/kitchen/duty/rest/", filename="UserSearchResourceFuncTest.java", ghBaseUrl=gitHubBaseUrlForStep2, uniqueId=idUserSearchResourceFuncTestStep2, source='
                     |package it.com.comsysto.kitchen.duty.rest;
@@ -661,7 +651,7 @@
                     |}
                 ') }}
             </div>
-            <div class="col-md-6 cs-sticky-in-parent">
+            <div class="col-md-5 cs-sticky-in-parent">
 
                 <div class="list-group cs-source-point-list" data-source-target="{{ idUserSearchResourceFuncTestStep2 }}">
                     <div class="list-group-item cs-source-point-list__item">
@@ -769,14 +759,14 @@
 
         <div class="cs-tutorial-step-review">
             <div class="cs-tutorial-step-review__headline">
-                <strong>You have completed Step 2.</strong> Good Job! You can check out this steps solution on GitHub
+                <strong>You have completed Step 2.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
                 <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin">
                     https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin
                 </a>
-                <br>
-                Or view the diff from Step 1 to Step 2 here: <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a>
+                <!--<br>
+                Or view the diff from Step 1 to Step 2 here: <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a>-->
             </div>
         </div>
 

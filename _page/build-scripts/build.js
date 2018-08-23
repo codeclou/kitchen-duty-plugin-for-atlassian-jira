@@ -9,7 +9,6 @@ var moment = require('moment');
 var Hashids = require("hashids");
 var lodash = require('lodash');
 var shell = require('shelljs');
-var killport = require('killport');
 
 // ////////////////////////////////////////////////////////////////
 // REQUIRE - BUILD FILES
@@ -37,6 +36,8 @@ var preBuildTaskOptions = {
     buildDir: buildDir
 };
 
+// JS
+var jsBundle = buildDir + '/generated/bundle.js';
 
 // SCSS
 var scssTaskOptions = {
@@ -51,38 +52,6 @@ var scssTaskOptions = {
          }*/
     ]
 };
-
-
-// JS
-var jsTaskOptions = {
-    jsFiles: [
-        './node_modules/tether/dist/js/tether.js',
-        './node_modules/clipboard/dist/clipboard.js',
-        './node_modules/jquery/dist/jquery.js',
-        './node_modules/popper.js/dist/umd/popper.js',
-        './node_modules/lightbox2/dist/js/lightbox.js',
-/*         './node_modules/retina.js/dist/retina.js', */
-        './node_modules/webcomponents.js/CustomElements.js',
-        './node_modules/bootstrap/dist/js/bootstrap.js',
-        './node_modules/snapsvg/dist/snap.svg.js',
-        './node_modules/toastr/toastr.js',
-        './node_modules/sticky-kit/dist/sticky-kit.js',
-        './_page/js/main.js'
-    ],
-    jsBundle: buildDir + '/generated/bundle.js',
-    jsUglifyOptions: {
-        mangle: false,
-    }
-};
-if (environment === 'dev') {
-    jsTaskOptions.jsUglifyOptions = {
-        mangle: false,
-        compress: false,
-        output: {
-            beautify: true
-        }
-    };
-}
 
 
 // HTML
@@ -132,7 +101,7 @@ var watchers = [
         what: 'javascript',
         watchGlob: './_page/js/**/*.js',
         watchCallback: function (filepath) {
-            tasks.buildJs(jsTaskOptions);
+            tasks.buildJs();
         }
     },
     {
@@ -180,7 +149,7 @@ async.waterfall([
     function(previousStepName, waterfallProceed) {
         async.parallel(
             [
-                function(callback) { tasks.buildJs(jsTaskOptions, callback) },
+                function(callback) { tasks.buildJs(callback) },
                 function(callback) { tasks.buildCss(scssTaskOptions, callback); },
                 function(callback) { tasks.buildHtml(htmlTaskOptions, callback); },
                 function(callback) { tasks.buildFonts(fontsTaskOptions, callback); }
@@ -196,12 +165,6 @@ async.waterfall([
             /* https://www.npmjs.com/package/local-web-server */
             console.log(('>> http-server started on port 7788').yellow);
             console.log(('>> go to http://localhost:7788/kitchen-duty-plugin-for-atlassian-jira/').yellow);
-
-            killport(7788).then(function(out){
-                helpers.printSuccess(' server> killed any process on port 7788 before starting server' );
-            }).catch(function(err){
-                helpers.printError(' server> failed to process on port 7788 before startup of server');
-            });
 
             var express = require('express');
             var serveStatic = require('serve-static');
@@ -256,6 +219,6 @@ async.waterfall([
     }
 ], function (err, result) {
     helpers.printBuildTime(buildStartTime, moment());
-    helpers.printFileSize(jsTaskOptions.jsBundle, 'bundle.js');
+    helpers.printFileSize(jsBundle, 'bundle.js');
     helpers.printFileSize(scssTaskOptions.cssBundle, 'bundlev2.css');
 });

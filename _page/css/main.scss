@@ -22,9 +22,7 @@ $list-group-border-radius: 0;
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '../../node_modules/font-awesome/scss/font-awesome.scss';
 @import '../../node_modules/highlight.js/styles/railscasts';
-@import '../../node_modules/lightbox2/dist/css/lightbox';
-@import '../../node_modules/toastr/toastr';
-
+@import '../../node_modules/bilderrahmen/bilderrahmen';
 
 
 
@@ -131,9 +129,14 @@ html, body {
     background-color: #fff;
     max-height: calc(100vh - 140px);
     width: 100%;
+    display:flex;
+    justify-content: center;
 }
 .cs-content-wrapper--isopen {
 
+}
+.cs-content-wrapper-inner {
+    max-width:1400px;
 }
 
 .cs-stars-on-github-give-star-button {
@@ -143,7 +146,7 @@ html, body {
     padding: 0;
     overflow-y: auto;
     background-color: #fff;
-    min-width: 310px;
+    min-width: 320px;
     display: none;
     max-height: calc(100vh - 140px);
     border-right:1px solid #efefef;

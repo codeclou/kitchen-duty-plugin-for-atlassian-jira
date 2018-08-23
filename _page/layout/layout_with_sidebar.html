@@ -189,6 +189,28 @@
 </svg>
 {% endmacro %}
 
+{# USAGE: {{image('./foo/bar.png', 'Bla', '100%')} #}
+{#        {{image('./foo/bar.png', 'Bla', '60%')}  #}
+{# uses: https://github.com/codeclou/bilderrahmen  #}
+{% macro image(imgUrl, imgText, size) %}
+    {% set colClasses = "offset-md-1 col-md-10" %}
+    {% if size == '100%' %}
+        {% set colClasses = "col-md-12" %}
+    {% endif %}
+    <div class="row">
+        <div class="{{ colClasses }}">
+            <p>
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/{{ imgUrl }}">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/{{ imgUrl }}" class="img-fluid" alt="{{ imgText }}"
+                         data-bilderrahmen="gallery-01"
+                         data-bilderrahmen-title="{{ imgText }}"
+                    >
+                </a>
+            </p>
+        </div>
+    </div>
+{% endmacro %}
+
 
 
 {% block contentLayout %}
@@ -227,9 +249,11 @@
         {{ pageSidebar(CURRENT_PAGE_ID) }}
     </div>
     <div class="cs-content-wrapper">
+        <div class="cs-content-wrapper-inner">
         {% block content %}
 
         {% endblock %}
+        </div>
     </div>
 </div>
 

@@ -155,15 +155,8 @@
 
         <p>You should be able to open the <code>KitchenDutyPlanningWebworkAction</code> in IntelliJ now.</p>
 
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-intellij-after-webwork-module-create.png" data-lightbox="01-step-server-side" data-title="Step 1 - IntelliJ after Webwork Module creation">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-intellij-after-webwork-module-create.png" class="img-thumbnail img-fluid" alt="Step 1 - IntelliJ after Webwork Module creation">
-                    </a>
-                </p>
-            </div>
-        </div>
+        {{ image('doc/step-01-intellij-after-webwork-module-create.png', 'Step 1 - IntelliJ after Webwork Module creation', '60%') }}
+
 
         <p>Now we change the <code>execute</code> Method to work with our view:</p>
 
@@ -189,14 +182,7 @@
 
         <p>Now browse to <a class="cs-do-wrap" href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa</a> and you should see:</p>
 
-        <div class="row">
-            <div class="offset-md-2 col-md-8">
-                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-atlas-run-jira-with-kitchen-duty-planning-webwork-action.png" data-lightbox="01-step-server-side" data-title="Step 1 - Success View of Kitchen Duty Planning Webwork Action">
-                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-atlas-run-jira-with-kitchen-duty-planning-webwork-action.png" class="img-thumbnail img-fluid" alt="Step 1 - Success View of Kitchen Duty Planning Webwork Action">
-                </a>
-            </div>
-        </div>
-
+        {{ image('doc/step-01-atlas-run-jira-with-kitchen-duty-planning-webwork-action.png', 'Step 1 - Success View of Kitchen Duty Planning Webwork Action', '60%') }}
 
         <div class="cs-v-spacer cs-v-spacer--small"></div>
 
@@ -246,15 +232,7 @@
 
         <p>After you have saved the changes run <code>atlas-run</code> again your shell to start JIRA and <a class="cs-do-wrap" href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">browse to the Planning Page</a>. It should look like this now.</p>
 
-        <div class="row">
-            <div class="offset-md-2 col-md-8">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-decorator-atl-admin.png" data-lightbox="01-step-server-side" data-title="Step 1 - Page Decorator atl.admin">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-decorator-atl-admin.png" class="img-thumbnail img-fluid" alt="Step 1 - Page Decorator atl.admin">
-                    </a>
-                </p>
-            </div>
-        </div>
+        {{ image('doc/step-01-planning-page-decorator-atl-admin.png', 'Step 1 - Page Decorator atl.admin', '60%') }}
 
         <p>If you had <code>atlas-run</code> still running and do not see your changes, try opening a second shell and type <code>atlas-cli</code> wait for the prompt, type <code>pi</code> and press enter. Now your plugin is force-rebuild. You can read more about that later on in the section about faster development.</p>
 
@@ -275,15 +253,7 @@
             to hook into the JIRA Sidebar which renders for every administrator tab section, so that it will look like this.
         </p>
 
-        <div class="row">
-            <div class="offset-md-2 col-md-8">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-web-section-and-item.png" data-lightbox="01-step-server-side" data-title="Step 1 - Web Section and Web Item">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-web-section-and-item.png" class="img-thumbnail img-fluid" alt="Step 1 - Web Section and Web Item">
-                    </a>
-                </p>
-            </div>
-        </div>
+        {{ image('doc/step-01-planning-page-web-section-and-item.png', 'Step 1 - Web Section and Web Item', '60%') }}
 
         <p>You might need another coffee because here comes the code for the <code>atlassian-plugin.xml</code> which resides in <code>src/main/resources/</code></p>
 
@@ -353,15 +323,7 @@
 
         <p>Ok this is a no-brainer since you already saw the content section. But to be consistent here is the screenshot ;)</p>
 
-        <div class="row">
-            <div class="offset-md-2 col-md-8">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-content.png" data-lightbox="01-step-server-side" data-title="Step 1 - Content Section">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-planning-page-content.png" class="img-thumbnail img-fluid" alt="Step 1 - Content Section">
-                    </a>
-                </p>
-            </div>
-        </div>
+        {{ image('doc/step-01-planning-page-content.png', 'Step 1 - Content Section', '60%') }}
 
         <p>
             If you want to be the a-student you can read about <a target="_blank" href="https://docs.atlassian.com/aui/latest/docs/layout.html">AUI Layout</a>
@@ -417,21 +379,13 @@
 
         <p>If you log out of JIRA now and browse again to the planning page you will see the administrator login form. When logging in as <code>admin</code> (password <code>admin</code>) you should be redirected to the planning page.</p>
 
-        <div class="row">
-            <div class="offset-md-2 col-md-8">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-done.png" data-lightbox="01-step-server-side" data-title="Step 1 - Done">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-01-done.png" class="img-thumbnail img-fluid" alt="Step 1 - Done">
-                    </a>
-                </p>
-            </div>
-        </div>
+        {{ image('doc/step-01-done.png', 'Step 1 - Done', '60%') }}
 
         <div class="cs-v-spacer"></div>
 
         <div class="cs-tutorial-step-review">
             <div class="cs-tutorial-step-review__headline">
-                <strong>You have completed Step 1.</strong> Good Job! You can check out this steps solution on GitHub
+                <strong>You have completed Step 1.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
                 <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin">

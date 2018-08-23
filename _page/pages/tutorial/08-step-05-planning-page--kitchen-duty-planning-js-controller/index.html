@@ -44,11 +44,7 @@
         </ul>
         <div class="row  ml-2">
             <div class="col-md-6">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-jira-now.png" data-lightbox="05-step" data-title="Step 5 - JIRA Redesign">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-jira-now.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - JIRA Redesign">
-                    </a>
-                </p>
+                {{ image('doc/step-05-jira-now.png', 'Step 5 - JIRA Redesign', '100%') }}
             </div>
             <div class="col-md-6">
                 {{ csSource(lang='xml', filepath="", filename="pom.xml", ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='x3eewr8dadfdfsdsfsf6df7987ij', source='
@@ -87,18 +83,10 @@
         </p>
         <div class="row">
             <div class="col-md-6">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" data-lightbox="05-step" data-title="Step 5 - Planning Page working">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page working">
-                    </a>
-                </p>
+                {{ image('doc/step-05-planning-page-working.gif', 'Step 5 - Planning Page working', '100%') }}
             </div>
             <div class="col-md-6">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-templates.png" data-lightbox="05-step" data-title="Step 5 - Planning Page Soy Templates">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-templates.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page Soy Templates">
-                    </a>
-                </p>
+                {{ image('doc/step-05-templates.png', 'Step 5 - Planning Page Soy Templates', '100%') }}
             </div>
         </div>
 
@@ -563,21 +551,12 @@
         <p>That's it. Now we can run our plugin with <code>atlas-run</code> and when navigating to <a href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa</a>
         it should work as you can see below. <strong>We are completely done implementing the Kitchen Duty Planning Page</strong>.</p>
 
-        <div class="row">
-            <div class="col-md-10 offset-md-1">
-                <p>
-                    <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" data-lightbox="05-step" data-title="Step 5 - Planning Page working">
-                        <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-05-planning-page-working.gif" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 5 - Planning Page working">
-                    </a>
-                </p>
-            </div>
-        </div>
-
+        {{ image('doc/step-05-planning-page-working.gif', 'Step 5 - Planning Page working', '60%') }}
 
         <div class="cs-v-spacer"></div>
         <div class="cs-tutorial-step-review">
             <div class="cs-tutorial-step-review__headline">
-                <strong>You have completed Step 5.</strong> Good Job! You can check out this steps solution on GitHub
+                <strong>You have completed Step 5.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
                 <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin">

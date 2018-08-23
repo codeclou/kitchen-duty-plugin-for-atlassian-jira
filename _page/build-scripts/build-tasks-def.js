@@ -231,24 +231,12 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
 };
 
 // JS
-exports.buildJs = function(options, nextBuildStep) {
+exports.buildJs = function(nextBuildStep) {
     console.log('>> build js'.bold.cyan);
-    /* glob seems to delete my array :( that's why we copy it and let glob consume the copy! */
-    var jsFilesCopy = [];
-    options.jsFiles.forEach(function(jsfile) {
-        jsFilesCopy.push(jsfile);
-    });
-    var _allJsFiles = {};
-    var _allJsFilesGlob = glob.sync(jsFilesCopy);
-    _allJsFilesGlob.forEach(function(file) {
-        _allJsFiles[file] = fs.readFileSync(file, 'utf-8');
-    });
-    var uglifiedResult = uglifyjs3.minify(_allJsFiles);
-    console.log(uglifiedResult.error);
-    fse.outputFile(options.jsBundle, uglifiedResult.code, function (err) {
-        helpers.printSuccessOrError(err, 'js> write ' + options.jsBundle);
-        helpers.proceedBuild(nextBuildStep, 'buildJs');
-    });
+    shell.exec('./node_modules/.bin/webpack');
+    if (nextBuildStep !== undefined && nextBuildStep !== null) {
+        nextBuildStep();
+    }
 };
 
 

@@ -15,7 +15,6 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       Popper: ['popper.js', 'default'],
-      Clipboard: 'Clipboard', /* https://github.com/zenorocha/clipboard.js */
     })
   ]
 };

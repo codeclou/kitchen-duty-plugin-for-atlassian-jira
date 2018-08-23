@@ -983,3 +983,12 @@ p {
 .cs-legal-box a:last-child {
     border:0;
 }
+
+
+#copy-to-clipboard-dummy {
+    width:1px;
+    height: 1px;
+    position: absolute;
+    top: -20px;
+    left:-20px;
+}

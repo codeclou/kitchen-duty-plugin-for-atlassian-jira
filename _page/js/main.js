@@ -1,4 +1,5 @@
 import 'bootstrap';
+import 'clipboard';
 import { Bilderrahmen } from 'bilderrahmen';
 // snapsvg is special :D
 var Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
@@ -45,18 +46,34 @@ var initBootstrapTooltip = function () {
 };
 
 var initClipboardJs = function () {
-    /* https://github.com/zenorocha/clipboard.js */
-    var clipboard = new Clipboard('.cs--trigger-copy-clipboard');
     $('.cs--trigger-copy-clipboard').click(function(){
         var that = $(this);
-        that.tooltip('dispose');
-        that.attr('title', 'copied!');
-        that.tooltip('show');
-        setTimeout(function(){
-            that.attr('title', that.attr('data-title-orig'));
+
+        const referenceNode = document.getElementById('copy-to-clipboard-dummy');
+        referenceNode.value = that.attr('data-clipboard-text');
+
+        try {
+            referenceNode.select();
+            document.execCommand('copy');
             that.tooltip('dispose');
-            that.tooltip();
-        }, 1000);
+            that.attr('title', 'copied!');
+            that.tooltip('show');
+            setTimeout(function(){
+                that.attr('title', that.attr('data-title-orig'));
+                that.tooltip('dispose');
+                that.tooltip();
+            }, 1000);
+        } catch(e) {
+            that.tooltip('dispose');
+            that.attr('title', 'copy failed! Use a modern browser!');
+            that.tooltip('show');
+            setTimeout(function(){
+                that.attr('title', that.attr('data-title-orig'));
+                that.tooltip('dispose');
+                that.tooltip();
+            }, 1000);
+        }
+
     });
 };
 

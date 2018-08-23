@@ -23,7 +23,7 @@
 
 
 
-    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundlev2.css?v2018-08-21--20-13" rel="stylesheet">
+    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundlev2.css?v2018-08-23--12-50" rel="stylesheet">
 
     <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-256.png" type="image/png" sizes="256x256">
@@ -177,6 +177,7 @@
 
     </div>
     <div class="cs-content-wrapper">
+        <div class="cs-content-wrapper-inner">
         
 
     <div class="row">
@@ -597,43 +598,64 @@ target/</code></pre>
                     <p>Now open <strong>Preferences</strong> in IntelliJ and set the built-in maven of the SDK together with the <code>settings.xml</code></p>
                     <p>(Tip: By calling <code>atlas-version</code> all paths including home directory of SDK are printed)</p>
 
-                    <div class="row">
-                        <div class="col-md-8 offset-md-2">
-                            <p>
-                                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-install-settings.png" data-lightbox="00-step-intellij" data-title="Step 0 - Set maven home and maven settings.xml">
-                                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-install-settings.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 0 - Set maven home and maven settings.xml">
-                                </a>
-                            </p>
-                        </div>
-                    </div>
+                    
+    
+    
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            <p>
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-install-settings.png">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-install-settings.png" class="img-fluid" alt="Step 0 - Set maven home and maven settings.xml"
+                         data-bilderrahmen="gallery-01"
+                         data-bilderrahmen-title="Step 0 - Set maven home and maven settings.xml"
+                    >
+                </a>
+            </p>
+        </div>
+    </div>
+
 
                     <div class="cs-v-spacer"></div>
 
                     <p>Since we need the <code>ATLAS_HOME</code> environment variable to get maven inside IntelliJ to work we set that as well.</p>
 
-                    <div class="row">
-                        <div class="col-md-8 offset-md-2">
-                            <p>
-                                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-atlas-home.png" data-lightbox="00-step-intellij" data-title="Step 0 - Set ATLAS_HOME variable">
-                                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-atlas-home.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 0 - Set ATLAS_HOME variable">
-                                </a>
-                            </p>
-                        </div>
-                    </div>
+                    
+    
+    
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            <p>
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-atlas-home.png">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-atlas-home.png" class="img-fluid" alt="Step 0 - Set ATLAS_HOME variable"
+                         data-bilderrahmen="gallery-01"
+                         data-bilderrahmen-title="Step 0 - Set ATLAS_HOME variable"
+                    >
+                </a>
+            </p>
+        </div>
+    </div>
+
 
                     <div class="cs-v-spacer"></div>
 
                     <p>Now you can click on the <strong>Maven-Tab</strong> on the right and click <strong>compile</strong> and you should have a successful build.</p>
 
-                    <div class="row">
-                        <div class="col-md-8 offset-md-2">
-                            <p>
-                                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-successful-compile.png" data-lightbox="00-step-intellij" data-title="Step 0 - Successful Maven Compile">
-                                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-successful-compile.png" class="img-thumbnail img-fluid cs-tutorial-image" alt="Step 0 - Successful Maven Compile">
-                                </a>
-                            </p>
-                        </div>
-                    </div>
+                    
+    
+    
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            <p>
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-successful-compile.png">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-00-intellij-maven-successful-compile.png" class="img-fluid" alt="Step 0 - Successful Maven Compile"
+                         data-bilderrahmen="gallery-01"
+                         data-bilderrahmen-title="Step 0 - Successful Maven Compile"
+                    >
+                </a>
+            </p>
+        </div>
+    </div>
+
 
                     <div class="cs-v-spacer"></div>
 
@@ -643,7 +665,7 @@ target/</code></pre>
 
                     <div class="cs-tutorial-step-review">
                         <div class="cs-tutorial-step-review__headline">
-                            <strong>You have completed Step 0.</strong> Good Job! You can check out this steps solution on GitHub
+                            <strong>You have completed Step 0.</strong> Good Job! You can check out this step's solution on GitHub
                         </div>
                         <div class="cs-tutorial-step-review__link">
                             <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-00-kitchen-duty-plugin">
@@ -740,11 +762,24 @@ target/</code></pre>
 
                         </div>
                         <div class="col-md-6">
-                            <p>
-                                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-osgi-and-jira_big.jpg" data-lightbox="00-osgi" data-title="OSGi and JIRA">
-                                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-osgi-and-jira.jpg" class="img-thumbnail img-fluid" alt="OSGi and JIRA">
-                                </a>
-                            </p>
+                            
+    
+    
+        
+    
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-osgi-and-jira_big.jpg">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/drawings/00-mock-osgi-and-jira_big.jpg" class="img-fluid" alt="OSGi and JIRA"
+                         data-bilderrahmen="gallery-01"
+                         data-bilderrahmen-title="OSGi and JIRA"
+                    >
+                </a>
+            </p>
+        </div>
+    </div>
+
                         </div>
                     </div>
 
@@ -831,6 +866,7 @@ Spring-Context: *</code></pre>
 
 
 
+        </div>
     </div>
 </div>
 
@@ -865,7 +901,7 @@ Spring-Context: *</code></pre>
 
 
 
-<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js?v2018-08-21--20-13" async></script>
+<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js?v2018-08-23--12-50" async></script>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>

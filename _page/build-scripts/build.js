@@ -101,7 +101,7 @@ var watchers = [
         what: 'javascript',
         watchGlob: './_page/js/**/*.js',
         watchCallback: function (filepath) {
-            tasks.buildJs();
+            tasks.buildJs(true, null);
         }
     },
     {
@@ -149,7 +149,7 @@ async.waterfall([
     function(previousStepName, waterfallProceed) {
         async.parallel(
             [
-                function(callback) { tasks.buildJs(callback) },
+                function(callback) { tasks.buildJs(false, callback) },
                 function(callback) { tasks.buildCss(scssTaskOptions, callback); },
                 function(callback) { tasks.buildHtml(htmlTaskOptions, callback); },
                 function(callback) { tasks.buildFonts(fontsTaskOptions, callback); }

@@ -231,9 +231,11 @@ exports.buildSingleHtmlPage = function (curFile, options, callback) {
 };
 
 // JS
-exports.buildJs = function(nextBuildStep) {
+exports.buildJs = function(watchMode /* boolean */, nextBuildStep) {
     console.log('>> build js'.bold.cyan);
-    shell.exec('./node_modules/.bin/webpack');
+    if (watchMode === false && shell.exec('./node_modules/.bin/webpack').code !== 0) {
+        throw Error('js failed');
+    }
     if (nextBuildStep !== undefined && nextBuildStep !== null) {
         nextBuildStep();
     }

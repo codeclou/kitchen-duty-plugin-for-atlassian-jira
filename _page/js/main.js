@@ -7,7 +7,6 @@ var Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/d
 /* ================================================================================================ */
 /* STUFF */
 /* ================================================================================================ */
-
 var initCsSourcePointerHover = function () {
     /** when hovering item in list on the right */
     $('.cs-source-point-list__item').hover(

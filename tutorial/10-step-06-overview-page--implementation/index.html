@@ -165,6 +165,19 @@
             </a>
         </li>
 
+
+        
+
+
+        <li class="toc-h2-divider">Misc</li>
+
+        <li class="toc-h2 ">
+            <a href="/kitchen-duty-plugin-for-atlassian-jira/news/">
+                <span>&nbsp;</span>
+                News
+            </a>
+        </li>
+
     </ul>
 
 
@@ -959,6 +972,164 @@ public class KitchenDutyActiveObjectHelper {
 </div>
 
 
+        <div class="row">
+            <div class="col-md-7">
+                
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyOverviewPageResource.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyOverviewPageResource.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+
+import com.atlassian.activeobjects.external.ActiveObjects;
+import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+import com.atlassian.sal.api.user.UserManager;
+import com.comsysto.kitchen.duty.ao.KitchenDutyActiveObjectHelper;
+import com.comsysto.kitchen.duty.ao.User;
+import com.comsysto.kitchen.duty.ao.Week;
+
+...
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Named
+@Path(&quot;/overview_page&quot;)
+public class KitchenDutyOverviewPageResource extends BaseResource {
+
+    @Inject
+    public KitchenDutyOverviewPageResource(ActiveObjects activeObjects,
+                                           UserManager userManager) {
+        this.activeObjects = activeObjects;
+        this.userManager = userManager;
+    }
+    public KitchenDutyOverviewPageResource() { }
+
+    @GET
+    @Path(&quot;/year/{year}/month/{month}&quot;)
+    @Produces({MediaType.APPLICATION_JSON})
+    @AnonymousAllowed
+    public Response getUsersForWeek(@PathParam(&quot;year&quot;) final Long year,
+                                    @PathParam(&quot;month&quot;) final Long month) {
+        // AUTHENTICATION
+        if (!this.isUserLoggedIn()) {
+            return getUnauthorizedErrorResponse();
+        }
+        // BUSINESS LOGIC
+        List&lt;KitchenDutyOverviewPageMonthDutyModel&gt; responseList = new ArrayList&lt;&gt;();
+        List&lt;Long&gt; isoWeeksInMonth = getIsoWeeksOfMonth(year, month);
+        for (Long isoWeek : isoWeeksInMonth) {
+            Week week = KitchenDutyActiveObjectHelper
+                         .getWeekByIsoWeekInTransaction(activeObjects, isoWeek);
+            List&lt;User&gt; usersForWeek = KitchenDutyActiveObjectHelper
+                         .getUsersAssignedToWeekInTransaction(activeObjects, week);
+            List&lt;String&gt; usernames = usersForWeek
+                         .stream()
+                         .map(user -&gt; user.getName())
+                         .collect(Collectors.toList());
+            responseList.add(new KitchenDutyOverviewPageMonthDutyModel(
+                isoWeek,
+                getFirstDayOfWeekOfYear(year, isoWeek).toString(),
+                getLastDayOfWeekOfYear(year, isoWeek).toString(),
+                usernames)
+            );
+        }
+
+        return Response.ok(responseList).build();
+    }
+
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
+<span class="hljs-keyword">import</span> com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+<span class="hljs-keyword">import</span> com.atlassian.sal.api.user.UserManager;
+<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.ao.KitchenDutyActiveObjectHelper;
+<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.ao.User;
+<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.ao.Week;
+
+...
+<span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.stream.Collectors;
+
+<span class="hljs-annotation">@Named</span>
+<span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/overview_page"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyOverviewPageResource</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseResource</span> </span>{
+
+    <span class="hljs-annotation">@Inject</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">KitchenDutyOverviewPageResource</span><span class="hljs-params">(ActiveObjects activeObjects,
+                                           UserManager userManager)</span> </span>{
+        <span class="hljs-keyword">this</span>.activeObjects = activeObjects;
+        <span class="hljs-keyword">this</span>.userManager = userManager;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">KitchenDutyOverviewPageResource</span><span class="hljs-params">()</span> </span>{ }
+
+    <span class="hljs-annotation">@GET</span>
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/year/{year}/month/{month}"</span>)
+    <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
+    <span class="hljs-annotation">@AnonymousAllowed</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">getUsersForWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"year"</span>)</span> <span class="hljs-keyword">final</span> Long year,
+                                    @<span class="hljs-title">PathParam</span><span class="hljs-params">(<span class="hljs-string">"month"</span>)</span> <span class="hljs-keyword">final</span> Long month) </span>{
+        <span class="hljs-comment">// AUTHENTICATION</span>
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isUserLoggedIn()) {
+            <span class="hljs-keyword">return</span> getUnauthorizedErrorResponse();
+        }
+        <span class="hljs-comment">// BUSINESS LOGIC</span>
+        List&lt;KitchenDutyOverviewPageMonthDutyModel&gt; responseList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        List&lt;Long&gt; isoWeeksInMonth = getIsoWeeksOfMonth(year, month);
+        <span class="hljs-keyword">for</span> (Long isoWeek : isoWeeksInMonth) {
+            Week week = KitchenDutyActiveObjectHelper
+                         .getWeekByIsoWeekInTransaction(activeObjects, isoWeek);
+            List&lt;User&gt; usersForWeek = KitchenDutyActiveObjectHelper
+                         .getUsersAssignedToWeekInTransaction(activeObjects, week);
+            List&lt;String&gt; usernames = usersForWeek
+                         .stream()
+                         .map(user -&gt; user.getName())
+                         .collect(Collectors.toList());
+            responseList.add(<span class="hljs-keyword">new</span> KitchenDutyOverviewPageMonthDutyModel(
+                isoWeek,
+                getFirstDayOfWeekOfYear(year, isoWeek).toString(),
+                getLastDayOfWeekOfYear(year, isoWeek).toString(),
+                usernames)
+            );
+        }
+
+        <span class="hljs-keyword">return</span> Response.ok(responseList).build();
+    }
+
+}</code></pre>
+
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="fsdsdasfggfsddfsdffej5">
+                    <div class="list-group-item cs-source-point-list__item">
+x
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+x
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+x
+                    </div>
+                </div>
+            </div>
+        </div>
 <!--
 
 

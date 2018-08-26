@@ -964,13 +964,60 @@ public class KitchenDutyActiveObjectHelper {
 
         <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page REST Resource</h3>
 
-        <p>An Endpoint that returns all weeks with users for a selected month.</p>
+        <p>We now need a REST Endpoint to give us all weeks with users that have kitchen duty for the whole month.</p>
+        <p>
+            But since we checked the <a href="https://fullcalendar.io/docs/event-object">Events Object Spec of Full Calendar</a> we know that for a
+            valid event we need <strong>the start and the end date</strong>.
+            We want an events representing a week which means sunday is the start date and saturday the end date.
+            It is possible to calculate that in JavaScript but I decided to do it in Java.
+        </p>
 
         
-<div class="cs-working-on-it">
-    We are working on it. Please visit again some time.
+
+<div class="cs-code-filename">
+    
+    desired event response for march 2018
+    
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="[
+  {
+    &quot;isoWeek&quot;: 10,
+    &quot;start&quot;: &quot;2018-03-04&quot;,
+    &quot;end&quot;: &quot;2018-03-10&quot;,
+    &quot;users&quot;: [ ]
+  },
+  {
+    &quot;isoWeek&quot;: 11,
+    &quot;start&quot;: &quot;2018-03-11&quot;,
+    &quot;end&quot;: &quot;2018-03-17&quot;,
+    &quot;users&quot;: [ &quot;admin&quot; ]
+  },
+  ...
+]"><i class="fa fa-files-o"></i></a>
 </div>
 
+<pre class="cs-code"><code class="hljs">[
+  {
+    <span class="hljs-string">"isoWeek"</span>: <span class="hljs-number">10</span>,
+    <span class="hljs-string">"start"</span>: <span class="hljs-string">"2018-03-04"</span>,
+    <span class="hljs-string">"end"</span>: <span class="hljs-string">"2018-03-10"</span>,
+    <span class="hljs-string">"users"</span>: [ ]
+  },
+  {
+    <span class="hljs-string">"isoWeek"</span>: <span class="hljs-number">11</span>,
+    <span class="hljs-string">"start"</span>: <span class="hljs-string">"2018-03-11"</span>,
+    <span class="hljs-string">"end"</span>: <span class="hljs-string">"2018-03-17"</span>,
+    <span class="hljs-string">"users"</span>: [ <span class="hljs-string">"admin"</span> ]
+  },
+  ...
+]</code></pre>
+
+
+        <p>Since we moved the data access code to our ActiveObjectsHelper our Endpoint looks very clean now.</p>
 
         <div class="row">
             <div class="col-md-7">
@@ -1019,7 +1066,7 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
     public KitchenDutyOverviewPageResource() { }
 
     @GET
-    @Path(&quot;/year/{year}/month/{month}&quot;)
+    @Path(&quot;/year/{year}/month/{month}&quot;) 
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
     public Response getUsersForWeek(@PathParam(&quot;year&quot;) final Long year,
@@ -1030,20 +1077,20 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
         }
         // BUSINESS LOGIC
         List&lt;KitchenDutyOverviewPageMonthDutyModel&gt; responseList = new ArrayList&lt;&gt;();
-        List&lt;Long&gt; isoWeeksInMonth = getIsoWeeksOfMonth(year, month);
+        List&lt;Long&gt; isoWeeksInMonth = getIsoWeeksOfMonth(year, month); 
         for (Long isoWeek : isoWeeksInMonth) {
-            Week week = KitchenDutyActiveObjectHelper
+            Week week = KitchenDutyActiveObjectHelper 
                          .getWeekByIsoWeekInTransaction(activeObjects, isoWeek);
-            List&lt;User&gt; usersForWeek = KitchenDutyActiveObjectHelper
+            List&lt;User&gt; usersForWeek = KitchenDutyActiveObjectHelper 
                          .getUsersAssignedToWeekInTransaction(activeObjects, week);
             List&lt;String&gt; usernames = usersForWeek
                          .stream()
                          .map(user -&gt; user.getName())
-                         .collect(Collectors.toList());
+                         .collect(Collectors.toList()); 
             responseList.add(new KitchenDutyOverviewPageMonthDutyModel(
                 isoWeek,
-                getFirstDayOfWeekOfYear(year, isoWeek).toString(),
-                getLastDayOfWeekOfYear(year, isoWeek).toString(),
+                getFirstDayOfWeekOfYear(year, isoWeek).toString(), 
+                getLastDayOfWeekOfYear(year, isoWeek).toString(), 
                 usernames)
             );
         }
@@ -1081,7 +1128,7 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">KitchenDutyOverviewPageResource</span><span class="hljs-params">()</span> </span>{ }
 
     <span class="hljs-annotation">@GET</span>
-    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/year/{year}/month/{month}"</span>)
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/year/{year}/month/{month}"</span>) <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="1"></span>
     <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
     <span class="hljs-annotation">@AnonymousAllowed</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">getUsersForWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"year"</span>)</span> <span class="hljs-keyword">final</span> Long year,
@@ -1092,20 +1139,20 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
         }
         <span class="hljs-comment">// BUSINESS LOGIC</span>
         List&lt;KitchenDutyOverviewPageMonthDutyModel&gt; responseList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
-        List&lt;Long&gt; isoWeeksInMonth = getIsoWeeksOfMonth(year, month);
+        List&lt;Long&gt; isoWeeksInMonth = getIsoWeeksOfMonth(year, month); <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="2"></span>
         <span class="hljs-keyword">for</span> (Long isoWeek : isoWeeksInMonth) {
-            Week week = KitchenDutyActiveObjectHelper
+            Week week = KitchenDutyActiveObjectHelper <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="3"></span>
                          .getWeekByIsoWeekInTransaction(activeObjects, isoWeek);
-            List&lt;User&gt; usersForWeek = KitchenDutyActiveObjectHelper
+            List&lt;User&gt; usersForWeek = KitchenDutyActiveObjectHelper <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="4"></span>
                          .getUsersAssignedToWeekInTransaction(activeObjects, week);
             List&lt;String&gt; usernames = usersForWeek
                          .stream()
                          .map(user -&gt; user.getName())
-                         .collect(Collectors.toList());
+                         .collect(Collectors.toList()); <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="5"></span>
             responseList.add(<span class="hljs-keyword">new</span> KitchenDutyOverviewPageMonthDutyModel(
                 isoWeek,
-                getFirstDayOfWeekOfYear(year, isoWeek).toString(),
-                getLastDayOfWeekOfYear(year, isoWeek).toString(),
+                getFirstDayOfWeekOfYear(year, isoWeek).toString(), <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="6"></span>
+                getLastDayOfWeekOfYear(year, isoWeek).toString(), <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="7"></span>
                 usernames)
             );
         }
@@ -1117,9 +1164,10 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
 
             </div>
             <div class="col-md-5 cs-sticky-in-parent">
-                <div class="list-group cs-source-point-list" data-source-target="fsdsdasfggfsddfsdffej5">
+                <div class="list-group cs-source-point-list" data-source-target="mdsihjsdfdv8">
                     <div class="list-group-item cs-source-point-list__item">
-x
+                        The URL should map to <code>/year/{year}/month/{month}</code>
+                        so that we can query for e.g. <code>/year/2018/month/08</code>
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
 x
@@ -1130,6 +1178,264 @@ x
                 </div>
             </div>
         </div>
+
+
+        <p>The <strong>date calculation helpers <code>getIsoWeeksOfMonth()</code>, <code>getFirstDayOfWeekOfYear()</code> and <code>getLastDayOfWeekOfYear()</code> are defined in <code>BaseResource.java</code></strong>.</p>
+
+        <div class="row">
+            <div class="col-md-7">
+                
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>BaseResource.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/BaseResource.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.WeekFields;
+...
+
+public class BaseResource {
+  ...
+
+  public static List&lt;Long&gt; getIsoWeeksOfMonth(Long year, Long month) { 
+      List&lt;Long&gt; isoWeeks = new ArrayList&lt;&gt;();
+      isoWeeks.add(getWeekOfMonth(year, month, 1L));
+      isoWeeks.add(getWeekOfMonth(year, month, 2L));
+      isoWeeks.add(getWeekOfMonth(year, month, 3L));
+      isoWeeks.add(getWeekOfMonth(year, month, 4L));
+      isoWeeks.add(getWeekOfMonth(year, month, 5L));
+      return isoWeeks;
+  }
+
+  protected static Long getWeekOfMonth(Long year, Long month, Long weekInMonth) { 
+      // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
+      WeekFields weekFields = WeekFields.ISO;
+      return (long) LocalDate.now().with(weekFields.weekBasedYear(), year)
+          .with(ChronoField.MONTH_OF_YEAR, month)
+          .with(ChronoField.ALIGNED_WEEK_OF_MONTH, weekInMonth)
+          .get(ChronoField.ALIGNED_WEEK_OF_YEAR);
+  }
+
+  public static LocalDate getFirstDayOfWeekOfYear(Long year, Long isoWeek) { 
+      // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
+      WeekFields weekFields = WeekFields.ISO;
+      return LocalDate.now().with(weekFields.weekBasedYear(), year)
+          .with(ChronoField.ALIGNED_WEEK_OF_YEAR, isoWeek)
+          .with(ChronoField.DAY_OF_WEEK, 1).minusDays(1);
+  }
+
+  public static LocalDate getLastDayOfWeekOfYear(Long year, Long isoWeek) { 
+      return getFirstDayOfWeekOfYear(year, isoWeek).plusDays(6);
+  }
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> java.time.LocalDate;
+<span class="hljs-keyword">import</span> java.time.temporal.ChronoField;
+<span class="hljs-keyword">import</span> java.time.temporal.WeekFields;
+...
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseResource</span> </span>{
+  ...
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;Long&gt; <span class="hljs-title">getIsoWeeksOfMonth</span><span class="hljs-params">(Long year, Long month)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="1"></span>
+      List&lt;Long&gt; isoWeeks = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+      isoWeeks.add(getWeekOfMonth(year, month, <span class="hljs-number">1L</span>));
+      isoWeeks.add(getWeekOfMonth(year, month, <span class="hljs-number">2L</span>));
+      isoWeeks.add(getWeekOfMonth(year, month, <span class="hljs-number">3L</span>));
+      isoWeeks.add(getWeekOfMonth(year, month, <span class="hljs-number">4L</span>));
+      isoWeeks.add(getWeekOfMonth(year, month, <span class="hljs-number">5L</span>));
+      <span class="hljs-keyword">return</span> isoWeeks;
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> Long <span class="hljs-title">getWeekOfMonth</span><span class="hljs-params">(Long year, Long month, Long weekInMonth)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="2"></span>
+      <span class="hljs-comment">// https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html</span>
+      WeekFields weekFields = WeekFields.ISO;
+      <span class="hljs-keyword">return</span> (<span class="hljs-keyword">long</span>) LocalDate.now().with(weekFields.weekBasedYear(), year)
+          .with(ChronoField.MONTH_OF_YEAR, month)
+          .with(ChronoField.ALIGNED_WEEK_OF_MONTH, weekInMonth)
+          .get(ChronoField.ALIGNED_WEEK_OF_YEAR);
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LocalDate <span class="hljs-title">getFirstDayOfWeekOfYear</span><span class="hljs-params">(Long year, Long isoWeek)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="3"></span>
+      <span class="hljs-comment">// https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html</span>
+      WeekFields weekFields = WeekFields.ISO;
+      <span class="hljs-keyword">return</span> LocalDate.now().with(weekFields.weekBasedYear(), year)
+          .with(ChronoField.ALIGNED_WEEK_OF_YEAR, isoWeek)
+          .with(ChronoField.DAY_OF_WEEK, <span class="hljs-number">1</span>).minusDays(<span class="hljs-number">1</span>);
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LocalDate <span class="hljs-title">getLastDayOfWeekOfYear</span><span class="hljs-params">(Long year, Long isoWeek)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="1"></span>
+      <span class="hljs-keyword">return</span> getFirstDayOfWeekOfYear(year, isoWeek).plusDays(<span class="hljs-number">6</span>);
+  }
+}</code></pre>
+
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="sg4ddf">
+                    <div class="list-group-item cs-source-point-list__item">
+                     x
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+x
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+x
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>The <strong>Unit Test for the date calculation helpers</strong> looks like this. Just simple asserts, nothing special.</p>
+
+        
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/test/java/ut/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/test/java/ut/com/comsysto/kitchen/duty/rest/">.../</span>BaseResourceTest.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/test/java/ut/com/comsysto/kitchen/duty/rest/BaseResourceTest.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package ut.com.comsysto.kitchen.duty.rest;
+
+import com.comsysto.kitchen.duty.rest.BaseResource;
+import org.junit.Test;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
+public class BaseResourceTest {
+
+    @Test
+    public void testGetIsoWeeksOfMonth() {
+        List&lt;Long&gt; isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 8L);
+
+        assertEquals(Long.valueOf(31), isoWeeks.get(0));
+        assertEquals(Long.valueOf(32), isoWeeks.get(1));
+        assertEquals(Long.valueOf(33), isoWeeks.get(2));
+        assertEquals(Long.valueOf(34), isoWeeks.get(3));
+        assertEquals(Long.valueOf(35), isoWeeks.get(4));
+
+        List&lt;Long&gt; isoWeeks2 = BaseResource.getIsoWeeksOfMonth(2018L, 2L);
+
+        assertEquals(Long.valueOf(6), isoWeeks2.get(0));
+        assertEquals(Long.valueOf(7), isoWeeks2.get(1));
+        assertEquals(Long.valueOf(8), isoWeeks2.get(2));
+        assertEquals(Long.valueOf(9), isoWeeks2.get(3));
+        assertEquals(Long.valueOf(10), isoWeeks2.get(4));
+
+        List&lt;Long&gt; isoWeeks3 = BaseResource.getIsoWeeksOfMonth(2018L, 5L);
+
+        assertEquals(Long.valueOf(18), isoWeeks3.get(0));
+        assertEquals(Long.valueOf(19), isoWeeks3.get(1));
+        assertEquals(Long.valueOf(20), isoWeeks3.get(2));
+        assertEquals(Long.valueOf(21), isoWeeks3.get(3));
+        assertEquals(Long.valueOf(22), isoWeeks3.get(4));
+    }
+
+
+    @Test
+    public void testGetFirstDayOfWeekOfMonth() {
+        LocalDate date = BaseResource.getFirstDayOfWeekOfYear(2018L, 32L);
+        assertEquals(&quot;2018-08-05&quot;, date.toString());
+    }
+
+    @Test
+    public void testGetLastDayOfWeekOfMonth() {
+        LocalDate date = BaseResource.getLastDayOfWeekOfYear(2018L, 32L);
+        assertEquals(&quot;2018-08-11&quot;, date.toString());
+    }
+
+
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> ut.com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.rest.BaseResource;
+<span class="hljs-keyword">import</span> org.junit.Test;
+
+<span class="hljs-keyword">import</span> java.time.LocalDate;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.junit.Assert.assertEquals;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseResourceTest</span> </span>{
+
+    <span class="hljs-annotation">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testGetIsoWeeksOfMonth</span><span class="hljs-params">()</span> </span>{
+        List&lt;Long&gt; isoWeeks = BaseResource.getIsoWeeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">8L</span>);
+
+        assertEquals(Long.valueOf(<span class="hljs-number">31</span>), isoWeeks.get(<span class="hljs-number">0</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">32</span>), isoWeeks.get(<span class="hljs-number">1</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">33</span>), isoWeeks.get(<span class="hljs-number">2</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">34</span>), isoWeeks.get(<span class="hljs-number">3</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">35</span>), isoWeeks.get(<span class="hljs-number">4</span>));
+
+        List&lt;Long&gt; isoWeeks2 = BaseResource.getIsoWeeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">2L</span>);
+
+        assertEquals(Long.valueOf(<span class="hljs-number">6</span>), isoWeeks2.get(<span class="hljs-number">0</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">7</span>), isoWeeks2.get(<span class="hljs-number">1</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">8</span>), isoWeeks2.get(<span class="hljs-number">2</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">9</span>), isoWeeks2.get(<span class="hljs-number">3</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">10</span>), isoWeeks2.get(<span class="hljs-number">4</span>));
+
+        List&lt;Long&gt; isoWeeks3 = BaseResource.getIsoWeeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">5L</span>);
+
+        assertEquals(Long.valueOf(<span class="hljs-number">18</span>), isoWeeks3.get(<span class="hljs-number">0</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">19</span>), isoWeeks3.get(<span class="hljs-number">1</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">20</span>), isoWeeks3.get(<span class="hljs-number">2</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">21</span>), isoWeeks3.get(<span class="hljs-number">3</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">22</span>), isoWeeks3.get(<span class="hljs-number">4</span>));
+    }
+
+
+    <span class="hljs-annotation">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testGetFirstDayOfWeekOfMonth</span><span class="hljs-params">()</span> </span>{
+        LocalDate date = BaseResource.getFirstDayOfWeekOfYear(<span class="hljs-number">2018L</span>, <span class="hljs-number">32L</span>);
+        assertEquals(<span class="hljs-string">"2018-08-05"</span>, date.toString());
+    }
+
+    <span class="hljs-annotation">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testGetLastDayOfWeekOfMonth</span><span class="hljs-params">()</span> </span>{
+        LocalDate date = BaseResource.getLastDayOfWeekOfYear(<span class="hljs-number">2018L</span>, <span class="hljs-number">32L</span>);
+        assertEquals(<span class="hljs-string">"2018-08-11"</span>, date.toString());
+    }
+
+
+}</code></pre>
+
+
+
 <!--
 
 

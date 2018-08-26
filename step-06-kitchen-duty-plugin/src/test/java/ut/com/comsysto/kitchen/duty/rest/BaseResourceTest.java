@@ -1,4 +1,4 @@
-package it.com.comsysto.kitchen.duty.rest;
+package ut.com.comsysto.kitchen.duty.rest;
 
 import com.comsysto.kitchen.duty.rest.BaseResource;
 import org.junit.Test;

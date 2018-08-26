@@ -607,8 +607,8 @@ p {
     color:#fff;
     font-weight:300;
     font-size: 13px;
-    font-family: Menlo, Menlo, Monaco, Consolas, "Courier New", monospace;
-    overflow:hidden;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    word-wrap: break-word;
 }
 
 .cs-code-copylink, .cs-code-ghlink {

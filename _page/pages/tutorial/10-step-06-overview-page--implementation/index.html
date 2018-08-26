@@ -407,13 +407,37 @@
 
         <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page REST Resource</h3>
 
-        <p>An Endpoint that returns all weeks with users for a selected month.</p>
+        <p>We now need a REST Endpoint to give us all weeks with users that have kitchen duty for the whole month.</p>
+        <p>
+            But since we checked the <a href="https://fullcalendar.io/docs/event-object">Events Object Spec of Full Calendar</a> we know that for a
+            valid event we need <strong>the start and the end date</strong>.
+            We want an events representing a week which means sunday is the start date and saturday the end date.
+            It is possible to calculate that in JavaScript but I decided to do it in Java.
+        </p>
 
-        {{ weAreWorkingOnIt() }}
+        {{ csSource(lang='js', filepath="", filename="desired event response for march 2018",  source='
+        |[
+        |  {
+        |    "isoWeek": 10,
+        |    "start": "2018-03-04",
+        |    "end": "2018-03-10",
+        |    "users": [ ]
+        |  },
+        |  {
+        |    "isoWeek": 11,
+        |    "start": "2018-03-11",
+        |    "end": "2018-03-17",
+        |    "users": [ "admin" ]
+        |  },
+        |  ...
+        |]
+        ') }}
+
+        <p>Since we moved the data access code to our ActiveObjectsHelper our Endpoint looks very clean now.</p>
 
         <div class="row">
             <div class="col-md-7">
-                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyOverviewPageResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='mdsihjdv8', source='
+                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyOverviewPageResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='mdsihjsdfdv8', source='
                     |package com.comsysto.kitchen.duty.rest;
                     |
                     |import com.atlassian.activeobjects.external.ActiveObjects;
@@ -441,7 +465,7 @@
                     |    public KitchenDutyOverviewPageResource() { }
                     |
                     |    @GET
-                    |    @Path("/year/{year}/month/{month}")
+                    |    @Path("/year/{year}/month/{month}") {{{point::1}}}
                     |    @Produces({MediaType.APPLICATION_JSON})
                     |    @AnonymousAllowed
                     |    public Response getUsersForWeek(@PathParam("year") final Long year,
@@ -452,20 +476,20 @@
                     |        }
                     |        // BUSINESS LOGIC
                     |        List<KitchenDutyOverviewPageMonthDutyModel> responseList = new ArrayList<>();
-                    |        List<Long> isoWeeksInMonth = getIsoWeeksOfMonth(year, month);
+                    |        List<Long> isoWeeksInMonth = getIsoWeeksOfMonth(year, month); {{{point::2}}}
                     |        for (Long isoWeek : isoWeeksInMonth) {
-                    |            Week week = KitchenDutyActiveObjectHelper
+                    |            Week week = KitchenDutyActiveObjectHelper {{{point::3}}}
                     |                         .getWeekByIsoWeekInTransaction(activeObjects, isoWeek);
-                    |            List<User> usersForWeek = KitchenDutyActiveObjectHelper
+                    |            List<User> usersForWeek = KitchenDutyActiveObjectHelper {{{point::4}}}
                     |                         .getUsersAssignedToWeekInTransaction(activeObjects, week);
                     |            List<String> usernames = usersForWeek
                     |                         .stream()
                     |                         .map(user -> user.getName())
-                    |                         .collect(Collectors.toList());
+                    |                         .collect(Collectors.toList()); {{{point::5}}}
                     |            responseList.add(new KitchenDutyOverviewPageMonthDutyModel(
                     |                isoWeek,
-                    |                getFirstDayOfWeekOfYear(year, isoWeek).toString(),
-                    |                getLastDayOfWeekOfYear(year, isoWeek).toString(),
+                    |                getFirstDayOfWeekOfYear(year, isoWeek).toString(), {{{point::6}}}
+                    |                getLastDayOfWeekOfYear(year, isoWeek).toString(), {{{point::7}}}
                     |                usernames)
                     |            );
                     |        }
@@ -478,9 +502,10 @@
                 ')}}
             </div>
             <div class="col-md-5 cs-sticky-in-parent">
-                <div class="list-group cs-source-point-list" data-source-target="fsdsdasfggfsddfsdffej5">
+                <div class="list-group cs-source-point-list" data-source-target="mdsihjsdfdv8">
                     <div class="list-group-item cs-source-point-list__item">
-x
+                        The URL should map to <code>/year/{year}/month/{month}</code>
+                        so that we can query for e.g. <code>/year/2018/month/08</code>
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
 x
@@ -491,6 +516,132 @@ x
                 </div>
             </div>
         </div>
+
+
+        <p>The <strong>date calculation helpers <code>getIsoWeeksOfMonth()</code>, <code>getFirstDayOfWeekOfYear()</code> and <code>getLastDayOfWeekOfYear()</code> are defined in <code>BaseResource.java</code></strong>.</p>
+
+        <div class="row">
+            <div class="col-md-7">
+                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="BaseResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='sg4ddf', source='
+                    |package com.comsysto.kitchen.duty.rest;
+                    |
+                    |import java.time.LocalDate;
+                    |import java.time.temporal.ChronoField;
+                    |import java.time.temporal.WeekFields;
+                    |...
+                    |
+                    |public class BaseResource {
+                    |  ...
+                    |
+                    |  public static List<Long> getIsoWeeksOfMonth(Long year, Long month) { {{{point::1}}}
+                    |      List<Long> isoWeeks = new ArrayList<>();
+                    |      isoWeeks.add(getWeekOfMonth(year, month, 1L));
+                    |      isoWeeks.add(getWeekOfMonth(year, month, 2L));
+                    |      isoWeeks.add(getWeekOfMonth(year, month, 3L));
+                    |      isoWeeks.add(getWeekOfMonth(year, month, 4L));
+                    |      isoWeeks.add(getWeekOfMonth(year, month, 5L));
+                    |      return isoWeeks;
+                    |  }
+                    |
+                    |  protected static Long getWeekOfMonth(Long year, Long month, Long weekInMonth) { {{{point::2}}}
+                    |      // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
+                    |      WeekFields weekFields = WeekFields.ISO;
+                    |      return (long) LocalDate.now().with(weekFields.weekBasedYear(), year)
+                    |          .with(ChronoField.MONTH_OF_YEAR, month)
+                    |          .with(ChronoField.ALIGNED_WEEK_OF_MONTH, weekInMonth)
+                    |          .get(ChronoField.ALIGNED_WEEK_OF_YEAR);
+                    |  }
+                    |
+                    |  public static LocalDate getFirstDayOfWeekOfYear(Long year, Long isoWeek) { {{{point::3}}}
+                    |      // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
+                    |      WeekFields weekFields = WeekFields.ISO;
+                    |      return LocalDate.now().with(weekFields.weekBasedYear(), year)
+                    |          .with(ChronoField.ALIGNED_WEEK_OF_YEAR, isoWeek)
+                    |          .with(ChronoField.DAY_OF_WEEK, 1).minusDays(1);
+                    |  }
+                    |
+                    |  public static LocalDate getLastDayOfWeekOfYear(Long year, Long isoWeek) { {{{point::1}}}
+                    |      return getFirstDayOfWeekOfYear(year, isoWeek).plusDays(6);
+                    |  }
+                    |}
+                    |
+                ')}}
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="sg4ddf">
+                    <div class="list-group-item cs-source-point-list__item">
+                     x
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+x
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+x
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>The <strong>Unit Test for the date calculation helpers</strong> looks like this. Just simple asserts, nothing special.</p>
+
+        {{ csSource(lang='java', filepath="src/test/java/ut/com/comsysto/kitchen/duty/rest/", filename="BaseResourceTest.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='sgsdfhxsdf4ddf', source='
+            |package ut.com.comsysto.kitchen.duty.rest;
+            |
+            |import com.comsysto.kitchen.duty.rest.BaseResource;
+            |import org.junit.Test;
+            |
+            |import java.time.LocalDate;
+            |import java.util.List;
+            |
+            |import static org.junit.Assert.assertEquals;
+            |
+            |public class BaseResourceTest {
+            |
+            |    @Test
+            |    public void testGetIsoWeeksOfMonth() {
+            |        List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 8L);
+            |
+            |        assertEquals(Long.valueOf(31), isoWeeks.get(0));
+            |        assertEquals(Long.valueOf(32), isoWeeks.get(1));
+            |        assertEquals(Long.valueOf(33), isoWeeks.get(2));
+            |        assertEquals(Long.valueOf(34), isoWeeks.get(3));
+            |        assertEquals(Long.valueOf(35), isoWeeks.get(4));
+            |
+            |        List<Long> isoWeeks2 = BaseResource.getIsoWeeksOfMonth(2018L, 2L);
+            |
+            |        assertEquals(Long.valueOf(6), isoWeeks2.get(0));
+            |        assertEquals(Long.valueOf(7), isoWeeks2.get(1));
+            |        assertEquals(Long.valueOf(8), isoWeeks2.get(2));
+            |        assertEquals(Long.valueOf(9), isoWeeks2.get(3));
+            |        assertEquals(Long.valueOf(10), isoWeeks2.get(4));
+            |
+            |        List<Long> isoWeeks3 = BaseResource.getIsoWeeksOfMonth(2018L, 5L);
+            |
+            |        assertEquals(Long.valueOf(18), isoWeeks3.get(0));
+            |        assertEquals(Long.valueOf(19), isoWeeks3.get(1));
+            |        assertEquals(Long.valueOf(20), isoWeeks3.get(2));
+            |        assertEquals(Long.valueOf(21), isoWeeks3.get(3));
+            |        assertEquals(Long.valueOf(22), isoWeeks3.get(4));
+            |    }
+            |
+            |
+            |    @Test
+            |    public void testGetFirstDayOfWeekOfMonth() {
+            |        LocalDate date = BaseResource.getFirstDayOfWeekOfYear(2018L, 32L);
+            |        assertEquals("2018-08-05", date.toString());
+            |    }
+            |
+            |    @Test
+            |    public void testGetLastDayOfWeekOfMonth() {
+            |        LocalDate date = BaseResource.getLastDayOfWeekOfYear(2018L, 32L);
+            |        assertEquals("2018-08-11", date.toString());
+            |    }
+            |
+            |
+            |}
+        ')}}
+
+
 <!--
 
 

@@ -211,16 +211,8 @@
 </h2>
 
 
-
-        
-<div class="cs-working-on-it">
-    We are working on it. Please visit again some time.
-</div>
-
-
-
         <p>
-            Ok before we continue any further we need to clean up some <strong>technical debt</strong>.
+            Before we continue any further we need to clean up some <strong>technical debt</strong>.
             I just realised the <strong>REST API Endpoints are not secured</strong> also the <strong>database spaghetti code</strong>
             really bugs me out. Therefore here are some completely unrelated but necessary things we need to do.
         </p>
@@ -1521,11 +1513,11 @@ public class BaseResourceTest {
     public void testGetIsoWeeksOfMonth() {
         List&lt;Long&gt; isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 8L);
 
-        assertEquals(Long.valueOf(31), isoWeeks.get(0));
-        assertEquals(Long.valueOf(32), isoWeeks.get(1));
-        assertEquals(Long.valueOf(33), isoWeeks.get(2));
-        assertEquals(Long.valueOf(34), isoWeeks.get(3));
-        assertEquals(Long.valueOf(35), isoWeeks.get(4));
+        assertEquals(Long.valueOf(32), isoWeeks.get(0));
+        assertEquals(Long.valueOf(33), isoWeeks.get(1));
+        assertEquals(Long.valueOf(34), isoWeeks.get(2));
+        assertEquals(Long.valueOf(35), isoWeeks.get(3));
+        assertEquals(Long.valueOf(36), isoWeeks.get(4));
 
         List&lt;Long&gt; isoWeeks2 = BaseResource.getIsoWeeksOfMonth(2018L, 2L);
 
@@ -1537,11 +1529,11 @@ public class BaseResourceTest {
 
         List&lt;Long&gt; isoWeeks3 = BaseResource.getIsoWeeksOfMonth(2018L, 5L);
 
-        assertEquals(Long.valueOf(18), isoWeeks3.get(0));
-        assertEquals(Long.valueOf(19), isoWeeks3.get(1));
-        assertEquals(Long.valueOf(20), isoWeeks3.get(2));
-        assertEquals(Long.valueOf(21), isoWeeks3.get(3));
-        assertEquals(Long.valueOf(22), isoWeeks3.get(4));
+        assertEquals(Long.valueOf(19), isoWeeks3.get(0));
+        assertEquals(Long.valueOf(20), isoWeeks3.get(1));
+        assertEquals(Long.valueOf(21), isoWeeks3.get(2));
+        assertEquals(Long.valueOf(22), isoWeeks3.get(3));
+        assertEquals(Long.valueOf(23), isoWeeks3.get(4));
     }
 
 
@@ -1577,11 +1569,11 @@ public class BaseResourceTest {
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testGetIsoWeeksOfMonth</span><span class="hljs-params">()</span> </span>{
         List&lt;Long&gt; isoWeeks = BaseResource.getIsoWeeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">8L</span>);
 
-        assertEquals(Long.valueOf(<span class="hljs-number">31</span>), isoWeeks.get(<span class="hljs-number">0</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">32</span>), isoWeeks.get(<span class="hljs-number">1</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">33</span>), isoWeeks.get(<span class="hljs-number">2</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">34</span>), isoWeeks.get(<span class="hljs-number">3</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">35</span>), isoWeeks.get(<span class="hljs-number">4</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">32</span>), isoWeeks.get(<span class="hljs-number">0</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">33</span>), isoWeeks.get(<span class="hljs-number">1</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">34</span>), isoWeeks.get(<span class="hljs-number">2</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">35</span>), isoWeeks.get(<span class="hljs-number">3</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">36</span>), isoWeeks.get(<span class="hljs-number">4</span>));
 
         List&lt;Long&gt; isoWeeks2 = BaseResource.getIsoWeeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">2L</span>);
 
@@ -1593,11 +1585,11 @@ public class BaseResourceTest {
 
         List&lt;Long&gt; isoWeeks3 = BaseResource.getIsoWeeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">5L</span>);
 
-        assertEquals(Long.valueOf(<span class="hljs-number">18</span>), isoWeeks3.get(<span class="hljs-number">0</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">19</span>), isoWeeks3.get(<span class="hljs-number">1</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">20</span>), isoWeeks3.get(<span class="hljs-number">2</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">21</span>), isoWeeks3.get(<span class="hljs-number">3</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">22</span>), isoWeeks3.get(<span class="hljs-number">4</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">19</span>), isoWeeks3.get(<span class="hljs-number">0</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">20</span>), isoWeeks3.get(<span class="hljs-number">1</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">21</span>), isoWeeks3.get(<span class="hljs-number">2</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">22</span>), isoWeeks3.get(<span class="hljs-number">3</span>));
+        assertEquals(Long.valueOf(<span class="hljs-number">23</span>), isoWeeks3.get(<span class="hljs-number">4</span>));
     }
 
 
@@ -1618,7 +1610,7 @@ public class BaseResourceTest {
 
 
 
-        <p>Ok if we now do a curl on the Endpoint it looks like this:</p>
+        <p>Ok if we now do a curl on the Endpoint it looks like this. We always get five weeks within the month (or wih minor overlap).</p>
 
 
         
@@ -1671,82 +1663,551 @@ public class BaseResourceTest {
     <p>The code for our endpoint is complete now. Let's move on.</p>
 
 
-    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page Webwork Action</h3>
-        
-<div class="cs-working-on-it">
-    We are working on it. Please visit again some time.
+    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page Webwork Action and WebItems</h3>
+
+    <p>Ok now again comes the ugly XML part. We need a dedicated page that can be accessed by every logged in user to display
+    the calendar. And we need a <a href="https://developer.atlassian.com/server/jira/platform/web-item/">Web Item</a> link in the top JIRA navigation bar.</p>
+
+    
+    
+    
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            <p>
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-06-web-item.png">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-06-web-item.png" class="img-fluid" alt="Step 6 - Web Item - Link to Overview Page from navigation top bar"
+                         data-bilderrahmen="gallery-01"
+                         data-bilderrahmen-title="Step 6 - Web Item - Link to Overview Page from navigation top bar"
+                    >
+                </a>
+            </p>
+        </div>
+    </div>
+
+
+    <p>Also we want to link to the Overview Page from the Planning Page to make navigating easy.</p>
+
+    
+    
+    
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            <p>
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-06-planning-page-link-to-overview.png">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-06-planning-page-link-to-overview.png" class="img-fluid" alt="Step 6 - Web Item - Link to Overview Page from Planning Page"
+                         data-bilderrahmen="gallery-01"
+                         data-bilderrahmen-title="Step 6 - Web Item - Link to Overview Page from Planning Page"
+                    >
+                </a>
+            </p>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-7">
+            
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/">.../</span>atlassian-plugin.xml
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="&lt;atlassian-plugin key=&quot;${atlassian.plugin.key}&quot; name=&quot;${project.name}&quot; plugins-version=&quot;2&quot;&gt;
+  ...
+  &lt;web-item key=&quot;admin_kitchen_duty_overview_webitem&quot;  
+       name=&quot;admin_kitchen_duty_overview_webitem&quot;
+       section=&quot;admin_plugins_menu/admin_kitchen_duty_planning_section&quot;
+       weight=&quot;14&quot; i18n-name-key=&quot;kitchen-duty-plugin.admin.overview.page.web.item.name&quot;&gt;
+     &lt;label key=&quot;kitchen-duty-plugin.admin.overview.page.web.item.name&quot;/&gt;
+     &lt;link linkId=&quot;admin_kitchen_duty_overview_webitem_link&quot;&gt;/secure/KitchenDutyOverviewPageWebworkAction.jspa&lt;/link&gt;
+  &lt;/web-item&gt;
+  ...
+  &lt;!-- ====================== --&gt;
+  &lt;!-- OVERVIEW PAGE --&gt;
+  &lt;!-- ====================== --&gt;
+  &lt;web-resource key=&quot;kitchen-duty-plugin-resources--overview-page&quot; 
+       name=&quot;kitchen-duty-plugin Web Resources for Overview Page&quot;&gt;
+    &lt;dependency&gt;com.atlassian.auiplugin:ajs&lt;/dependency&gt;
+    &lt;dependency&gt;com.atlassian.auiplugin:aui-experimental-soy-templates&lt;/dependency&gt;
+    &lt;transformation extension=&quot;soy&quot;&gt;
+      &lt;transformer key=&quot;soyTransformer&quot;&gt;
+        &lt;functions&gt;com.atlassian.confluence.plugins.soy:soy-core-functions&lt;/functions&gt;
+      &lt;/transformer&gt;
+    &lt;/transformation&gt;
+    &lt;resource type=&quot;download&quot; name=&quot;momentjs.js&quot;
+              location=&quot;/js/3rdparty/moment-2.22.2.min.js&quot;/&gt;   
+    &lt;resource type=&quot;download&quot; name=&quot;fullcalendar.js&quot;
+              location=&quot;/js/3rdparty/fullcalendar-3.9.0.min.js&quot;/&gt;   
+    &lt;resource type=&quot;download&quot; name=&quot;fullcalendar.css&quot;
+              location=&quot;/css/3rdparty/fullcalendar-3.9.0.min.css&quot;/&gt;   
+    &lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-overview-soy.js&quot;
+              location=&quot;templates-soy/kitchen-duty-overview.soy&quot;/&gt;     
+    &lt;resource type=&quot;download&quot; name=&quot;kitchen-duty-plugin--overview-page-controller.js&quot;
+              location=&quot;/js/kitchen-duty-plugin--overview-page-controller.js&quot;/&gt;   
+    &lt;context&gt;kitchen-duty-plugin&lt;/context&gt;
+  &lt;/web-resource&gt;
+  &lt;webwork1 key=&quot;kitchen-duty-overview-page-webwork-module&quot;
+            name=&quot;Kitchen Duty Overview Page Webwork Module&quot;
+            i18n-name-key=&quot;kitchen-duty-overview-page-webwork-module.name&quot;
+            roles-required=&quot;use&quot;&gt;  
+    &lt;description
+      key=&quot;kitchen-duty-overview-page-webwork-module.description&quot;
+    &gt;The Kitchen Duty Overview Page Webwork Module Plugin&lt;/description&gt;
+    &lt;actions&gt;
+      &lt;action name=&quot;com.comsysto.kitchen.duty.webwork.KitchenDutyOverviewPageWebworkAction&quot;
+              alias=&quot;KitchenDutyOverviewPageWebworkAction&quot;&gt; 
+        &lt;view
+          name=&quot;kitchen-duty-overview-page-success&quot; 
+        &gt;/templates/kitchen-duty-overview-page-webwork-module/kitchen-duty-overview-page-success.vm&lt;/view&gt;
+      &lt;/action&gt;
+    &lt;/actions&gt;
+  &lt;/webwork1&gt;
+  &lt;web-item key=&quot;user_kitchen_duty_overview_webitem&quot; 
+            name=&quot;user_kitchen_duty_overview_webitem&quot;
+            section=&quot;system.top.navigation.bar&quot;
+            weight=&quot;60&quot;
+            i18n-name-key=&quot;kitchen-duty-plugin.user.overview.page.web.item.name&quot;&gt;
+    &lt;label key=&quot;kitchen-duty-plugin.user.overview.page.web.item.name&quot;/&gt;
+    &lt;link
+      linkId=&quot;user_kitchen_duty_overview_webitem_link&quot;
+    &gt;/secure/KitchenDutyOverviewPageWebworkAction.jspa&lt;/link&gt;
+  &lt;/web-item&gt;
+  ...
+&lt;/atlassian-plugin&gt;"><i class="fa fa-files-o"></i></a>
 </div>
 
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">atlassian-plugin</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"${atlassian.plugin.key}"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"${project.name}"</span> <span class="hljs-attribute">plugins-version</span>=<span class="hljs-value">"2"</span>&gt;</span>
+  ...
+  <span class="hljs-tag">&lt;<span class="hljs-title">web-item</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"admin_kitchen_duty_overview_webitem"</span>  <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="1"></span>
+       <span class="hljs-attribute">name</span>=<span class="hljs-value">"admin_kitchen_duty_overview_webitem"</span>
+       <span class="hljs-attribute">section</span>=<span class="hljs-value">"admin_plugins_menu/admin_kitchen_duty_planning_section"</span>
+       <span class="hljs-attribute">weight</span>=<span class="hljs-value">"14"</span> <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-plugin.admin.overview.page.web.item.name"</span>&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-plugin.admin.overview.page.web.item.name"</span>/&gt;</span>
+     <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">linkId</span>=<span class="hljs-value">"admin_kitchen_duty_overview_webitem_link"</span>&gt;</span>/secure/KitchenDutyOverviewPageWebworkAction.jspa<span class="hljs-tag">&lt;/<span class="hljs-title">link</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">web-item</span>&gt;</span>
+  ...
+  <span class="hljs-comment">&lt;!-- ====================== --&gt;</span>
+  <span class="hljs-comment">&lt;!-- OVERVIEW PAGE --&gt;</span>
+  <span class="hljs-comment">&lt;!-- ====================== --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">web-resource</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-plugin-resources--overview-page"</span> <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="2"></span>
+       <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin Web Resources for Overview Page"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:ajs<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>com.atlassian.auiplugin:aui-experimental-soy-templates<span class="hljs-tag">&lt;/<span class="hljs-title">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">transformation</span> <span class="hljs-attribute">extension</span>=<span class="hljs-value">"soy"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">transformer</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"soyTransformer"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">functions</span>&gt;</span>com.atlassian.confluence.plugins.soy:soy-core-functions<span class="hljs-tag">&lt;/<span class="hljs-title">functions</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">transformer</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">transformation</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"momentjs.js"</span>
+              <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/3rdparty/moment-2.22.2.min.js"</span>/&gt;</span>   <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="3"></span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"fullcalendar.js"</span>
+              <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/3rdparty/fullcalendar-3.9.0.min.js"</span>/&gt;</span>   <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="4"></span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"fullcalendar.css"</span>
+              <span class="hljs-attribute">location</span>=<span class="hljs-value">"/css/3rdparty/fullcalendar-3.9.0.min.css"</span>/&gt;</span>   <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="5"></span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-overview-soy.js"</span>
+              <span class="hljs-attribute">location</span>=<span class="hljs-value">"templates-soy/kitchen-duty-overview.soy"</span>/&gt;</span>     <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="6"></span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">resource</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"download"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-plugin--overview-page-controller.js"</span>
+              <span class="hljs-attribute">location</span>=<span class="hljs-value">"/js/kitchen-duty-plugin--overview-page-controller.js"</span>/&gt;</span>   <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="7"></span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">context</span>&gt;</span>kitchen-duty-plugin<span class="hljs-tag">&lt;/<span class="hljs-title">context</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">web-resource</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-overview-page-webwork-module"</span>
+            <span class="hljs-attribute">name</span>=<span class="hljs-value">"Kitchen Duty Overview Page Webwork Module"</span>
+            <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-overview-page-webwork-module.name"</span>
+            <span class="hljs-attribute">roles-required</span>=<span class="hljs-value">"use"</span>&gt;</span>  <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="8"></span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">description</span>
+      <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-overview-page-webwork-module.description"</span>
+    &gt;</span>The Kitchen Duty Overview Page Webwork Module Plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">actions</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">action</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"com.comsysto.kitchen.duty.webwork.KitchenDutyOverviewPageWebworkAction"</span>
+              <span class="hljs-attribute">alias</span>=<span class="hljs-value">"KitchenDutyOverviewPageWebworkAction"</span>&gt;</span> <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="9"></span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">view</span>
+          <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-overview-page-success"</span> <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="10"></span>
+        &gt;</span>/templates/kitchen-duty-overview-page-webwork-module/kitchen-duty-overview-page-success.vm<span class="hljs-tag">&lt;/<span class="hljs-title">view</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-title">action</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">actions</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">webwork1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">web-item</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"user_kitchen_duty_overview_webitem"</span> <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="11"></span>
+            <span class="hljs-attribute">name</span>=<span class="hljs-value">"user_kitchen_duty_overview_webitem"</span>
+            <span class="hljs-attribute">section</span>=<span class="hljs-value">"system.top.navigation.bar"</span>
+            <span class="hljs-attribute">weight</span>=<span class="hljs-value">"60"</span>
+            <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-plugin.user.overview.page.web.item.name"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-plugin.user.overview.page.web.item.name"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span>
+      <span class="hljs-attribute">linkId</span>=<span class="hljs-value">"user_kitchen_duty_overview_webitem_link"</span>
+    &gt;</span>/secure/KitchenDutyOverviewPageWebworkAction.jspa<span class="hljs-tag">&lt;/<span class="hljs-title">link</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">web-item</span>&gt;</span>
+  ...
+<span class="hljs-tag">&lt;/<span class="hljs-title">atlassian-plugin</span>&gt;</span></code></pre>
 
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="knjbihvutzczdgui">
+                    <div class="list-group-item cs-source-point-list__item">
+                        First we need a link to the Overview Page from the side navigation when we are on the Planning Page.
+                        You can see it in the screenshot above.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We define a dedicated web-resource section to provide CSS, JS and Soy resources for the Overview Page.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We reuse the moment-js library we already used on the planning page since the full calendar library depends on moment-js.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Next we put a copy of fullcalendar.min.js to <code>src/main/resources/js/3rdparty</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The full calendar also needs a copy of fullcalendar.min.css to <code>src/main/resources/css/3rdparty</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        For the Overview Page we also define a dedicated soy template in <code>src/main/resources/js/kitchen-duty-plugin--overview-page-controller.js</code>.
+                        We will create the file later in full detail.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The Overview Page has its own JS-controller in <code>src/main/resources/js/kitchen-duty-overview.soy</code>.
+                        We will create the file later in full detail.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The actual page is defined as a web work module. The <code>roles-required="use"</code> ensures only logged in users
+                        can view the page.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The module contains the actual action to the <code>KitchenDutyOverviewPageWebworkAction.java</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        As usual we define a velocity template for our web work action in <code>src/main/resources/templates/kitchen-duty-overview-page-webwork-module/kitchen-duty-overview-page-success.vm</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Lastly we define a web-item with the link to the Overview Page in the JIRA top navigation bar.
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
-<!--
-KitchenDutyOverviewPageWebworkAction
- => atlas.xml => Roles-Required="use" => https://developer.atlassian.com/server/jira/platform/webwork/#Webworkpluginmodule-RolesRequired
- => velocity.vm
- => js controller file /js/kitchen-duty-plugin-...-planning-overview-controller.js
- => i18n kitchen-duty-plugin.properties
- => new soy file
- => fullcalendar needs moment.js!
- => https://fullcalendar.io/ js file to js/3rdparty/ and css/3rdparty  => CDN =>
-    https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js
-    https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css
-
-
-Cleanup: Move flag stuff to common js file from kitchen-duty-plugin-...-planning-page-controller.js
--->
-
-
-
-
-    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page WebItem</h3>
+        <p>All these xml things have <strong>i18n keys which we need to put in our translation file</strong>. Keep in mind that encoding for property files is ISO 8859-1.</p>
 
         
-<div class="cs-working-on-it">
-    We are working on it. Please visit again some time.
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/">.../</span>kitchen-duty-plugin.properties
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="# admin
+kitchen-duty-plugin.admin.overview.page.web.item.name = Overview Page
+
+# kitchen-duty-overview-page-success.vm
+kitchen-duty-plugin.user.overview.page.title = Kitchen Duty Plugin - Overview Page
+
+# webitem
+kitchen-duty-plugin.user.overview.page.web.item.name = Kitchen Duty"><i class="fa fa-files-o"></i></a>
 </div>
 
+<pre class="cs-code"><code class="hljs"># admin
+kitchen-duty-plugin.admin.overview.page.web.item.name = Overview Page
+
+# kitchen-duty-overview-page-success.vm
+kitchen-duty-plugin.user.overview.page.title = Kitchen Duty Plugin - Overview Page
+
+# webitem
+kitchen-duty-plugin.user.overview.page.web.item.name = Kitchen Duty</code></pre>
 
 
-<!--
-WebItem: https://developer.atlassian.com/server/jira/platform/web-item/
- - atlas.xml + i18n => top nav bar
- - Also a WebItem for Admin to link back to overview page
--->
-
-
-
-
-
-    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page JS Controller</h3>
-
-    <p>Some JavaScript logic to display the calender with data from REST Endpoints on the page.</p>
+        <p>Now we define our <strong>web work action</strong> that displays the velocity template and loads the overview page resources.</p>
 
         
-<div class="cs-working-on-it">
-    We are working on it. Please visit again some time.
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/webwork/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/webwork/">.../</span>KitchenDutyOverviewPageWebworkAction.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyOverviewPageWebworkAction.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.webwork;
+
+import com.atlassian.jira.web.action.JiraWebActionSupport;
+import com.atlassian.webresource.api.assembler.PageBuilderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+@Named
+public class KitchenDutyOverviewPageWebworkAction extends JiraWebActionSupport
+{
+    private static final Logger log = LoggerFactory.getLogger(KitchenDutyOverviewPageWebworkAction.class);
+
+    @Inject
+    private PageBuilderService pageBuilderService;
+
+    @Override
+    public String execute() throws Exception {
+        pageBuilderService.assembler().resources()
+            .requireWebResource(&quot;com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources&quot;)
+            .requireWebResource(&quot;com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources--overview-page&quot;);
+
+        return &quot;kitchen-duty-overview-page-success&quot;;
+    }
+
+    public void setPageBuilderService(PageBuilderService pageBuilderService) {
+        this.pageBuilderService = pageBuilderService;
+    }
+}"><i class="fa fa-files-o"></i></a>
 </div>
 
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.webwork;
+
+<span class="hljs-keyword">import</span> com.atlassian.jira.web.action.JiraWebActionSupport;
+<span class="hljs-keyword">import</span> com.atlassian.webresource.api.assembler.PageBuilderService;
+<span class="hljs-keyword">import</span> org.slf4j.Logger;
+<span class="hljs-keyword">import</span> org.slf4j.LoggerFactory;
+
+<span class="hljs-keyword">import</span> javax.inject.Inject;
+<span class="hljs-keyword">import</span> javax.inject.Named;
+
+<span class="hljs-annotation">@Named</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyOverviewPageWebworkAction</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">JiraWebActionSupport</span>
+</span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Logger log = LoggerFactory.getLogger(KitchenDutyOverviewPageWebworkAction.class);
+
+    <span class="hljs-annotation">@Inject</span>
+    <span class="hljs-keyword">private</span> PageBuilderService pageBuilderService;
+
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">execute</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        pageBuilderService.assembler().resources()
+            .requireWebResource(<span class="hljs-string">"com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources"</span>)
+            .requireWebResource(<span class="hljs-string">"com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources--overview-page"</span>);
+
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"kitchen-duty-overview-page-success"</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setPageBuilderService</span><span class="hljs-params">(PageBuilderService pageBuilderService)</span> </span>{
+        <span class="hljs-keyword">this</span>.pageBuilderService = pageBuilderService;
+    }
+}</code></pre>
 
 
-<!--
+        <p>
+            Let's also create the <strong>velocity success template</strong> now.
+            On non-admin pages you have to define the <a href="https://docs.atlassian.com/aui/7.9.5/docs/navigation.html">Navigation</a> by yourself.
+            Also read the doc about <a href="https://docs.atlassian.com/aui/7.9.5/docs/page.html">Page</a>.
+            We simply define a div with id <code>kdp-overview-page-container</code> to hook in with our JS-controller.
+        </p>
 
-https://fullcalendar.io/
+        
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/templates/kitchen-duty-overview-page-webwork-module/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/templates/kitchen-duty-overview-page-webwork-module/">.../</span>kitchen-duty-overview-page-success.vm
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-overview-page-webwork-module/kitchen-duty-overview-page-success.vm" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;$i18n.getText(&quot;kitchen-duty-plugin.user.overview.page.title&quot;)&lt;/title&gt;
+    &lt;meta name=&quot;decorator&quot; content=&quot;atl.general&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;page&quot;&gt;
+    &lt;section id=&quot;content&quot; role=&quot;main&quot;&gt;
+
+        &lt;header class=&quot;aui-page-header&quot;&gt;
+            &lt;div class=&quot;aui-page-header-inner&quot;&gt;
+                &lt;div class=&quot;aui-page-header-main&quot;&gt;
+                    &lt;h1&gt;Kitchen Duty&lt;/h1&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/header&gt;
+
+        &lt;div class=&quot;aui-page-panel&quot;&gt;
+            &lt;div class=&quot;aui-page-panel-inner&quot;&gt;
+                &lt;div class=&quot;aui-page-panel-nav&quot;&gt;
+                    &lt;nav class=&quot;aui-navgroup aui-navgroup-vertical&quot;&gt;
+                        &lt;div class=&quot;aui-navgroup-inner&quot;&gt;
+                            &lt;ul class=&quot;aui-nav&quot;&gt;
+                                &lt;li class=&quot;aui-nav-selected&quot;&gt;&lt;a href=&quot;${req.contextPath}/secure/KitchenDutyOverviewPageWebworkAction.jspa&quot;&gt;Overview Page&lt;/a&gt;&lt;/li&gt;
+                                &lt;li&gt;&lt;a href=&quot;${req.contextPath}/secure/KitchenDutyPlanningWebworkAction.jspa&quot;&gt;Planning Page&lt;/a&gt;&lt;/li&gt;
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                    &lt;/nav&gt;
+                &lt;/div&gt;
+                &lt;section class=&quot;aui-page-panel-content&quot;&gt;
+                    &lt;div id=&quot;kdp-overview-page-container&quot;&gt;&lt;/div&gt;
+                &lt;/section&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>$i18n.getText("kitchen-duty-plugin.user.overview.page.title")<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"decorator"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"atl.general"</span>/&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"page"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"content"</span> <span class="hljs-attribute">role</span>=<span class="hljs-value">"main"</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-title">header</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-page-header"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-page-header-inner"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-page-header-main"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Kitchen Duty<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">header</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-page-panel"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-page-panel-inner"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-page-panel-nav"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">nav</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-navgroup aui-navgroup-vertical"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-navgroup-inner"</span>&gt;</span>
+                            <span class="hljs-tag">&lt;<span class="hljs-title">ul</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-nav"</span>&gt;</span>
+                                <span class="hljs-tag">&lt;<span class="hljs-title">li</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-nav-selected"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"${req.contextPath}/secure/KitchenDutyOverviewPageWebworkAction.jspa"</span>&gt;</span>Overview Page<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+                                <span class="hljs-tag">&lt;<span class="hljs-title">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">a</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"${req.contextPath}/secure/KitchenDutyPlanningWebworkAction.jspa"</span>&gt;</span>Planning Page<span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">li</span>&gt;</span>
+                            <span class="hljs-tag">&lt;/<span class="hljs-title">ul</span>&gt;</span>
+                        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-title">nav</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-title">section</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"aui-page-panel-content"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"kdp-overview-page-container"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">section</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span></code></pre>
 
 
-Week Numbers in the months view.
-https://fullcalendar.io/docs/week-numbers
-https://fullcalendar.io/docs/weekNumbers-demo
+    <p>When clicking on 'Kitchen Duty' in the JIAR top bar now it should look like this.</p>
 
-  $('#calendar').fullCalendar({
-    defaultView: 'month',
-    weekNumbers: true
-  });
+    
+    
+    
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            <p>
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-06-overview-page-velocity.png">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-06-overview-page-velocity.png" class="img-fluid" alt="Step 6 - Velocity and Web work action - Overview Page"
+                         data-bilderrahmen="gallery-01"
+                         data-bilderrahmen-title="Step 6 - Velocity and Web work action - Overview Page"
+                    >
+                </a>
+            </p>
+        </div>
+    </div>
 
 
-events https://fullcalendar.io/docs/events-function
--->
+    <p>Ok that was now the server-side part of the overview page. Let's move on to the client-side.</p>
 
+
+
+
+
+    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page JS Controller and Soy Templates</h3>
+
+    <p>As we already did it on the planning page, we again have a JS-controller using soy-templates
+    and some logic to display the <a href="https://fullcalendar.io/">full calendar</a> with data from REST Endpoints on the page.</p>
+
+    <p>Ok to be honest we could just skip using the soy template here since we do not really need it right now.
+        Also do we want to follow a convention for building our pages, so that we can easily extend them in the future</p>
+
+
+
+
+        
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/templates-soy/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/templates-soy/">.../</span>kitchen-duty-overview.soy
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/templates-soy/kitchen-duty-overview.soy" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="{namespace JIRA.Templates.KDPO}
+/**
+ * Kitchen Duty Overview Page - Base Template
+ */
+{template .overviewPage}
+    &lt;div id=&quot;kdp-overview&quot;&gt;
+        &lt;div id=&quot;kdp-calendar&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+{/template}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">namespace</span> JIRA.Templates.KDPO</span>}</span>
+<span class="hljs-comment">/**
+ * Kitchen Duty Overview Page - Base Template
+ */</span>
+<span class="hljs-soyTag">{<span class="hljs-title"><span class="hljs-tag">template</span> .overviewPage</span>}</span>
+    &lt;div id=<span class="hljs-string">"kdp-overview"</span>&gt;
+        &lt;div id=<span class="hljs-string">"kdp-calendar"</span>&gt;&lt;/div&gt;
+    &lt;/div&gt;
+<span class="hljs-soyTag">{/<span class="hljs-tag">template</span>}</span></code></pre>
+
+
+        <p>Now comes the actual <strong>controller logic to display the calendar with kitchen duty data from the REST API</strong>.</p>
+
+        <div class="row">
+            <div class="col-md-7">
+                
 
 <div class="cs-code-filename">
     
@@ -1771,31 +2232,31 @@ events https://fullcalendar.io/docs/events-function
     window.KDPrestUrl = restUrl;
 
     // Init Base SOY template
-    var overviewPageTemplate = JIRA.Templates.KDPO.overviewPage();
+    var overviewPageTemplate = JIRA.Templates.KDPO.overviewPage(); 
     AJS.$(&#39;#kdp-overview-page-container&#39;).html(overviewPageTemplate);
 
-    AJS.$(&#39;#kdp-calendar&#39;).fullCalendar({
-        defaultView: &#39;month&#39;,
-        weekNumbers: true,
+    AJS.$(&#39;#kdp-calendar&#39;).fullCalendar({ 
+        defaultView: &#39;month&#39;, 
+        weekNumbers: true, 
         height: 500,
         fixedWeekCount: false,
-        events: function(start, end, timezone, callback) {
-            var year = moment(start).format(&#39;YYYY&#39;);
-            // Full Calender always starts month with days of previous month.
+        events: function(start, end, timezone, callback) { 
+            // Full calendar always starts month with days of previous month.
             // We add 10 days to get month we want.
-            var month = moment(start).add(&#39;days&#39;, 10).format(&#39;M&#39;);
-            AJS.$.ajax({
+            var year = moment(start).add(&#39;days&#39;, 10).format(&#39;YYYY&#39;); 
+            var month = moment(start).add(&#39;days&#39;, 10).format(&#39;M&#39;); 
+            AJS.$.ajax({ 
                 url: window.KDPrestUrl + &#39;/overview_page/year/&#39; + year + &#39;/month/&#39; + month,
                 dataType: &#39;json&#39;,
                 success: function(rawEvents) {
                     var events = [];
-                    AJS.$(rawEvents).each(function() {
+                    AJS.$(rawEvents).each(function() { 
                         var users = AJS.$(this).attr(&#39;users&#39;);
                         events.push({
-                            title: users.join(&#39;, &#39;),
+                            title: users.join(&#39;, &#39;), 
                             start: AJS.$(this).attr(&#39;start&#39;),
                             end: AJS.$(this).attr(&#39;end&#39;),
-                            color: users.length &gt; 0 ? &#39;#36B37E&#39; : &#39;#FFAB00&#39;,
+                            color: users.length &gt; 0 ? &#39;#36B37E&#39; : &#39;#FFAB00&#39;, 
                         });
                     });
                     callback(events);
@@ -1813,31 +2274,31 @@ events https://fullcalendar.io/docs/events-function
     <span class="hljs-built_in">window</span>.KDPrestUrl = restUrl;
 
     <span class="hljs-comment">// Init Base SOY template</span>
-    <span class="hljs-keyword">var</span> overviewPageTemplate = JIRA.Templates.KDPO.overviewPage();
+    <span class="hljs-keyword">var</span> overviewPageTemplate = JIRA.Templates.KDPO.overviewPage(); <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="1"></span>
     AJS.$(<span class="hljs-string">'#kdp-overview-page-container'</span>).html(overviewPageTemplate);
 
-    AJS.$(<span class="hljs-string">'#kdp-calendar'</span>).fullCalendar({
-        defaultView: <span class="hljs-string">'month'</span>,
-        weekNumbers: <span class="hljs-literal">true</span>,
+    AJS.$(<span class="hljs-string">'#kdp-calendar'</span>).fullCalendar({ <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="2"></span>
+        defaultView: <span class="hljs-string">'month'</span>, <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="3"></span>
+        weekNumbers: <span class="hljs-literal">true</span>, <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="4"></span>
         height: <span class="hljs-number">500</span>,
         fixedWeekCount: <span class="hljs-literal">false</span>,
-        events: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">start, end, timezone, callback</span>) </span>{
-            <span class="hljs-keyword">var</span> year = moment(start).format(<span class="hljs-string">'YYYY'</span>);
-            <span class="hljs-comment">// Full Calender always starts month with days of previous month.</span>
+        events: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">start, end, timezone, callback</span>) </span>{ <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="5"></span>
+            <span class="hljs-comment">// Full calendar always starts month with days of previous month.</span>
             <span class="hljs-comment">// We add 10 days to get month we want.</span>
-            <span class="hljs-keyword">var</span> month = moment(start).add(<span class="hljs-string">'days'</span>, <span class="hljs-number">10</span>).format(<span class="hljs-string">'M'</span>);
-            AJS.$.ajax({
+            <span class="hljs-keyword">var</span> year = moment(start).add(<span class="hljs-string">'days'</span>, <span class="hljs-number">10</span>).format(<span class="hljs-string">'YYYY'</span>); <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="6"></span>
+            <span class="hljs-keyword">var</span> month = moment(start).add(<span class="hljs-string">'days'</span>, <span class="hljs-number">10</span>).format(<span class="hljs-string">'M'</span>); <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="7"></span>
+            AJS.$.ajax({ <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="8"></span>
                 url: <span class="hljs-built_in">window</span>.KDPrestUrl + <span class="hljs-string">'/overview_page/year/'</span> + year + <span class="hljs-string">'/month/'</span> + month,
                 dataType: <span class="hljs-string">'json'</span>,
                 success: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">rawEvents</span>) </span>{
                     <span class="hljs-keyword">var</span> events = [];
-                    AJS.$(rawEvents).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                    AJS.$(rawEvents).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="9"></span>
                         <span class="hljs-keyword">var</span> users = AJS.$(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'users'</span>);
                         events.push({
-                            title: users.join(<span class="hljs-string">', '</span>),
+                            title: users.join(<span class="hljs-string">', '</span>), <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="10"></span>
                             start: AJS.$(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'start'</span>),
                             end: AJS.$(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'end'</span>),
-                            color: users.length &gt; <span class="hljs-number">0</span> ? <span class="hljs-string">'#36B37E'</span> : <span class="hljs-string">'#FFAB00'</span>,
+                            color: users.length &gt; <span class="hljs-number">0</span> ? <span class="hljs-string">'#36B37E'</span> : <span class="hljs-string">'#FFAB00'</span>, <span class="cs-source-point" data-cs-source-point-id="bhvgcfrd546857io8giubhvgj" data-cs-source-point-number="11"></span>
                         });
                     });
                     callback(events);
@@ -1846,6 +2307,154 @@ events https://fullcalendar.io/docs/events-function
         }
     });
 });</code></pre>
+
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="bhvgcfrd546857io8giubhvgj">
+                    <div class="list-group-item cs-source-point-list__item">
+                        Load the overviewPage soy template and inject it into the DOM.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Initialize the <a href="https://fullcalendar.io/">full calendar</a> in the div with id <code>kdp-calendar</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We set the <a href="https://fullcalendar.io/docs/month-view"><code>defaultView</code> to month</a>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We also want the <a href="https://fullcalendar.io/docs/week-numbers">week numbers displayed</a>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Via the <a href="https://fullcalendar.io/docs/events-function">Events Function</a>
+                        we fill the calendar with out kitchen duty 'events' representing each week.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The <code>start</code> variable contains the start date of the calendar view.
+                        Since we are in the month view the start date is usually some day of the previous month
+                        therefore we add 10 days to get a date in the actual current month. Via moment-js we get the year.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We do the same to get the current month displayed in the calendar.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Via ajax GET request we call our <code>/overview_page/year/:year/month/:month</code>
+                        REST Endpoint with the month and year we get from the calendar api.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We iterate over the <code>rawEvents</code> which are in the form of
+                        <code>[ { "isoWeek": 10, "start": "2018-03-04", "end": "2018-03-10", "users": [ "bob", "steve" ] } ]</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Since we need to build <a href="https://fullcalendar.io/docs/event-object">full calendar event objects</a>
+                        in form of
+                        <code>[ { "start": "2018-03-04", "end": "2018-03-10", "title": "bob, steve", "color": "#ff0000" } ]</code>
+                        we map our values. As <code>title</code> we concatenate the users into one string.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        As <code>color</code> we display green (#36B37E) if the week has assigned users.
+                        And we display orange (#FFAB00) if no users are assigned to week.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!--
+
+
+events
+-->
+
+
+        <p>Lastly - since we might use the code to display <a href="https://docs.atlassian.com/aui/7.9.5/docs/flag.html">AUI Flags</a> in both controllers - <strong>we move the common code to <code>kitchen-duty-plugin.js</code></strong>.</p>
+
+        
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/js/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/resources/js/">.../</span>kitchen-duty-plugin.js
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/js/kitchen-duty-plugin.js" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="//
+// COMMON CODE
+//
+var showSuccessFlag = function(message) {
+    require([&#39;aui/flag&#39;], function(flag) {
+        flag({
+            type: &#39;success&#39;,
+            title: &#39;Kitchen Duty Plugin&#39;,
+            close: &#39;auto&#39;,
+            body: message
+        });
+    });
+};
+var showErrorFlag = function(message) {
+    require([&#39;aui/flag&#39;], function(flag) {
+        flag({
+            type: &#39;error&#39;,
+            title: &#39;Kitchen Duty Plugin&#39;,
+            close: &#39;auto&#39;,
+            body: message
+        });
+    });
+};"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-comment">//</span>
+<span class="hljs-comment">// COMMON CODE</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">var</span> showSuccessFlag = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">message</span>) </span>{
+    <span class="hljs-built_in">require</span>([<span class="hljs-string">'aui/flag'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">flag</span>) </span>{
+        flag({
+            type: <span class="hljs-string">'success'</span>,
+            title: <span class="hljs-string">'Kitchen Duty Plugin'</span>,
+            close: <span class="hljs-string">'auto'</span>,
+            body: message
+        });
+    });
+};
+<span class="hljs-keyword">var</span> showErrorFlag = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">message</span>) </span>{
+    <span class="hljs-built_in">require</span>([<span class="hljs-string">'aui/flag'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">flag</span>) </span>{
+        flag({
+            type: <span class="hljs-string">'error'</span>,
+            title: <span class="hljs-string">'Kitchen Duty Plugin'</span>,
+            close: <span class="hljs-string">'auto'</span>,
+            body: message
+        });
+    });
+};</code></pre>
+
+
+
+        <p>That's it. Now we can run our plugin with <code>atlas-run</code> and when navigating to <a href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyOverviewPageWebworkAction.jspa</a>
+        it should work as you can see below. <strong>We are completely done implementing the Kitchen Duty Overview Page</strong>.</p>
+
+        
+    
+    
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            <p>
+                <a href="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-06-overview-page-working.gif">
+                    <img src="/kitchen-duty-plugin-for-atlassian-jira/images/doc/step-06-overview-page-working.gif" class="img-fluid" alt="Step 6 - Overview Page working"
+                         data-bilderrahmen="gallery-01"
+                         data-bilderrahmen-title="Step 6 - Overview Page working"
+                    >
+                </a>
+            </p>
+        </div>
+    </div>
+
 
 
 

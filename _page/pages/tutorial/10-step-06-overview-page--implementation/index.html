@@ -506,17 +506,105 @@
                     <div class="list-group-item cs-source-point-list__item">
                         The URL should map to <code>/year/{year}/month/{month}</code>
                         so that we can query for e.g. <code>/year/2018/month/08</code>
+                        and get all isoWeeks for that month. We always get 5 weeks.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-x
+                        Get all iso weeks in that month.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-x
+                        Query the database and get existing Week Object.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Get the users for that week (nullsafe = return empty list if no users found)
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Map the user objects to stringified usernames.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we build our event list as <code>KitchenDutyOverviewPageMonthDutyModel</code>
+                        objects with isoWeek, start-date and end-date.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <code>getFirstDayOfWeekOfYear()</code> gets you the date of the first day of the week (sunday).
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <code>getLastDayOfWeekOfYear()</code> gets you the date of the last day of the week (saturday).
                     </div>
                 </div>
             </div>
         </div>
 
+        <p>The pojo for the week-events with start and end-date. The rest will be mapped in the JS controller.</p>
+
+        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyOverviewPageMonthDutyModel.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='kjnbhuivozuo89o', source='
+            |package com.comsysto.kitchen.duty.rest;
+            |
+            |import javax.xml.bind.annotation.XmlAccessType;
+            |import javax.xml.bind.annotation.XmlAccessorType;
+            |import javax.xml.bind.annotation.XmlElement;
+            |import javax.xml.bind.annotation.XmlRootElement;
+            |import java.util.List;
+            |
+            |/*
+            | * We want this entity to be directly usable as full calendar event object
+            | * https://fullcalendar.io/docs/event-object
+            | */
+            |@XmlRootElement(name = "duty")
+            |@XmlAccessorType(XmlAccessType.FIELD)
+            |public class KitchenDutyOverviewPageMonthDutyModel {
+            |
+            |    @XmlElement
+            |    private Long isoWeek;
+            |
+            |    @XmlElement
+            |    private String start; /* Date String - First day of week (Sunday) */
+            |    @XmlElement
+            |    private String end; /* Date String - Last day of week (Monday) */
+            |
+            |    @XmlElement
+            |    private List<String> users;
+            |
+            |    public KitchenDutyOverviewPageMonthDutyModel(Long isoWeek, String start, String end, List<String> users) {
+            |        this.start = start;
+            |        this.end = end;
+            |        this.isoWeek = isoWeek;
+            |        this.users = users;
+            |    }
+            |
+            |    public Long getIsoWeek() {
+            |        return isoWeek;
+            |    }
+            |
+            |    public void setIsoWeek(Long isoWeek) {
+            |        this.isoWeek = isoWeek;
+            |    }
+            |
+            |    public List<String> getUsers() {
+            |        return users;
+            |    }
+            |
+            |    public void setUsers(List<String> users) {
+            |        this.users = users;
+            |    }
+            |
+            |    public String getStart() {
+            |        return start;
+            |    }
+            |
+            |    public void setStart(String start) {
+            |        this.start = start;
+            |    }
+            |
+            |    public String getEnd() {
+            |        return end;
+            |    }
+            |
+            |    public void setEnd(String end) {
+            |        this.end = end;
+            |    }
+            |}
+            |
+        ')}}
 
         <p>The <strong>date calculation helpers <code>getIsoWeeksOfMonth()</code>, <code>getFirstDayOfWeekOfYear()</code> and <code>getLastDayOfWeekOfYear()</code> are defined in <code>BaseResource.java</code></strong>.</p>
 
@@ -560,7 +648,7 @@ x
                     |          .with(ChronoField.DAY_OF_WEEK, 1).minusDays(1);
                     |  }
                     |
-                    |  public static LocalDate getLastDayOfWeekOfYear(Long year, Long isoWeek) { {{{point::1}}}
+                    |  public static LocalDate getLastDayOfWeekOfYear(Long year, Long isoWeek) { {{{point::4}}}
                     |      return getFirstDayOfWeekOfYear(year, isoWeek).plusDays(6);
                     |  }
                     |}
@@ -570,13 +658,23 @@ x
             <div class="col-md-5 cs-sticky-in-parent">
                 <div class="list-group cs-source-point-list" data-source-target="sg4ddf">
                     <div class="list-group-item cs-source-point-list__item">
-                     x
+                        <code>getIsoWeeksOfMonth()</code> returns five weeks with iso week numbers
+                        for given year and month.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-x
+                        <code>getWeekOfMonth()</code> returns the iso week number
+                        for given year, month and weekInMonth. Ok if it sounds confusing look
+                        at the Unit Test. But simply said this methods converts
+                        week 1-5 of a specific month to the iso week number which represents basically the week
+                        of a year.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-x
+                        <code>getFirstDayOfWeekOfYear()</code> returns the first day of the week (sunday)
+                        for a given year and isoWeek.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <code>getLastDayOfWeekOfYear()</code> returns the last day of the week (saturday)
+                        for a given year and isoWeek.
                     </div>
                 </div>
             </div>
@@ -642,64 +740,47 @@ x
         ')}}
 
 
-<!--
+        <p>Ok if we now do a curl on the Endpoint it looks like this:</p>
 
 
+        {{ csShell(shellCmd='curl --user admin:admin http://localhost:2990/jira/rest/kitchenduty/1.0/overview_page/year/2018/month/3', shellCmdOutput='
+                |[
+                |  {
+                |    "isoWeek": 10,
+                |    "start": "2018-03-04",
+                |    "end": "2018-03-10",
+                |    "users": [ ]
+                |  },
+                |  {
+                |    "isoWeek": 11,
+                |    "start": "2018-03-11",
+                |    "end": "2018-03-17",
+                |    "users": [ "admin" ]
+                |  },
+                |  {
+                |    "isoWeek": 12,
+                |    "start": "2018-03-18",
+                |    "end": "2018-03-24",
+                |    "users": [ ]
+                |  },
+                |  {
+                |    "isoWeek": 13,
+                |    "start": "2018-03-25",
+                |    "end": "2018-03-31",
+                |    "users": [ ]
+                |  },
+                |  {
+                |    "isoWeek": 14,
+                |    "start": "2018-04-01",
+                |    "end": "2018-04-07",
+                |    "users": [ ]
+                |  }
+                |]
+         ') }}
 
 
-====
+    <p>The code for our endpoint is complete now. Let's move on.</p>
 
-New KitchenDutyOverviewPageMonthDutyModel
-New KitchenDutyOverviewPageResource
-New BaseResource => isoDate Function + UnitTest
-
-http://localhost:2990/jira/rest/kitchenduty/1.0/overview_page/year/2018/month/9
-
-Response
-
-====
-[
-  {
-    "isoWeek": 10,
-    "start": "2018-03-04",
-    "end": "2018-03-10",
-    "users": [
-
-    ]
-  },
-  {
-    "isoWeek": 11,
-    "start": "2018-03-11",
-    "end": "2018-03-17",
-    "users": [ "admin" ]
-  },
-  {
-    "isoWeek": 12,
-    "start": "2018-03-18",
-    "end": "2018-03-24",
-    "users": [
-
-    ]
-  },
-  {
-    "isoWeek": 13,
-    "start": "2018-03-25",
-    "end": "2018-03-31",
-    "users": [
-
-    ]
-  },
-  {
-    "isoWeek": 14,
-    "start": "2018-04-01",
-    "end": "2018-04-07",
-    "users": [
-
-    ]
-  }
-]
-====
--->
 
     <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page Webwork Action</h3>
         {{ weAreWorkingOnIt() }}

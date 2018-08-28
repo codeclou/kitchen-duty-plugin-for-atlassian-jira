@@ -4,13 +4,12 @@
         <title>Plugin Development Tutorial for Atlassian JIRA® Server | Kitchen Duty Plugin by Comsysto Reply</title>
         <link>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/</link>
         <description>An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® Server by Comsysto Reply</description>
-<!--        <item>
+        <item>
             <title>Tutorial is finished!</title>
             <link>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/</link>
             <description>Checkout all steps. The tutorial is finally done.</description>
-            <pubDate>Fri, 24th August 2018</pubDate>
+            <pubDate>Tue, 28th August 2018</pubDate>
         </item>
--->
         <item>
             <title>Atlassian Summit 2017 was awesome!</title>
             <link>https://www.atlassian.com/atlascamp/2017/archives/build-addons/creating-your-own-server-add-on-that-customizes-confluence-or-jira</link>

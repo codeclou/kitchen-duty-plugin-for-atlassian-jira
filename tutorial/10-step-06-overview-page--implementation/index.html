@@ -1168,16 +1168,188 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
                     <div class="list-group-item cs-source-point-list__item">
                         The URL should map to <code>/year/{year}/month/{month}</code>
                         so that we can query for e.g. <code>/year/2018/month/08</code>
+                        and get all isoWeeks for that month. We always get 5 weeks.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-x
+                        Get all iso weeks in that month.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-x
+                        Query the database and get existing Week Object.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Get the users for that week (nullsafe = return empty list if no users found)
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Map the user objects to stringified usernames.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Now we build our event list as <code>KitchenDutyOverviewPageMonthDutyModel</code>
+                        objects with isoWeek, start-date and end-date.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <code>getFirstDayOfWeekOfYear()</code> gets you the date of the first day of the week (sunday).
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <code>getLastDayOfWeekOfYear()</code> gets you the date of the last day of the week (saturday).
                     </div>
                 </div>
             </div>
         </div>
+
+        <p>The pojo for the week-events with start and end-date. The rest will be mapped in the JS controller.</p>
+
+        
+
+<div class="cs-code-filename">
+    
+    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                            data-toggle="tooltip"
+                                                            data-placement="right"
+                                                            title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyOverviewPageMonthDutyModel.java
+    
+    
+    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyOverviewPageMonthDutyModel.java" target="_blank"
+       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+    
+    <a class="cs-code-copylink cs--trigger-copy-clipboard"
+       data-toggle="tooltip" data-placement="left"
+       data-title-orig="Copy file content to clipboard"
+       title="Copy file content to clipboard"
+       data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
+
+/*
+ * We want this entity to be directly usable as full calendar event object
+ * https://fullcalendar.io/docs/event-object
+ */
+@XmlRootElement(name = &quot;duty&quot;)
+@XmlAccessorType(XmlAccessType.FIELD)
+public class KitchenDutyOverviewPageMonthDutyModel {
+
+    @XmlElement
+    private Long isoWeek;
+
+    @XmlElement
+    private String start; /* Date String - First day of week (Sunday) */
+    @XmlElement
+    private String end; /* Date String - Last day of week (Monday) */
+
+    @XmlElement
+    private List&lt;String&gt; users;
+
+    public KitchenDutyOverviewPageMonthDutyModel(Long isoWeek, String start, String end, List&lt;String&gt; users) {
+        this.start = start;
+        this.end = end;
+        this.isoWeek = isoWeek;
+        this.users = users;
+    }
+
+    public Long getIsoWeek() {
+        return isoWeek;
+    }
+
+    public void setIsoWeek(Long isoWeek) {
+        this.isoWeek = isoWeek;
+    }
+
+    public List&lt;String&gt; getUsers() {
+        return users;
+    }
+
+    public void setUsers(List&lt;String&gt; users) {
+        this.users = users;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+}"><i class="fa fa-files-o"></i></a>
+</div>
+
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessType;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessorType;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlElement;
+<span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlRootElement;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-comment">/*
+ * We want this entity to be directly usable as full calendar event object
+ * https://fullcalendar.io/docs/event-object
+ */</span>
+<span class="hljs-annotation">@XmlRootElement</span>(name = <span class="hljs-string">"duty"</span>)
+<span class="hljs-annotation">@XmlAccessorType</span>(XmlAccessType.FIELD)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyOverviewPageMonthDutyModel</span> </span>{
+
+    <span class="hljs-annotation">@XmlElement</span>
+    <span class="hljs-keyword">private</span> Long isoWeek;
+
+    <span class="hljs-annotation">@XmlElement</span>
+    <span class="hljs-keyword">private</span> String start; <span class="hljs-comment">/* Date String - First day of week (Sunday) */</span>
+    <span class="hljs-annotation">@XmlElement</span>
+    <span class="hljs-keyword">private</span> String end; <span class="hljs-comment">/* Date String - Last day of week (Monday) */</span>
+
+    <span class="hljs-annotation">@XmlElement</span>
+    <span class="hljs-keyword">private</span> List&lt;String&gt; users;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">KitchenDutyOverviewPageMonthDutyModel</span><span class="hljs-params">(Long isoWeek, String start, String end, List&lt;String&gt; users)</span> </span>{
+        <span class="hljs-keyword">this</span>.start = start;
+        <span class="hljs-keyword">this</span>.end = end;
+        <span class="hljs-keyword">this</span>.isoWeek = isoWeek;
+        <span class="hljs-keyword">this</span>.users = users;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Long <span class="hljs-title">getIsoWeek</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> isoWeek;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setIsoWeek</span><span class="hljs-params">(Long isoWeek)</span> </span>{
+        <span class="hljs-keyword">this</span>.isoWeek = isoWeek;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;String&gt; <span class="hljs-title">getUsers</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> users;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setUsers</span><span class="hljs-params">(List&lt;String&gt; users)</span> </span>{
+        <span class="hljs-keyword">this</span>.users = users;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getStart</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> start;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setStart</span><span class="hljs-params">(String start)</span> </span>{
+        <span class="hljs-keyword">this</span>.start = start;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getEnd</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> end;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setEnd</span><span class="hljs-params">(String end)</span> </span>{
+        <span class="hljs-keyword">this</span>.end = end;
+    }
+}</code></pre>
 
 
         <p>The <strong>date calculation helpers <code>getIsoWeeksOfMonth()</code>, <code>getFirstDayOfWeekOfYear()</code> and <code>getLastDayOfWeekOfYear()</code> are defined in <code>BaseResource.java</code></strong>.</p>
@@ -1282,7 +1454,7 @@ public class BaseResource {
           .with(ChronoField.DAY_OF_WEEK, <span class="hljs-number">1</span>).minusDays(<span class="hljs-number">1</span>);
   }
 
-  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LocalDate <span class="hljs-title">getLastDayOfWeekOfYear</span><span class="hljs-params">(Long year, Long isoWeek)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="1"></span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LocalDate <span class="hljs-title">getLastDayOfWeekOfYear</span><span class="hljs-params">(Long year, Long isoWeek)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="4"></span>
       <span class="hljs-keyword">return</span> getFirstDayOfWeekOfYear(year, isoWeek).plusDays(<span class="hljs-number">6</span>);
   }
 }</code></pre>
@@ -1291,13 +1463,23 @@ public class BaseResource {
             <div class="col-md-5 cs-sticky-in-parent">
                 <div class="list-group cs-source-point-list" data-source-target="sg4ddf">
                     <div class="list-group-item cs-source-point-list__item">
-                     x
+                        <code>getIsoWeeksOfMonth()</code> returns five weeks with iso week numbers
+                        for given year and month.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-x
+                        <code>getWeekOfMonth()</code> returns the iso week number
+                        for given year, month and weekInMonth. Ok if it sounds confusing look
+                        at the Unit Test. But simply said this methods converts
+                        week 1-5 of a specific month to the iso week number which represents basically the week
+                        of a year.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-x
+                        <code>getFirstDayOfWeekOfYear()</code> returns the first day of the week (sunday)
+                        for a given year and isoWeek.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        <code>getLastDayOfWeekOfYear()</code> returns the last day of the week (saturday)
+                        for a given year and isoWeek.
                     </div>
                 </div>
             </div>
@@ -1436,64 +1618,58 @@ public class BaseResourceTest {
 
 
 
-<!--
+        <p>Ok if we now do a curl on the Endpoint it looks like this:</p>
 
 
+        
+<div class="cs-shell">
+    <div class="cs-shell__inner">
+        <a class="cs-shell__copy-clipboard cs--trigger-copy-clipboard" data-clipboard-text="curl --user admin:admin http://localhost:2990/jira/rest/kitchenduty/1.0/overview_page/year/2018/month/3"
+           data-toggle="tooltip" data-placement="left"
+           data-title-orig="Copy file content to clipboard"
+           title="Copy file content to clipboard"><i class="fa fa-files-o"></i></a>
 
-
-====
-
-New KitchenDutyOverviewPageMonthDutyModel
-New KitchenDutyOverviewPageResource
-New BaseResource => isoDate Function + UnitTest
-
-http://localhost:2990/jira/rest/kitchenduty/1.0/overview_page/year/2018/month/9
-
-Response
-
-====
-[
+        curl --user admin:admin http://localhost:2990/jira/rest/kitchenduty/1.0/overview_page/year/2018/month/3<br>
+        <pre class="cs-shell__output"><code class="hljs cs-shell__output-hljs">[
   {
-    "isoWeek": 10,
-    "start": "2018-03-04",
-    "end": "2018-03-10",
-    "users": [
-
-    ]
+    <span class="hljs-string">"isoWeek"</span>: <span class="hljs-number">10</span>,
+    <span class="hljs-string">"start"</span>: <span class="hljs-string">"2018-03-04"</span>,
+    <span class="hljs-string">"end"</span>: <span class="hljs-string">"2018-03-10"</span>,
+    <span class="hljs-string">"users"</span>: [ ]
   },
   {
-    "isoWeek": 11,
-    "start": "2018-03-11",
-    "end": "2018-03-17",
-    "users": [ "admin" ]
+    <span class="hljs-string">"isoWeek"</span>: <span class="hljs-number">11</span>,
+    <span class="hljs-string">"start"</span>: <span class="hljs-string">"2018-03-11"</span>,
+    <span class="hljs-string">"end"</span>: <span class="hljs-string">"2018-03-17"</span>,
+    <span class="hljs-string">"users"</span>: [ <span class="hljs-string">"admin"</span> ]
   },
   {
-    "isoWeek": 12,
-    "start": "2018-03-18",
-    "end": "2018-03-24",
-    "users": [
-
-    ]
+    <span class="hljs-string">"isoWeek"</span>: <span class="hljs-number">12</span>,
+    <span class="hljs-string">"start"</span>: <span class="hljs-string">"2018-03-18"</span>,
+    <span class="hljs-string">"end"</span>: <span class="hljs-string">"2018-03-24"</span>,
+    <span class="hljs-string">"users"</span>: [ ]
   },
   {
-    "isoWeek": 13,
-    "start": "2018-03-25",
-    "end": "2018-03-31",
-    "users": [
-
-    ]
+    <span class="hljs-string">"isoWeek"</span>: <span class="hljs-number">13</span>,
+    <span class="hljs-string">"start"</span>: <span class="hljs-string">"2018-03-25"</span>,
+    <span class="hljs-string">"end"</span>: <span class="hljs-string">"2018-03-31"</span>,
+    <span class="hljs-string">"users"</span>: [ ]
   },
   {
-    "isoWeek": 14,
-    "start": "2018-04-01",
-    "end": "2018-04-07",
-    "users": [
-
-    ]
+    <span class="hljs-string">"isoWeek"</span>: <span class="hljs-number">14</span>,
+    <span class="hljs-string">"start"</span>: <span class="hljs-string">"2018-04-01"</span>,
+    <span class="hljs-string">"end"</span>: <span class="hljs-string">"2018-04-07"</span>,
+    <span class="hljs-string">"users"</span>: [ ]
   }
-]
-====
--->
+]</code></pre>
+
+    </div>
+</div>
+
+
+
+    <p>The code for our endpoint is complete now. Let's move on.</p>
+
 
     <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page Webwork Action</h3>
         

@@ -14,11 +14,11 @@ public class BaseResourceTest {
     public void testGetIsoWeeksOfMonth() {
         List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 8L);
 
-        assertEquals(Long.valueOf(31), isoWeeks.get(0));
-        assertEquals(Long.valueOf(32), isoWeeks.get(1));
-        assertEquals(Long.valueOf(33), isoWeeks.get(2));
-        assertEquals(Long.valueOf(34), isoWeeks.get(3));
-        assertEquals(Long.valueOf(35), isoWeeks.get(4));
+        assertEquals(Long.valueOf(32), isoWeeks.get(0));
+        assertEquals(Long.valueOf(33), isoWeeks.get(1));
+        assertEquals(Long.valueOf(34), isoWeeks.get(2));
+        assertEquals(Long.valueOf(35), isoWeeks.get(3));
+        assertEquals(Long.valueOf(36), isoWeeks.get(4));
 
         List<Long> isoWeeks2 = BaseResource.getIsoWeeksOfMonth(2018L, 2L);
 
@@ -30,11 +30,11 @@ public class BaseResourceTest {
 
         List<Long> isoWeeks3 = BaseResource.getIsoWeeksOfMonth(2018L, 5L);
 
-        assertEquals(Long.valueOf(18), isoWeeks3.get(0));
-        assertEquals(Long.valueOf(19), isoWeeks3.get(1));
-        assertEquals(Long.valueOf(20), isoWeeks3.get(2));
-        assertEquals(Long.valueOf(21), isoWeeks3.get(3));
-        assertEquals(Long.valueOf(22), isoWeeks3.get(4));
+        assertEquals(Long.valueOf(19), isoWeeks3.get(0));
+        assertEquals(Long.valueOf(20), isoWeeks3.get(1));
+        assertEquals(Long.valueOf(21), isoWeeks3.get(2));
+        assertEquals(Long.valueOf(22), isoWeeks3.get(3));
+        assertEquals(Long.valueOf(23), isoWeeks3.get(4));
     }
 
 

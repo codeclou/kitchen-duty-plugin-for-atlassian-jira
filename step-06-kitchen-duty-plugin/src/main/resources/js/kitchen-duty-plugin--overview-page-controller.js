@@ -14,9 +14,9 @@ AJS.toInit(function(){
         height: 500,
         fixedWeekCount: false,
         events: function(start, end, timezone, callback) {
-            var year = moment(start).format('YYYY');
             // Full Calender always starts month with days of previous month.
             // We add 10 days to get month we want.
+            var year = moment(start).add('days', 10).format('YYYY');
             var month = moment(start).add('days', 10).format('M');
             AJS.$.ajax({
                 url: window.KDPrestUrl + '/overview_page/year/' + year + '/month/' + month,

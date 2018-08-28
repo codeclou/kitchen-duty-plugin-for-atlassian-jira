@@ -14,12 +14,8 @@
     <div class="col-md-12">
         {{ headline('Kitchen Duty Overview Page', 'm') }}
 
-
-        {{ weAreWorkingOnIt() }}
-
-
         <p>
-            Ok before we continue any further we need to clean up some <strong>technical debt</strong>.
+            Before we continue any further we need to clean up some <strong>technical debt</strong>.
             I just realised the <strong>REST API Endpoints are not secured</strong> also the <strong>database spaghetti code</strong>
             really bugs me out. Therefore here are some completely unrelated but necessary things we need to do.
         </p>
@@ -699,11 +695,11 @@
             |    public void testGetIsoWeeksOfMonth() {
             |        List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 8L);
             |
-            |        assertEquals(Long.valueOf(31), isoWeeks.get(0));
-            |        assertEquals(Long.valueOf(32), isoWeeks.get(1));
-            |        assertEquals(Long.valueOf(33), isoWeeks.get(2));
-            |        assertEquals(Long.valueOf(34), isoWeeks.get(3));
-            |        assertEquals(Long.valueOf(35), isoWeeks.get(4));
+            |        assertEquals(Long.valueOf(32), isoWeeks.get(0));
+            |        assertEquals(Long.valueOf(33), isoWeeks.get(1));
+            |        assertEquals(Long.valueOf(34), isoWeeks.get(2));
+            |        assertEquals(Long.valueOf(35), isoWeeks.get(3));
+            |        assertEquals(Long.valueOf(36), isoWeeks.get(4));
             |
             |        List<Long> isoWeeks2 = BaseResource.getIsoWeeksOfMonth(2018L, 2L);
             |
@@ -715,11 +711,11 @@
             |
             |        List<Long> isoWeeks3 = BaseResource.getIsoWeeksOfMonth(2018L, 5L);
             |
-            |        assertEquals(Long.valueOf(18), isoWeeks3.get(0));
-            |        assertEquals(Long.valueOf(19), isoWeeks3.get(1));
-            |        assertEquals(Long.valueOf(20), isoWeeks3.get(2));
-            |        assertEquals(Long.valueOf(21), isoWeeks3.get(3));
-            |        assertEquals(Long.valueOf(22), isoWeeks3.get(4));
+            |        assertEquals(Long.valueOf(19), isoWeeks3.get(0));
+            |        assertEquals(Long.valueOf(20), isoWeeks3.get(1));
+            |        assertEquals(Long.valueOf(21), isoWeeks3.get(2));
+            |        assertEquals(Long.valueOf(22), isoWeeks3.get(3));
+            |        assertEquals(Long.valueOf(23), isoWeeks3.get(4));
             |    }
             |
             |
@@ -740,7 +736,7 @@
         ')}}
 
 
-        <p>Ok if we now do a curl on the Endpoint it looks like this:</p>
+        <p>Ok if we now do a curl on the Endpoint it looks like this. We always get five weeks within the month (or wih minor overlap).</p>
 
 
         {{ csShell(shellCmd='curl --user admin:admin http://localhost:2990/jira/rest/kitchenduty/1.0/overview_page/year/2018/month/3', shellCmdOutput='
@@ -782,111 +778,395 @@
     <p>The code for our endpoint is complete now. Let's move on.</p>
 
 
-    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page Webwork Action</h3>
-        {{ weAreWorkingOnIt() }}
+    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page Webwork Action and WebItems</h3>
 
+    <p>Ok now again comes the ugly XML part. We need a dedicated page that can be accessed by every logged in user to display
+    the calendar. And we need a <a href="https://developer.atlassian.com/server/jira/platform/web-item/">Web Item</a> link in the top JIRA navigation bar.</p>
+
+    {{ image('doc/step-06-web-item.png', 'Step 6 - Web Item - Link to Overview Page from navigation top bar', '60%') }}
+
+    <p>Also we want to link to the Overview Page from the Planning Page to make navigating easy.</p>
+
+    {{ image('doc/step-06-planning-page-link-to-overview.png', 'Step 6 - Web Item - Link to Overview Page from Planning Page', '60%') }}
+
+
+    <div class="row">
+        <div class="col-md-7">
+            {{ csSource(lang='xml', filepath="src/main/resources/", filename="atlassian-plugin.xml", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='knjbihvutzczdgui', source='
+                |<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+                |  ...
+                |  <web-item key="admin_kitchen_duty_overview_webitem"  {{{point::1}}}
+                |       name="admin_kitchen_duty_overview_webitem"
+                |       section="admin_plugins_menu/admin_kitchen_duty_planning_section"
+                |       weight="14" i18n-name-key="kitchen-duty-plugin.admin.overview.page.web.item.name">
+                |     <label key="kitchen-duty-plugin.admin.overview.page.web.item.name"/>
+                |     <link linkId="admin_kitchen_duty_overview_webitem_link">/secure/KitchenDutyOverviewPageWebworkAction.jspa</link>
+                |  </web-item>
+                |  ...
+                |  <!-- ====================== -->
+                |  <!-- OVERVIEW PAGE -->
+                |  <!-- ====================== -->
+                |  <web-resource key="kitchen-duty-plugin-resources--overview-page" {{{point::2}}}
+                |       name="kitchen-duty-plugin Web Resources for Overview Page">
+                |    <dependency>com.atlassian.auiplugin:ajs</dependency>
+                |    <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency>
+                |    <transformation extension="soy">
+                |      <transformer key="soyTransformer">
+                |        <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+                |      </transformer>
+                |    </transformation>
+                |    <resource type="download" name="momentjs.js"
+                |              location="/js/3rdparty/moment-2.22.2.min.js"/>   {{{point::3}}}
+                |    <resource type="download" name="fullcalendar.js"
+                |              location="/js/3rdparty/fullcalendar-3.9.0.min.js"/>   {{{point::4}}}
+                |    <resource type="download" name="fullcalendar.css"
+                |              location="/css/3rdparty/fullcalendar-3.9.0.min.css"/>   {{{point::5}}}
+                |    <resource type="download" name="kitchen-duty-overview-soy.js"
+                |              location="templates-soy/kitchen-duty-overview.soy"/>     {{{point::6}}}
+                |    <resource type="download" name="kitchen-duty-plugin--overview-page-controller.js"
+                |              location="/js/kitchen-duty-plugin--overview-page-controller.js"/>   {{{point::7}}}
+                |    <context>kitchen-duty-plugin</context>
+                |  </web-resource>
+                |  <webwork1 key="kitchen-duty-overview-page-webwork-module"
+                |            name="Kitchen Duty Overview Page Webwork Module"
+                |            i18n-name-key="kitchen-duty-overview-page-webwork-module.name"
+                |            roles-required="use">  {{{point::8}}}
+                |    <description
+                |      key="kitchen-duty-overview-page-webwork-module.description"
+                |    >The Kitchen Duty Overview Page Webwork Module Plugin</description>
+                |    <actions>
+                |      <action name="com.comsysto.kitchen.duty.webwork.KitchenDutyOverviewPageWebworkAction"
+                |              alias="KitchenDutyOverviewPageWebworkAction"> {{{point::9}}}
+                |        <view
+                |          name="kitchen-duty-overview-page-success" {{{point::10}}}
+                |        >/templates/kitchen-duty-overview-page-webwork-module/kitchen-duty-overview-page-success.vm</view>
+                |      </action>
+                |    </actions>
+                |  </webwork1>
+                |  <web-item key="user_kitchen_duty_overview_webitem" {{{point::11}}}
+                |            name="user_kitchen_duty_overview_webitem"
+                |            section="system.top.navigation.bar"
+                |            weight="60"
+                |            i18n-name-key="kitchen-duty-plugin.user.overview.page.web.item.name">
+                |    <label key="kitchen-duty-plugin.user.overview.page.web.item.name"/>
+                |    <link
+                |      linkId="user_kitchen_duty_overview_webitem_link"
+                |    >/secure/KitchenDutyOverviewPageWebworkAction.jspa</link>
+                |  </web-item>
+                |  ...
+                |</atlassian-plugin>
+                ')}}
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="knjbihvutzczdgui">
+                    <div class="list-group-item cs-source-point-list__item">
+                        First we need a link to the Overview Page from the side navigation when we are on the Planning Page.
+                        You can see it in the screenshot above.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We define a dedicated web-resource section to provide CSS, JS and Soy resources for the Overview Page.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We reuse the moment-js library we already used on the planning page since the full calendar library depends on moment-js.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Next we put a copy of fullcalendar.min.js to <code>src/main/resources/js/3rdparty</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The full calendar also needs a copy of fullcalendar.min.css to <code>src/main/resources/css/3rdparty</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        For the Overview Page we also define a dedicated soy template in <code>src/main/resources/js/kitchen-duty-plugin--overview-page-controller.js</code>.
+                        We will create the file later in full detail.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The Overview Page has its own JS-controller in <code>src/main/resources/js/kitchen-duty-overview.soy</code>.
+                        We will create the file later in full detail.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The actual page is defined as a web work module. The <code>roles-required="use"</code> ensures only logged in users
+                        can view the page.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The module contains the actual action to the <code>KitchenDutyOverviewPageWebworkAction.java</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        As usual we define a velocity template for our web work action in <code>src/main/resources/templates/kitchen-duty-overview-page-webwork-module/kitchen-duty-overview-page-success.vm</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Lastly we define a web-item with the link to the Overview Page in the JIRA top navigation bar.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>All these xml things have <strong>i18n keys which we need to put in our translation file</strong>. Keep in mind that encoding for property files is ISO 8859-1.</p>
+
+        {{ csSource(lang='ini', filepath="src/main/resources/", filename="kitchen-duty-plugin.properties", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='kmjihuzt76890', source='
+        |# admin
+        |kitchen-duty-plugin.admin.overview.page.web.item.name = Overview Page
+        |
+        |# kitchen-duty-overview-page-success.vm
+        |kitchen-duty-plugin.user.overview.page.title = Kitchen Duty Plugin - Overview Page
+        |
+        |# webitem
+        |kitchen-duty-plugin.user.overview.page.web.item.name = Kitchen Duty
+        ') }}
+
+        <p>Now we define our <strong>web work action</strong> that displays the velocity template and loads the overview page resources.</p>
+
+        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/webwork/", filename="KitchenDutyOverviewPageWebworkAction.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='ckjnihbugvzf8', source='
+        |package com.comsysto.kitchen.duty.webwork;
+        |
+        |import com.atlassian.jira.web.action.JiraWebActionSupport;
+        |import com.atlassian.webresource.api.assembler.PageBuilderService;
+        |import org.slf4j.Logger;
+        |import org.slf4j.LoggerFactory;
+        |
+        |import javax.inject.Inject;
+        |import javax.inject.Named;
+        |
+        |@Named
+        |public class KitchenDutyOverviewPageWebworkAction extends JiraWebActionSupport
+        |{
+        |    private static final Logger log = LoggerFactory.getLogger(KitchenDutyOverviewPageWebworkAction.class);
+        |
+        |    @Inject
+        |    private PageBuilderService pageBuilderService;
+        |
+        |    @Override
+        |    public String execute() throws Exception {
+        |        pageBuilderService.assembler().resources()
+        |            .requireWebResource("com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources")
+        |            .requireWebResource("com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources--overview-page");
+        |
+        |        return "kitchen-duty-overview-page-success";
+        |    }
+        |
+        |    public void setPageBuilderService(PageBuilderService pageBuilderService) {
+        |        this.pageBuilderService = pageBuilderService;
+        |    }
+        |}
+        ') }}
+
+        <p>
+            Let's also create the <strong>velocity success template</strong> now.
+            On non-admin pages you have to define the <a href="https://docs.atlassian.com/aui/7.9.5/docs/navigation.html">Navigation</a> by yourself.
+            Also read the doc about <a href="https://docs.atlassian.com/aui/7.9.5/docs/page.html">Page</a>.
+            We simply define a div with id <code>kdp-overview-page-container</code> to hook in with our JS-controller.
+        </p>
+
+        {{ csSource(lang='html', filepath="src/main/resources/templates/kitchen-duty-overview-page-webwork-module/", filename="kitchen-duty-overview-page-success.vm", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='kijuzg7tf6r5678io', source='
+        |<html>
+        |<head>
+        |    <title>$i18n.getText("kitchen-duty-plugin.user.overview.page.title")</title>
+        |    <meta name="decorator" content="atl.general"/>
+        |</head>
+        |<body>
+        |<div id="page">
+        |    <section id="content" role="main">
+        |
+        |        <header class="aui-page-header">
+        |            <div class="aui-page-header-inner">
+        |                <div class="aui-page-header-main">
+        |                    <h1>Kitchen Duty</h1>
+        |                </div>
+        |            </div>
+        |        </header>
+        |
+        |        <div class="aui-page-panel">
+        |            <div class="aui-page-panel-inner">
+        |                <div class="aui-page-panel-nav">
+        |                    <nav class="aui-navgroup aui-navgroup-vertical">
+        |                        <div class="aui-navgroup-inner">
+        |                            <ul class="aui-nav">
+        |                                <li class="aui-nav-selected"><a href="${req.contextPath}/secure/KitchenDutyOverviewPageWebworkAction.jspa">Overview Page</a></li>
+        |                                <li><a href="${req.contextPath}/secure/KitchenDutyPlanningWebworkAction.jspa">Planning Page</a></li>
+        |                            </ul>
+        |                        </div>
+        |                    </nav>
+        |                </div>
+        |                <section class="aui-page-panel-content">
+        |                    <div id="kdp-overview-page-container"></div>
+        |                </section>
+        |            </div>
+        |        </div>
+        |    </section>
+        |</div>
+        |</body>
+        |</html>
+        ') }}
+
+    <p>When clicking on 'Kitchen Duty' in the JIAR top bar now it should look like this.</p>
+
+    {{ image('doc/step-06-overview-page-velocity.png', 'Step 6 - Velocity and Web work action - Overview Page', '60%') }}
+
+    <p>Ok that was now the server-side part of the overview page. Let's move on to the client-side.</p>
+
+
+
+
+
+    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page JS Controller and Soy Templates</h3>
+
+    <p>As we already did it on the planning page, we again have a JS-controller using soy-templates
+    and some logic to display the <a href="https://fullcalendar.io/">full calendar</a> with data from REST Endpoints on the page.</p>
+
+    <p>Ok to be honest we could just skip using the soy template here since we do not really need it right now.
+        Also do we want to follow a convention for building our pages, so that we can easily extend them in the future</p>
+
+
+
+
+        {{ csSource(lang='soy', filepath="src/main/resources/templates-soy/", filename="kitchen-duty-overview.soy", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fdsfdsr4dg6dfg', source='
+            |{namespace JIRA.Templates.KDPO}
+            |/**
+            | * Kitchen Duty Overview Page - Base Template
+            | */
+            |{template .overviewPage}
+            |    <div id="kdp-overview">
+            |        <div id="kdp-calendar"></div>
+            |    </div>
+            |{/template}
+        ')}}
+
+        <p>Now comes the actual <strong>controller logic to display the calendar with kitchen duty data from the REST API</strong>.</p>
+
+        <div class="row">
+            <div class="col-md-7">
+                {{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin--overview-page-controller.js", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='bhvgcfrd546857io8giubhvgj', source="
+                    |AJS.toInit(function(){
+                    |    AJS.log('KDP: Overview Page Controller initializing ...');
+                    |    var baseUrl = AJS.params.baseURL;
+                    |    var restUrl = baseUrl + '/rest/kitchenduty/1.0';
+                    |    window.KDPrestUrl = restUrl;
+                    |
+                    |    // Init Base SOY template
+                    |    var overviewPageTemplate = JIRA.Templates.KDPO.overviewPage(); {{{point::1}}}
+                    |    AJS.$('#kdp-overview-page-container').html(overviewPageTemplate);
+                    |
+                    |    AJS.$('#kdp-calendar').fullCalendar({ {{{point::2}}}
+                    |        defaultView: 'month', {{{point::3}}}
+                    |        weekNumbers: true, {{{point::4}}}
+                    |        height: 500,
+                    |        fixedWeekCount: false,
+                    |        events: function(start, end, timezone, callback) { {{{point::5}}}
+                    |            // Full calendar always starts month with days of previous month.
+                    |            // We add 10 days to get month we want.
+                    |            var year = moment(start).add('days', 10).format('YYYY'); {{{point::6}}}
+                    |            var month = moment(start).add('days', 10).format('M'); {{{point::7}}}
+                    |            AJS.$.ajax({ {{{point::8}}}
+                    |                url: window.KDPrestUrl + '/overview_page/year/' + year + '/month/' + month,
+                    |                dataType: 'json',
+                    |                success: function(rawEvents) {
+                    |                    var events = [];
+                    |                    AJS.$(rawEvents).each(function() { {{{point::9}}}
+                    |                        var users = AJS.$(this).attr('users');
+                    |                        events.push({
+                    |                            title: users.join(', '), {{{point::10}}}
+                    |                            start: AJS.$(this).attr('start'),
+                    |                            end: AJS.$(this).attr('end'),
+                    |                            color: users.length > 0 ? '#36B37E' : '#FFAB00', {{{point::11}}}
+                    |                        });
+                    |                    });
+                    |                    callback(events);
+                    |                }
+                    |            });
+                    |        }
+                    |    });
+                    |});
+                ")}}
+            </div>
+            <div class="col-md-5 cs-sticky-in-parent">
+                <div class="list-group cs-source-point-list" data-source-target="bhvgcfrd546857io8giubhvgj">
+                    <div class="list-group-item cs-source-point-list__item">
+                        Load the overviewPage soy template and inject it into the DOM.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Initialize the <a href="https://fullcalendar.io/">full calendar</a> in the div with id <code>kdp-calendar</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We set the <a href="https://fullcalendar.io/docs/month-view"><code>defaultView</code> to month</a>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We also want the <a href="https://fullcalendar.io/docs/week-numbers">week numbers displayed</a>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Via the <a href="https://fullcalendar.io/docs/events-function">Events Function</a>
+                        we fill the calendar with out kitchen duty 'events' representing each week.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        The <code>start</code> variable contains the start date of the calendar view.
+                        Since we are in the month view the start date is usually some day of the previous month
+                        therefore we add 10 days to get a date in the actual current month. Via moment-js we get the year.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We do the same to get the current month displayed in the calendar.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Via ajax GET request we call our <code>/overview_page/year/:year/month/:month</code>
+                        REST Endpoint with the month and year we get from the calendar api.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        We iterate over the <code>rawEvents</code> which are in the form of
+                        <code>[ { "isoWeek": 10, "start": "2018-03-04", "end": "2018-03-10", "users": [ "bob", "steve" ] } ]</code>.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        Since we need to build <a href="https://fullcalendar.io/docs/event-object">full calendar event objects</a>
+                        in form of
+                        <code>[ { "start": "2018-03-04", "end": "2018-03-10", "title": "bob, steve", "color": "#ff0000" } ]</code>
+                        we map our values. As <code>title</code> we concatenate the users into one string.
+                    </div>
+                    <div class="list-group-item cs-source-point-list__item">
+                        As <code>color</code> we display green (#36B37E) if the week has assigned users.
+                        And we display orange (#FFAB00) if no users are assigned to week.
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 <!--
-KitchenDutyOverviewPageWebworkAction
- => atlas.xml => Roles-Required="use" => https://developer.atlassian.com/server/jira/platform/webwork/#Webworkpluginmodule-RolesRequired
- => velocity.vm
- => js controller file /js/kitchen-duty-plugin-...-planning-overview-controller.js
- => i18n kitchen-duty-plugin.properties
- => new soy file
- => fullcalendar needs moment.js!
- => https://fullcalendar.io/ js file to js/3rdparty/ and css/3rdparty  => CDN =>
-    https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js
-    https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css
 
 
-Cleanup: Move flag stuff to common js file from kitchen-duty-plugin-...-planning-page-controller.js
+events
 -->
 
 
+        <p>Lastly - since we might use the code to display <a href="https://docs.atlassian.com/aui/7.9.5/docs/flag.html">AUI Flags</a> in both controllers - <strong>we move the common code to <code>kitchen-duty-plugin.js</code></strong>.</p>
+
+        {{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin.js", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fdg6dfr67z6rg', source="
+        |//
+        |// COMMON CODE
+        |//
+        |var showSuccessFlag = function(message) {
+        |    require(['aui/flag'], function(flag) {
+        |        flag({
+        |            type: 'success',
+        |            title: 'Kitchen Duty Plugin',
+        |            close: 'auto',
+        |            body: message
+        |        });
+        |    });
+        |};
+        |var showErrorFlag = function(message) {
+        |    require(['aui/flag'], function(flag) {
+        |        flag({
+        |            type: 'error',
+        |            title: 'Kitchen Duty Plugin',
+        |            close: 'auto',
+        |            body: message
+        |        });
+        |    });
+        |};
+        ")}}
 
 
-    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page WebItem</h3>
+        <p>That's it. Now we can run our plugin with <code>atlas-run</code> and when navigating to <a href="http://localhost:2990/jira/secure/KitchenDutyPlanningWebworkAction.jspa">http://localhost:2990/jira/secure/KitchenDutyOverviewPageWebworkAction.jspa</a>
+        it should work as you can see below. <strong>We are completely done implementing the Kitchen Duty Overview Page</strong>.</p>
 
-        {{ weAreWorkingOnIt() }}
+        {{ image('doc/step-06-overview-page-working.gif', 'Step 6 - Overview Page working', '60%') }}
 
-
-<!--
-WebItem: https://developer.atlassian.com/server/jira/platform/web-item/
- - atlas.xml + i18n => top nav bar
- - Also a WebItem for Admin to link back to overview page
--->
-
-
-
-
-
-    <h3 class="cs-headline cs-headline--s">Kitchen Duty Overview Page JS Controller</h3>
-
-    <p>Some JavaScript logic to display the calender with data from REST Endpoints on the page.</p>
-
-        {{ weAreWorkingOnIt() }}
-
-
-<!--
-
-https://fullcalendar.io/
-
-
-Week Numbers in the months view.
-https://fullcalendar.io/docs/week-numbers
-https://fullcalendar.io/docs/weekNumbers-demo
-
-  $('#calendar').fullCalendar({
-    defaultView: 'month',
-    weekNumbers: true
-  });
-
-
-events https://fullcalendar.io/docs/events-function
--->
-{{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin--overview-page-controller.js", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fdg6dfg', source="
-    |AJS.toInit(function(){
-    |    AJS.log('KDP: Overview Page Controller initializing ...');
-    |    var baseUrl = AJS.params.baseURL;
-    |    var restUrl = baseUrl + '/rest/kitchenduty/1.0';
-    |    window.KDPrestUrl = restUrl;
-    |
-    |    // Init Base SOY template
-    |    var overviewPageTemplate = JIRA.Templates.KDPO.overviewPage();
-    |    AJS.$('#kdp-overview-page-container').html(overviewPageTemplate);
-    |
-    |    AJS.$('#kdp-calendar').fullCalendar({
-    |        defaultView: 'month',
-    |        weekNumbers: true,
-    |        height: 500,
-    |        fixedWeekCount: false,
-    |        events: function(start, end, timezone, callback) {
-    |            var year = moment(start).format('YYYY');
-    |            // Full Calender always starts month with days of previous month.
-    |            // We add 10 days to get month we want.
-    |            var month = moment(start).add('days', 10).format('M');
-    |            AJS.$.ajax({
-    |                url: window.KDPrestUrl + '/overview_page/year/' + year + '/month/' + month,
-    |                dataType: 'json',
-    |                success: function(rawEvents) {
-    |                    var events = [];
-    |                    AJS.$(rawEvents).each(function() {
-    |                        var users = AJS.$(this).attr('users');
-    |                        events.push({
-    |                            title: users.join(', '),
-    |                            start: AJS.$(this).attr('start'),
-    |                            end: AJS.$(this).attr('end'),
-    |                            color: users.length > 0 ? '#36B37E' : '#FFAB00',
-    |                        });
-    |                    });
-    |                    callback(events);
-    |                }
-    |            });
-    |        }
-    |    });
-    |});
-")}}
 
 
         <div class="cs-v-spacer"></div>

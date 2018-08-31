@@ -407,7 +407,7 @@
         <p>
             But since we checked the <a href="https://fullcalendar.io/docs/event-object">Events Object Spec of Full Calendar</a> we know that for a
             valid event we need <strong>the start and the end date</strong>.
-            We want an events representing a week which means sunday is the start date and saturday the end date.
+            We want an event representing a week which means sunday is the start date and saturday the end date.
             It is possible to calculate that in JavaScript but I decided to do it in Java.
         </p>
 
@@ -501,7 +501,7 @@
                 <div class="list-group cs-source-point-list" data-source-target="mdsihjsdfdv8">
                     <div class="list-group-item cs-source-point-list__item">
                         The URL should map to <code>/year/{year}/month/{month}</code>
-                        so that we can query for e.g. <code>/year/2018/month/08</code>
+                        so that we can query for e.g. <code>/year/2018/month/8</code>
                         and get all isoWeeks for that month. We always get 5 weeks.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
@@ -736,7 +736,7 @@
         ')}}
 
 
-        <p>Ok if we now do a curl on the Endpoint it looks like this. We always get five weeks within the month (or wih minor overlap).</p>
+        <p>Ok if we now do a curl on the Endpoint it looks like this. We always get five weeks within the month (or with minor overlap).</p>
 
 
         {{ csShell(shellCmd='curl --user admin:admin http://localhost:2990/jira/rest/kitchenduty/1.0/overview_page/year/2018/month/3', shellCmdOutput='
@@ -876,11 +876,11 @@
                         The full calendar also needs a copy of fullcalendar.min.css to <code>src/main/resources/css/3rdparty</code>.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        For the Overview Page we also define a dedicated soy template in <code>src/main/resources/js/kitchen-duty-plugin--overview-page-controller.js</code>.
+                        For the Overview Page we also define a dedicated soy template in <code>src/main/resources/templates-soy/kitchen-duty-overview.soy</code>.
                         We will create the file later in full detail.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        The Overview Page has its own JS-controller in <code>src/main/resources/js/kitchen-duty-overview.soy</code>.
+                        The Overview Page has its own JS-controller in <code>src/main/resources/js/kitchen-duty-plugin--overview-page-controller.js</code>.
                         We will create the file later in full detail.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
@@ -997,7 +997,7 @@
         |</html>
         ') }}
 
-    <p>When clicking on 'Kitchen Duty' in the JIAR top bar now it should look like this.</p>
+    <p>When clicking on 'Kitchen Duty' in the JIRA top bar now it should look like this.</p>
 
     {{ image('doc/step-06-overview-page-velocity.png', 'Step 6 - Velocity and Web work action - Overview Page', '60%') }}
 
@@ -1013,7 +1013,7 @@
     and some logic to display the <a href="https://fullcalendar.io/">full calendar</a> with data from REST Endpoints on the page.</p>
 
     <p>Ok to be honest we could just skip using the soy template here since we do not really need it right now.
-        Also do we want to follow a convention for building our pages, so that we can easily extend them in the future</p>
+        But it is always good to follow common conventions for building our pages, so that we can easily extend them in the future.</p>
 
 
 
@@ -1093,12 +1093,12 @@
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         Via the <a href="https://fullcalendar.io/docs/events-function">Events Function</a>
-                        we fill the calendar with out kitchen duty 'events' representing each week.
+                        we fill the calendar with our kitchen duty 'events' representing each week.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         The <code>start</code> variable contains the start date of the calendar view.
                         Since we are in the month view the start date is usually some day of the previous month
-                        therefore we add 10 days to get a date in the actual current month. Via moment-js we get the year.
+                        therefore we add 10 days to get a date within the current month. Via moment-js we get the year.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         We do the same to get the current month displayed in the calendar.

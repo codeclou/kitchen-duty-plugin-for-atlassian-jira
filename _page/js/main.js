@@ -302,20 +302,22 @@ var initToggleSidebarByState = function() {
         sidebarWrapper.addClass('cs-sidebar-wrapper--isopen');
     }
     var toggleSidebarButton = document.getElementById('toggleSidebarButton');
-    toggleSidebarButton.addEventListener('click', function() {
-        var contentWrapper = $('.cs-content-wrapper');
-        var sidebarWrapper = $('.cs-sidebar-wrapper');
+    if (toggleSidebarButton !== undefined && toggleSidebarButton !== null) {
+        toggleSidebarButton.addEventListener('click', function() {
+            var contentWrapper = $('.cs-content-wrapper');
+            var sidebarWrapper = $('.cs-sidebar-wrapper');
 
-        if (contentWrapper.hasClass('cs-content-wrapper--isopen')) {
-            contentWrapper.removeClass('cs-content-wrapper--isopen');
-            sidebarWrapper.removeClass('cs-sidebar-wrapper--isopen');
-            sessionStorage.setItem('cs-kitchen-duty-sidebar-open', 'closed');
-        } else {
-            contentWrapper.addClass('cs-content-wrapper--isopen');
-            sidebarWrapper.addClass('cs-sidebar-wrapper--isopen');
-            sessionStorage.setItem('cs-kitchen-duty-sidebar-open', 'open');
-        }
-    });
+            if (contentWrapper.hasClass('cs-content-wrapper--isopen')) {
+                contentWrapper.removeClass('cs-content-wrapper--isopen');
+                sidebarWrapper.removeClass('cs-sidebar-wrapper--isopen');
+                sessionStorage.setItem('cs-kitchen-duty-sidebar-open', 'closed');
+            } else {
+                contentWrapper.addClass('cs-content-wrapper--isopen');
+                sidebarWrapper.addClass('cs-sidebar-wrapper--isopen');
+                sessionStorage.setItem('cs-kitchen-duty-sidebar-open', 'open');
+            }
+        });
+    }
 };
 
 /* ================================================================================================ */

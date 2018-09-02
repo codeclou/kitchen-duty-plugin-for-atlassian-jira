@@ -23,7 +23,7 @@
 
 
 
-    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundlev2.css?v2018-09-01--12-50" rel="stylesheet">
+    <link href="/kitchen-duty-plugin-for-atlassian-jira/generated/bundlev2.css?v2018-09-02--12-50" rel="stylesheet">
 
     <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-32.png" type="image/png" sizes="32x32">
     <link rel="icon" href="/kitchen-duty-plugin-for-atlassian-jira/images/favicon-256.png" type="image/png" sizes="256x256">
@@ -868,7 +868,7 @@ public class KitchenDutyActiveObjectHelper {
     // TRANSACTIONAL
     //
 
-    public static Week getWeekByweekInTransaction(ActiveObjects activeObjects, Long weekNumber) { 
+    public static Week getWeekByWeekNumberInTransaction(ActiveObjects activeObjects, Long weekNumber) { 
         return activeObjects.executeInTransaction(new TransactionCallback&lt;Week&gt;() {
             @Override
             public Week doInTransaction() {
@@ -917,7 +917,7 @@ public class KitchenDutyActiveObjectHelper {
     <span class="hljs-comment">// TRANSACTIONAL</span>
     <span class="hljs-comment">//</span>
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Week <span class="hljs-title">getWeekByweekInTransaction</span><span class="hljs-params">(ActiveObjects activeObjects, Long weekNumber)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="fsdsdasfggfsddfsdffej5" data-cs-source-point-number="1"></span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Week <span class="hljs-title">getWeekByWeekNumberInTransaction</span><span class="hljs-params">(ActiveObjects activeObjects, Long weekNumber)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="fsdsdasfggfsddfsdffej5" data-cs-source-point-number="1"></span>
         <span class="hljs-keyword">return</span> activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Week&gt;() {
             <span class="hljs-annotation">@Override</span>
             <span class="hljs-function"><span class="hljs-keyword">public</span> Week <span class="hljs-title">doInTransaction</span><span class="hljs-params">()</span> </span>{
@@ -954,7 +954,7 @@ public class KitchenDutyActiveObjectHelper {
             <div class="col-md-5 cs-sticky-in-parent">
                 <div class="list-group cs-source-point-list" data-source-target="fsdsdasfggfsddfsdffej5">
                     <div class="list-group-item cs-source-point-list__item">
-                       <strong><code>getWeekByweekInTransaction()</code></strong> gives us either an object of <code>Week</code> or <code>null</code> for a certain week number.
+                       <strong><code>getWeekByWeekNumberInTransaction()</code></strong> gives us either an object of <code>Week</code> or <code>null</code> for a certain week number.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                        <strong><code>getUsersAssignedToWeekInTransaction()</code></strong> gives us either a list of <code>List&lt;User&gt;</code> or and empty list for a certain week.
@@ -1096,10 +1096,10 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
         }
         // BUSINESS LOGIC
         List&lt;KitchenDutyOverviewPageMonthDutyModel&gt; responseList = new ArrayList&lt;&gt;();
-        List&lt;Long&gt; weeksInMonth = getweeksOfMonth(year, month); 
+        List&lt;Long&gt; weeksInMonth = getWeeksOfMonth(year, month); 
         for (Long week : weeksInMonth) {
             Week week = KitchenDutyActiveObjectHelper 
-                         .getWeekByweekInTransaction(activeObjects, week);
+                         .getWeekByWeekNumberInTransaction(activeObjects, week);
             List&lt;User&gt; usersForWeek = KitchenDutyActiveObjectHelper 
                          .getUsersAssignedToWeekInTransaction(activeObjects, week);
             List&lt;String&gt; usernames = usersForWeek
@@ -1159,10 +1159,10 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
         }
         <span class="hljs-comment">// BUSINESS LOGIC</span>
         List&lt;KitchenDutyOverviewPageMonthDutyModel&gt; responseList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
-        List&lt;Long&gt; weeksInMonth = getweeksOfMonth(year, month); <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="2"></span>
+        List&lt;Long&gt; weeksInMonth = getWeeksOfMonth(year, month); <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="2"></span>
         <span class="hljs-keyword">for</span> (Long week : weeksInMonth) {
             Week week = KitchenDutyActiveObjectHelper <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="3"></span>
-                         .getWeekByweekInTransaction(activeObjects, week);
+                         .getWeekByWeekNumberInTransaction(activeObjects, week);
             List&lt;User&gt; usersForWeek = KitchenDutyActiveObjectHelper <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="4"></span>
                          .getUsersAssignedToWeekInTransaction(activeObjects, week);
             List&lt;String&gt; usernames = usersForWeek
@@ -1273,11 +1273,11 @@ public class KitchenDutyOverviewPageMonthDutyModel {
         this.users = users;
     }
 
-    public Long getweek() {
+    public Long getWeek() {
         return week;
     }
 
-    public void setweek(Long week) {
+    public void setWeek(Long week) {
         this.week = week;
     }
 
@@ -1342,11 +1342,11 @@ public class KitchenDutyOverviewPageMonthDutyModel {
         <span class="hljs-keyword">this</span>.users = users;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> Long <span class="hljs-title">getweek</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Long <span class="hljs-title">getWeek</span><span class="hljs-params">()</span> </span>{
         <span class="hljs-keyword">return</span> week;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setweek</span><span class="hljs-params">(Long week)</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setWeek</span><span class="hljs-params">(Long week)</span> </span>{
         <span class="hljs-keyword">this</span>.week = week;
     }
 
@@ -1376,7 +1376,7 @@ public class KitchenDutyOverviewPageMonthDutyModel {
 }</code></pre>
 
 
-        <p>The <strong>date calculation helpers <code>getweeksOfMonth()</code>, <code>getFirstDayOfWeekOfYear()</code> and <code>getLastDayOfWeekOfYear()</code> are defined in <code>BaseResource.java</code></strong>.</p>
+        <p>The <strong>date calculation helpers <code>getWeeksOfMonth()</code>, <code>getFirstDayOfWeekOfYear()</code> and <code>getLastDayOfWeekOfYear()</code> are defined in <code>BaseResource.java</code></strong>.</p>
 
         <div class="row">
             <div class="col-md-7">
@@ -1403,103 +1403,138 @@ public class KitchenDutyOverviewPageMonthDutyModel {
         title="Copy file content to clipboard"
         data-clipboard-text="package com.comsysto.kitchen.duty.rest;
 
+import com.atlassian.activeobjects.external.ActiveObjects;
+import com.atlassian.sal.api.user.UserProfile;
+
+import javax.ws.rs.core.Response;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
-...
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class BaseResource {
-  ...
 
-  public static List&lt;Long&gt; getweeksOfMonth(Long year, Long month) { 
-      List&lt;Long&gt; weeks = new ArrayList&lt;&gt;();
-      weeks.add(getWeekOfMonth(year, month, 1L));
-      weeks.add(getWeekOfMonth(year, month, 2L));
-      weeks.add(getWeekOfMonth(year, month, 3L));
-      weeks.add(getWeekOfMonth(year, month, 4L));
-      weeks.add(getWeekOfMonth(year, month, 5L));
-      return weeks;
-  }
+    ...
 
-  protected static Long getWeekOfMonth(Long year, Long month, Long weekInMonth) { 
-      // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
-      WeekFields weekFields = WeekFields.ISO;
-      return (long) LocalDate.now().with(weekFields.weekBasedYear(), year)
-          .with(ChronoField.MONTH_OF_YEAR, month)
-          .with(ChronoField.ALIGNED_WEEK_OF_MONTH, weekInMonth)
-          .get(ChronoField.ALIGNED_WEEK_OF_YEAR);
-  }
+    // See unit test
+    public static List&lt;Long&gt; getWeeksOfMonth(Long year, Long month) { 
+        List&lt;Long&gt; weeks = new ArrayList&lt;&gt;();
+        weeks.add(getWeekOfMonth(year, month, 1L));
+        weeks.add(getWeekOfMonth(year, month, 2L));
+        weeks.add(getWeekOfMonth(year, month, 3L));
+        weeks.add(getWeekOfMonth(year, month, 4L));
+        weeks.add(getWeekOfMonth(year, month, 5L));
+        return weeks;
+    }
 
-  public static LocalDate getFirstDayOfWeekOfYear(Long year, Long week) { 
-      // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
-      WeekFields weekFields = WeekFields.ISO;
-      return LocalDate.now().with(weekFields.weekBasedYear(), year)
-          .with(ChronoField.ALIGNED_WEEK_OF_YEAR, week)
-          .with(ChronoField.DAY_OF_WEEK, 1).minusDays(1);
-  }
+    protected static Long getWeekOfMonth(Long year, Long month, Long weekInMonth) { 
+        // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
+        // For locale en_US weeks start on sunday
+        WeekFields weekFields = WeekFields.of(Locale.forLanguageTag(&quot;en_US&quot;));
+        DayOfWeek x = weekFields.getFirstDayOfWeek();
+        LocalDate origin  = LocalDate.of(1970, 1, 1);
+        LocalDate reference = origin
+            .with(weekFields.weekBasedYear(), year)
+            .with(ChronoField.YEAR, year)
+            .with(ChronoField.MONTH_OF_YEAR, month)
+            .with(ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH, 1)
+            .with(ChronoField.ALIGNED_WEEK_OF_MONTH, weekInMonth);
+        return (long) reference.get(weekFields.weekOfYear());
+    }
 
-  public static LocalDate getLastDayOfWeekOfYear(Long year, Long week) { 
-      return getFirstDayOfWeekOfYear(year, week).plusDays(6);
-  }
+    public static LocalDate getFirstDayOfWeekOfYear(Long year, Long week) { 
+        // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
+        WeekFields weekFields = WeekFields.of(Locale.forLanguageTag(&quot;en_US&quot;));
+        return LocalDate.now()
+            .with(weekFields.weekBasedYear(), year)
+            .with(ChronoField.ALIGNED_WEEK_OF_YEAR, week)
+            .with(ChronoField.DAY_OF_WEEK, 1).minusDays(1);
+    }
+
+    public static LocalDate getLastDayOfWeekOfYear(Long year, Long week) { 
+        return getFirstDayOfWeekOfYear(year, week).plusDays(6);
+    }
 }"><i class="fa fa-files-o"></i></a>
     </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
 
+<span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
+<span class="hljs-keyword">import</span> com.atlassian.sal.api.user.UserProfile;
+
+<span class="hljs-keyword">import</span> javax.ws.rs.core.Response;
+<span class="hljs-keyword">import</span> java.time.DayOfWeek;
 <span class="hljs-keyword">import</span> java.time.LocalDate;
+<span class="hljs-keyword">import</span> java.time.Month;
 <span class="hljs-keyword">import</span> java.time.temporal.ChronoField;
+<span class="hljs-keyword">import</span> java.time.temporal.TemporalField;
 <span class="hljs-keyword">import</span> java.time.temporal.WeekFields;
-...
+<span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.List;
+<span class="hljs-keyword">import</span> java.util.Locale;
 
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseResource</span> </span>{
-  ...
 
-  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;Long&gt; <span class="hljs-title">getweeksOfMonth</span><span class="hljs-params">(Long year, Long month)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="1"></span>
-      List&lt;Long&gt; weeks = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
-      weeks.add(getWeekOfMonth(year, month, <span class="hljs-number">1L</span>));
-      weeks.add(getWeekOfMonth(year, month, <span class="hljs-number">2L</span>));
-      weeks.add(getWeekOfMonth(year, month, <span class="hljs-number">3L</span>));
-      weeks.add(getWeekOfMonth(year, month, <span class="hljs-number">4L</span>));
-      weeks.add(getWeekOfMonth(year, month, <span class="hljs-number">5L</span>));
-      <span class="hljs-keyword">return</span> weeks;
-  }
+    ...
 
-  <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> Long <span class="hljs-title">getWeekOfMonth</span><span class="hljs-params">(Long year, Long month, Long weekInMonth)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="2"></span>
-      <span class="hljs-comment">// https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html</span>
-      WeekFields weekFields = WeekFields.ISO;
-      <span class="hljs-keyword">return</span> (<span class="hljs-keyword">long</span>) LocalDate.now().with(weekFields.weekBasedYear(), year)
-          .with(ChronoField.MONTH_OF_YEAR, month)
-          .with(ChronoField.ALIGNED_WEEK_OF_MONTH, weekInMonth)
-          .get(ChronoField.ALIGNED_WEEK_OF_YEAR);
-  }
+    <span class="hljs-comment">// See unit test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;Long&gt; <span class="hljs-title">getWeeksOfMonth</span><span class="hljs-params">(Long year, Long month)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="1"></span>
+        List&lt;Long&gt; weeks = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+        weeks.add(getWeekOfMonth(year, month, <span class="hljs-number">1L</span>));
+        weeks.add(getWeekOfMonth(year, month, <span class="hljs-number">2L</span>));
+        weeks.add(getWeekOfMonth(year, month, <span class="hljs-number">3L</span>));
+        weeks.add(getWeekOfMonth(year, month, <span class="hljs-number">4L</span>));
+        weeks.add(getWeekOfMonth(year, month, <span class="hljs-number">5L</span>));
+        <span class="hljs-keyword">return</span> weeks;
+    }
 
-  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LocalDate <span class="hljs-title">getFirstDayOfWeekOfYear</span><span class="hljs-params">(Long year, Long week)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="3"></span>
-      <span class="hljs-comment">// https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html</span>
-      WeekFields weekFields = WeekFields.ISO;
-      <span class="hljs-keyword">return</span> LocalDate.now().with(weekFields.weekBasedYear(), year)
-          .with(ChronoField.ALIGNED_WEEK_OF_YEAR, week)
-          .with(ChronoField.DAY_OF_WEEK, <span class="hljs-number">1</span>).minusDays(<span class="hljs-number">1</span>);
-  }
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> Long <span class="hljs-title">getWeekOfMonth</span><span class="hljs-params">(Long year, Long month, Long weekInMonth)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="2"></span>
+        <span class="hljs-comment">// https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html</span>
+        <span class="hljs-comment">// For locale en_US weeks start on sunday</span>
+        WeekFields weekFields = WeekFields.of(Locale.forLanguageTag(<span class="hljs-string">"en_US"</span>));
+        DayOfWeek x = weekFields.getFirstDayOfWeek();
+        LocalDate origin  = LocalDate.of(<span class="hljs-number">1970</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+        LocalDate reference = origin
+            .with(weekFields.weekBasedYear(), year)
+            .with(ChronoField.YEAR, year)
+            .with(ChronoField.MONTH_OF_YEAR, month)
+            .with(ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH, <span class="hljs-number">1</span>)
+            .with(ChronoField.ALIGNED_WEEK_OF_MONTH, weekInMonth);
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">long</span>) reference.get(weekFields.weekOfYear());
+    }
 
-  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LocalDate <span class="hljs-title">getLastDayOfWeekOfYear</span><span class="hljs-params">(Long year, Long week)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="4"></span>
-      <span class="hljs-keyword">return</span> getFirstDayOfWeekOfYear(year, week).plusDays(<span class="hljs-number">6</span>);
-  }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LocalDate <span class="hljs-title">getFirstDayOfWeekOfYear</span><span class="hljs-params">(Long year, Long week)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="3"></span>
+        <span class="hljs-comment">// https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html</span>
+        WeekFields weekFields = WeekFields.of(Locale.forLanguageTag(<span class="hljs-string">"en_US"</span>));
+        <span class="hljs-keyword">return</span> LocalDate.now()
+            .with(weekFields.weekBasedYear(), year)
+            .with(ChronoField.ALIGNED_WEEK_OF_YEAR, week)
+            .with(ChronoField.DAY_OF_WEEK, <span class="hljs-number">1</span>).minusDays(<span class="hljs-number">1</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LocalDate <span class="hljs-title">getLastDayOfWeekOfYear</span><span class="hljs-params">(Long year, Long week)</span> </span>{ <span class="cs-source-point" data-cs-source-point-id="sg4ddf" data-cs-source-point-number="4"></span>
+        <span class="hljs-keyword">return</span> getFirstDayOfWeekOfYear(year, week).plusDays(<span class="hljs-number">6</span>);
+    }
 }</code></pre>
 
             </div>
             <div class="col-md-5 cs-sticky-in-parent">
                 <div class="list-group cs-source-point-list" data-source-target="sg4ddf">
                     <div class="list-group-item cs-source-point-list__item">
-                        <code>getweeksOfMonth()</code> returns five weeks with iso week numbers
+                        <code>getWeeksOfMonth()</code> returns five weeks with week numbers
                         for given year and month.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        <code>getWeekOfMonth()</code> returns the iso week number
+                        <code>getWeekOfMonth()</code> returns the week number
                         for given year, month and weekInMonth. Ok if it sounds confusing look
                         at the Unit Test. But simply said this methods converts
-                        week 1-5 of a specific month to the iso week number which represents basically the week
-                        of a year.
+                        week 1-5 of a specific month to the week-of-year-number.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         <code>getFirstDayOfWeekOfYear()</code> returns the first day of the week (sunday)
@@ -1542,52 +1577,96 @@ import com.comsysto.kitchen.duty.rest.BaseResource;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class BaseResourceTest {
 
     @Test
-    public void testGetweeksOfMonth() {
-        List&lt;Long&gt; weeks = BaseResource.getweeksOfMonth(2018L, 8L);
+    public void testGetWeeksOfMonth__weekStartsInPreviousMonth() {
+        // Sunday to Saturday:
+        // Week 31  July   29, 2018 =&gt; August  4, 2018
+        // Week 32  August  5, 2018 =&gt; August 11, 2018
+        // Week 33  August 12, 2018 =&gt; August 18, 2018
+        // Week 34  August 19, 2018 =&gt; August 25, 2018
+        // Week 35  August 26, 2018 =&gt; Sept,   1, 2018
+        {
+            List&lt;Long&gt; weeks = BaseResource.getWeeksOfMonth(2018L, 8L);
+            assertThat(weeks, is(Arrays.asList(31L, 32L, 33L, 34L, 35L)));
+        }
 
-        assertEquals(Long.valueOf(32), weeks.get(0));
-        assertEquals(Long.valueOf(33), weeks.get(1));
-        assertEquals(Long.valueOf(34), weeks.get(2));
-        assertEquals(Long.valueOf(35), weeks.get(3));
-        assertEquals(Long.valueOf(36), weeks.get(4));
+        // Sunday to Saturday:
+        // Week 5  January  28, 2018 =&gt; February  3, 2018
+        // Week 6  February  4, 2018 =&gt; February 10, 2018
+        // Week 7  February 11, 2018 =&gt; February 17, 2018
+        // Week 8  February 18, 2018 =&gt; February 24, 2018
+        // Week 9  February 25, 2018 =&gt; March     3, 2018
+        {
+            List&lt;Long&gt; weeks = BaseResource.getWeeksOfMonth(2018L, 2L);
+            assertThat(weeks, is(Arrays.asList(5L, 6L, 7L, 8L, 9L)));
+        }
 
-        List&lt;Long&gt; weeks2 = BaseResource.getweeksOfMonth(2018L, 2L);
-
-        assertEquals(Long.valueOf(6), weeks2.get(0));
-        assertEquals(Long.valueOf(7), weeks2.get(1));
-        assertEquals(Long.valueOf(8), weeks2.get(2));
-        assertEquals(Long.valueOf(9), weeks2.get(3));
-        assertEquals(Long.valueOf(10), weeks2.get(4));
-
-        List&lt;Long&gt; weeks3 = BaseResource.getweeksOfMonth(2018L, 5L);
-
-        assertEquals(Long.valueOf(19), weeks3.get(0));
-        assertEquals(Long.valueOf(20), weeks3.get(1));
-        assertEquals(Long.valueOf(21), weeks3.get(2));
-        assertEquals(Long.valueOf(22), weeks3.get(3));
-        assertEquals(Long.valueOf(23), weeks3.get(4));
+        // Sunday to Saturday:
+        // Week 18  April 29, 2018 =&gt; May   5, 2018
+        // Week 19  May    6, 2018 =&gt; May  12, 2018
+        // Week 20  May   13, 2018 =&gt; May  19, 2018
+        // Week 21  May   20, 2018 =&gt; May  26, 2018
+        // Week 22  May   27, 2018 =&gt; June  2, 2018
+        {
+            List&lt;Long&gt; weeks = BaseResource.getWeeksOfMonth(2018L, 5L);
+            assertThat(weeks, is(Arrays.asList(18L, 19L, 20L, 21L, 22L)));
+        }
     }
 
+    @Test
+    public void testGetWeeksOfMonth__weekStartsExactlyInMonth() {
+        // Sunday to Saturday:
+        // Week 19  May  1, 2016 =&gt; May  7, 2016
+        // Week 20  May  8, 2016 =&gt; May 14, 2016
+        // Week 21  May 15, 2016 =&gt; May 21, 2016
+        // Week 22  May 22, 2016 =&gt; May 28, 2016
+        // Week 23  May 29, 2016 =&gt; June 4, 2016
+        {
+            List&lt;Long&gt; weeks = BaseResource.getWeeksOfMonth(2016L, 5L);
+            assertThat(weeks, is(Arrays.asList(19L, 20L, 21L, 22L, 23L)));
+        }
+
+        // Sunday to Saturday:
+        // Week 27  July  1, 2018 =&gt; July  7, 2018
+        // Week 28  July  8, 2018 =&gt; July 14, 2018
+        // Week 29  July 15, 2018 =&gt; July 21, 2018
+        // Week 30  July 22, 2018 =&gt; July 28, 2018
+        // Week 31  July 29, 2018 =&gt; Aug.  4, 2018
+        {
+            List&lt;Long&gt; weeks = BaseResource.getWeeksOfMonth(2018L, 7L);
+            assertThat(weeks, is(Arrays.asList(27L, 28L, 29L, 30L, 31L)));
+        }
+    }
 
     @Test
     public void testGetFirstDayOfWeekOfMonth() {
         LocalDate date = BaseResource.getFirstDayOfWeekOfYear(2018L, 32L);
         assertEquals(&quot;2018-08-05&quot;, date.toString());
+
+        LocalDate date2 = BaseResource.getFirstDayOfWeekOfYear(2018L, 31L);
+        assertEquals(&quot;2018-07-29&quot;, date2.toString());
+
+        LocalDate date3 = BaseResource.getFirstDayOfWeekOfYear(2018L, 27L);
+        assertEquals(&quot;2018-07-01&quot;, date3.toString());
     }
 
     @Test
     public void testGetLastDayOfWeekOfMonth() {
         LocalDate date = BaseResource.getLastDayOfWeekOfYear(2018L, 32L);
         assertEquals(&quot;2018-08-11&quot;, date.toString());
-    }
 
+        LocalDate date2 = BaseResource.getLastDayOfWeekOfYear(2018L, 31L);
+        assertEquals(&quot;2018-08-04&quot;, date2.toString());
+    }
 
 }"><i class="fa fa-files-o"></i></a>
     </div>
@@ -1599,52 +1678,96 @@ public class BaseResourceTest {
 <span class="hljs-keyword">import</span> org.junit.Test;
 
 <span class="hljs-keyword">import</span> java.time.LocalDate;
+<span class="hljs-keyword">import</span> java.util.Arrays;
 <span class="hljs-keyword">import</span> java.util.List;
 
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.hamcrest.core.Is.is;
 <span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.junit.Assert.assertEquals;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.junit.Assert.assertThat;
 
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseResourceTest</span> </span>{
 
     <span class="hljs-annotation">@Test</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testGetweeksOfMonth</span><span class="hljs-params">()</span> </span>{
-        List&lt;Long&gt; weeks = BaseResource.getweeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">8L</span>);
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testGetWeeksOfMonth__weekStartsInPreviousMonth</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// Sunday to Saturday:</span>
+        <span class="hljs-comment">// Week 31  July   29, 2018 =&gt; August  4, 2018</span>
+        <span class="hljs-comment">// Week 32  August  5, 2018 =&gt; August 11, 2018</span>
+        <span class="hljs-comment">// Week 33  August 12, 2018 =&gt; August 18, 2018</span>
+        <span class="hljs-comment">// Week 34  August 19, 2018 =&gt; August 25, 2018</span>
+        <span class="hljs-comment">// Week 35  August 26, 2018 =&gt; Sept,   1, 2018</span>
+        {
+            List&lt;Long&gt; weeks = BaseResource.getWeeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">8L</span>);
+            assertThat(weeks, is(Arrays.asList(<span class="hljs-number">31L</span>, <span class="hljs-number">32L</span>, <span class="hljs-number">33L</span>, <span class="hljs-number">34L</span>, <span class="hljs-number">35L</span>)));
+        }
 
-        assertEquals(Long.valueOf(<span class="hljs-number">32</span>), weeks.get(<span class="hljs-number">0</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">33</span>), weeks.get(<span class="hljs-number">1</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">34</span>), weeks.get(<span class="hljs-number">2</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">35</span>), weeks.get(<span class="hljs-number">3</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">36</span>), weeks.get(<span class="hljs-number">4</span>));
+        <span class="hljs-comment">// Sunday to Saturday:</span>
+        <span class="hljs-comment">// Week 5  January  28, 2018 =&gt; February  3, 2018</span>
+        <span class="hljs-comment">// Week 6  February  4, 2018 =&gt; February 10, 2018</span>
+        <span class="hljs-comment">// Week 7  February 11, 2018 =&gt; February 17, 2018</span>
+        <span class="hljs-comment">// Week 8  February 18, 2018 =&gt; February 24, 2018</span>
+        <span class="hljs-comment">// Week 9  February 25, 2018 =&gt; March     3, 2018</span>
+        {
+            List&lt;Long&gt; weeks = BaseResource.getWeeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">2L</span>);
+            assertThat(weeks, is(Arrays.asList(<span class="hljs-number">5L</span>, <span class="hljs-number">6L</span>, <span class="hljs-number">7L</span>, <span class="hljs-number">8L</span>, <span class="hljs-number">9L</span>)));
+        }
 
-        List&lt;Long&gt; weeks2 = BaseResource.getweeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">2L</span>);
-
-        assertEquals(Long.valueOf(<span class="hljs-number">6</span>), weeks2.get(<span class="hljs-number">0</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">7</span>), weeks2.get(<span class="hljs-number">1</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">8</span>), weeks2.get(<span class="hljs-number">2</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">9</span>), weeks2.get(<span class="hljs-number">3</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">10</span>), weeks2.get(<span class="hljs-number">4</span>));
-
-        List&lt;Long&gt; weeks3 = BaseResource.getweeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">5L</span>);
-
-        assertEquals(Long.valueOf(<span class="hljs-number">19</span>), weeks3.get(<span class="hljs-number">0</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">20</span>), weeks3.get(<span class="hljs-number">1</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">21</span>), weeks3.get(<span class="hljs-number">2</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">22</span>), weeks3.get(<span class="hljs-number">3</span>));
-        assertEquals(Long.valueOf(<span class="hljs-number">23</span>), weeks3.get(<span class="hljs-number">4</span>));
+        <span class="hljs-comment">// Sunday to Saturday:</span>
+        <span class="hljs-comment">// Week 18  April 29, 2018 =&gt; May   5, 2018</span>
+        <span class="hljs-comment">// Week 19  May    6, 2018 =&gt; May  12, 2018</span>
+        <span class="hljs-comment">// Week 20  May   13, 2018 =&gt; May  19, 2018</span>
+        <span class="hljs-comment">// Week 21  May   20, 2018 =&gt; May  26, 2018</span>
+        <span class="hljs-comment">// Week 22  May   27, 2018 =&gt; June  2, 2018</span>
+        {
+            List&lt;Long&gt; weeks = BaseResource.getWeeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">5L</span>);
+            assertThat(weeks, is(Arrays.asList(<span class="hljs-number">18L</span>, <span class="hljs-number">19L</span>, <span class="hljs-number">20L</span>, <span class="hljs-number">21L</span>, <span class="hljs-number">22L</span>)));
+        }
     }
 
+    <span class="hljs-annotation">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testGetWeeksOfMonth__weekStartsExactlyInMonth</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// Sunday to Saturday:</span>
+        <span class="hljs-comment">// Week 19  May  1, 2016 =&gt; May  7, 2016</span>
+        <span class="hljs-comment">// Week 20  May  8, 2016 =&gt; May 14, 2016</span>
+        <span class="hljs-comment">// Week 21  May 15, 2016 =&gt; May 21, 2016</span>
+        <span class="hljs-comment">// Week 22  May 22, 2016 =&gt; May 28, 2016</span>
+        <span class="hljs-comment">// Week 23  May 29, 2016 =&gt; June 4, 2016</span>
+        {
+            List&lt;Long&gt; weeks = BaseResource.getWeeksOfMonth(<span class="hljs-number">2016L</span>, <span class="hljs-number">5L</span>);
+            assertThat(weeks, is(Arrays.asList(<span class="hljs-number">19L</span>, <span class="hljs-number">20L</span>, <span class="hljs-number">21L</span>, <span class="hljs-number">22L</span>, <span class="hljs-number">23L</span>)));
+        }
+
+        <span class="hljs-comment">// Sunday to Saturday:</span>
+        <span class="hljs-comment">// Week 27  July  1, 2018 =&gt; July  7, 2018</span>
+        <span class="hljs-comment">// Week 28  July  8, 2018 =&gt; July 14, 2018</span>
+        <span class="hljs-comment">// Week 29  July 15, 2018 =&gt; July 21, 2018</span>
+        <span class="hljs-comment">// Week 30  July 22, 2018 =&gt; July 28, 2018</span>
+        <span class="hljs-comment">// Week 31  July 29, 2018 =&gt; Aug.  4, 2018</span>
+        {
+            List&lt;Long&gt; weeks = BaseResource.getWeeksOfMonth(<span class="hljs-number">2018L</span>, <span class="hljs-number">7L</span>);
+            assertThat(weeks, is(Arrays.asList(<span class="hljs-number">27L</span>, <span class="hljs-number">28L</span>, <span class="hljs-number">29L</span>, <span class="hljs-number">30L</span>, <span class="hljs-number">31L</span>)));
+        }
+    }
 
     <span class="hljs-annotation">@Test</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testGetFirstDayOfWeekOfMonth</span><span class="hljs-params">()</span> </span>{
         LocalDate date = BaseResource.getFirstDayOfWeekOfYear(<span class="hljs-number">2018L</span>, <span class="hljs-number">32L</span>);
         assertEquals(<span class="hljs-string">"2018-08-05"</span>, date.toString());
+
+        LocalDate date2 = BaseResource.getFirstDayOfWeekOfYear(<span class="hljs-number">2018L</span>, <span class="hljs-number">31L</span>);
+        assertEquals(<span class="hljs-string">"2018-07-29"</span>, date2.toString());
+
+        LocalDate date3 = BaseResource.getFirstDayOfWeekOfYear(<span class="hljs-number">2018L</span>, <span class="hljs-number">27L</span>);
+        assertEquals(<span class="hljs-string">"2018-07-01"</span>, date3.toString());
     }
 
     <span class="hljs-annotation">@Test</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testGetLastDayOfWeekOfMonth</span><span class="hljs-params">()</span> </span>{
         LocalDate date = BaseResource.getLastDayOfWeekOfYear(<span class="hljs-number">2018L</span>, <span class="hljs-number">32L</span>);
         assertEquals(<span class="hljs-string">"2018-08-11"</span>, date.toString());
-    }
 
+        LocalDate date2 = BaseResource.getLastDayOfWeekOfYear(<span class="hljs-number">2018L</span>, <span class="hljs-number">31L</span>);
+        assertEquals(<span class="hljs-string">"2018-08-04"</span>, date2.toString());
+    }
 
 }</code></pre>
 
@@ -2591,7 +2714,7 @@ var showErrorFlag = function(message) {
 
 
 
-<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js?v2018-09-01--12-50" async></script>
+<script src="/kitchen-duty-plugin-for-atlassian-jira/generated/bundle.js?v2018-09-02--12-50" async></script>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>

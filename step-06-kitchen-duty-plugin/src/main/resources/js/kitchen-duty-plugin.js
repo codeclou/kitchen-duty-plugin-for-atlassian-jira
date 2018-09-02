@@ -1,5 +1,5 @@
 //
-// COMMON CODE
+// FLAGS
 //
 var showSuccessFlag = function(message) {
     require(['aui/flag'], function(flag) {

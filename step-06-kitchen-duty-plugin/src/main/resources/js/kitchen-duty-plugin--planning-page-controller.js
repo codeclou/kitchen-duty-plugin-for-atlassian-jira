@@ -72,7 +72,12 @@ var initWeekPicker = function() {
     AJS.$('#week-picker').off(); // remove previous listeners
     AJS.$('#week-picker').datePicker({'overrideBrowserDefault': true});
     AJS.$('#week-picker').change(function() {
-        var isoWeek = moment(AJS.$('#week-picker').val()).isoWeek();
+        // Note: We do not use isoWeek() anymore since we misunderstood what
+        //       iso weeks are. We want normal weeks starting on sunday.
+        var dateValueFromPicker = AJS.$('#week-picker').val();
+        var isoWeek = moment(dateValueFromPicker).week();
+        console.log('Date from picker: ' + dateValueFromPicker +
+                    ' calcualted to week: ' + isoWeek);
         initUserSearch(isoWeek);
     });
 };
@@ -82,6 +87,17 @@ AJS.toInit(function(){
     var baseUrl = AJS.params.baseURL;
     var restUrl = baseUrl + '/rest/kitchenduty/1.0';
     window.KDPrestUrl = restUrl;
+
+    // set locale for moment-js so that week starts on sunday
+    // and week numbers are correctly calcualted
+    moment.locale('en', {
+        week: {
+            dow: 0, // Sunday (0) is the first day of the week
+            doy: 1  // The week that contains Jan 1st is the first week of the year.
+        }
+    });
+    console.log('Week starts at: ' + moment().startOf('week').format('dddd'));
+    console.log('Current moment locale: ' + moment().locale());
 
     // Init Base SOY template
     var planningPageTemplate = JIRA.Templates.KDP.planningPage();

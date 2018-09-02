@@ -260,7 +260,7 @@
                 <p>
                     The <strong>Week</strong> will be the actual week number in the year, and we don't care about the year in this tutorial. So if you had kitchen duty in week 24 this year you will have it the years after as well.
                     With a little thinking ahead of how I want to use it in the JS Controller
-                    I basically will select a week via a date picker and <a href="http://momentjs.com/docs/#/get-set/iso-week/">calculate the isoWeek in the frontend using moment.js</a></p>
+                    I basically will select a week via a date picker and <a href="http://momentjs.com/docs/#/get-set/week/">calculate the week number in the frontend using moment.js</a></p>
                 <p>
                     The <strong>User</strong> part is obvious. We will need to store a list of usernames in the database in relation with Weeks (<a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/manytomany-relationship"><code>@ManyToMany</code></a>).
                 </p>
@@ -291,7 +291,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>isoWeek:&nbsp;Integer</td>
+                        <td>week:&nbsp;Integer</td>
                         <td class="cs-table-uml--blank"></td>
                         <td>username:&nbsp;String</td>
                     </tr>
@@ -490,7 +490,7 @@ public interface Week extends Entity {
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         The important thing is that we extend <code>Entity</code> that makes our Class automatically have <code>getID()</code>
-                        so we just need to define our fields which is currently only the isoWeek.
+                        so we just need to define our fields which is currently only the week number (week of year).
                     </div>
                 </div>
             </div>
@@ -1486,22 +1486,22 @@ public class KitchenDutyPlanningResource {
 ...
 
     /**
-     * Get the Users assigned to the isoWeekNumber.
+     * Get the Users assigned to the weekNumber.
      *
-     * @param isoWeekNumber
+     * @param weekNumber
      * @return
      */
     @GET
-    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Path(&quot;/week/{weekNumber}/users&quot;)
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response getUsersForWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber) {
+    public Response getUsersForWeek(@PathParam(&quot;weekNumber&quot;) final Integer weekNumber) {
         Week[] weeks = activeObjects.executeInTransaction(new TransactionCallback&lt;Week[]&gt;() { 
             @Override
             public Week[] doInTransaction() {
                 return activeObjects.find( 
                            Week.class,
-                           Query.select().where(&quot;WEEK = ?&quot;, isoWeekNumber)); 
+                           Query.select().where(&quot;WEEK = ?&quot;, weekNumber)); 
             }
         });
         List&lt;KitchenDutyPlanningResourceUserModel&gt; users = new ArrayList&lt;&gt;(); 
@@ -1521,7 +1521,7 @@ public class KitchenDutyPlanningResource {
     /**
      * Get the Weeks assigned to the User.
      *
-     * @param isoWeekNumber
+     * @param weekNumber
      * @return
      */
     @GET
@@ -1556,22 +1556,22 @@ public class KitchenDutyPlanningResource {
 ...
 
     <span class="hljs-comment">/**
-     * Get the Users assigned to the isoWeekNumber.
+     * Get the Users assigned to the weekNumber.
      *
-     * <span class="hljs-doctag">@param</span> isoWeekNumber
+     * <span class="hljs-doctag">@param</span> weekNumber
      * <span class="hljs-doctag">@return</span>
      */</span>
     <span class="hljs-annotation">@GET</span>
-    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{weekNumber}/users"</span>)
     <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
     <span class="hljs-annotation">@AnonymousAllowed</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">getUsersForWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber) </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">getUsersForWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"weekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer weekNumber) </span>{
         Week[] weeks = activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Week[]&gt;() { <span class="cs-source-point" data-cs-source-point-id="xtrfdg54ze56dhr" data-cs-source-point-number="1"></span>
             <span class="hljs-annotation">@Override</span>
             <span class="hljs-keyword">public</span> Week[] doInTransaction() {
                 <span class="hljs-keyword">return</span> activeObjects.find( <span class="cs-source-point" data-cs-source-point-id="xtrfdg54ze56dhr" data-cs-source-point-number="2"></span>
                            Week.class,
-                           Query.select().where(<span class="hljs-string">"WEEK = ?"</span>, isoWeekNumber)); <span class="cs-source-point" data-cs-source-point-id="xtrfdg54ze56dhr" data-cs-source-point-number="3"></span>
+                           Query.select().where(<span class="hljs-string">"WEEK = ?"</span>, weekNumber)); <span class="cs-source-point" data-cs-source-point-id="xtrfdg54ze56dhr" data-cs-source-point-number="3"></span>
             }
         });
         List&lt;KitchenDutyPlanningResourceUserModel&gt; users = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(); <span class="cs-source-point" data-cs-source-point-id="xtrfdg54ze56dhr" data-cs-source-point-number="4"></span>
@@ -1591,7 +1591,7 @@ public class KitchenDutyPlanningResource {
     <span class="hljs-comment">/**
      * Get the Weeks assigned to the User.
      *
-     * <span class="hljs-doctag">@param</span> isoWeekNumber
+     * <span class="hljs-doctag">@param</span> weekNumber
      * <span class="hljs-doctag">@return</span>
      */</span>
     <span class="hljs-annotation">@GET</span>
@@ -1621,7 +1621,7 @@ public class KitchenDutyPlanningResource {
                 <!-- no sticky here since block is too big -->
                 <div class="list-group cs-source-point-list" data-source-target="xtrfdg54ze56dhr">
                     <div class="list-group-item cs-source-point-list__item">
-                        In our new <strong><code>/week/{isoWeekNumber}/users</code> Endpoint</strong>
+                        In our new <strong><code>/week/{weekNumber}/users</code> Endpoint</strong>
                         we start a Transaction and specify <code>Week[]</code> as return type since there is no way <em>(at least I did not find one)</em>
                         to get only one entity from the Database. We always get a List. Since we are having our unique constraints setup our lists will most likely
                         only contain one value.
@@ -1989,14 +1989,14 @@ public class KitchenDutyPlanningResourceUserModel {
     /**
      * Add the User to the Week
      *
-     * @param isoWeekNumber
+     * @param weekNumber
      * @return
      */
     @PUT 
-    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Path(&quot;/week/{weekNumber}/users&quot;)
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response addUserToWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber, 
+    public Response addUserToWeek(@PathParam(&quot;weekNumber&quot;) final Integer weekNumber, 
                                   final KitchenDutyPlanningResourceUserModel userParam) { 
         activeObjects.executeInTransaction(new TransactionCallback&lt;Void&gt;() { 
             @Override
@@ -2006,12 +2006,12 @@ public class KitchenDutyPlanningResourceUserModel {
                 //
                 Week week = KitchenDutyActiveObjectHelper.findUniqueWeek( 
                                  activeObjects,
-                                 isoWeekNumber
+                                 weekNumber
                 );
                 if (week == null) {
                     week = activeObjects.create(
                                  Week.class,
-                                 new DBParam(&quot;WEEK&quot;, isoWeekNumber) 
+                                 new DBParam(&quot;WEEK&quot;, weekNumber) 
                     );
                     week.save();
                 }
@@ -2057,14 +2057,14 @@ public class KitchenDutyPlanningResourceUserModel {
     <span class="hljs-comment">/**
      * Add the User to the Week
      *
-     * <span class="hljs-doctag">@param</span> isoWeekNumber
+     * <span class="hljs-doctag">@param</span> weekNumber
      * <span class="hljs-doctag">@return</span>
      */</span>
     <span class="hljs-annotation">@PUT</span> <span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="1"></span>
-    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{weekNumber}/users"</span>)
     <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
     <span class="hljs-annotation">@AnonymousAllowed</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">addUserToWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber, </span><span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="2"></span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">addUserToWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"weekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer weekNumber, </span><span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="2"></span>
                                   <span class="hljs-keyword">final</span> KitchenDutyPlanningResourceUserModel userParam) { <span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="3"></span>
         activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Void&gt;() { <span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="4"></span>
             <span class="hljs-annotation">@Override</span>
@@ -2074,12 +2074,12 @@ public class KitchenDutyPlanningResourceUserModel {
                 <span class="hljs-comment">//</span>
                 Week week = KitchenDutyActiveObjectHelper.findUniqueWeek( <span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="5"></span>
                                  activeObjects,
-                                 isoWeekNumber
+                                 weekNumber
                 );
                 <span class="hljs-keyword">if</span> (week == <span class="hljs-keyword">null</span>) {
                     week = activeObjects.create(
                                  Week.class,
-                                 <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"WEEK"</span>, isoWeekNumber) <span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="6"></span>
+                                 <span class="hljs-keyword">new</span> DBParam(<span class="hljs-string">"WEEK"</span>, weekNumber) <span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="6"></span>
                     );
                     week.save();
                 }
@@ -2125,7 +2125,7 @@ public class KitchenDutyPlanningResourceUserModel {
                 <!-- no sticky here since block is too big -->
                 <div class="list-group cs-source-point-list" data-source-target="x890uji9099n">
                     <div class="list-group-item cs-source-point-list__item">
-                        We define our new <strong><code>PUT /week/{isoWeekNumber}/users</code> Endpoint</strong>
+                        We define our new <strong><code>PUT /week/{weekNumber}/users</code> Endpoint</strong>
                         with method <code>@PUT</code> <em>(you can also use <code>@Patch</code> which would be more appropriate since we are sending increments to the Endpoints but it is up to you)</em>.
                         There is nothing more time consuming as to argue with colleagues about REST API design ... at best you look at the <a href="https://developer.github.com/v3/">GitHub REST API</a> or
                         the <a href="http://spring.io/guides/gs/accessing-data-rest/">Spring Data REST Docs</a> to get a feel for good API design. And if you
@@ -2145,8 +2145,8 @@ public class KitchenDutyPlanningResourceUserModel {
                         transaction.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        Get the week by the isoWeekNumber using our <code>findUniqueWeek</code> helper method which we will define later - just trust me that
-                        it will return one for the isoWeekNumber passed or null.
+                        Get the week by the weekNumber using our <code>findUniqueWeek</code> helper method which we will define later - just trust me that
+                        it will return one for the weekNumber passed or null.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         If the week is null we just create it on the fly and continue.
@@ -2205,14 +2205,14 @@ public class KitchenDutyPlanningResourceUserModel {
     /**
      * Remove the User from Week
      *
-     * @param isoWeekNumber
+     * @param weekNumber
      * @return
      */
     @DELETE 
-    @Path(&quot;/week/{isoWeekNumber}/users&quot;)
+    @Path(&quot;/week/{weekNumber}/users&quot;)
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response deleteUserFomWeek(@PathParam(&quot;isoWeekNumber&quot;) final Integer isoWeekNumber,
+    public Response deleteUserFomWeek(@PathParam(&quot;weekNumber&quot;) final Integer weekNumber,
                                   final KitchenDutyPlanningResourceUserModel userParam) { 
         activeObjects.executeInTransaction(new TransactionCallback&lt;Void&gt;() {
             @Override
@@ -2222,7 +2222,7 @@ public class KitchenDutyPlanningResourceUserModel {
                 //
                 Week week = KitchenDutyActiveObjectHelper.findUniqueWeek( 
                                  activeObjects,
-                                 isoWeekNumber
+                                 weekNumber
                 );
                 if (week == null) {
                     // week does not exist =&gt; no relation to delete
@@ -2263,14 +2263,14 @@ public class KitchenDutyPlanningResourceUserModel {
     <span class="hljs-comment">/**
      * Remove the User from Week
      *
-     * <span class="hljs-doctag">@param</span> isoWeekNumber
+     * <span class="hljs-doctag">@param</span> weekNumber
      * <span class="hljs-doctag">@return</span>
      */</span>
     <span class="hljs-annotation">@DELETE</span> <span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="1"></span>
-    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{isoWeekNumber}/users"</span>)
+    <span class="hljs-annotation">@Path</span>(<span class="hljs-string">"/week/{weekNumber}/users"</span>)
     <span class="hljs-annotation">@Produces</span>({MediaType.APPLICATION_JSON})
     <span class="hljs-annotation">@AnonymousAllowed</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">deleteUserFomWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"isoWeekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer isoWeekNumber,
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Response <span class="hljs-title">deleteUserFomWeek</span><span class="hljs-params">(@PathParam(<span class="hljs-string">"weekNumber"</span>)</span> <span class="hljs-keyword">final</span> Integer weekNumber,
                                   <span class="hljs-keyword">final</span> KitchenDutyPlanningResourceUserModel userParam) </span>{ <span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="2"></span>
         activeObjects.executeInTransaction(<span class="hljs-keyword">new</span> TransactionCallback&lt;Void&gt;() {
             <span class="hljs-annotation">@Override</span>
@@ -2280,7 +2280,7 @@ public class KitchenDutyPlanningResourceUserModel {
                 <span class="hljs-comment">//</span>
                 Week week = KitchenDutyActiveObjectHelper.findUniqueWeek( <span class="cs-source-point" data-cs-source-point-id="x890uji9099n" data-cs-source-point-number="3"></span>
                                  activeObjects,
-                                 isoWeekNumber
+                                 weekNumber
                 );
                 <span class="hljs-keyword">if</span> (week == <span class="hljs-keyword">null</span>) {
                     <span class="hljs-comment">// week does not exist =&gt; no relation to delete</span>
@@ -2374,8 +2374,8 @@ import net.java.ao.Query;
 
 public class KitchenDutyActiveObjectHelper {
 
-    public static Week findUniqueWeek(ActiveObjects activeObjects, Integer isoWeekNumber) {
-        Week[] weekRes = activeObjects.find(Week.class, Query.select().where(&quot;WEEK = ?&quot;, isoWeekNumber));
+    public static Week findUniqueWeek(ActiveObjects activeObjects, Integer weekNumber) {
+        Week[] weekRes = activeObjects.find(Week.class, Query.select().where(&quot;WEEK = ?&quot;, weekNumber));
         if ((weekRes != null &amp;&amp; weekRes.length &gt; 0)) {
             return weekRes[0];
         }
@@ -2407,8 +2407,8 @@ public class KitchenDutyActiveObjectHelper {
 
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">KitchenDutyActiveObjectHelper</span> </span>{
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Week <span class="hljs-title">findUniqueWeek</span><span class="hljs-params">(ActiveObjects activeObjects, Integer isoWeekNumber)</span> </span>{
-        Week[] weekRes = activeObjects.find(Week.class, Query.select().where(<span class="hljs-string">"WEEK = ?"</span>, isoWeekNumber));
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Week <span class="hljs-title">findUniqueWeek</span><span class="hljs-params">(ActiveObjects activeObjects, Integer weekNumber)</span> </span>{
+        Week[] weekRes = activeObjects.find(Week.class, Query.select().where(<span class="hljs-string">"WEEK = ?"</span>, weekNumber));
         <span class="hljs-keyword">if</span> ((weekRes != <span class="hljs-keyword">null</span> &amp;&amp; weekRes.length &gt; <span class="hljs-number">0</span>)) {
             <span class="hljs-keyword">return</span> weekRes[<span class="hljs-number">0</span>];
         }

@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 public class BaseResourceTest {
 
     @Test
-    public void testGetIsoWeeksOfMonth__weekStartsInPreviousMonth() {
+    public void testGetWeeksOfMonth__weekStartsInPreviousMonth() {
         // Sunday to Saturday:
         // Week 31  July   29, 2018 => August  4, 2018
         // Week 32  August  5, 2018 => August 11, 2018
@@ -22,8 +22,8 @@ public class BaseResourceTest {
         // Week 34  August 19, 2018 => August 25, 2018
         // Week 35  August 26, 2018 => Sept,   1, 2018
         {
-            List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 8L);
-            assertThat(isoWeeks, is(Arrays.asList(31L, 32L, 33L, 34L, 35L)));
+            List<Long> weeks = BaseResource.getWeeksOfMonth(2018L, 8L);
+            assertThat(weeks, is(Arrays.asList(31L, 32L, 33L, 34L, 35L)));
         }
 
         // Sunday to Saturday:
@@ -33,8 +33,8 @@ public class BaseResourceTest {
         // Week 8  February 18, 2018 => February 24, 2018
         // Week 9  February 25, 2018 => March     3, 2018
         {
-            List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 2L);
-            assertThat(isoWeeks, is(Arrays.asList(5L, 6L, 7L, 8L, 9L)));
+            List<Long> weeks = BaseResource.getWeeksOfMonth(2018L, 2L);
+            assertThat(weeks, is(Arrays.asList(5L, 6L, 7L, 8L, 9L)));
         }
 
         // Sunday to Saturday:
@@ -44,13 +44,13 @@ public class BaseResourceTest {
         // Week 21  May   20, 2018 => May  26, 2018
         // Week 22  May   27, 2018 => June  2, 2018
         {
-            List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 5L);
-            assertThat(isoWeeks, is(Arrays.asList(18L, 19L, 20L, 21L, 22L)));
+            List<Long> weeks = BaseResource.getWeeksOfMonth(2018L, 5L);
+            assertThat(weeks, is(Arrays.asList(18L, 19L, 20L, 21L, 22L)));
         }
     }
 
     @Test
-    public void testGetIsoWeeksOfMonth__weekStartsExactlyInMonth() {
+    public void testGetWeeksOfMonth__weekStartsExactlyInMonth() {
         // Sunday to Saturday:
         // Week 19  May  1, 2016 => May  7, 2016
         // Week 20  May  8, 2016 => May 14, 2016
@@ -58,8 +58,8 @@ public class BaseResourceTest {
         // Week 22  May 22, 2016 => May 28, 2016
         // Week 23  May 29, 2016 => June 4, 2016
         {
-            List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2016L, 5L);
-            assertThat(isoWeeks, is(Arrays.asList(19L, 20L, 21L, 22L, 23L)));
+            List<Long> weeks = BaseResource.getWeeksOfMonth(2016L, 5L);
+            assertThat(weeks, is(Arrays.asList(19L, 20L, 21L, 22L, 23L)));
         }
 
         // Sunday to Saturday:
@@ -69,8 +69,8 @@ public class BaseResourceTest {
         // Week 30  July 22, 2018 => July 28, 2018
         // Week 31  July 29, 2018 => Aug.  4, 2018
         {
-            List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 7L);
-            assertThat(isoWeeks, is(Arrays.asList(27L, 28L, 29L, 30L, 31L)));
+            List<Long> weeks = BaseResource.getWeeksOfMonth(2018L, 7L);
+            assertThat(weeks, is(Arrays.asList(27L, 28L, 29L, 30L, 31L)));
         }
     }
 

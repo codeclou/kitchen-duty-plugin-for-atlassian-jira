@@ -43,15 +43,15 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
         }
         // BUSINESS LOGIC
         List<KitchenDutyOverviewPageMonthDutyModel> responseList = new ArrayList<>();
-        List<Long> isoWeeksInMonth = getIsoWeeksOfMonth(year, month);
-        for (Long isoWeek : isoWeeksInMonth) {
-            Week week = KitchenDutyActiveObjectHelper.getWeekByIsoWeekInTransaction(activeObjects, isoWeek);
+        List<Long> weekNumbersInMonth = getWeeksOfMonth(year, month);
+        for (Long weekNumber : weekNumbersInMonth) {
+            Week week = KitchenDutyActiveObjectHelper.getWeekByWeekNumberInTransaction(activeObjects, weekNumber);
             List<User> usersForWeek = KitchenDutyActiveObjectHelper.getUsersAssignedToWeekInTransaction(activeObjects, week);
             List<String> usernames = usersForWeek.stream().map(user -> user.getName()).collect(Collectors.toList());
             responseList.add(new KitchenDutyOverviewPageMonthDutyModel(
-                isoWeek,
-                getFirstDayOfWeekOfYear(year, isoWeek).toString(),
-                getLastDayOfWeekOfYear(year, isoWeek).toString(),
+                weekNumber,
+                getFirstDayOfWeekOfYear(year, weekNumber).toString(),
+                getLastDayOfWeekOfYear(year, weekNumber).toString(),
                 usernames)
             );
         }

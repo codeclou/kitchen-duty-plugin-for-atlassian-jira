@@ -1,7 +1,7 @@
-var initUserSearch = function(weekIsoWeekNumber) {
+var initUserSearch = function(weekNumber) {
     // Init SOY template
     var planningPageWeekUsersTemplate = JIRA.Templates.KDP.planningPageWeekUsers({
-        isoWeek: weekIsoWeekNumber
+        week: weekNumber
     });
     AJS.$('#kdp-planning-page-week-users-container').html(planningPageWeekUsersTemplate);
 
@@ -21,9 +21,9 @@ var initUserSearch = function(weekIsoWeekNumber) {
     AJS.$('#kdp-user-select').auiSelect2(auiUserSelectOptions);
 
     // Load initial values from REST API and set for aui-select
-    if (weekIsoWeekNumber !== null) {
+    if (weekNumber !== null) {
         AJS.$.ajax({
-            url: window.KDPrestUrl + '/planning/week/' + weekIsoWeekNumber + '/users',
+            url: window.KDPrestUrl + '/planning/week/' + weekNumber + '/users',
             dataType: 'json',
             success: function(users) {
                 var selectedUserList = [];
@@ -48,16 +48,16 @@ var initUserSearch = function(weekIsoWeekNumber) {
             selectedUserList.push({ username: this.text });
         });
         AJS.$.ajax({
-            url: window.KDPrestUrl + '/planning/week/' + weekIsoWeekNumber + '/users',
+            url: window.KDPrestUrl + '/planning/week/' + weekNumber + '/users',
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(selectedUserList),
             processData: false,
             success: function() {
-                showSuccessFlag('Saved users for Week ' + weekIsoWeekNumber);
+                showSuccessFlag('Saved users for Week ' + weekNumber);
             },
             error: function() {
-                showErrorFlag('Failed to save users for Week ' + weekIsoWeekNumber);
+                showErrorFlag('Failed to save users for Week ' + weekNumber);
             }
         });
     });
@@ -72,13 +72,8 @@ var initWeekPicker = function() {
     AJS.$('#week-picker').off(); // remove previous listeners
     AJS.$('#week-picker').datePicker({'overrideBrowserDefault': true});
     AJS.$('#week-picker').change(function() {
-        // Note: We do not use isoWeek() anymore since we misunderstood what
-        //       iso weeks are. We want normal weeks starting on sunday.
-        var dateValueFromPicker = AJS.$('#week-picker').val();
-        var isoWeek = moment(dateValueFromPicker).week();
-        console.log('Date from picker: ' + dateValueFromPicker +
-                    ' calcualted to week: ' + isoWeek);
-        initUserSearch(isoWeek);
+        var week = moment(AJS.$('#week-picker').val()).week();
+        initUserSearch(week);
     });
 };
 
@@ -89,11 +84,11 @@ AJS.toInit(function(){
     window.KDPrestUrl = restUrl;
 
     // set locale for moment-js so that week starts on sunday
-    // and week numbers are correctly calcualted
+    // and week numbers are correctly calculated
     moment.locale('en', {
         week: {
             dow: 0, // Sunday (0) is the first day of the week
-            doy: 1  // The week that contains Jan 1st is the first week of the year.
+            doy: 1  // Week that contains Jan 1st is the first week of the year.
         }
     });
     console.log('Week starts at: ' + moment().startOf('week').format('dddd'));

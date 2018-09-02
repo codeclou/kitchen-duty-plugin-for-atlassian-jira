@@ -29,19 +29,19 @@
  * Kitchen Duty Planning Page - User Search Template
  */
 {template .planningPageWeekUsers}
-    {@param? isoWeek: int}
+    {@param? week: int}
     <h4 class="kdp-step-headline">
         2. Kitchen Duty for Week&nbsp;
-        {if $isoWeek != null }
+        {if $week != null }
             <aui-badge class="aui-badge-primary">
-                <span id="iso-week-label">{isoWeek}</span>
+                <span id="week-label">{week}</span>
             </aui-badge>
         {else}
-            <aui-badge><span id="iso-week-label">...</span></aui-badge>
+            <aui-badge><span id="week-label">...</span></aui-badge>
         {/if}
     </h4>
     <div class="kdp-step-content">
-        {if $isoWeek == null }
+        {if $week == null }
             <div>- no week selected -</div>
         {else}
             <div >Users on kitchen duty for selected week:</div>

@@ -35,13 +35,13 @@ public class KitchenDutyPlanningResource extends BaseResource {
 
 
     /*
-     * Get all Users assigned to the isoWeekNumber.
+     * Get all Users assigned to the weekNumber.
      */
     @GET
-    @Path("/week/{isoWeekNumber}/users")
+    @Path("/week/{weekNumber}/users")
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response getUsersForWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber) {
+    public Response getUsersForWeek(@PathParam("weekNumber") final Integer weekNumber) {
         // AUTHENTICATION
         if (!this.isUserLoggedIn()) {
             return getUnauthorizedErrorResponse();
@@ -54,7 +54,7 @@ public class KitchenDutyPlanningResource extends BaseResource {
         Week week = activeObjects.executeInTransaction(new TransactionCallback<Week>() {
             @Override
             public Week doInTransaction() {
-                Week[] weeks = activeObjects.find(Week.class, Query.select().where("WEEK = ?", isoWeekNumber));
+                Week[] weeks = activeObjects.find(Week.class, Query.select().where("WEEK = ?", weekNumber));
                 if (weeks != null && weeks.length > 0) {
                     return weeks[0];
                 }
@@ -82,10 +82,10 @@ public class KitchenDutyPlanningResource extends BaseResource {
      * Add the Users to the Week
      */
     @PUT
-    @Path("/week/{isoWeekNumber}/users")
+    @Path("/week/{weekNumber}/users")
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response addUserToWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+    public Response addUserToWeek(@PathParam("weekNumber") final Integer weekNumber,
                                   final List<KitchenDutyPlanningResourceUserModel> userParams) {
         // AUTHENTICATION
         if (!this.isUserLoggedIn()) {
@@ -102,9 +102,9 @@ public class KitchenDutyPlanningResource extends BaseResource {
                 //
                 // WEEK
                 //
-                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, weekNumber);
                 if (week == null) {
-                    week = activeObjects.create(Week.class, new DBParam("WEEK", isoWeekNumber));
+                    week = activeObjects.create(Week.class, new DBParam("WEEK", weekNumber));
                     week.save();
                     activeObjects.flush(week);
                 }
@@ -154,10 +154,10 @@ public class KitchenDutyPlanningResource extends BaseResource {
      * Remove the User from Week
      */
     @DELETE
-    @Path("/week/{isoWeekNumber}/users")
+    @Path("/week/{weekNumber}/users")
     @Produces({MediaType.APPLICATION_JSON})
     @AnonymousAllowed
-    public Response deleteUserFomWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+    public Response deleteUserFomWeek(@PathParam("weekNumber") final Integer weekNumber,
                                   final KitchenDutyPlanningResourceUserModel userParam) {
         // AUTHENTICATION
         if (!this.isUserLoggedIn()) {
@@ -174,7 +174,7 @@ public class KitchenDutyPlanningResource extends BaseResource {
                 //
                 // WEEK
                 //
-                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, weekNumber);
                 if (week == null) {
                     // week does not exist => no relation to delete
                     return null;

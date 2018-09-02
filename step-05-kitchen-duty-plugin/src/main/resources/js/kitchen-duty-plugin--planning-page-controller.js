@@ -19,10 +19,10 @@ var showErrorFlag = function(message) {
     });
 };
 
-var initUserSearch = function(weekIsoWeekNumber) {
+var initUserSearch = function(weekNumber) {
     // Init SOY template
     var planningPageWeekUsersTemplate = JIRA.Templates.KDP.planningPageWeekUsers({
-        isoWeek: weekIsoWeekNumber
+        week: weekNumber
     });
     AJS.$('#kdp-planning-page-week-users-container').html(planningPageWeekUsersTemplate);
 
@@ -42,9 +42,9 @@ var initUserSearch = function(weekIsoWeekNumber) {
     AJS.$('#kdp-user-select').auiSelect2(auiUserSelectOptions);
 
     // Load initial values from REST API and set for aui-select
-    if (weekIsoWeekNumber !== null) {
+    if (weekNumber !== null) {
         AJS.$.ajax({
-            url: window.KDPrestUrl + '/planning/week/' + weekIsoWeekNumber + '/users',
+            url: window.KDPrestUrl + '/planning/week/' + weekNumber + '/users',
             dataType: 'json',
             success: function(users) {
                 var selectedUserList = [];
@@ -69,16 +69,16 @@ var initUserSearch = function(weekIsoWeekNumber) {
             selectedUserList.push({ username: this.text });
         });
         AJS.$.ajax({
-            url: window.KDPrestUrl + '/planning/week/' + weekIsoWeekNumber + '/users',
+            url: window.KDPrestUrl + '/planning/week/' + weekNumber + '/users',
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(selectedUserList),
             processData: false,
             success: function() {
-                showSuccessFlag('Saved users for Week ' + weekIsoWeekNumber);
+                showSuccessFlag('Saved users for Week ' + weekNumber);
             },
             error: function() {
-                showErrorFlag('Failed to save users for Week ' + weekIsoWeekNumber);
+                showErrorFlag('Failed to save users for Week ' + weekNumber);
             }
         });
     });
@@ -93,8 +93,8 @@ var initWeekPicker = function() {
     AJS.$('#week-picker').off(); // remove previous listeners
     AJS.$('#week-picker').datePicker({'overrideBrowserDefault': true});
     AJS.$('#week-picker').change(function() {
-        var isoWeek = moment(AJS.$('#week-picker').val()).isoWeek();
-        initUserSearch(isoWeek);
+        var week = moment(AJS.$('#week-picker').val()).week();
+        initUserSearch(week);
     });
 };
 
@@ -103,6 +103,17 @@ AJS.toInit(function(){
     var baseUrl = AJS.params.baseURL;
     var restUrl = baseUrl + '/rest/kitchenduty/1.0';
     window.KDPrestUrl = restUrl;
+
+    // set locale for moment-js so that week starts on sunday
+    // and week numbers are correctly calculated
+    moment.locale('en', {
+        week: {
+            dow: 0, // Sunday (0) is the first day of the week
+            doy: 1  // Week that contains Jan 1st is the first week of the year.
+        }
+    });
+    console.log('Week starts at: ' + moment().startOf('week').format('dddd'));
+    console.log('Current moment locale: ' + moment().locale());
 
     // Init Base SOY template
     var planningPageTemplate = JIRA.Templates.KDP.planningPage();

@@ -56,14 +56,14 @@ public class BaseResource {
     }
 
     // See unit test
-    public static List<Long> getIsoWeeksOfMonth(Long year, Long month) {
-        List<Long> isoWeeks = new ArrayList<>();
-        isoWeeks.add(getWeekOfMonth(year, month, 1L));
-        isoWeeks.add(getWeekOfMonth(year, month, 2L));
-        isoWeeks.add(getWeekOfMonth(year, month, 3L));
-        isoWeeks.add(getWeekOfMonth(year, month, 4L));
-        isoWeeks.add(getWeekOfMonth(year, month, 5L));
-        return isoWeeks;
+    public static List<Long> getWeeksOfMonth(Long year, Long month) {
+        List<Long> weeks = new ArrayList<>();
+        weeks.add(getWeekOfMonth(year, month, 1L));
+        weeks.add(getWeekOfMonth(year, month, 2L));
+        weeks.add(getWeekOfMonth(year, month, 3L));
+        weeks.add(getWeekOfMonth(year, month, 4L));
+        weeks.add(getWeekOfMonth(year, month, 5L));
+        return weeks;
     }
 
     protected static Long getWeekOfMonth(Long year, Long month, Long weekInMonth) {
@@ -81,16 +81,16 @@ public class BaseResource {
         return (long) reference.get(weekFields.weekOfYear());
     }
 
-    public static LocalDate getFirstDayOfWeekOfYear(Long year, Long isoWeek) {
+    public static LocalDate getFirstDayOfWeekOfYear(Long year, Long week) {
         // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
         WeekFields weekFields = WeekFields.of(Locale.forLanguageTag("en_US"));
         return LocalDate.now()
             .with(weekFields.weekBasedYear(), year)
-            .with(ChronoField.ALIGNED_WEEK_OF_YEAR, isoWeek)
+            .with(ChronoField.ALIGNED_WEEK_OF_YEAR, week)
             .with(ChronoField.DAY_OF_WEEK, 1).minusDays(1);
     }
 
-    public static LocalDate getLastDayOfWeekOfYear(Long year, Long isoWeek) {
-        return getFirstDayOfWeekOfYear(year, isoWeek).plusDays(6);
+    public static LocalDate getLastDayOfWeekOfYear(Long year, Long week) {
+        return getFirstDayOfWeekOfYear(year, week).plusDays(6);
     }
 }

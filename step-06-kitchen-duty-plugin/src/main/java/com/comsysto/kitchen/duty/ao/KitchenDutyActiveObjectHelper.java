@@ -10,8 +10,8 @@ import java.util.List;
 
 public class KitchenDutyActiveObjectHelper {
 
-    public static Week findUniqueWeek(ActiveObjects activeObjects, Integer isoWeekNumber) {
-        Week[] weekRes = activeObjects.find(Week.class, Query.select().where("WEEK = ?", isoWeekNumber));
+    public static Week findUniqueWeek(ActiveObjects activeObjects, Integer weekNumber) {
+        Week[] weekRes = activeObjects.find(Week.class, Query.select().where("WEEK = ?", weekNumber));
         if ((weekRes != null && weekRes.length > 0)) {
             return weekRes[0];
         }
@@ -46,11 +46,11 @@ public class KitchenDutyActiveObjectHelper {
     // TRANSACTIONAL
     //
 
-    public static Week getWeekByIsoWeekInTransaction(ActiveObjects activeObjects, Long isoWeekNumber) {
+    public static Week getWeekByWeekNumberInTransaction(ActiveObjects activeObjects, Long weekNumber) {
         return activeObjects.executeInTransaction(new TransactionCallback<Week>() {
             @Override
             public Week doInTransaction() {
-                Week[] weeks = activeObjects.find(Week.class, Query.select().where("WEEK = ?", isoWeekNumber));
+                Week[] weeks = activeObjects.find(Week.class, Query.select().where("WEEK = ?", weekNumber));
                 if (weeks != null && weeks.length > 0) {
                     return weeks[0];
                 }

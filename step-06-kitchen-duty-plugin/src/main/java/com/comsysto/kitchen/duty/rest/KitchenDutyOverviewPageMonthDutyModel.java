@@ -15,7 +15,7 @@ import java.util.List;
 public class KitchenDutyOverviewPageMonthDutyModel {
 
     @XmlElement
-    private Long isoWeek;
+    private Long week;
 
     @XmlElement
     private String start; /* Date String - First day of week (Sunday) */
@@ -25,19 +25,19 @@ public class KitchenDutyOverviewPageMonthDutyModel {
     @XmlElement
     private List<String> users;
 
-    public KitchenDutyOverviewPageMonthDutyModel(Long isoWeek, String start, String end, List<String> users) {
+    public KitchenDutyOverviewPageMonthDutyModel(Long week, String start, String end, List<String> users) {
         this.start = start;
         this.end = end;
-        this.isoWeek = isoWeek;
+        this.week = week;
         this.users = users;
     }
 
-    public Long getIsoWeek() {
-        return isoWeek;
+    public Long getWeek() {
+        return week;
     }
 
-    public void setIsoWeek(Long isoWeek) {
-        this.isoWeek = isoWeek;
+    public void setWeek(Long week) {
+        this.week = week;
     }
 
     public List<String> getUsers() {

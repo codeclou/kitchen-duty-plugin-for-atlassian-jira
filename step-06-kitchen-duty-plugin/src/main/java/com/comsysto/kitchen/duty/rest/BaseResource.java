@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static java.lang.Math.toIntExact;
-
 public class BaseResource {
 
     protected com.atlassian.sal.api.user.UserManager userManager;

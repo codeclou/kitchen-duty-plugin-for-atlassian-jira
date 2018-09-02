@@ -4,51 +4,95 @@ import com.comsysto.kitchen.duty.rest.BaseResource;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class BaseResourceTest {
 
     @Test
-    public void testGetIsoWeeksOfMonth() {
-        List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 8L);
+    public void testGetIsoWeeksOfMonth__weekStartsInPreviousMonth() {
+        // Sunday to Saturday:
+        // Week 31  July   29, 2018 => August  4, 2018
+        // Week 32  August  5, 2018 => August 11, 2018
+        // Week 33  August 12, 2018 => August 18, 2018
+        // Week 34  August 19, 2018 => August 25, 2018
+        // Week 35  August 26, 2018 => Sept,   1, 2018
+        {
+            List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 8L);
+            assertThat(isoWeeks, is(Arrays.asList(31L, 32L, 33L, 34L, 35L)));
+        }
 
-        assertEquals(Long.valueOf(32), isoWeeks.get(0));
-        assertEquals(Long.valueOf(33), isoWeeks.get(1));
-        assertEquals(Long.valueOf(34), isoWeeks.get(2));
-        assertEquals(Long.valueOf(35), isoWeeks.get(3));
-        assertEquals(Long.valueOf(36), isoWeeks.get(4));
+        // Sunday to Saturday:
+        // Week 5  January  28, 2018 => February  3, 2018
+        // Week 6  February  4, 2018 => February 10, 2018
+        // Week 7  February 11, 2018 => February 17, 2018
+        // Week 8  February 18, 2018 => February 24, 2018
+        // Week 9  February 25, 2018 => March     3, 2018
+        {
+            List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 2L);
+            assertThat(isoWeeks, is(Arrays.asList(5L, 6L, 7L, 8L, 9L)));
+        }
 
-        List<Long> isoWeeks2 = BaseResource.getIsoWeeksOfMonth(2018L, 2L);
-
-        assertEquals(Long.valueOf(6), isoWeeks2.get(0));
-        assertEquals(Long.valueOf(7), isoWeeks2.get(1));
-        assertEquals(Long.valueOf(8), isoWeeks2.get(2));
-        assertEquals(Long.valueOf(9), isoWeeks2.get(3));
-        assertEquals(Long.valueOf(10), isoWeeks2.get(4));
-
-        List<Long> isoWeeks3 = BaseResource.getIsoWeeksOfMonth(2018L, 5L);
-
-        assertEquals(Long.valueOf(19), isoWeeks3.get(0));
-        assertEquals(Long.valueOf(20), isoWeeks3.get(1));
-        assertEquals(Long.valueOf(21), isoWeeks3.get(2));
-        assertEquals(Long.valueOf(22), isoWeeks3.get(3));
-        assertEquals(Long.valueOf(23), isoWeeks3.get(4));
+        // Sunday to Saturday:
+        // Week 18  April 29, 2018 => May   5, 2018
+        // Week 19  May    6, 2018 => May  12, 2018
+        // Week 20  May   13, 2018 => May  19, 2018
+        // Week 21  May   20, 2018 => May  26, 2018
+        // Week 22  May   27, 2018 => June  2, 2018
+        {
+            List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 5L);
+            assertThat(isoWeeks, is(Arrays.asList(18L, 19L, 20L, 21L, 22L)));
+        }
     }
 
+    @Test
+    public void testGetIsoWeeksOfMonth__weekStartsExactlyInMonth() {
+        // Sunday to Saturday:
+        // Week 19  May  1, 2016 => May  7, 2016
+        // Week 20  May  8, 2016 => May 14, 2016
+        // Week 21  May 15, 2016 => May 21, 2016
+        // Week 22  May 22, 2016 => May 28, 2016
+        // Week 23  May 29, 2016 => June 4, 2016
+        {
+            List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2016L, 5L);
+            assertThat(isoWeeks, is(Arrays.asList(19L, 20L, 21L, 22L, 23L)));
+        }
+
+        // Sunday to Saturday:
+        // Week 27  July  1, 2018 => July  7, 2018
+        // Week 28  July  8, 2018 => July 14, 2018
+        // Week 29  July 15, 2018 => July 21, 2018
+        // Week 30  July 22, 2018 => July 28, 2018
+        // Week 31  July 29, 2018 => Aug.  4, 2018
+        {
+            List<Long> isoWeeks = BaseResource.getIsoWeeksOfMonth(2018L, 7L);
+            assertThat(isoWeeks, is(Arrays.asList(27L, 28L, 29L, 30L, 31L)));
+        }
+    }
 
     @Test
     public void testGetFirstDayOfWeekOfMonth() {
         LocalDate date = BaseResource.getFirstDayOfWeekOfYear(2018L, 32L);
         assertEquals("2018-08-05", date.toString());
+
+        LocalDate date2 = BaseResource.getFirstDayOfWeekOfYear(2018L, 31L);
+        assertEquals("2018-07-29", date2.toString());
+
+        LocalDate date3 = BaseResource.getFirstDayOfWeekOfYear(2018L, 27L);
+        assertEquals("2018-07-01", date3.toString());
     }
 
     @Test
     public void testGetLastDayOfWeekOfMonth() {
         LocalDate date = BaseResource.getLastDayOfWeekOfYear(2018L, 32L);
         assertEquals("2018-08-11", date.toString());
-    }
 
+        LocalDate date2 = BaseResource.getLastDayOfWeekOfYear(2018L, 31L);
+        assertEquals("2018-08-04", date2.toString());
+    }
 
 }

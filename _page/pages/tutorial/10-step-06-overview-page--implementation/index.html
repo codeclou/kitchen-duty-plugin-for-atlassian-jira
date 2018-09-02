@@ -472,10 +472,10 @@
                     |        }
                     |        // BUSINESS LOGIC
                     |        List<KitchenDutyOverviewPageMonthDutyModel> responseList = new ArrayList<>();
-                    |        List<Long> weeksInMonth = getWeeksOfMonth(year, month); {{{point::2}}}
-                    |        for (Long week : weeksInMonth) {
+                    |        List<Long> weekNumbersInMonth = getWeeksOfMonth(year, month); {{{point::2}}}
+                    |        for (Long weekNumber : weekNumbersInMonth) {
                     |            Week week = KitchenDutyActiveObjectHelper {{{point::3}}}
-                    |                         .getWeekByWeekNumberInTransaction(activeObjects, week);
+                    |                         .getWeekByWeekNumberInTransaction(activeObjects, weekNumber);
                     |            List<User> usersForWeek = KitchenDutyActiveObjectHelper {{{point::4}}}
                     |                         .getUsersAssignedToWeekInTransaction(activeObjects, week);
                     |            List<String> usernames = usersForWeek
@@ -483,9 +483,9 @@
                     |                         .map(user -> user.getName())
                     |                         .collect(Collectors.toList()); {{{point::5}}}
                     |            responseList.add(new KitchenDutyOverviewPageMonthDutyModel(
-                    |                week,
-                    |                getFirstDayOfWeekOfYear(year, week).toString(), {{{point::6}}}
-                    |                getLastDayOfWeekOfYear(year, week).toString(), {{{point::7}}}
+                    |                weekNumber,
+                    |                getFirstDayOfWeekOfYear(year, weekNumber).toString(), {{{point::6}}}
+                    |                getLastDayOfWeekOfYear(year, weekNumber).toString(), {{{point::7}}}
                     |                usernames)
                     |            );
                     |        }

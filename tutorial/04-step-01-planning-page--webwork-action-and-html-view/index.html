@@ -352,22 +352,25 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                 
 
 <div class="cs-code-filename">
-    
-    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="src/main/resources/">.../</span>atlassian-plugin.xml
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="&lt;webwork1 key=&quot;kitchen-duty-planning-webwork-module&quot; name=&quot;Kitchen Duty Planning Webwork Module&quot; i18n-name-key=&quot;kitchen-duty-planning-webwork-module.name&quot;&gt;
+    <div class="cs-code-filename-inner">
+        
+        <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                                data-toggle="tooltip"
+                                                                data-placement="right"
+                                                                title="src/main/resources/">.../</span>atlassian-plugin.xml
+        
+    </div>
+    <div class="cs-code-buttons">
+        
+        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+        
+        <a class="cs-code-copylink cs--trigger-copy-clipboard"
+        data-toggle="tooltip" data-placement="left"
+        data-title-orig="Copy file content to clipboard"
+        title="Copy file content to clipboard"
+        data-clipboard-text="&lt;webwork1 key=&quot;kitchen-duty-planning-webwork-module&quot; name=&quot;Kitchen Duty Planning Webwork Module&quot; i18n-name-key=&quot;kitchen-duty-planning-webwork-module.name&quot;&gt;
     &lt;description key=&quot;kitchen-duty-planning-webwork-module.description&quot;&gt;The Kitchen Duty Planning Webwork Module Plugin&lt;/description&gt;
     &lt;actions&gt;
       &lt;action name=&quot;com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction&quot; alias=&quot;KitchenDutyPlanningWebworkAction&quot;&gt;
@@ -375,6 +378,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
       &lt;/action&gt;
     &lt;/actions&gt;
   &lt;/webwork1&gt;"><i class="fa fa-files-o"></i></a>
+    </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"Kitchen Duty Planning Webwork Module"</span> <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.name"</span>&gt;</span>
@@ -393,19 +397,22 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
                 
 
 <div class="cs-code-filename">
-    
-    pom.xml
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/pom.xml" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="&lt;dependency&gt;
+    <div class="cs-code-filename-inner">
+        
+        pom.xml
+        
+    </div>
+    <div class="cs-code-buttons">
+        
+        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/pom.xml" target="_blank"
+        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+        
+        <a class="cs-code-copylink cs--trigger-copy-clipboard"
+        data-toggle="tooltip" data-placement="left"
+        data-title-orig="Copy file content to clipboard"
+        title="Copy file content to clipboard"
+        data-clipboard-text="&lt;dependency&gt;
    &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;
    &lt;artifactId&gt;httpclient&lt;/artifactId&gt;
    &lt;version&gt;4.1.1&lt;/version&gt;
@@ -423,6 +430,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
    &lt;version&gt;1.8.5&lt;/version&gt;
    &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;"><i class="fa fa-files-o"></i></a>
+    </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">dependency</span>&gt;</span>
@@ -475,25 +483,29 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
         
 
 <div class="cs-code-filename">
-    
-    <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/webwork/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="src/main/java/com/comsysto/kitchen/duty/webwork/">.../</span>KitchenDutyPlanningWebworkAction.java
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="@Override
+    <div class="cs-code-filename-inner">
+        
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/webwork/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                                data-toggle="tooltip"
+                                                                data-placement="right"
+                                                                title="src/main/java/com/comsysto/kitchen/duty/webwork/">.../</span>KitchenDutyPlanningWebworkAction.java
+        
+    </div>
+    <div class="cs-code-buttons">
+        
+        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java" target="_blank"
+        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+        
+        <a class="cs-code-copylink cs--trigger-copy-clipboard"
+        data-toggle="tooltip" data-placement="left"
+        data-title-orig="Copy file content to clipboard"
+        title="Copy file content to clipboard"
+        data-clipboard-text="@Override
 public String execute() throws Exception {
    return &quot;kitchen-duty-planning-success&quot;;
 }"><i class="fa fa-files-o"></i></a>
+    </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-annotation">@Override</span>
@@ -572,22 +584,25 @@ public String execute() throws Exception {
         
 
 <div class="cs-code-filename">
-    
-    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/templates/kitchen-duty-planning-webwork-module/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="src/main/resources/templates/kitchen-duty-planning-webwork-module/">.../</span>kitchen-duty-planning-success.vm
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="&lt;html&gt;
+    <div class="cs-code-filename-inner">
+        
+        <span class="d-none d-lg-inline d-xl-inline">src/main/resources/templates/kitchen-duty-planning-webwork-module/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                                data-toggle="tooltip"
+                                                                data-placement="right"
+                                                                title="src/main/resources/templates/kitchen-duty-planning-webwork-module/">.../</span>kitchen-duty-planning-success.vm
+        
+    </div>
+    <div class="cs-code-buttons">
+        
+        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
+        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+        
+        <a class="cs-code-copylink cs--trigger-copy-clipboard"
+        data-toggle="tooltip" data-placement="left"
+        data-title-orig="Copy file content to clipboard"
+        title="Copy file content to clipboard"
+        data-clipboard-text="&lt;html&gt;
 &lt;head&gt;
     &lt;title&gt;Planning Page - Kitchen Duty Plugin&lt;/title&gt;
     &lt;meta name=&quot;decorator&quot; content=&quot;atl.admin&quot;&gt;
@@ -598,6 +613,7 @@ public String execute() throws Exception {
 &lt;p&gt;Now it looks nice :)&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;"><i class="fa fa-files-o"></i></a>
+    </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
@@ -681,22 +697,25 @@ public String execute() throws Exception {
         
 
 <div class="cs-code-filename">
-    
-    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="src/main/resources/">.../</span>atlassian-plugin.xml
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="&lt;atlassian-plugin&gt;
+    <div class="cs-code-filename-inner">
+        
+        <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                                data-toggle="tooltip"
+                                                                data-placement="right"
+                                                                title="src/main/resources/">.../</span>atlassian-plugin.xml
+        
+    </div>
+    <div class="cs-code-buttons">
+        
+        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+        
+        <a class="cs-code-copylink cs--trigger-copy-clipboard"
+        data-toggle="tooltip" data-placement="left"
+        data-title-orig="Copy file content to clipboard"
+        title="Copy file content to clipboard"
+        data-clipboard-text="&lt;atlassian-plugin&gt;
 ...
   &lt;web-section key=&quot;admin_kitchen_duty_planning_section&quot;
                name=&quot;admin_kitchen_duty_planning_section&quot;
@@ -716,6 +735,7 @@ public String execute() throws Exception {
   &lt;/web-item&gt;
 
 &lt;/atlassian-plugin&gt;"><i class="fa fa-files-o"></i></a>
+    </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">atlassian-plugin</span>&gt;</span>
@@ -773,24 +793,28 @@ public String execute() throws Exception {
         
 
 <div class="cs-code-filename">
-    
-    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="src/main/resources/">.../</span>kitchen-duty-plugin.properties
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="# websection/webitems
+    <div class="cs-code-filename-inner">
+        
+        <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                                data-toggle="tooltip"
+                                                                data-placement="right"
+                                                                title="src/main/resources/">.../</span>kitchen-duty-plugin.properties
+        
+    </div>
+    <div class="cs-code-buttons">
+        
+        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
+        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+        
+        <a class="cs-code-copylink cs--trigger-copy-clipboard"
+        data-toggle="tooltip" data-placement="left"
+        data-title-orig="Copy file content to clipboard"
+        title="Copy file content to clipboard"
+        data-clipboard-text="# websection/webitems
 kitchen-duty-plugin.admin.planning.page.web.section.name = Kitchen Duty Plugin
 kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page"><i class="fa fa-files-o"></i></a>
+    </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"># websection/webitems
@@ -842,22 +866,25 @@ kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pr
         
 
 <div class="cs-code-filename">
-    
-    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/templates/kitchen-duty-planning-webwork-module/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="src/main/resources/templates/kitchen-duty-planning-webwork-module/">.../</span>kitchen-duty-planning-success.vm
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="&lt;html&gt;
+    <div class="cs-code-filename-inner">
+        
+        <span class="d-none d-lg-inline d-xl-inline">src/main/resources/templates/kitchen-duty-planning-webwork-module/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                                data-toggle="tooltip"
+                                                                data-placement="right"
+                                                                title="src/main/resources/templates/kitchen-duty-planning-webwork-module/">.../</span>kitchen-duty-planning-success.vm
+        
+    </div>
+    <div class="cs-code-buttons">
+        
+        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
+        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+        
+        <a class="cs-code-copylink cs--trigger-copy-clipboard"
+        data-toggle="tooltip" data-placement="left"
+        data-title-orig="Copy file content to clipboard"
+        title="Copy file content to clipboard"
+        data-clipboard-text="&lt;html&gt;
 &lt;head&gt;
     &lt;title&gt;$i18n.getText(&quot;kitchen-duty-plugin.admin.planning.page.title&quot;)&lt;/title&gt;
     &lt;meta name=&quot;decorator&quot; content=&quot;atl.admin&quot;&gt;
@@ -868,6 +895,7 @@ kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pr
 &lt;p&gt;Now it looks nice :)&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;"><i class="fa fa-files-o"></i></a>
+    </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
@@ -888,24 +916,28 @@ kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pr
         
 
 <div class="cs-code-filename">
-    
-    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="src/main/resources/">.../</span>kitchen-duty-plugin.properties
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="# kitchen-duty-planning-success.vm
+    <div class="cs-code-filename-inner">
+        
+        <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                                data-toggle="tooltip"
+                                                                data-placement="right"
+                                                                title="src/main/resources/">.../</span>kitchen-duty-plugin.properties
+        
+    </div>
+    <div class="cs-code-buttons">
+        
+        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
+        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+        
+        <a class="cs-code-copylink cs--trigger-copy-clipboard"
+        data-toggle="tooltip" data-placement="left"
+        data-title-orig="Copy file content to clipboard"
+        title="Copy file content to clipboard"
+        data-clipboard-text="# kitchen-duty-planning-success.vm
 kitchen-duty-plugin.admin.planning.page.headline = Kitchen Duty Plugin - Planning Page
 kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plugin"><i class="fa fa-files-o"></i></a>
+    </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"># kitchen-duty-planning-success.vm
@@ -923,24 +955,28 @@ kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plu
         
 
 <div class="cs-code-filename">
-    
-    <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="src/main/resources/">.../</span>atlassian-plugin.xml
-    
-    
-    <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="&lt;webwork1 key=&quot;kitchen-duty-planning-webwork-module&quot;
+    <div class="cs-code-filename-inner">
+        
+        <span class="d-none d-lg-inline d-xl-inline">src/main/resources/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                                data-toggle="tooltip"
+                                                                data-placement="right"
+                                                                title="src/main/resources/">.../</span>atlassian-plugin.xml
+        
+    </div>
+    <div class="cs-code-buttons">
+        
+        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+        
+        <a class="cs-code-copylink cs--trigger-copy-clipboard"
+        data-toggle="tooltip" data-placement="left"
+        data-title-orig="Copy file content to clipboard"
+        title="Copy file content to clipboard"
+        data-clipboard-text="&lt;webwork1 key=&quot;kitchen-duty-planning-webwork-module&quot;
           ...
           roles-required=&quot;admin&quot;&gt;"><i class="fa fa-files-o"></i></a>
+    </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module"</span>

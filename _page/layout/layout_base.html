@@ -53,24 +53,28 @@
 {% macro csSource(lang='', source='', uniqueId='', filename='', filepath='', ghBaseUrl='') %}
 {% if filename %}
 <div class="cs-code-filename">
-    {% if filepath %}
-    <span class="d-none d-lg-inline d-xl-inline">{{ filepath }}</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
-                                                            data-toggle="tooltip"
-                                                            data-placement="right"
-                                                            title="{{ filepath }}">.../</span>{{ filename }}
-    {% else %}
-    {{ filename }}
-    {% endif %}
-    {% if ghBaseUrl %}
-    <a href="{{ ghBaseUrl }}{{ filepath }}{{ filename }}" target="_blank"
-       data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
-       class="cs-code-ghlink"><i class="fa fa-github"></i></a>
-    {% endif %}
-    <a class="cs-code-copylink cs--trigger-copy-clipboard"
-       data-toggle="tooltip" data-placement="left"
-       data-title-orig="Copy file content to clipboard"
-       title="Copy file content to clipboard"
-       data-clipboard-text="{{source | formatSourceCodeForCopyClipboardDataAttribute() }}"><i class="fa fa-files-o"></i></a>
+    <div class="cs-code-filename-inner">
+        {% if filepath %}
+        <span class="d-none d-lg-inline d-xl-inline">{{ filepath }}</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+                                                                data-toggle="tooltip"
+                                                                data-placement="right"
+                                                                title="{{ filepath }}">.../</span>{{ filename }}
+        {% else %}
+        {{ filename }}
+        {% endif %}
+    </div>
+    <div class="cs-code-buttons">
+        {% if ghBaseUrl %}
+        <a href="{{ ghBaseUrl }}{{ filepath }}{{ filename }}" target="_blank"
+        data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
+        class="cs-code-ghlink"><i class="fa fa-github"></i></a>
+        {% endif %}
+        <a class="cs-code-copylink cs--trigger-copy-clipboard"
+        data-toggle="tooltip" data-placement="left"
+        data-title-orig="Copy file content to clipboard"
+        title="Copy file content to clipboard"
+        data-clipboard-text="{{source | formatSourceCodeForCopyClipboardDataAttribute() }}"><i class="fa fa-files-o"></i></a>
+    </div>
 </div>
 {% endif %}
 <pre class="cs-code"><code class="hljs">{{source | formatSourceCode(lang, uniqueId) | safe }}</code></pre>

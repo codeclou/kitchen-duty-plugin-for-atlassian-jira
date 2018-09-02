@@ -600,15 +600,24 @@ p {
 /* CS SOURCE CODE */
 
 .cs-code-filename {
+    display:flex;
+    justify-content: space-between;
+    background-color: #525252;
+}
+
+.cs-code-filename-inner {
     margin-left:0;
     margin-right:0;
     padding: 10px 10px 5px 10px;
-    background-color: #525252;
     color:#fff;
     font-weight:300;
     font-size: 13px;
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     word-wrap: break-word;
+}
+.cs-code-buttons {
+    padding: 10px 10px 5px 10px;
+    color:#fff;
 }
 
 .cs-code-copylink, .cs-code-ghlink {

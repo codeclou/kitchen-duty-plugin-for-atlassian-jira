@@ -120,21 +120,21 @@
                             |{/template}
                             |
                             |{template .planningPageWeekUsers} {{{point::3}}}
-                            |    {@param? isoWeek: int} {{{point::4}}}
+                            |    {@param? week: int} {{{point::4}}}
                             |    <h4 class="kdp-step-headline">
                             |        2. Kitchen Duty for Week&nbsp;
-                            |        {if $isoWeek != null } {{{point::5}}}
+                            |        {if $week != null } {{{point::5}}}
                             |            <aui-badge class="aui-badge-primary">
-                            |                <span id="iso-week-label">{isoWeek}</span>
+                            |                <span id="week-label">{week}</span>
                             |            </aui-badge>
                             |        {else}
                             |            <aui-badge>
-                            |                <span id="iso-week-label">...</span>
+                            |                <span id="week-label">...</span>
                             |            </aui-badge>
                             |        {/if}
                             |    </h4>
                             |    <div class="kdp-step-content">
-                            |        {if $isoWeek == null } {{{point::6}}}
+                            |        {if $week == null } {{{point::6}}}
                             |            <div>- no week selected -</div>
                             |        {else}
                             |            <div>Users on kitchen duty for selected week:</div>
@@ -171,13 +171,13 @@
                         This template is re-rendered multiple times since it is a <strong>parameterized soy template</strong>.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        <strong>isoWeek parameter</strong> is used to pass the week number to the template.
+                        <strong>week parameter</strong> is used to pass the week number to the template.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        conditionally render the template for isoWeek being null (=no week selected) or isoWeek greater zero (=week selected).
+                        conditionally render the template for week being null (=no week selected) or week greater zero (=week selected).
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        when the isoWeek is null display a message, otherwise render the AUI Select 2 field for the user selection.
+                        when the week is null display a message, otherwise render the AUI Select 2 field for the user selection.
                     </div>
                 </div>
             </div>
@@ -210,14 +210,14 @@
             |
             |
             |    @GET
-            |    @Path("/week/{isoWeekNumber}/users")
+            |    @Path("/week/{weekNumber}/users")
             |    @Produces({MediaType.APPLICATION_JSON})
             |    @AnonymousAllowed
-            |    public Response getUsersForWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber) {
+            |    public Response getUsersForWeek(@PathParam("weekNumber") final Integer weekNumber) {
             |        Week week = activeObjects.executeInTransaction(new TransactionCallback<Week>() {
             |            @Override
             |            public Week doInTransaction() {
-            |                Week[] weeks = activeObjects.find(Week.class, Query.select().where("WEEK = ?", isoWeekNumber));
+            |                Week[] weeks = activeObjects.find(Week.class, Query.select().where("WEEK = ?", weekNumber));
             |                if (weeks != null && weeks.length > 0) {
             |                    return weeks[0];
             |                }
@@ -245,10 +245,10 @@
             |     * Add the Users to the Week
             |     */
             |    @PUT
-            |    @Path("/week/{isoWeekNumber}/users")
+            |    @Path("/week/{weekNumber}/users")
             |    @Produces({MediaType.APPLICATION_JSON})
             |    @AnonymousAllowed
-            |    public Response addUserToWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+            |    public Response addUserToWeek(@PathParam("weekNumber") final Integer weekNumber,
             |                                  final List<KitchenDutyPlanningResourceUserModel> userParams) {
             |        activeObjects.executeInTransaction(new TransactionCallback<Void>() {
             |            @Override
@@ -256,9 +256,9 @@
             |                //
             |                // WEEK {{{point::3}}}
             |                //
-            |               Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, isoWeekNumber);
+            |               Week week = KitchenDutyActiveObjectHelper.findUniqueWeek(activeObjects, weekNumber);
             |                if (week == null) {
-            |                    week = activeObjects.create(Week.class, new DBParam("WEEK", isoWeekNumber));
+            |                    week = activeObjects.create(Week.class, new DBParam("WEEK", weekNumber));
             |                    week.save();
             |                    activeObjects.flush(week);
             |                }
@@ -371,6 +371,8 @@
             I have extended the existing code to load and save the users per week. This JS code now uses the soy templates defined above.
         </p>
 
+
+
         <div class="row">
             <div class="col-md-8">
         {{ csSource(lang='js', filepath="src/main/resources/js/", filename="kitchen-duty-plugin--planning-page-controller.js", ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='sdfdfhg36ig', source="
@@ -395,10 +397,10 @@
             |    });
             |};
             |
-            |var initUserSearch = function(weekIsoWeekNumber) { {{{point::1}}}
+            |var initUserSearch = function(weekNumber) { {{{point::1}}}
             |    // Init SOY template
             |    var planningPageWeekUsersTemplate = JIRA.Templates.KDP.planningPageWeekUsers({
-            |        isoWeek: weekIsoWeekNumber {{{point::2}}}
+            |        week: weekNumber {{{point::2}}}
             |    });
             |    AJS.$('#kdp-planning-page-week-users-container').html(planningPageWeekUsersTemplate); {{{point::3}}}
             |
@@ -418,9 +420,9 @@
             |    AJS.$('#kdp-user-select').auiSelect2(auiUserSelectOptions);
             |
             |    // Load initial values from REST API and set for aui-select
-            |    if (weekIsoWeekNumber !== null) { {{{point::4}}}
+            |    if (weekNumber !== null) { {{{point::4}}}
             |        AJS.$.ajax({
-            |            url: window.KDPrestUrl + '/planning/week/' + weekIsoWeekNumber + '/users',
+            |            url: window.KDPrestUrl + '/planning/week/' + weekNumber + '/users',
             |            dataType: 'json',
             |            success: function(users) {
             |                var selectedUserList = [];
@@ -445,16 +447,16 @@
             |            selectedUserList.push({ username: this.text });
             |        });
             |        AJS.$.ajax({ {{{point::6}}}
-            |            url: window.KDPrestUrl + '/planning/week/' + weekIsoWeekNumber + '/users',
+            |            url: window.KDPrestUrl + '/planning/week/' + weekNumber + '/users',
             |            type: 'PUT',
             |            contentType: 'application/json',
             |            data: JSON.stringify(selectedUserList),
             |            processData: false,
             |            success: function() {
-            |                showSuccessFlag('Saved users for Week ' + weekIsoWeekNumber);
+            |                showSuccessFlag('Saved users for Week ' + weekNumber);
             |            },
             |            error: function() {
-            |                showErrorFlag('Failed to save users for Week ' + weekIsoWeekNumber);
+            |                showErrorFlag('Failed to save users for Week ' + weekNumber);
             |            }
             |        });
             |    });
@@ -469,8 +471,8 @@
             |    AJS.$('#week-picker').off(); // remove previous listeners
             |    AJS.$('#week-picker').datePicker({'overrideBrowserDefault': true});
             |    AJS.$('#week-picker').change(function() {
-            |        var isoWeek = moment(AJS.$('#week-picker').val()).isoWeek(); {{{point::8}}}
-            |        initUserSearch(isoWeek);
+            |        var week = moment(AJS.$('#week-picker').val()).week(); {{{point::8}}}
+            |        initUserSearch(week);
             |    });
             |};
             |
@@ -479,6 +481,17 @@
             |    var baseUrl = AJS.params.baseURL;
             |    var restUrl = baseUrl + '/rest/kitchenduty/1.0';
             |    window.KDPrestUrl = restUrl;
+            |
+            |    // set locale for moment-js so that week starts on sunday
+            |    // and week numbers are correctly calculated
+            |    moment.locale('en', {
+            |        week: {
+            |            dow: 0, // Sunday (0) is the first day of the week
+            |            doy: 1  // Week that contains Jan 1st is the first week of the year.
+            |        }
+            |    });
+            |    console.log('Week starts at: ' + moment().startOf('week').format('dddd'));
+            |    console.log('Current moment locale: ' + moment().locale());
             |
             |    // Init Base SOY template {{{point::9}}}
             |    var planningPageTemplate = JIRA.Templates.KDP.planningPage();
@@ -498,13 +511,13 @@
                        <em>planningPageWeekUsers</em> soy template for the week number passed as parameter.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        <strong>isoWeek soy template parameter</strong> is passed to template from JavaScript function parameter.
+                        <strong>week soy template parameter</strong> is passed to template from JavaScript function parameter.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         The rendered <em>planningPageWeekUsers</em> soy template is injected into the DOM.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        If the <em>weekIsoWeekNumber</em> variable is not null (meaning user has selected a date), then
+                        If the <em>weekNumber</em> variable is not null (meaning user has selected a date), then
                         load existing users for that week from our REST Endpoint via HTTP GET.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
@@ -527,9 +540,9 @@
                         This is the real magic now. We register a <strong>change listener</strong> to our date picker field,
                         meaning that once the user selects a date the function is called.
                         Inside that function we get the selected date from the date picker and pass it to the
-                        <a href="http://momentjs.com/docs/#/get-set/iso-week/">MomentJS isoWeek() function</a> which returns us
-                        the iso week number for that date.
-                        And once we have the iso week number we <strong>trigger a re-render of the <em>planningPageWeekUsers</em> template</strong> for that week.
+                        <a href="http://momentjs.com/docs/#/get-set/week/">MomentJS week() function</a> which returns us
+                        the week number for that date.
+                        And once we have the week number we <strong>trigger a re-render of the <em>planningPageWeekUsers</em> template</strong> for that week.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         In our <code>AJS.toInit()</code> function (which is executed after the DOM has loaded),

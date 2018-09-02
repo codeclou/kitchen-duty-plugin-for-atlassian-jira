@@ -344,7 +344,7 @@
                     |    // TRANSACTIONAL
                     |    //
                     |
-                    |    public static Week getWeekByweekInTransaction(ActiveObjects activeObjects, Long weekNumber) { {{{point::1}}}
+                    |    public static Week getWeekByWeekNumberInTransaction(ActiveObjects activeObjects, Long weekNumber) { {{{point::1}}}
                     |        return activeObjects.executeInTransaction(new TransactionCallback<Week>() {
                     |            @Override
                     |            public Week doInTransaction() {
@@ -381,7 +381,7 @@
             <div class="col-md-5 cs-sticky-in-parent">
                 <div class="list-group cs-source-point-list" data-source-target="fsdsdasfggfsddfsdffej5">
                     <div class="list-group-item cs-source-point-list__item">
-                       <strong><code>getWeekByweekInTransaction()</code></strong> gives us either an object of <code>Week</code> or <code>null</code> for a certain week number.
+                       <strong><code>getWeekByWeekNumberInTransaction()</code></strong> gives us either an object of <code>Week</code> or <code>null</code> for a certain week number.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                        <strong><code>getUsersAssignedToWeekInTransaction()</code></strong> gives us either a list of <code>List&lt;User&gt;</code> or and empty list for a certain week.
@@ -472,10 +472,10 @@
                     |        }
                     |        // BUSINESS LOGIC
                     |        List<KitchenDutyOverviewPageMonthDutyModel> responseList = new ArrayList<>();
-                    |        List<Long> weeksInMonth = getweeksOfMonth(year, month); {{{point::2}}}
+                    |        List<Long> weeksInMonth = getWeeksOfMonth(year, month); {{{point::2}}}
                     |        for (Long week : weeksInMonth) {
                     |            Week week = KitchenDutyActiveObjectHelper {{{point::3}}}
-                    |                         .getWeekByweekInTransaction(activeObjects, week);
+                    |                         .getWeekByWeekNumberInTransaction(activeObjects, week);
                     |            List<User> usersForWeek = KitchenDutyActiveObjectHelper {{{point::4}}}
                     |                         .getUsersAssignedToWeekInTransaction(activeObjects, week);
                     |            List<String> usernames = usersForWeek
@@ -567,11 +567,11 @@
             |        this.users = users;
             |    }
             |
-            |    public Long getweek() {
+            |    public Long getWeek() {
             |        return week;
             |    }
             |
-            |    public void setweek(Long week) {
+            |    public void setWeek(Long week) {
             |        this.week = week;
             |    }
             |
@@ -602,51 +602,69 @@
             |
         ')}}
 
-        <p>The <strong>date calculation helpers <code>getweeksOfMonth()</code>, <code>getFirstDayOfWeekOfYear()</code> and <code>getLastDayOfWeekOfYear()</code> are defined in <code>BaseResource.java</code></strong>.</p>
+        <p>The <strong>date calculation helpers <code>getWeeksOfMonth()</code>, <code>getFirstDayOfWeekOfYear()</code> and <code>getLastDayOfWeekOfYear()</code> are defined in <code>BaseResource.java</code></strong>.</p>
 
         <div class="row">
             <div class="col-md-7">
                 {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="BaseResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='sg4ddf', source='
                     |package com.comsysto.kitchen.duty.rest;
                     |
+                    |import com.atlassian.activeobjects.external.ActiveObjects;
+                    |import com.atlassian.sal.api.user.UserProfile;
+                    |
+                    |import javax.ws.rs.core.Response;
+                    |import java.time.DayOfWeek;
                     |import java.time.LocalDate;
+                    |import java.time.Month;
                     |import java.time.temporal.ChronoField;
+                    |import java.time.temporal.TemporalField;
                     |import java.time.temporal.WeekFields;
-                    |...
+                    |import java.util.ArrayList;
+                    |import java.util.List;
+                    |import java.util.Locale;
                     |
                     |public class BaseResource {
-                    |  ...
                     |
-                    |  public static List<Long> getweeksOfMonth(Long year, Long month) { {{{point::1}}}
-                    |      List<Long> weeks = new ArrayList<>();
-                    |      weeks.add(getWeekOfMonth(year, month, 1L));
-                    |      weeks.add(getWeekOfMonth(year, month, 2L));
-                    |      weeks.add(getWeekOfMonth(year, month, 3L));
-                    |      weeks.add(getWeekOfMonth(year, month, 4L));
-                    |      weeks.add(getWeekOfMonth(year, month, 5L));
-                    |      return weeks;
-                    |  }
+                    |    ...
                     |
-                    |  protected static Long getWeekOfMonth(Long year, Long month, Long weekInMonth) { {{{point::2}}}
-                    |      // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
-                    |      WeekFields weekFields = WeekFields.ISO;
-                    |      return (long) LocalDate.now().with(weekFields.weekBasedYear(), year)
-                    |          .with(ChronoField.MONTH_OF_YEAR, month)
-                    |          .with(ChronoField.ALIGNED_WEEK_OF_MONTH, weekInMonth)
-                    |          .get(ChronoField.ALIGNED_WEEK_OF_YEAR);
-                    |  }
+                    |    // See unit test
+                    |    public static List<Long> getWeeksOfMonth(Long year, Long month) { {{{point::1}}}
+                    |        List<Long> weeks = new ArrayList<>();
+                    |        weeks.add(getWeekOfMonth(year, month, 1L));
+                    |        weeks.add(getWeekOfMonth(year, month, 2L));
+                    |        weeks.add(getWeekOfMonth(year, month, 3L));
+                    |        weeks.add(getWeekOfMonth(year, month, 4L));
+                    |        weeks.add(getWeekOfMonth(year, month, 5L));
+                    |        return weeks;
+                    |    }
                     |
-                    |  public static LocalDate getFirstDayOfWeekOfYear(Long year, Long week) { {{{point::3}}}
-                    |      // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
-                    |      WeekFields weekFields = WeekFields.ISO;
-                    |      return LocalDate.now().with(weekFields.weekBasedYear(), year)
-                    |          .with(ChronoField.ALIGNED_WEEK_OF_YEAR, week)
-                    |          .with(ChronoField.DAY_OF_WEEK, 1).minusDays(1);
-                    |  }
+                    |    protected static Long getWeekOfMonth(Long year, Long month, Long weekInMonth) { {{{point::2}}}
+                    |        // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
+                    |        // For locale en_US weeks start on sunday
+                    |        WeekFields weekFields = WeekFields.of(Locale.forLanguageTag("en_US"));
+                    |        DayOfWeek x = weekFields.getFirstDayOfWeek();
+                    |        LocalDate origin  = LocalDate.of(1970, 1, 1);
+                    |        LocalDate reference = origin
+                    |            .with(weekFields.weekBasedYear(), year)
+                    |            .with(ChronoField.YEAR, year)
+                    |            .with(ChronoField.MONTH_OF_YEAR, month)
+                    |            .with(ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH, 1)
+                    |            .with(ChronoField.ALIGNED_WEEK_OF_MONTH, weekInMonth);
+                    |        return (long) reference.get(weekFields.weekOfYear());
+                    |    }
                     |
-                    |  public static LocalDate getLastDayOfWeekOfYear(Long year, Long week) { {{{point::4}}}
-                    |      return getFirstDayOfWeekOfYear(year, week).plusDays(6);
-                    |  }
+                    |    public static LocalDate getFirstDayOfWeekOfYear(Long year, Long week) { {{{point::3}}}
+                    |        // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
+                    |        WeekFields weekFields = WeekFields.of(Locale.forLanguageTag("en_US"));
+                    |        return LocalDate.now()
+                    |            .with(weekFields.weekBasedYear(), year)
+                    |            .with(ChronoField.ALIGNED_WEEK_OF_YEAR, week)
+                    |            .with(ChronoField.DAY_OF_WEEK, 1).minusDays(1);
+                    |    }
+                    |
+                    |    public static LocalDate getLastDayOfWeekOfYear(Long year, Long week) { {{{point::4}}}
+                    |        return getFirstDayOfWeekOfYear(year, week).plusDays(6);
+                    |    }
                     |}
                     |
                 ')}}
@@ -654,15 +672,14 @@
             <div class="col-md-5 cs-sticky-in-parent">
                 <div class="list-group cs-source-point-list" data-source-target="sg4ddf">
                     <div class="list-group-item cs-source-point-list__item">
-                        <code>getweeksOfMonth()</code> returns five weeks with iso week numbers
+                        <code>getWeeksOfMonth()</code> returns five weeks with week numbers
                         for given year and month.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        <code>getWeekOfMonth()</code> returns the iso week number
+                        <code>getWeekOfMonth()</code> returns the week number
                         for given year, month and weekInMonth. Ok if it sounds confusing look
                         at the Unit Test. But simply said this methods converts
-                        week 1-5 of a specific month to the iso week number which represents basically the week
-                        of a year.
+                        week 1-5 of a specific month to the week-of-year-number.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         <code>getFirstDayOfWeekOfYear()</code> returns the first day of the week (sunday)
@@ -685,52 +702,96 @@
             |import org.junit.Test;
             |
             |import java.time.LocalDate;
+            |import java.util.Arrays;
             |import java.util.List;
             |
+            |import static org.hamcrest.core.Is.is;
             |import static org.junit.Assert.assertEquals;
+            |import static org.junit.Assert.assertThat;
             |
             |public class BaseResourceTest {
             |
             |    @Test
-            |    public void testGetweeksOfMonth() {
-            |        List<Long> weeks = BaseResource.getweeksOfMonth(2018L, 8L);
+            |    public void testGetWeeksOfMonth__weekStartsInPreviousMonth() {
+            |        // Sunday to Saturday:
+            |        // Week 31  July   29, 2018 => August  4, 2018
+            |        // Week 32  August  5, 2018 => August 11, 2018
+            |        // Week 33  August 12, 2018 => August 18, 2018
+            |        // Week 34  August 19, 2018 => August 25, 2018
+            |        // Week 35  August 26, 2018 => Sept,   1, 2018
+            |        {
+            |            List<Long> weeks = BaseResource.getWeeksOfMonth(2018L, 8L);
+            |            assertThat(weeks, is(Arrays.asList(31L, 32L, 33L, 34L, 35L)));
+            |        }
             |
-            |        assertEquals(Long.valueOf(32), weeks.get(0));
-            |        assertEquals(Long.valueOf(33), weeks.get(1));
-            |        assertEquals(Long.valueOf(34), weeks.get(2));
-            |        assertEquals(Long.valueOf(35), weeks.get(3));
-            |        assertEquals(Long.valueOf(36), weeks.get(4));
+            |        // Sunday to Saturday:
+            |        // Week 5  January  28, 2018 => February  3, 2018
+            |        // Week 6  February  4, 2018 => February 10, 2018
+            |        // Week 7  February 11, 2018 => February 17, 2018
+            |        // Week 8  February 18, 2018 => February 24, 2018
+            |        // Week 9  February 25, 2018 => March     3, 2018
+            |        {
+            |            List<Long> weeks = BaseResource.getWeeksOfMonth(2018L, 2L);
+            |            assertThat(weeks, is(Arrays.asList(5L, 6L, 7L, 8L, 9L)));
+            |        }
             |
-            |        List<Long> weeks2 = BaseResource.getweeksOfMonth(2018L, 2L);
-            |
-            |        assertEquals(Long.valueOf(6), weeks2.get(0));
-            |        assertEquals(Long.valueOf(7), weeks2.get(1));
-            |        assertEquals(Long.valueOf(8), weeks2.get(2));
-            |        assertEquals(Long.valueOf(9), weeks2.get(3));
-            |        assertEquals(Long.valueOf(10), weeks2.get(4));
-            |
-            |        List<Long> weeks3 = BaseResource.getweeksOfMonth(2018L, 5L);
-            |
-            |        assertEquals(Long.valueOf(19), weeks3.get(0));
-            |        assertEquals(Long.valueOf(20), weeks3.get(1));
-            |        assertEquals(Long.valueOf(21), weeks3.get(2));
-            |        assertEquals(Long.valueOf(22), weeks3.get(3));
-            |        assertEquals(Long.valueOf(23), weeks3.get(4));
+            |        // Sunday to Saturday:
+            |        // Week 18  April 29, 2018 => May   5, 2018
+            |        // Week 19  May    6, 2018 => May  12, 2018
+            |        // Week 20  May   13, 2018 => May  19, 2018
+            |        // Week 21  May   20, 2018 => May  26, 2018
+            |        // Week 22  May   27, 2018 => June  2, 2018
+            |        {
+            |            List<Long> weeks = BaseResource.getWeeksOfMonth(2018L, 5L);
+            |            assertThat(weeks, is(Arrays.asList(18L, 19L, 20L, 21L, 22L)));
+            |        }
             |    }
             |
+            |    @Test
+            |    public void testGetWeeksOfMonth__weekStartsExactlyInMonth() {
+            |        // Sunday to Saturday:
+            |        // Week 19  May  1, 2016 => May  7, 2016
+            |        // Week 20  May  8, 2016 => May 14, 2016
+            |        // Week 21  May 15, 2016 => May 21, 2016
+            |        // Week 22  May 22, 2016 => May 28, 2016
+            |        // Week 23  May 29, 2016 => June 4, 2016
+            |        {
+            |            List<Long> weeks = BaseResource.getWeeksOfMonth(2016L, 5L);
+            |            assertThat(weeks, is(Arrays.asList(19L, 20L, 21L, 22L, 23L)));
+            |        }
+            |
+            |        // Sunday to Saturday:
+            |        // Week 27  July  1, 2018 => July  7, 2018
+            |        // Week 28  July  8, 2018 => July 14, 2018
+            |        // Week 29  July 15, 2018 => July 21, 2018
+            |        // Week 30  July 22, 2018 => July 28, 2018
+            |        // Week 31  July 29, 2018 => Aug.  4, 2018
+            |        {
+            |            List<Long> weeks = BaseResource.getWeeksOfMonth(2018L, 7L);
+            |            assertThat(weeks, is(Arrays.asList(27L, 28L, 29L, 30L, 31L)));
+            |        }
+            |    }
             |
             |    @Test
             |    public void testGetFirstDayOfWeekOfMonth() {
             |        LocalDate date = BaseResource.getFirstDayOfWeekOfYear(2018L, 32L);
             |        assertEquals("2018-08-05", date.toString());
+            |
+            |        LocalDate date2 = BaseResource.getFirstDayOfWeekOfYear(2018L, 31L);
+            |        assertEquals("2018-07-29", date2.toString());
+            |
+            |        LocalDate date3 = BaseResource.getFirstDayOfWeekOfYear(2018L, 27L);
+            |        assertEquals("2018-07-01", date3.toString());
             |    }
             |
             |    @Test
             |    public void testGetLastDayOfWeekOfMonth() {
             |        LocalDate date = BaseResource.getLastDayOfWeekOfYear(2018L, 32L);
             |        assertEquals("2018-08-11", date.toString());
-            |    }
             |
+            |        LocalDate date2 = BaseResource.getLastDayOfWeekOfYear(2018L, 31L);
+            |        assertEquals("2018-08-04", date2.toString());
+            |    }
             |
             |}
         ')}}

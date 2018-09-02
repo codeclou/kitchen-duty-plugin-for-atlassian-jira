@@ -1436,7 +1436,6 @@ public class BaseResource {
         // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
         // For locale en_US weeks start on sunday
         WeekFields weekFields = WeekFields.of(Locale.forLanguageTag(&quot;en_US&quot;));
-        DayOfWeek x = weekFields.getFirstDayOfWeek();
         LocalDate origin  = LocalDate.of(1970, 1, 1);
         LocalDate reference = origin
             .with(weekFields.weekBasedYear(), year)
@@ -1498,7 +1497,6 @@ public class BaseResource {
         <span class="hljs-comment">// https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html</span>
         <span class="hljs-comment">// For locale en_US weeks start on sunday</span>
         WeekFields weekFields = WeekFields.of(Locale.forLanguageTag(<span class="hljs-string">"en_US"</span>));
-        DayOfWeek x = weekFields.getFirstDayOfWeek();
         LocalDate origin  = LocalDate.of(<span class="hljs-number">1970</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
         LocalDate reference = origin
             .with(weekFields.weekBasedYear(), year)

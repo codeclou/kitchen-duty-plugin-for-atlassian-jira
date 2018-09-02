@@ -35,7 +35,7 @@
                 <p>
                     The <strong>Week</strong> will be the actual week number in the year, and we don't care about the year in this tutorial. So if you had kitchen duty in week 24 this year you will have it the years after as well.
                     With a little thinking ahead of how I want to use it in the JS Controller
-                    I basically will select a week via a date picker and <a href="http://momentjs.com/docs/#/get-set/iso-week/">calculate the isoWeek in the frontend using moment.js</a></p>
+                    I basically will select a week via a date picker and <a href="http://momentjs.com/docs/#/get-set/week/">calculate the week number in the frontend using moment.js</a></p>
                 <p>
                     The <strong>User</strong> part is obvious. We will need to store a list of usernames in the database in relation with Weeks (<a href="https://developer.atlassian.com/docs/atlassian-platform-common-components/active-objects/developing-your-plugin-with-active-objects/the-active-objects-library/manytomany-relationship"><code>@ManyToMany</code></a>).
                 </p>
@@ -66,7 +66,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>isoWeek:&nbsp;Integer</td>
+                        <td>week:&nbsp;Integer</td>
                         <td class="cs-table-uml--blank"></td>
                         <td>username:&nbsp;String</td>
                     </tr>
@@ -181,7 +181,7 @@
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         The important thing is that we extend <code>Entity</code> that makes our Class automatically have <code>getID()</code>
-                        so we just need to define our fields which is currently only the isoWeek.
+                        so we just need to define our fields which is currently only the week number (week of year).
                     </div>
                 </div>
             </div>
@@ -703,22 +703,22 @@
             |...
             |
             |    /**
-            |     * Get the Users assigned to the isoWeekNumber.
+            |     * Get the Users assigned to the weekNumber.
             |     *
-            |     * @param isoWeekNumber
+            |     * @param weekNumber
             |     * @return
             |     */
             |    @GET
-            |    @Path("/week/{isoWeekNumber}/users")
+            |    @Path("/week/{weekNumber}/users")
             |    @Produces({MediaType.APPLICATION_JSON})
             |    @AnonymousAllowed
-            |    public Response getUsersForWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber) {
+            |    public Response getUsersForWeek(@PathParam("weekNumber") final Integer weekNumber) {
             |        Week[] weeks = activeObjects.executeInTransaction(new TransactionCallback<Week[]>() { {{{point::1}}}
             |            @Override
             |            public Week[] doInTransaction() {
             |                return activeObjects.find( {{{point::2}}}
             |                           Week.class,
-            |                           Query.select().where("WEEK = ?", isoWeekNumber)); {{{point::3}}}
+            |                           Query.select().where("WEEK = ?", weekNumber)); {{{point::3}}}
             |            }
             |        });
             |        List<KitchenDutyPlanningResourceUserModel> users = new ArrayList<>(); {{{point::4}}}
@@ -738,7 +738,7 @@
             |    /**
             |     * Get the Weeks assigned to the User.
             |     *
-            |     * @param isoWeekNumber
+            |     * @param weekNumber
             |     * @return
             |     */
             |    @GET
@@ -768,7 +768,7 @@
                 <!-- no sticky here since block is too big -->
                 <div class="list-group cs-source-point-list" data-source-target="xtrfdg54ze56dhr">
                     <div class="list-group-item cs-source-point-list__item">
-                        In our new <strong><code>/week/{isoWeekNumber}/users</code> Endpoint</strong>
+                        In our new <strong><code>/week/{weekNumber}/users</code> Endpoint</strong>
                         we start a Transaction and specify <code>Week[]</code> as return type since there is no way <em>(at least I did not find one)</em>
                         to get only one entity from the Database. We always get a List. Since we are having our unique constraints setup our lists will most likely
                         only contain one value.
@@ -966,14 +966,14 @@
                 |    /**
                 |     * Add the User to the Week
                 |     *
-                |     * @param isoWeekNumber
+                |     * @param weekNumber
                 |     * @return
                 |     */
                 |    @PUT {{{point::1}}}
-                |    @Path("/week/{isoWeekNumber}/users")
+                |    @Path("/week/{weekNumber}/users")
                 |    @Produces({MediaType.APPLICATION_JSON})
                 |    @AnonymousAllowed
-                |    public Response addUserToWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber, {{{point::2}}}
+                |    public Response addUserToWeek(@PathParam("weekNumber") final Integer weekNumber, {{{point::2}}}
                 |                                  final KitchenDutyPlanningResourceUserModel userParam) { {{{point::3}}}
                 |        activeObjects.executeInTransaction(new TransactionCallback<Void>() { {{{point::4}}}
                 |            @Override
@@ -983,12 +983,12 @@
                 |                //
                 |                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek( {{{point::5}}}
                 |                                 activeObjects,
-                |                                 isoWeekNumber
+                |                                 weekNumber
                 |                );
                 |                if (week == null) {
                 |                    week = activeObjects.create(
                 |                                 Week.class,
-                |                                 new DBParam("WEEK", isoWeekNumber) {{{point::6}}}
+                |                                 new DBParam("WEEK", weekNumber) {{{point::6}}}
                 |                    );
                 |                    week.save();
                 |                }
@@ -1034,7 +1034,7 @@
                 <!-- no sticky here since block is too big -->
                 <div class="list-group cs-source-point-list" data-source-target="x890uji9099n">
                     <div class="list-group-item cs-source-point-list__item">
-                        We define our new <strong><code>PUT /week/{isoWeekNumber}/users</code> Endpoint</strong>
+                        We define our new <strong><code>PUT /week/{weekNumber}/users</code> Endpoint</strong>
                         with method <code>@PUT</code> <em>(you can also use <code>@Patch</code> which would be more appropriate since we are sending increments to the Endpoints but it is up to you)</em>.
                         There is nothing more time consuming as to argue with colleagues about REST API design ... at best you look at the <a href="https://developer.github.com/v3/">GitHub REST API</a> or
                         the <a href="http://spring.io/guides/gs/accessing-data-rest/">Spring Data REST Docs</a> to get a feel for good API design. And if you
@@ -1054,8 +1054,8 @@
                         transaction.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
-                        Get the week by the isoWeekNumber using our <code>findUniqueWeek</code> helper method which we will define later - just trust me that
-                        it will return one for the isoWeekNumber passed or null.
+                        Get the week by the weekNumber using our <code>findUniqueWeek</code> helper method which we will define later - just trust me that
+                        it will return one for the weekNumber passed or null.
                     </div>
                     <div class="list-group-item cs-source-point-list__item">
                         If the week is null we just create it on the fly and continue.
@@ -1097,14 +1097,14 @@
                 |    /**
                 |     * Remove the User from Week
                 |     *
-                |     * @param isoWeekNumber
+                |     * @param weekNumber
                 |     * @return
                 |     */
                 |    @DELETE {{{point::1}}}
-                |    @Path("/week/{isoWeekNumber}/users")
+                |    @Path("/week/{weekNumber}/users")
                 |    @Produces({MediaType.APPLICATION_JSON})
                 |    @AnonymousAllowed
-                |    public Response deleteUserFomWeek(@PathParam("isoWeekNumber") final Integer isoWeekNumber,
+                |    public Response deleteUserFomWeek(@PathParam("weekNumber") final Integer weekNumber,
                 |                                  final KitchenDutyPlanningResourceUserModel userParam) { {{{point::2}}}
                 |        activeObjects.executeInTransaction(new TransactionCallback<Void>() {
                 |            @Override
@@ -1114,7 +1114,7 @@
                 |                //
                 |                Week week = KitchenDutyActiveObjectHelper.findUniqueWeek( {{{point::3}}}
                 |                                 activeObjects,
-                |                                 isoWeekNumber
+                |                                 weekNumber
                 |                );
                 |                if (week == null) {
                 |                    // week does not exist => no relation to delete
@@ -1191,8 +1191,8 @@
             |
             |public class KitchenDutyActiveObjectHelper {
             |
-            |    public static Week findUniqueWeek(ActiveObjects activeObjects, Integer isoWeekNumber) {
-            |        Week[] weekRes = activeObjects.find(Week.class, Query.select().where("WEEK = ?", isoWeekNumber));
+            |    public static Week findUniqueWeek(ActiveObjects activeObjects, Integer weekNumber) {
+            |        Week[] weekRes = activeObjects.find(Week.class, Query.select().where("WEEK = ?", weekNumber));
             |        if ((weekRes != null && weekRes.length > 0)) {
             |            return weekRes[0];
             |        }

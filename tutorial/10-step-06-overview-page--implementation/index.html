@@ -1096,10 +1096,10 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
         }
         // BUSINESS LOGIC
         List&lt;KitchenDutyOverviewPageMonthDutyModel&gt; responseList = new ArrayList&lt;&gt;();
-        List&lt;Long&gt; weeksInMonth = getWeeksOfMonth(year, month); 
-        for (Long week : weeksInMonth) {
+        List&lt;Long&gt; weekNumbersInMonth = getWeeksOfMonth(year, month); 
+        for (Long weekNumber : weekNumbersInMonth) {
             Week week = KitchenDutyActiveObjectHelper 
-                         .getWeekByWeekNumberInTransaction(activeObjects, week);
+                         .getWeekByWeekNumberInTransaction(activeObjects, weekNumber);
             List&lt;User&gt; usersForWeek = KitchenDutyActiveObjectHelper 
                          .getUsersAssignedToWeekInTransaction(activeObjects, week);
             List&lt;String&gt; usernames = usersForWeek
@@ -1107,9 +1107,9 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
                          .map(user -&gt; user.getName())
                          .collect(Collectors.toList()); 
             responseList.add(new KitchenDutyOverviewPageMonthDutyModel(
-                week,
-                getFirstDayOfWeekOfYear(year, week).toString(), 
-                getLastDayOfWeekOfYear(year, week).toString(), 
+                weekNumber,
+                getFirstDayOfWeekOfYear(year, weekNumber).toString(), 
+                getLastDayOfWeekOfYear(year, weekNumber).toString(), 
                 usernames)
             );
         }
@@ -1159,10 +1159,10 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
         }
         <span class="hljs-comment">// BUSINESS LOGIC</span>
         List&lt;KitchenDutyOverviewPageMonthDutyModel&gt; responseList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
-        List&lt;Long&gt; weeksInMonth = getWeeksOfMonth(year, month); <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="2"></span>
-        <span class="hljs-keyword">for</span> (Long week : weeksInMonth) {
+        List&lt;Long&gt; weekNumbersInMonth = getWeeksOfMonth(year, month); <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="2"></span>
+        <span class="hljs-keyword">for</span> (Long weekNumber : weekNumbersInMonth) {
             Week week = KitchenDutyActiveObjectHelper <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="3"></span>
-                         .getWeekByWeekNumberInTransaction(activeObjects, week);
+                         .getWeekByWeekNumberInTransaction(activeObjects, weekNumber);
             List&lt;User&gt; usersForWeek = KitchenDutyActiveObjectHelper <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="4"></span>
                          .getUsersAssignedToWeekInTransaction(activeObjects, week);
             List&lt;String&gt; usernames = usersForWeek
@@ -1170,9 +1170,9 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
                          .map(user -&gt; user.getName())
                          .collect(Collectors.toList()); <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="5"></span>
             responseList.add(<span class="hljs-keyword">new</span> KitchenDutyOverviewPageMonthDutyModel(
-                week,
-                getFirstDayOfWeekOfYear(year, week).toString(), <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="6"></span>
-                getLastDayOfWeekOfYear(year, week).toString(), <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="7"></span>
+                weekNumber,
+                getFirstDayOfWeekOfYear(year, weekNumber).toString(), <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="6"></span>
+                getLastDayOfWeekOfYear(year, weekNumber).toString(), <span class="cs-source-point" data-cs-source-point-id="mdsihjsdfdv8" data-cs-source-point-number="7"></span>
                 usernames)
             );
         }

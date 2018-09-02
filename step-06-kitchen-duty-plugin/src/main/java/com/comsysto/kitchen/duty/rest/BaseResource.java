@@ -68,7 +68,6 @@ public class BaseResource {
         // https://docs.oracle.com/javase/8/docs/api/java/time/temporal/WeekFields.html
         // For locale en_US weeks start on sunday
         WeekFields weekFields = WeekFields.of(Locale.forLanguageTag("en_US"));
-        DayOfWeek x = weekFields.getFirstDayOfWeek();
         LocalDate origin  = LocalDate.of(1970, 1, 1);
         LocalDate reference = origin
             .with(weekFields.weekBasedYear(), year)

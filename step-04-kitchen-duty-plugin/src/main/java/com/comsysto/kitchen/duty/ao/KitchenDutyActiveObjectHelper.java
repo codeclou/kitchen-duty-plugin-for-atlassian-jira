@@ -5,8 +5,8 @@ import net.java.ao.Query;
 
 public class KitchenDutyActiveObjectHelper {
 
-    public static Week findUniqueWeek(ActiveObjects activeObjects, Integer isoWeekNumber) {
-        Week[] weekRes = activeObjects.find(Week.class, Query.select().where("WEEK = ?", isoWeekNumber));
+    public static Week findUniqueWeek(ActiveObjects activeObjects, Integer weekNumber) {
+        Week[] weekRes = activeObjects.find(Week.class, Query.select().where("WEEK = ?", weekNumber));
         if ((weekRes != null && weekRes.length > 0)) {
             return weekRes[0];
         }

@@ -2,3 +2,6 @@
 *.iml
 *.log
 target/
+.settings
+.project
+.classpath

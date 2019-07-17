@@ -11,8 +11,8 @@
 
 ### Trademarks and Third Party Licenses
 
- * **Atlassian JIRA® Sofware**
-   * Atlassian®, JIRA®, JIRA® Software are registered [trademarks of Atlassian Pty Ltd](https://de.atlassian.com/legal/trademark).
+ * **Atlassian Jira Sofware**
+   * Atlassian, Jira, Jira Software are registered [trademarks of Atlassian Pty Ltd](https://de.atlassian.com/legal/trademark).
    * Please check yourself for corresponding Licenses and Terms of Use at [atlassian.com](https://atlassian.com).
    * Atlassian SDK and Atlassian AUI might have a special license. Please check the [Atlassian Developer Terms](https://developer.atlassian.com/platform/marketplace/atlassian-developer-terms/)
  * **Oracle Java JDK 8**

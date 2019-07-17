@@ -1,9 +1,8 @@
-# Kitchen Duty Plugin for Atlassian JIRA® 
+# Kitchen Duty Plugin for Atlassian Jira Server
 
-This plugin demonstrates the usage of the Atlassian JIRA® 7.0 API for a very simple plugin
+> This plugin demonstrates the usage of the Atlassian Jira 7.0 API for a very simple plugin. Click on the banner to [start the tutorial](https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/).
 
 [![](https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-teaser.png)](https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/)
-
 
 
 -----

@@ -28,3 +28,7 @@ jobs:
     - run: yarn build:prod
       env:
         CI: true
+    - run: yarn ndes deployToGitHubPages as "GitHubActions" withEmail "noreply@comsysto.com" withGitHubAuthUsername $GITHUB_AUTH_USER withGitHubAuthToken $GITHUB_AUTH_TOKEN toRepository https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira.git fromSource "./build"        
+      env:
+        GITHUB_AUTH_USER: ${{ secrets.GITHUB_AUTH_USER }}
+        GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_AUTH_TOKEN }}

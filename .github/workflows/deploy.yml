@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [8.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -20,11 +20,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: npm run ndes replace "___TIMEST___" byCurrentTimetamp             in "_page/js/main.js" -s
-    - run: nom run ndes replace "___BRANCH___" byValue "$GITHUB_BRANCH_NAME" in "_page/js/main.js" -s
-    - run: npm run ndes replace "___COMMIT___" byValue "$GITHUB_COMMIT_HASH" in "_page/js/main.js" -s
-    - run: npm run build:img
-    - run: npm run build:prod
+    - run: yarn install
+    - run: yarn ndes replace "___TIMEST___" byCurrentTimetamp             in "_page/js/main.js" -s
+    - run: yarn ndes replace "___BRANCH___" byValue "$GITHUB_BRANCH_NAME" in "_page/js/main.js" -s
+    - run: yarn ndes replace "___COMMIT___" byValue "$GITHUB_COMMIT_HASH" in "_page/js/main.js" -s
+    - run: yarn build:img
+    - run: yarn build:prod
       env:
         CI: true

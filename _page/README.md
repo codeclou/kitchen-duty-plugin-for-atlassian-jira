@@ -16,7 +16,7 @@ Images will be copied from `/_images/` to `/build/images/` and optimized in size
 npm run build:img
 ```
 
-  * :bangbang: Jenkins runs this before *build:prod*
+  * :bangbang: GitHub Actions runs this before *build:prod*
   * Locally you don't need to run it since the images from `_images` will be proxied through to `http://localhost:port/kitchen-duty-plugin-for-atlassian-jira/images/` when running `npm run watch`
   * Only when you want locally start prod env you need to to run it.
 

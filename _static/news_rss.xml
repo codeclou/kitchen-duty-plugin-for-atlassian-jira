@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
     <channel>
-        <title>Plugin Development Tutorial for Atlassian JIRA® Server | Kitchen Duty Plugin by Comsysto Reply</title>
-        <link>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/</link>
-        <description>An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® Server by Comsysto Reply</description>
+        <title>Plugin Development Tutorial for Atlassian JIRA® Server | Kitchen Duty Plugin by codeclou UG</title>
+        <link>https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/</link>
+        <description>An interactive step-by-step tutorial on how to write Plugins for Atlassian Jira Server by codeclou UG</description>
         <item>
             <title>Tutorial is finished!</title>
-            <link>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/</link>
+            <link>https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/</link>
             <description>Checkout all steps. The tutorial is finally done.</description>
             <pubDate>Tue, 28th August 2018</pubDate>
         </item>
@@ -24,19 +24,19 @@
         </item>
         <item>
             <title>Kitchen Duty Planning REST Resource (step 4) finished</title>
-            <link>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/</link>
+            <link>https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/</link>
             <description>Step 4 of the tutorial is finished and describes how to persist Data with Active Objects and provide a REST API on top of that.</description>
             <pubDate>So, 11th Sep 2016</pubDate>
         </item>
         <item>
             <title>Continuing with Kitchen Duty Planning REST Resource (step 4)</title>
-            <link>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/</link>
+            <link>https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/</link>
             <description>Continuing the tutorial and soon there will be new content. I will inform on the news page and via RSS. I am sorry that so much time passed. I had some other blog posts to publish in the meantime. But now Kitchen Duty is back as top priority.</description>
             <pubDate>Fri, 2nd Sep 2016</pubDate>
         </item>
         <item>
             <title>News online</title>
-            <link>https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/news/</link>
+            <link>https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/news/</link>
             <description>I will inform via RSS feed on updates to this tutorial.</description>
             <pubDate>Fri, 2nd Sep 2016</pubDate>
         </item>

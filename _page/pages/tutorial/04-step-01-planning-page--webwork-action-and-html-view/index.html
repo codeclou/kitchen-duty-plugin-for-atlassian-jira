@@ -1,9 +1,9 @@
 {% set CURRENT_PAGE_ID = 4 %}
-{% set gitHubBaseUrlForStep1 = 'https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/' %}
+{% set gitHubBaseUrlForStep1 = 'https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/' %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
-    <title>Webwork Action and HTML View ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
-    <meta description="Developing the Webwork Action and HTML View for the Planning Page of Kitchen Duty Plugin for Atlassian JIRA® by Comsysto Reply">
+    <title>Webwork Action and HTML View ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by codeclou UG</title>
+    <meta description="Developing the Webwork Action and HTML View for the Planning Page of Kitchen Duty Plugin for Atlassian Jira by codeclou UG">
     <meta name="robots" content="index, follow">
 {% endblock %}
 {% block content %}
@@ -80,15 +80,15 @@
                     |i18n Name Key kitchen-duty-planning-webwork-module.name: :
                     |i18n Description Key kitchen-duty-planning-webwork-module.description: :
                     |Enter Action Classname MyActionClass: : KitchenDutyPlanningWebworkAction
-                    |Enter Package Name com.comsysto.jira.webwork: : com.comsysto.kitchen.duty.webwork
+                    |Enter Package Name io.codeclou.jira.webwork: : io.codeclou.kitchen.duty.webwork
                     |Enter Alias KitchenDutyPlanningWebworkAction: :
                     |Enter View Name success: : kitchen-duty-planning-success
                     |Enter Template Path /templates/.../kitchen-duty-planning-success.vm: : /templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm
                     |Add Another View? (Y/y/N/n) N: : N
                     |Add Another Action? (Y/y/N/n) N: : N
                     |[INFO] Adding the following items to the project:
-                    |[INFO]   [class: com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction]
-                    |[INFO]   [class: ut.com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest]
+                    |[INFO]   [class: io.codeclou.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction]
+                    |[INFO]   [class: ut.io.codeclou.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest]
                     |[INFO]   [dependency: org.apache.httpcomponents:httpclient]
                     |[INFO]   [dependency: org.mockito:mockito-all]
                     |[INFO]   [dependency: org.slf4j:slf4j-api]
@@ -105,7 +105,7 @@
                     |[INFO] ------------------------------------------------------------------------
                 ') }}
 
-        <p>After we have done that we see that a lot of code and files have been generated. You can see all changes in this <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/162ed706c7f4be0356871a4a6f8bb6398b38854f">GitHub Commit 162ed70</a>.</p>
+        <p>After we have done that we see that a lot of code and files have been generated. You can see all changes in this <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/commit/162ed706c7f4be0356871a4a6f8bb6398b38854f">GitHub Commit 162ed70</a>.</p>
 
         <p>What is important for us are the following changes:</p>
 
@@ -117,7 +117,7 @@
                             |  <webwork1 key="kitchen-duty-planning-webwork-module" name="Kitchen Duty Planning Webwork Module" i18n-name-key="kitchen-duty-planning-webwork-module.name">
                             |    <description key="kitchen-duty-planning-webwork-module.description">The Kitchen Duty Planning Webwork Module Plugin</description>
                             |    <actions>
-                            |      <action name="com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction" alias="KitchenDutyPlanningWebworkAction">
+                            |      <action name="io.codeclou.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction" alias="KitchenDutyPlanningWebworkAction">
                             |        <view name="kitchen-duty-planning-success">/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm</view>
                             |      </action>
                             |    </actions>
@@ -160,7 +160,7 @@
 
         <p>Now we change the <code>execute</code> Method to work with our view:</p>
 
-        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/webwork/", filename="KitchenDutyPlanningWebworkAction.java", ghBaseUrl=gitHubBaseUrlForStep1, source='
+        {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/webwork/", filename="KitchenDutyPlanningWebworkAction.java", ghBaseUrl=gitHubBaseUrlForStep1, source='
                     |@Override
                     |public String execute() throws Exception {
                     |   return "kitchen-duty-planning-success";
@@ -388,8 +388,8 @@
                 <strong>You have completed Step 1.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
-                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin">
-                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin
+                <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin">
+                    https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin
                 </a>
             </div>
         </div>

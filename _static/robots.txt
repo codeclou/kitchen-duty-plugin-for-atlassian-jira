@@ -1,2 +1,2 @@
 # since google does not crawl sub-folder robots.txts
-# edit this one: https://github.com/comsysto/comsysto.github.io/blob/master/robots.txt
+# edit this one: https://github.com/codeclou/codeclou.github.io/blob/master/robots.txt

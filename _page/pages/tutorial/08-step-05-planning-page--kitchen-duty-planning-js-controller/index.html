@@ -1,9 +1,9 @@
 {% set CURRENT_PAGE_ID = 8 %}
-{% set gitHubBaseUrlForStep5 = 'https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/__COMMIT__/step-05-kitchen-duty-plugin/' %}
+{% set gitHubBaseUrlForStep5 = 'https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/__COMMIT__/step-05-kitchen-duty-plugin/' %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
-    <title>Kitchen Duty Planning JS Controller ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
-    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by Comsysto Reply">
+    <title>Kitchen Duty Planning JS Controller ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by codeclou UG</title>
+    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian Jira by codeclou UG">
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 {% block content %}
@@ -199,8 +199,8 @@
 
         <div class="row">
             <div class="col-md-8">
-            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='x3eewr8dasdsfsf67987ij', source='
-            |package com.comsysto.kitchen.duty.rest;
+            {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep5 | replace("__COMMIT__", "502903955096146b308efbf5018c5457905f00bb")), uniqueId='x3eewr8dasdsfsf67987ij', source='
+            |package io.codeclou.kitchen.duty.rest;
             |...
             |
             |@Named
@@ -572,8 +572,8 @@
                 <strong>You have completed Step 5.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
-                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin">
-                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin
+                <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin">
+                    https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-05-kitchen-duty-plugin
                 </a>
             </div>
         </div>

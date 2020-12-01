@@ -1,9 +1,9 @@
 {% set CURRENT_PAGE_ID = 5 %}
-{% set gitHubBaseUrlForStep2 = 'https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/' %}
+{% set gitHubBaseUrlForStep2 = 'https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/' %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
-    <title>User Search REST Resource ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
-    <meta description="Developing the User Search REST Resource for the Planning Page with JAX-RS of Kitchen Duty Plugin for Atlassian JIRA® by Comsysto Reply">
+    <title>User Search REST Resource ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by codeclou UG</title>
+    <meta description="Developing the User Search REST Resource for the Planning Page with JAX-RS of Kitchen Duty Plugin for Atlassian Jira by codeclou UG">
     <meta name="robots" content="index, follow">
 {% endblock %}
 {% block content %}
@@ -58,7 +58,7 @@
                     |Choose a number (...): 14
                     |
                     |Enter New Classname MyRestResource: : UserSearchResource
-                    |Enter Package Name com.comsysto.rest: : com.comsysto.kitchen.duty.rest
+                    |Enter Package Name io.codeclou.rest: : io.codeclou.kitchen.duty.rest
                     |Enter REST Path /usersearchresource: : /kitchenduty
                     |Enter Version 1.0: : 1.0
                     |
@@ -70,7 +70,7 @@
                     |i18n Name Key user-search-resource.name: : kitchen-duty-plugin.rest.resources.name
                     |i18n Description Key user-search-resource.description: : kitchen-duty-plugin.rest.resources.description
                     |Add Package To Scan? (Y/y/N/n) N: : y
-                    |Enter Package: com.comsysto.kitchen.duty.rest
+                    |Enter Package: io.codeclou.kitchen.duty.rest
                     |...
                     |
                     |Add Package To Scan? (Y/y/N/n) N: : n
@@ -78,10 +78,10 @@
                     |Add Dispatcher? (Y/y/N/n) N: : n
                     |
                     |[INFO] Adding the following items to the project:
-                    |[INFO]   [class: com.comsysto.kitchen.duty.rest.UserSearchResourceModel]
-                    |[INFO]   [class: com.comsysto.kitchen.duty.rest.UserSearchResource]
-                    |[INFO]   [class: it.com.comsysto.kitchen.duty.rest.UserSearchResourceFuncTest]
-                    |[INFO]   [class: ut.com.comsysto.kitchen.duty.rest.UserSearchResourceTest]
+                    |[INFO]   [class: io.codeclou.kitchen.duty.rest.UserSearchResourceModel]
+                    |[INFO]   [class: io.codeclou.kitchen.duty.rest.UserSearchResource]
+                    |[INFO]   [class: it.io.codeclou.kitchen.duty.rest.UserSearchResourceFuncTest]
+                    |[INFO]   [class: ut.io.codeclou.kitchen.duty.rest.UserSearchResourceTest]
                     |[INFO]   [dependency: com.atlassian.plugins.rest:atlassian-rest-common]
                     |[INFO]   [dependency: com.atlassian.sal:sal-api]
                     |[INFO]   [dependency: javax.servlet:servlet-api]
@@ -188,7 +188,7 @@
                     |      path="/kitchenduty"
                     |      version="1.0">
                     |  <description key="kitchen-duty-plugin.rest.resources.description">All Kitchen Duty REST Resources</description>
-                    |  <package>com.comsysto.kitchen.duty.rest</package>
+                    |  <package>io.codeclou.kitchen.duty.rest</package>
                     |</rest>
                 ') }}
 
@@ -203,8 +203,8 @@
         <h3 class="cs-headline cs-headline--s">3. REST Controller and Model</h3>
 
         <p>
-            In the directory <code>src/main/java/</code> in the package <code>com.comsysto.kitchen.duty.rest</code> there is now the
-            <code>UserSearchResource.java</code> and the <code>UserSearchResourceModel.java</code>. You can see what has been created in the <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/95b8ebf5ff20a77c6b0853cd93ad0b465033e6f6">GitHub commit 95b8ebf</a>.
+            In the directory <code>src/main/java/</code> in the package <code>io.codeclou.kitchen.duty.rest</code> there is now the
+            <code>UserSearchResource.java</code> and the <code>UserSearchResourceModel.java</code>. You can see what has been created in the <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/commit/95b8ebf5ff20a77c6b0853cd93ad0b465033e6f6">GitHub commit 95b8ebf</a>.
         </p>
 
         <p>
@@ -214,8 +214,8 @@
         <div class="row">
             <div class="col-md-7">
                 {%  set uniqueIdUserSearchResourceStep2 = 'step2-usersearchresource' %}
-                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="UserSearchResource.java", uniqueId=uniqueIdUserSearchResourceStep2, ghBaseUrl=gitHubBaseUrlForStep2, source='
-                            |package com.comsysto.kitchen.duty.rest;
+                {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/rest/", filename="UserSearchResource.java", uniqueId=uniqueIdUserSearchResourceStep2, ghBaseUrl=gitHubBaseUrlForStep2, source='
+                            |package io.codeclou.kitchen.duty.rest;
                             |
                             |import com.atlassian.jira.bc.user.search.UserSearchParams;
                             |import com.atlassian.jira.bc.user.search.UserSearchService;
@@ -361,8 +361,8 @@
             <div class="col-md-6">
                 {%  set uniqueIdUserSearchResourceModelStep2 = 'step2-usersearchresourcemodel' %}
 
-                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="UserSearchResourceModel.java", uniqueId=uniqueIdUserSearchResourceModelStep2, ghBaseUrl=gitHubBaseUrlForStep2, source='
-                            |package com.comsysto.kitchen.duty.rest;
+                {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/rest/", filename="UserSearchResourceModel.java", uniqueId=uniqueIdUserSearchResourceModelStep2, ghBaseUrl=gitHubBaseUrlForStep2, source='
+                            |package io.codeclou.kitchen.duty.rest;
                             |
                             |import javax.xml.bind.annotation.*;
                             |@XmlRootElement(name = "users") {{{point::1}}}
@@ -439,8 +439,8 @@
         </p>
 
         <p>
-            {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/impl/", filename="MyPluginComponentImpl.java", uniqueId='sdfrg445ger', ghBaseUrl=gitHubBaseUrlForStep2, source='
-                |package com.comsysto.kitchen.duty.rest;
+            {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/impl/", filename="MyPluginComponentImpl.java", uniqueId='sdfrg445ger', ghBaseUrl=gitHubBaseUrlForStep2, source='
+                |package io.codeclou.kitchen.duty.rest;
                 |
                 |import com.atlassian.jira.bc.user.search.UserSearchService;
                 |import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
@@ -470,13 +470,13 @@
             and provide two users <code>bob</code> and <code>sue</code> as mocks. Now we test if our <code>searchUser</code> Method works as expected.
         </p>
 
-        {{ csSource(lang='java', filepath="src/test/java/ut/com/comsysto/kitchen/duty/rest/", filename="UserSearchResourceTest.java", ghBaseUrl=gitHubBaseUrlForStep2, uniqueId='fdgbfdsgdfgfdg', source='
-            |package ut.com.comsysto.kitchen.duty.rest;
+        {{ csSource(lang='java', filepath="src/test/java/ut/com/codeclou/kitchen/duty/rest/", filename="UserSearchResourceTest.java", ghBaseUrl=gitHubBaseUrlForStep2, uniqueId='fdgbfdsgdfgfdg', source='
+            |package ut.io.codeclou.kitchen.duty.rest;
             |
             |import com.atlassian.jira.bc.user.search.UserSearchParams;
             |import com.atlassian.jira.bc.user.search.UserSearchService;
-            |import com.comsysto.kitchen.duty.rest.UserSearchResource;
-            |import com.comsysto.kitchen.duty.rest.UserSearchResourceModel;
+            |import io.codeclou.kitchen.duty.rest.UserSearchResource;
+            |import io.codeclou.kitchen.duty.rest.UserSearchResourceModel;
             |import org.junit.After;
             |import org.junit.Before;
             |import org.junit.Test;
@@ -542,11 +542,11 @@
             |-------------------------------------------------------
             | T E S T S
             |-------------------------------------------------------
-            |Running ut.com.comsysto.kitchen.duty.MyComponentUnitTest
+            |Running ut.io.codeclou.kitchen.duty.MyComponentUnitTest
             |Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.051 sec
-            |Running ut.com.comsysto.kitchen.duty.rest.UserSearchResourceTest
+            |Running ut.io.codeclou.kitchen.duty.rest.UserSearchResourceTest
             |Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.148 sec
-            |Running ut.com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest
+            |Running ut.io.codeclou.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest
             |Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
             |
             |Results :
@@ -573,8 +573,8 @@
         <div class="row">
             <div class="col-md-7">
                 {%  set idUserSearchResourceFuncTestStep2 = 'step2-usersearchresourcefunctest' %}
-                {{ csSource(lang='java', filepath="src/test/java/it/com/comsysto/kitchen/duty/rest/", filename="UserSearchResourceFuncTest.java", ghBaseUrl=gitHubBaseUrlForStep2, uniqueId=idUserSearchResourceFuncTestStep2, source='
-                    |package it.com.comsysto.kitchen.duty.rest;
+                {{ csSource(lang='java', filepath="src/test/java/it/com/codeclou/kitchen/duty/rest/", filename="UserSearchResourceFuncTest.java", ghBaseUrl=gitHubBaseUrlForStep2, uniqueId=idUserSearchResourceFuncTestStep2, source='
+                    |package it.io.codeclou.kitchen.duty.rest;
                     |
                     |import org.apache.wink.client.ClientConfig;
                     |import org.apache.wink.client.Resource;
@@ -713,9 +713,9 @@
             |-------------------------------------------------------
             | T E S T S
             |-------------------------------------------------------
-            |Running it.com.comsysto.kitchen.duty.MyComponentWiredTest
+            |Running it.io.codeclou.kitchen.duty.MyComponentWiredTest
             |Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.248 sec
-            |Running it.com.comsysto.kitchen.duty.rest.UserSearchResourceFuncTest
+            |Running it.io.codeclou.kitchen.duty.rest.UserSearchResourceFuncTest
             |Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.018 sec
             |
             |Results :
@@ -762,11 +762,11 @@
                 <strong>You have completed Step 2.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
-                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin">
-                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin
+                <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin">
+                    https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin
                 </a>
                 <!--<br>
-                Or view the diff from Step 1 to Step 2 here: <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a>-->
+                Or view the diff from Step 1 to Step 2 here: <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a>-->
             </div>
         </div>
 

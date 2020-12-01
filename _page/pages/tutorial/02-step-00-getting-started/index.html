@@ -1,9 +1,9 @@
 {% set CURRENT_PAGE_ID = 2 %}
-{% set gitHubBaseUrlForStep0 = 'https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-00-kitchen-duty-plugin/' %}
+{% set gitHubBaseUrlForStep0 = 'https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-00-kitchen-duty-plugin/' %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
-    <title>Getting Started | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
-    <meta description="Setting up your IDE and installing prerequisites for the step-by-step tutorial on how to write Plugins for Atlassian JIRA® by Comsysto Reply">
+    <title>Getting Started | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by codeclou UG</title>
+    <meta description="Setting up your IDE and installing prerequisites for the step-by-step tutorial on how to write Plugins for Atlassian Jira by codeclou UG">
     <meta name="robots" content="index, follow">
 {% endblock %}
 {% block content %}
@@ -71,10 +71,10 @@
 
                     {{ csShell(shellCmd='atlas-create-jira-plugin', shellCmdOutput='
                         |...
-                        |Define value for groupId: : com.comsysto
+                        |Define value for groupId: : io.codeclou
                         |Define value for artifactId: : kitchen-duty-plugin
                         |Define value for version:  1.0.0-SNAPSHOT: :
-                        |Define value for package:  com.comsysto: : com.comsysto.kitchen.duty
+                        |Define value for package:  io.codeclou: : io.codeclou.kitchen.duty
                         |....
                         |Confirm
                         |Y
@@ -252,8 +252,8 @@
                             <strong>You have completed Step 0.</strong> Good Job! You can check out this step's solution on GitHub
                         </div>
                         <div class="cs-tutorial-step-review__link">
-                            <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-00-kitchen-duty-plugin">
-                                https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-00-kitchen-duty-plugin
+                            <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-00-kitchen-duty-plugin">
+                                https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-00-kitchen-duty-plugin
                             </a>
                         </div>
                     </div>
@@ -278,7 +278,7 @@
                     |<instructions>
                     |    <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
                     |    <Export-Package>
-                    |       com.comsysto.kitchen.duty.api,
+                    |       io.codeclou.kitchen.duty.api,
                     |    </Export-Package>
                     |    <Import-Package>
                     |       org.springframework.osgi.*;resolution:="optional",
@@ -333,12 +333,12 @@
                     {{ csShell(shellCmd='cat target/classes/MANIFEST.md', shellCmdOutput='
                         |Manifest-Version: 1.0
                         |Atlassian-Build-Date: 2015-12-15T18:43:43+0100
-                        |Atlassian-Plugin-Key: com.comsysto.kitchen-duty-plugin
+                        |Atlassian-Plugin-Key: io.codeclou.kitchen-duty-plugin
                         |Bundle-Name: kitchen-duty-plugin
-                        |Bundle-SymbolicName: com.comsysto.kitchen-duty-plugin
-                        |Bundle-Vendor: Comsysto Reply
+                        |Bundle-SymbolicName: io.codeclou.kitchen-duty-plugin
+                        |Bundle-Vendor: codeclou UG
                         |Bundle-Version: 1.0.0.SNAPSHOT
-                        |Export-Package: com.comsysto.kitchen.duty.api;version="1.0.0"
+                        |Export-Package: io.codeclou.kitchen.duty.api;version="1.0.0"
                         |Import-Package: org.springframework.osgi.service.exporter.support;resolution:=optional,
                         |org.springframework.osgi.service.importer.support;resolution:=optional,
                         |....

@@ -1,9 +1,9 @@
 {% set CURRENT_PAGE_ID = 10 %}
-{% set gitHubBaseUrlForStep6 = 'https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/__COMMIT__/step-06-kitchen-duty-plugin/' %}
+{% set gitHubBaseUrlForStep6 = 'https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/__COMMIT__/step-06-kitchen-duty-plugin/' %}
 {% extends layoutSourceDir + "/layout_with_sidebar.html" %}
 {% block head %}
-    <title>Kitchen Duty Overview Page Implementation ~ Overview Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
-    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by Comsysto Reply">
+    <title>Kitchen Duty Overview Page Implementation ~ Overview Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by codeclou UG</title>
+    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian Jira by codeclou UG">
     <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 {% block content %}
@@ -32,8 +32,8 @@
                 </p>
 
 
-                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="BaseResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsd5', source='
-                    |package com.comsysto.kitchen.duty.rest;
+                {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/rest/", filename="BaseResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsd5', source='
+                    |package io.codeclou.kitchen.duty.rest;
                     |
                     |import com.atlassian.activeobjects.external.ActiveObjects;
                     |import com.atlassian.sal.api.user.UserProfile;
@@ -97,8 +97,8 @@
 
         <p>You might have already seen that we use a class <code>RestError</code>. This is a simple pojo to serve our errors as JSON.</p>
 
-        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="RestError.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsdsdfsd5', source='
-            |package com.comsysto.kitchen.duty.rest;
+        {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/rest/", filename="RestError.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsdsdfsd5', source='
+            |package io.codeclou.kitchen.duty.rest;
             |
             |import javax.xml.bind.annotation.XmlAccessType;
             |import javax.xml.bind.annotation.XmlAccessorType;
@@ -159,8 +159,8 @@
             <p>Ok now we need our existing <code>KitchenDutyPlanningResource</code> <strong>to extend the <code>BaseResource</code> and use the AuthGuards</strong>.</p>
             <div class="row">
                 <div class="col-md-7">
-                    {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsdsdasfggfsd5', source='
-                    |package com.comsysto.kitchen.duty.rest;
+                    {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/rest/", filename="KitchenDutyPlanningResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsdsdasfggfsd5', source='
+                    |package io.codeclou.kitchen.duty.rest;
                     |
                     |...
                     |
@@ -290,8 +290,8 @@
         <p>You might have noticed that we use a <code>UserManager</code> that <strong>comes from the SAL API</strong>. We have already learned that we need to add a <code>@ComponentImport</code> for that.</p>
 
 
-        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/impl/", filename="MyPluginComponentImpl.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsd5', source='
-                |package com.comsysto.kitchen.duty.impl;
+        {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/impl/", filename="MyPluginComponentImpl.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsd5', source='
+                |package io.codeclou.kitchen.duty.impl;
                 |
                 |...
                 |
@@ -329,8 +329,8 @@
 
         <div class="row">
             <div class="col-md-7">
-                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/ao/", filename="KitchenDutyActiveObjectHelper.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsdsdasfggfsddfsdffej5', source='
-                    |package com.comsysto.kitchen.duty.ao;
+                {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/ao/", filename="KitchenDutyActiveObjectHelper.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='fsdsdasfggfsddfsdffej5', source='
+                    |package io.codeclou.kitchen.duty.ao;
                     |
                     |...
                     |import java.util.ArrayList;
@@ -433,15 +433,15 @@
 
         <div class="row">
             <div class="col-md-7">
-                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyOverviewPageResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='mdsihjsdfdv8', source='
-                    |package com.comsysto.kitchen.duty.rest;
+                {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/rest/", filename="KitchenDutyOverviewPageResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='mdsihjsdfdv8', source='
+                    |package io.codeclou.kitchen.duty.rest;
                     |
                     |import com.atlassian.activeobjects.external.ActiveObjects;
                     |import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
                     |import com.atlassian.sal.api.user.UserManager;
-                    |import com.comsysto.kitchen.duty.ao.KitchenDutyActiveObjectHelper;
-                    |import com.comsysto.kitchen.duty.ao.User;
-                    |import com.comsysto.kitchen.duty.ao.Week;
+                    |import io.codeclou.kitchen.duty.ao.KitchenDutyActiveObjectHelper;
+                    |import io.codeclou.kitchen.duty.ao.User;
+                    |import io.codeclou.kitchen.duty.ao.Week;
                     |
                     |...
                     |import java.util.ArrayList;
@@ -532,8 +532,8 @@
 
         <p>The pojo for the week-events with start and end-date. The rest will be mapped in the JS controller.</p>
 
-        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="KitchenDutyOverviewPageMonthDutyModel.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='kjnbhuivozuo89o', source='
-            |package com.comsysto.kitchen.duty.rest;
+        {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/rest/", filename="KitchenDutyOverviewPageMonthDutyModel.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='kjnbhuivozuo89o', source='
+            |package io.codeclou.kitchen.duty.rest;
             |
             |import javax.xml.bind.annotation.XmlAccessType;
             |import javax.xml.bind.annotation.XmlAccessorType;
@@ -606,8 +606,8 @@
 
         <div class="row">
             <div class="col-md-7">
-                {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/rest/", filename="BaseResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='sg4ddf', source='
-                    |package com.comsysto.kitchen.duty.rest;
+                {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/rest/", filename="BaseResource.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='sg4ddf', source='
+                    |package io.codeclou.kitchen.duty.rest;
                     |
                     |import com.atlassian.activeobjects.external.ActiveObjects;
                     |import com.atlassian.sal.api.user.UserProfile;
@@ -694,10 +694,10 @@
 
         <p>The <strong>Unit Test for the date calculation helpers</strong> looks like this. Just simple asserts, nothing special.</p>
 
-        {{ csSource(lang='java', filepath="src/test/java/ut/com/comsysto/kitchen/duty/rest/", filename="BaseResourceTest.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='sgsdfhxsdf4ddf', source='
-            |package ut.com.comsysto.kitchen.duty.rest;
+        {{ csSource(lang='java', filepath="src/test/java/ut/com/codeclou/kitchen/duty/rest/", filename="BaseResourceTest.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='sgsdfhxsdf4ddf', source='
+            |package ut.io.codeclou.kitchen.duty.rest;
             |
-            |import com.comsysto.kitchen.duty.rest.BaseResource;
+            |import io.codeclou.kitchen.duty.rest.BaseResource;
             |import org.junit.Test;
             |
             |import java.time.LocalDate;
@@ -895,7 +895,7 @@
                 |      key="kitchen-duty-overview-page-webwork-module.description"
                 |    >The Kitchen Duty Overview Page Webwork Module Plugin</description>
                 |    <actions>
-                |      <action name="com.comsysto.kitchen.duty.webwork.KitchenDutyOverviewPageWebworkAction"
+                |      <action name="io.codeclou.kitchen.duty.webwork.KitchenDutyOverviewPageWebworkAction"
                 |              alias="KitchenDutyOverviewPageWebworkAction"> {{{point::9}}}
                 |        <view
                 |          name="kitchen-duty-overview-page-success" {{{point::10}}}
@@ -975,8 +975,8 @@
 
         <p>Now we define our <strong>web work action</strong> that displays the velocity template and loads the overview page resources.</p>
 
-        {{ csSource(lang='java', filepath="src/main/java/com/comsysto/kitchen/duty/webwork/", filename="KitchenDutyOverviewPageWebworkAction.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='ckjnihbugvzf8', source='
-        |package com.comsysto.kitchen.duty.webwork;
+        {{ csSource(lang='java', filepath="src/main/java/com/codeclou/kitchen/duty/webwork/", filename="KitchenDutyOverviewPageWebworkAction.java", ghBaseUrl=(gitHubBaseUrlForStep6 | replace("__COMMIT__", "master")), uniqueId='ckjnihbugvzf8', source='
+        |package io.codeclou.kitchen.duty.webwork;
         |
         |import com.atlassian.jira.web.action.JiraWebActionSupport;
         |import com.atlassian.webresource.api.assembler.PageBuilderService;
@@ -997,8 +997,8 @@
         |    @Override
         |    public String execute() throws Exception {
         |        pageBuilderService.assembler().resources()
-        |            .requireWebResource("com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources")
-        |            .requireWebResource("com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources--overview-page");
+        |            .requireWebResource("io.codeclou.kitchen-duty-plugin:kitchen-duty-plugin-resources")
+        |            .requireWebResource("io.codeclou.kitchen-duty-plugin:kitchen-duty-plugin-resources--overview-page");
         |
         |        return "kitchen-duty-overview-page-success";
         |    }
@@ -1230,8 +1230,8 @@
                 <strong>You have completed Step 6.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
-                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-06-kitchen-duty-plugin">
-                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-06-kitchen-duty-plugin
+                <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-06-kitchen-duty-plugin">
+                    https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-06-kitchen-duty-plugin
                 </a>
             </div>
         </div>

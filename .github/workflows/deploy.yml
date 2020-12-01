@@ -3,11 +3,10 @@ name: Node.js CI
 on:
   push:
     branches:
-    - documentation
+      - documentation
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -15,20 +14,20 @@ jobs:
         node-version: [8.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: yarn install
-    - run: yarn ndes replace "___TIMEST___" byCurrentTimetamp             in "_page/js/main.js" -s
-    - run: yarn ndes replace "___BRANCH___" byValue "$GITHUB_BRANCH_NAME" in "_page/js/main.js" -s
-    - run: yarn ndes replace "___COMMIT___" byValue "$GITHUB_COMMIT_HASH" in "_page/js/main.js" -s
-    - run: yarn build:img
-    - run: yarn build:prod
-      env:
-        CI: true
-    - run: yarn ndes deployToGitHubPages as "GitHubActions" withEmail "noreply@comsysto.com" withGitHubAuthUsername $GITHUB_AUTH_USER withGitHubAuthToken $GITHUB_AUTH_TOKEN toRepository https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira.git fromSource "./build"        
-      env:
-        GITHUB_AUTH_USER: ${{ secrets.GITHUB_AUTH_USER }}
-        GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_AUTH_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install
+      - run: yarn ndes replace "___TIMEST___" byCurrentTimetamp             in "_page/js/main.js" -s
+      - run: yarn ndes replace "___BRANCH___" byValue "$GITHUB_BRANCH_NAME" in "_page/js/main.js" -s
+      - run: yarn ndes replace "___COMMIT___" byValue "$GITHUB_COMMIT_HASH" in "_page/js/main.js" -s
+      - run: yarn build:img
+      - run: yarn build:prod
+        env:
+          CI: true
+#      - run: yarn ndes deployToGitHubPages as "GitHubActions" withEmail "noreply@codeclou.io" withGitHubAuthUsername $GITHUB_AUTH_USER withGitHubAuthToken $GITHUB_AUTH_TOKEN toRepository https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira.git fromSource "./build"
+#        env:
+#          GITHUB_AUTH_USER: ${{ secrets.GITHUB_AUTH_USER }}
+#          GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_AUTH_TOKEN }}

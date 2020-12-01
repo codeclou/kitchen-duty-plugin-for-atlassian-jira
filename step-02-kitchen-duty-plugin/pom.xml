@@ -2,15 +2,15 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.comsysto</groupId>
+    <groupId>io.codeclou</groupId>
     <artifactId>kitchen-duty-plugin</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <organization>
-        <name>comSysto</name>
-        <url>http://comsysto.com/</url>
+        <name>codeclou UG</name>
+        <url>https://codeclou.io/</url>
     </organization>
     <name>kitchen-duty-plugin</name>
-    <description>This is the com.comsysto:kitchen-duty-plugin plugin for Atlassian JIRA.</description>
+    <description>This is the io.codeclou:kitchen-duty-plugin plugin for Atlassian JIRA.</description>
     <packaging>atlassian-plugin</packaging>
     <dependencies>
         <dependency>
@@ -155,7 +155,7 @@
                     <instructions>
                         <Atlassian-Plugin-Key>${atlassian.plugin.key}</Atlassian-Plugin-Key>
                         <!-- Add package to export here -->
-                        <Export-Package>com.comsysto.kitchen.duty.api,</Export-Package>
+                        <Export-Package>io.codeclou.kitchen.duty.api,</Export-Package>
                         <!-- Add package import here -->
                         <Import-Package>org.springframework.osgi.*;resolution:="optional", org.eclipse.gemini.blueprint.*;resolution:="optional", *</Import-Package>
                         <!-- Ensure plugin is spring powered - see https://extranet.atlassian.com/x/xBS9hQ  -->

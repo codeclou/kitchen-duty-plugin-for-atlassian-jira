@@ -39,7 +39,7 @@
   <webwork1 key="kitchen-duty-planning-webwork-module" name="Kitchen Duty Planning Webwork Module" i18n-name-key="kitchen-duty-planning-webwork-module.name" roles-required="admin">
     <description key="kitchen-duty-planning-webwork-module.description">The Kitchen Duty Planning Webwork Module Plugin</description>
     <actions>
-      <action name="com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction" alias="KitchenDutyPlanningWebworkAction">
+      <action name="io.codeclou.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction" alias="KitchenDutyPlanningWebworkAction">
         <view name="kitchen-duty-planning-success">/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm</view>
       </action>
     </actions>
@@ -53,12 +53,12 @@
   </web-item>
   <rest name="Kitchen Duty Resources" i18n-name-key="kitchen-duty-plugin.rest.resources.name" key="kitchen-duty-resources" path="/kitchenduty" version="1.0">
     <description key="kitchen-duty-plugin.rest.resources.description">All Kitchen Duty REST Resources</description>
-    <package>com.comsysto.kitchen.duty.rest</package>
+    <package>io.codeclou.kitchen.duty.rest</package>
   </rest>
   <ao key="ao-module">
     <description>The module configuring the Active Objects service used by this plugin</description>
-    <entity>com.comsysto.kitchen.duty.ao.Week</entity>
-    <entity>com.comsysto.kitchen.duty.ao.User</entity>
-    <entity>com.comsysto.kitchen.duty.ao.UserToWeek</entity>
+    <entity>io.codeclou.kitchen.duty.ao.Week</entity>
+    <entity>io.codeclou.kitchen.duty.ao.User</entity>
+    <entity>io.codeclou.kitchen.duty.ao.UserToWeek</entity>
   </ao>
 </atlassian-plugin>

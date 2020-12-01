@@ -6,7 +6,7 @@
     </plugin-info>
 
     <!-- from our base plugin -->
-    <component-import key="myComponent" interface="com.comsysto.kitchen.duty.api.MyPluginComponent"/>
+    <component-import key="myComponent" interface="io.codeclou.kitchen.duty.api.MyPluginComponent"/>
 
     <!-- from the product container -->
     <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />

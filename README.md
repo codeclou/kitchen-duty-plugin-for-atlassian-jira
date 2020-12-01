@@ -2,7 +2,7 @@
 
 > This plugin demonstrates the usage of the Atlassian Jira 7.0 API for a very simple plugin. Click on the banner to [start the tutorial](https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/).
 
-[![](https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-teaser.png)](https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/)
+[![](https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-teaser.png?v2)](https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/)
 
 ---
 

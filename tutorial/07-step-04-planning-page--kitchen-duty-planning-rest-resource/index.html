@@ -6,20 +6,20 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
     
-    <title>Kitchen Duty Planning REST Resource ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
-    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by Comsysto Reply">
+    <title>Kitchen Duty Planning REST Resource ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by codeclou UG</title>
+    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian Jira by codeclou UG">
     <meta name="robots" content="noindex, nofollow">
 
 
     
-    <meta property="og:title" content="Kitchen Duty Plugin for Atlassian JIRA® by Comsysto Reply" />
-    <meta property="og:image" content="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-plugin--social.jpg" />
-    <meta property="og:description" content="An interactive tutorial on how to write Plugins for Atlassian JIRA® by Comsysto Reply" />
+    <meta property="og:title" content="Kitchen Duty Plugin for Atlassian Jira by codeclou UG" />
+    <meta property="og:image" content="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-plugin--social.jpg" />
+    <meta property="og:description" content="An interactive tutorial on how to write Plugins for Atlassian Jira by codeclou UG" />
 
     
-    <link rel="canonical" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/" />
+    <link rel="canonical" href="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/07-step-04-planning-page--kitchen-duty-planning-rest-resource/" />
 
-    <link rel="alternate" type="application/rss+xml" title="Kitchen Duty Plugin News" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/rss_feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Kitchen Duty Plugin News" href="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/rss_feed.xml" />
 
 
 
@@ -72,9 +72,6 @@
                 <span class="cs-news-right">news</span>
             </a>
             -->
-        </div>
-        <div class="col-md-4  d-none d-sm-block cs-page-header-cs-logo text-right cs-page-header--right-fix">
-            <a href="https://comsystoreply.de" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="Comsysto Reply" style="width:150px; margin-top:-20px;"/></a>
         </div>
     </div>
 </div>
@@ -358,7 +355,7 @@
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/pom.xml" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-04-kitchen-duty-plugin/pom.xml" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -393,15 +390,15 @@
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/impl/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/impl/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/impl/">.../</span>MyPluginComponentImpl.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/impl/">.../</span>MyPluginComponentImpl.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -409,7 +406,7 @@
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import com.atlassian.activeobjects.external.ActiveObjects;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
@@ -425,7 +422,7 @@ public class MyPluginComponentImpl implements MyPluginComponent {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
 <span class="hljs-keyword">import</span> com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
@@ -450,15 +447,15 @@ public class MyPluginComponentImpl implements MyPluginComponent {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>Week.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/ao/">.../</span>Week.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/Week.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/ao/Week.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -466,7 +463,7 @@ public class MyPluginComponentImpl implements MyPluginComponent {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+        data-clipboard-text="package io.codeclou.kitchen.duty.ao;
 
 import net.java.ao.Entity;
 import net.java.ao.Preload;
@@ -480,7 +477,7 @@ public interface Week extends Entity {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.ao;
 
 <span class="hljs-keyword">import</span> net.java.ao.Entity;
 <span class="hljs-keyword">import</span> net.java.ao.Preload;
@@ -525,7 +522,7 @@ public interface Week extends Entity {
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -535,14 +532,14 @@ public interface Week extends Entity {
         title="Copy file content to clipboard"
         data-clipboard-text="&lt;ao key=&quot;ao-module&quot;&gt;
     &lt;description&gt;The module configuring the Active Objects service used by this plugin&lt;/description&gt;
-    &lt;entity&gt;com.comsysto.kitchen.duty.ao.Week&lt;/entity&gt;
+    &lt;entity&gt;io.codeclou.kitchen.duty.ao.Week&lt;/entity&gt;
 &lt;/ao&gt;"><i class="fa fa-files-o"></i></a>
     </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">ao</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"ao-module"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">description</span>&gt;</span>The module configuring the Active Objects service used by this plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>com.comsysto.kitchen.duty.ao.Week<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>io.codeclou.kitchen.duty.ao.Week<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">ao</span>&gt;</span></code></pre>
 
 
@@ -567,15 +564,15 @@ public interface Week extends Entity {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/30e29f5e1cc8bdb4d5a6ff72834fd4af219d4a1d/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -583,13 +580,13 @@ public interface Week extends Entity {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import com.atlassian.activeobjects.external.ActiveObjects;
 import com.atlassian.jira.bc.user.search.UserSearchService;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import com.atlassian.sal.api.transaction.TransactionCallback;
-import com.comsysto.kitchen.duty.ao.Week;
+import io.codeclou.kitchen.duty.ao.Week;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -651,13 +648,13 @@ public class KitchenDutyPlanningResource {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
 <span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchService;
 <span class="hljs-keyword">import</span> com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 <span class="hljs-keyword">import</span> com.atlassian.sal.api.transaction.TransactionCallback;
-<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.ao.Week;
+<span class="hljs-keyword">import</span> io.codeclou.kitchen.duty.ao.Week;
 
 <span class="hljs-keyword">import</span> javax.inject.Inject;
 <span class="hljs-keyword">import</span> javax.inject.Named;
@@ -949,15 +946,15 @@ public class KitchenDutyPlanningResource {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>Week.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/ao/">.../</span>Week.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/Week.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/ao/Week.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -965,7 +962,7 @@ public class KitchenDutyPlanningResource {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+        data-clipboard-text="package io.codeclou.kitchen.duty.ao;
 
 import net.java.ao.Entity;
 import net.java.ao.ManyToMany;
@@ -987,7 +984,7 @@ public interface Week extends Entity {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.ao;
 
 <span class="hljs-keyword">import</span> net.java.ao.Entity;
 <span class="hljs-keyword">import</span> net.java.ao.ManyToMany;
@@ -1035,15 +1032,15 @@ public interface Week extends Entity {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>User.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/ao/">.../</span>User.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/User.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/ao/User.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1051,7 +1048,7 @@ public interface Week extends Entity {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+        data-clipboard-text="package io.codeclou.kitchen.duty.ao;
 
 import net.java.ao.Entity;
 import net.java.ao.ManyToMany;
@@ -1073,7 +1070,7 @@ public interface User extends Entity {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.ao;
 
 <span class="hljs-keyword">import</span> net.java.ao.Entity;
 <span class="hljs-keyword">import</span> net.java.ao.ManyToMany;
@@ -1120,15 +1117,15 @@ public interface User extends Entity {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>UserToWeek.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/ao/">.../</span>UserToWeek.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/UserToWeek.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/ao/UserToWeek.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1136,7 +1133,7 @@ public interface User extends Entity {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+        data-clipboard-text="package io.codeclou.kitchen.duty.ao;
 
 import net.java.ao.Entity;
 
@@ -1151,7 +1148,7 @@ public interface UserToWeek extends Entity {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.ao;
 
 <span class="hljs-keyword">import</span> net.java.ao.Entity;
 
@@ -1195,7 +1192,7 @@ public interface UserToWeek extends Entity {
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/3b102ae23eaa587bb432b4b04b806ff78eb50b8f/step-04-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1205,18 +1202,18 @@ public interface UserToWeek extends Entity {
         title="Copy file content to clipboard"
         data-clipboard-text="&lt;ao key=&quot;ao-module&quot;&gt;
     &lt;description&gt;The module configuring the Active Objects service used by this plugin&lt;/description&gt;
-    &lt;entity&gt;com.comsysto.kitchen.duty.ao.Week&lt;/entity&gt;
-    &lt;entity&gt;com.comsysto.kitchen.duty.ao.User&lt;/entity&gt;
-    &lt;entity&gt;com.comsysto.kitchen.duty.ao.UserToWeek&lt;/entity&gt;
+    &lt;entity&gt;io.codeclou.kitchen.duty.ao.Week&lt;/entity&gt;
+    &lt;entity&gt;io.codeclou.kitchen.duty.ao.User&lt;/entity&gt;
+    &lt;entity&gt;io.codeclou.kitchen.duty.ao.UserToWeek&lt;/entity&gt;
 &lt;/ao&gt;"><i class="fa fa-files-o"></i></a>
     </div>
 </div>
 
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">ao</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"ao-module"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">description</span>&gt;</span>The module configuring the Active Objects service used by this plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>com.comsysto.kitchen.duty.ao.Week<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>com.comsysto.kitchen.duty.ao.User<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>com.comsysto.kitchen.duty.ao.UserToWeek<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>io.codeclou.kitchen.duty.ao.Week<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>io.codeclou.kitchen.duty.ao.User<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">entity</span>&gt;</span>io.codeclou.kitchen.duty.ao.UserToWeek<span class="hljs-tag">&lt;/<span class="hljs-title">entity</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">ao</span>&gt;</span></code></pre>
 
 
@@ -1231,15 +1228,15 @@ public interface UserToWeek extends Entity {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/83e18b1e57beb1e9282b2b3781966f88efd2763f/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/83e18b1e57beb1e9282b2b3781966f88efd2763f/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1247,7 +1244,7 @@ public interface UserToWeek extends Entity {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 ...
 
 @Named
@@ -1291,7 +1288,7 @@ public class KitchenDutyPlanningResource {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 ...
 
 <span class="hljs-annotation">@Named</span>
@@ -1504,15 +1501,15 @@ public class KitchenDutyPlanningResource {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e923ee619b945042bc37217e78b3aead2f8a4b44/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/e923ee619b945042bc37217e78b3aead2f8a4b44/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1520,7 +1517,7 @@ public class KitchenDutyPlanningResource {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 ...
 
 @Named
@@ -1591,7 +1588,7 @@ public class KitchenDutyPlanningResource {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 ...
 
 <span class="hljs-annotation">@Named</span>
@@ -1721,15 +1718,15 @@ public class KitchenDutyPlanningResource {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResourceWeekModel.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResourceWeekModel.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e923ee619b945042bc37217e78b3aead2f8a4b44/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResourceWeekModel.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/e923ee619b945042bc37217e78b3aead2f8a4b44/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/KitchenDutyPlanningResourceWeekModel.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1737,7 +1734,7 @@ public class KitchenDutyPlanningResource {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -1780,7 +1777,7 @@ public class KitchenDutyPlanningResourceWeekModel {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessType;
 <span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessorType;
@@ -1830,15 +1827,15 @@ public class KitchenDutyPlanningResourceWeekModel {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResourceUserModel.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResourceUserModel.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e923ee619b945042bc37217e78b3aead2f8a4b44/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResourceUserModel.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/e923ee619b945042bc37217e78b3aead2f8a4b44/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/KitchenDutyPlanningResourceUserModel.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1846,7 +1843,7 @@ public class KitchenDutyPlanningResourceWeekModel {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -1889,7 +1886,7 @@ public class KitchenDutyPlanningResourceUserModel {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessType;
 <span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessorType;
@@ -2024,15 +2021,15 @@ public class KitchenDutyPlanningResourceUserModel {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e90e472228d0512b90d6ef2f6f1b9f3cae91c542/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/e90e472228d0512b90d6ef2f6f1b9f3cae91c542/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -2243,15 +2240,15 @@ public class KitchenDutyPlanningResourceUserModel {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e90e472228d0512b90d6ef2f6f1b9f3cae91c542/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/e90e472228d0512b90d6ef2f6f1b9f3cae91c542/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -2414,15 +2411,15 @@ public class KitchenDutyPlanningResourceUserModel {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>KitchenDutyActiveObjectHelper.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/ao/">.../</span>KitchenDutyActiveObjectHelper.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/e90e472228d0512b90d6ef2f6f1b9f3cae91c542/step-04-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/KitchenDutyActiveObjectHelper.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/e90e472228d0512b90d6ef2f6f1b9f3cae91c542/step-04-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/ao/KitchenDutyActiveObjectHelper.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -2430,7 +2427,7 @@ public class KitchenDutyPlanningResourceUserModel {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+        data-clipboard-text="package io.codeclou.kitchen.duty.ao;
 
 import com.atlassian.activeobjects.external.ActiveObjects;
 import net.java.ao.Query;
@@ -2464,7 +2461,7 @@ public class KitchenDutyActiveObjectHelper {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.ao;
 
 <span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
 <span class="hljs-keyword">import</span> net.java.ao.Query;
@@ -2579,8 +2576,8 @@ Date: Fri, <span class="hljs-number">09</span> Sep <span class="hljs-number">201
                 <strong>You have completed Step 4.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
-                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin">
-                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin
+                <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin">
+                    https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-04-kitchen-duty-plugin
                 </a>
             </div>
         </div>
@@ -2621,9 +2618,9 @@ Date: Fri, <span class="hljs-number">09</span> Sep <span class="hljs-number">201
 <div class="cs-footer">
     <div class="cs-legal-box">
         <a href="/kitchen-duty-plugin-for-atlassian-jira/author-and-license/">Author &middot; License &middot; Trademarks</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/impressum/">Impressum &middot; Imprint</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/datenschutz/">Datenschutz &middot; Privacy</a>
-        <a class="d-none d-sm-inline btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
+        <a target="_blank" href="https://codeclou.io/legal/impressum-en/">Impressum &middot; Imprint</a>
+        <a target="_blank" href="https://codeclou.io/legal/datenschutz-en/">Datenschutz &middot; Privacy</a>
+        <a class="d-none d-sm-inline btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
             star on GitHub
         </a>
     </div>

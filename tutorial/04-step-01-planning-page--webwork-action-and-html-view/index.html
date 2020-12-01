@@ -6,20 +6,20 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
     
-    <title>Webwork Action and HTML View ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
-    <meta description="Developing the Webwork Action and HTML View for the Planning Page of Kitchen Duty Plugin for Atlassian JIRA® by Comsysto Reply">
+    <title>Webwork Action and HTML View ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by codeclou UG</title>
+    <meta description="Developing the Webwork Action and HTML View for the Planning Page of Kitchen Duty Plugin for Atlassian Jira by codeclou UG">
     <meta name="robots" content="index, follow">
 
 
     
-    <meta property="og:title" content="Kitchen Duty Plugin for Atlassian JIRA® by Comsysto Reply" />
-    <meta property="og:image" content="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-plugin--social.jpg" />
-    <meta property="og:description" content="An interactive tutorial on how to write Plugins for Atlassian JIRA® by Comsysto Reply" />
+    <meta property="og:title" content="Kitchen Duty Plugin for Atlassian Jira by codeclou UG" />
+    <meta property="og:image" content="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-plugin--social.jpg" />
+    <meta property="og:description" content="An interactive tutorial on how to write Plugins for Atlassian Jira by codeclou UG" />
 
     
-    <link rel="canonical" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/04-step-01-planning-page--webwork-action-and-html-view/" />
+    <link rel="canonical" href="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/04-step-01-planning-page--webwork-action-and-html-view/" />
 
-    <link rel="alternate" type="application/rss+xml" title="Kitchen Duty Plugin News" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/rss_feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Kitchen Duty Plugin News" href="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/rss_feed.xml" />
 
 
 
@@ -72,9 +72,6 @@
                 <span class="cs-news-right">news</span>
             </a>
             -->
-        </div>
-        <div class="col-md-4  d-none d-sm-block cs-page-header-cs-logo text-right cs-page-header--right-fix">
-            <a href="https://comsystoreply.de" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="Comsysto Reply" style="width:150px; margin-top:-20px;"/></a>
         </div>
     </div>
 </div>
@@ -313,15 +310,15 @@ Module Description The Kitchen Duty Planning Webwork Module Plugin: :
 i18n Name Key kitchen-duty-planning-webwork-module.name: :
 i18n Description Key kitchen-duty-planning-webwork-module.description: :
 Enter Action Classname MyActionClass: : KitchenDutyPlanningWebworkAction
-Enter Package Name com.comsysto.jira.webwork: : com.comsysto.kitchen.duty.webwork
+Enter Package Name io.codeclou.jira.webwork: : io.codeclou.kitchen.duty.webwork
 Enter Alias KitchenDutyPlanningWebworkAction: :
 Enter View Name success: : kitchen-duty-planning-success
 Enter Template Path /templates/.../kitchen-duty-planning-success.vm: : /templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm
 Add Another View? (Y/y/N/n) N: : N
 Add Another Action? (Y/y/N/n) N: : N
 [INFO] Adding the following items to the project:
-[INFO]   [class: com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction]
-[INFO]   [class: ut.com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest]
+[INFO]   [class: io.codeclou.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction]
+[INFO]   [class: ut.io.codeclou.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest]
 [INFO]   [dependency: org.apache.httpcomponents:httpclient]
 [INFO]   [dependency: org.mockito:mockito-all]
 [INFO]   [dependency: org.slf4j:slf4j-api]
@@ -341,7 +338,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 </div>
 
 
-        <p>After we have done that we see that a lot of code and files have been generated. You can see all changes in this <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/162ed706c7f4be0356871a4a6f8bb6398b38854f">GitHub Commit 162ed70</a>.</p>
+        <p>After we have done that we see that a lot of code and files have been generated. You can see all changes in this <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/commit/162ed706c7f4be0356871a4a6f8bb6398b38854f">GitHub Commit 162ed70</a>.</p>
 
         <p>What is important for us are the following changes:</p>
 
@@ -362,7 +359,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -373,7 +370,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
         data-clipboard-text="&lt;webwork1 key=&quot;kitchen-duty-planning-webwork-module&quot; name=&quot;Kitchen Duty Planning Webwork Module&quot; i18n-name-key=&quot;kitchen-duty-planning-webwork-module.name&quot;&gt;
     &lt;description key=&quot;kitchen-duty-planning-webwork-module.description&quot;&gt;The Kitchen Duty Planning Webwork Module Plugin&lt;/description&gt;
     &lt;actions&gt;
-      &lt;action name=&quot;com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction&quot; alias=&quot;KitchenDutyPlanningWebworkAction&quot;&gt;
+      &lt;action name=&quot;io.codeclou.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction&quot; alias=&quot;KitchenDutyPlanningWebworkAction&quot;&gt;
         &lt;view name=&quot;kitchen-duty-planning-success&quot;&gt;/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm&lt;/view&gt;
       &lt;/action&gt;
     &lt;/actions&gt;
@@ -384,7 +381,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 <pre class="cs-code"><code class="hljs"><span class="hljs-tag">&lt;<span class="hljs-title">webwork1</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module"</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"Kitchen Duty Planning Webwork Module"</span> <span class="hljs-attribute">i18n-name-key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.name"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">description</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-planning-webwork-module.description"</span>&gt;</span>The Kitchen Duty Planning Webwork Module Plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">actions</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">action</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction"</span> <span class="hljs-attribute">alias</span>=<span class="hljs-value">"KitchenDutyPlanningWebworkAction"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">action</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"io.codeclou.kitchen.duty.webwork.KitchenDutyPlanningWebworkAction"</span> <span class="hljs-attribute">alias</span>=<span class="hljs-value">"KitchenDutyPlanningWebworkAction"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-title">view</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-planning-success"</span>&gt;</span>/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm<span class="hljs-tag">&lt;/<span class="hljs-title">view</span>&gt;</span>
       <span class="hljs-tag">&lt;/<span class="hljs-title">action</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-title">actions</span>&gt;</span>
@@ -404,7 +401,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/pom.xml" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/pom.xml" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -485,15 +482,15 @@ Add Another Plugin Module? (Y/y/N/n) N: : N
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/webwork/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/webwork/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/webwork/">.../</span>KitchenDutyPlanningWebworkAction.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/webwork/">.../</span>KitchenDutyPlanningWebworkAction.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/webwork/KitchenDutyPlanningWebworkAction.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -594,7 +591,7 @@ public String execute() throws Exception {
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -707,7 +704,7 @@ public String execute() throws Exception {
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -803,7 +800,7 @@ public String execute() throws Exception {
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -876,7 +873,7 @@ kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pr
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-planning-webwork-module/kitchen-duty-planning-success.vm" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -926,7 +923,7 @@ kitchen-duty-plugin.admin.planning.page.web.item.name = Planning Page</code></pr
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -965,7 +962,7 @@ kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plu
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-01-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1010,8 +1007,8 @@ kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plu
                 <strong>You have completed Step 1.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
-                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin">
-                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin
+                <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin">
+                    https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-01-kitchen-duty-plugin
                 </a>
             </div>
         </div>
@@ -1058,9 +1055,9 @@ kitchen-duty-plugin.admin.planning.page.title = Planning Page - Kitchen Duty Plu
 <div class="cs-footer">
     <div class="cs-legal-box">
         <a href="/kitchen-duty-plugin-for-atlassian-jira/author-and-license/">Author &middot; License &middot; Trademarks</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/impressum/">Impressum &middot; Imprint</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/datenschutz/">Datenschutz &middot; Privacy</a>
-        <a class="d-none d-sm-inline btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
+        <a target="_blank" href="https://codeclou.io/legal/impressum-en/">Impressum &middot; Imprint</a>
+        <a target="_blank" href="https://codeclou.io/legal/datenschutz-en/">Datenschutz &middot; Privacy</a>
+        <a class="d-none d-sm-inline btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
             star on GitHub
         </a>
     </div>

@@ -6,20 +6,20 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
     
-    <title>User Search REST Resource ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
-    <meta description="Developing the User Search REST Resource for the Planning Page with JAX-RS of Kitchen Duty Plugin for Atlassian JIRA® by Comsysto Reply">
+    <title>User Search REST Resource ~ Planning Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by codeclou UG</title>
+    <meta description="Developing the User Search REST Resource for the Planning Page with JAX-RS of Kitchen Duty Plugin for Atlassian Jira by codeclou UG">
     <meta name="robots" content="index, follow">
 
 
     
-    <meta property="og:title" content="Kitchen Duty Plugin for Atlassian JIRA® by Comsysto Reply" />
-    <meta property="og:image" content="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-plugin--social.jpg" />
-    <meta property="og:description" content="An interactive tutorial on how to write Plugins for Atlassian JIRA® by Comsysto Reply" />
+    <meta property="og:title" content="Kitchen Duty Plugin for Atlassian Jira by codeclou UG" />
+    <meta property="og:image" content="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-plugin--social.jpg" />
+    <meta property="og:description" content="An interactive tutorial on how to write Plugins for Atlassian Jira by codeclou UG" />
 
     
-    <link rel="canonical" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/05-step-02-planning-page--user-search-rest-resource/" />
+    <link rel="canonical" href="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/05-step-02-planning-page--user-search-rest-resource/" />
 
-    <link rel="alternate" type="application/rss+xml" title="Kitchen Duty Plugin News" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/rss_feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Kitchen Duty Plugin News" href="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/rss_feed.xml" />
 
 
 
@@ -72,9 +72,6 @@
                 <span class="cs-news-right">news</span>
             </a>
             -->
-        </div>
-        <div class="col-md-4  d-none d-sm-block cs-page-header-cs-logo text-right cs-page-header--right-fix">
-            <a href="https://comsystoreply.de" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="Comsysto Reply" style="width:150px; margin-top:-20px;"/></a>
         </div>
     </div>
 </div>
@@ -291,7 +288,7 @@ Choose Plugin Module:
 Choose a number (...): <span class="hljs-number">14</span>
 
 Enter New Classname MyRestResource: : UserSearchResource
-Enter Package Name com.comsysto.rest: : com.comsysto.kitchen.duty.rest
+Enter Package Name io.codeclou.rest: : io.codeclou.kitchen.duty.rest
 Enter REST Path /usersearchresource: : /kitchenduty
 Enter Version <span class="hljs-number">1.0</span>: : <span class="hljs-number">1.0</span>
 
@@ -303,7 +300,7 @@ Module Description The User Search Resource Plugin: : All Kitchen Duty REST Reso
 i18n Name Key user-search-resource.name: : kitchen-duty-plugin.rest.resources.name
 i18n Description Key user-search-resource.description: : kitchen-duty-plugin.rest.resources.description
 Add Package To Scan? (Y/y/N/n) N: : y
-Enter Package: com.comsysto.kitchen.duty.rest
+Enter Package: io.codeclou.kitchen.duty.rest
 ...
 
 Add Package To Scan? (Y/y/N/n) N: : n
@@ -311,10 +308,10 @@ Add Package To Scan? (Y/y/N/n) N: : n
 Add Dispatcher? (Y/y/N/n) N: : n
 
 [INFO] Adding the following items to the project:
-[INFO]   [class: com.comsysto.kitchen.duty.rest.UserSearchResourceModel]
-[INFO]   [class: com.comsysto.kitchen.duty.rest.UserSearchResource]
-[INFO]   [class: it.com.comsysto.kitchen.duty.rest.UserSearchResourceFuncTest]
-[INFO]   [class: ut.com.comsysto.kitchen.duty.rest.UserSearchResourceTest]
+[INFO]   [class: io.codeclou.kitchen.duty.rest.UserSearchResourceModel]
+[INFO]   [class: io.codeclou.kitchen.duty.rest.UserSearchResource]
+[INFO]   [class: it.io.codeclou.kitchen.duty.rest.UserSearchResourceFuncTest]
+[INFO]   [class: ut.io.codeclou.kitchen.duty.rest.UserSearchResourceTest]
 [INFO]   [dependency: com.atlassian.plugins.rest:atlassian-rest-common]
 [INFO]   [dependency: com.atlassian.sal:sal-api]
 [INFO]   [dependency: javax.servlet:servlet-api]
@@ -389,7 +386,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/pom.xml" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/pom.xml" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -476,7 +473,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -490,7 +487,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
       path=&quot;/kitchenduty&quot;
       version=&quot;1.0&quot;&gt;
   &lt;description key=&quot;kitchen-duty-plugin.rest.resources.description&quot;&gt;All Kitchen Duty REST Resources&lt;/description&gt;
-  &lt;package&gt;com.comsysto.kitchen.duty.rest&lt;/package&gt;
+  &lt;package&gt;io.codeclou.kitchen.duty.rest&lt;/package&gt;
 &lt;/rest&gt;"><i class="fa fa-files-o"></i></a>
     </div>
 </div>
@@ -501,7 +498,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
       <span class="hljs-attribute">path</span>=<span class="hljs-value">"/kitchenduty"</span>
       <span class="hljs-attribute">version</span>=<span class="hljs-value">"1.0"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-title">description</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-plugin.rest.resources.description"</span>&gt;</span>All Kitchen Duty REST Resources<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">package</span>&gt;</span>com.comsysto.kitchen.duty.rest<span class="hljs-tag">&lt;/<span class="hljs-title">package</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">package</span>&gt;</span>io.codeclou.kitchen.duty.rest<span class="hljs-tag">&lt;/<span class="hljs-title">package</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-title">rest</span>&gt;</span></code></pre>
 
 
@@ -520,7 +517,7 @@ Add Another Plugin Module? (Y/y/N/n) N: : n
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -541,8 +538,8 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
         <h3 class="cs-headline cs-headline--s">3. REST Controller and Model</h3>
 
         <p>
-            In the directory <code>src/main/java/</code> in the package <code>com.comsysto.kitchen.duty.rest</code> there is now the
-            <code>UserSearchResource.java</code> and the <code>UserSearchResourceModel.java</code>. You can see what has been created in the <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/95b8ebf5ff20a77c6b0853cd93ad0b465033e6f6">GitHub commit 95b8ebf</a>.
+            In the directory <code>src/main/java/</code> in the package <code>io.codeclou.kitchen.duty.rest</code> there is now the
+            <code>UserSearchResource.java</code> and the <code>UserSearchResourceModel.java</code>. You can see what has been created in the <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/commit/95b8ebf5ff20a77c6b0853cd93ad0b465033e6f6">GitHub commit 95b8ebf</a>.
         </p>
 
         <p>
@@ -557,15 +554,15 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>UserSearchResource.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>UserSearchResource.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/UserSearchResource.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/UserSearchResource.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -573,7 +570,7 @@ kitchen-duty-plugin.rest.resources.description=All Kitchen Duty REST Resources</
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import com.atlassian.jira.bc.user.search.UserSearchParams;
 import com.atlassian.jira.bc.user.search.UserSearchService;
@@ -648,7 +645,7 @@ public class UserSearchResource {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchParams;
 <span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchService;
@@ -799,15 +796,15 @@ public class UserSearchResource {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>UserSearchResourceModel.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>UserSearchResourceModel.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/UserSearchResourceModel.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/UserSearchResourceModel.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -815,7 +812,7 @@ public class UserSearchResource {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import javax.xml.bind.annotation.*;
 @XmlRootElement(name = &quot;users&quot;) 
@@ -855,7 +852,7 @@ public class UserSearchResourceModel {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> javax.xml.bind.annotation.*;
 <span class="hljs-annotation">@XmlRootElement</span>(name = <span class="hljs-string">"users"</span>) <span class="cs-source-point" data-cs-source-point-id="step2-usersearchresourcemodel" data-cs-source-point-number="1"></span>
@@ -937,15 +934,15 @@ public class UserSearchResourceModel {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/impl/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/impl/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/impl/">.../</span>MyPluginComponentImpl.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/impl/">.../</span>MyPluginComponentImpl.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -953,7 +950,7 @@ public class UserSearchResourceModel {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import com.atlassian.jira.bc.user.search.UserSearchService;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
@@ -969,7 +966,7 @@ public class MyPluginComponentImpl implements MyPluginComponent {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchService;
 <span class="hljs-keyword">import</span> com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
@@ -1004,15 +1001,15 @@ public class MyPluginComponentImpl implements MyPluginComponent {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/test/java/ut/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/test/java/ut/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/test/java/ut/com/comsysto/kitchen/duty/rest/">.../</span>UserSearchResourceTest.java
+                                                                title="src/test/java/ut/com/codeclou/kitchen/duty/rest/">.../</span>UserSearchResourceTest.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/test/java/ut/com/comsysto/kitchen/duty/rest/UserSearchResourceTest.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/test/java/ut/com/codeclou/kitchen/duty/rest/UserSearchResourceTest.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1020,12 +1017,12 @@ public class MyPluginComponentImpl implements MyPluginComponent {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package ut.com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package ut.io.codeclou.kitchen.duty.rest;
 
 import com.atlassian.jira.bc.user.search.UserSearchParams;
 import com.atlassian.jira.bc.user.search.UserSearchService;
-import com.comsysto.kitchen.duty.rest.UserSearchResource;
-import com.comsysto.kitchen.duty.rest.UserSearchResourceModel;
+import io.codeclou.kitchen.duty.rest.UserSearchResource;
+import io.codeclou.kitchen.duty.rest.UserSearchResourceModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -1075,12 +1072,12 @@ public class UserSearchResourceTest {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> ut.com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> ut.io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchParams;
 <span class="hljs-keyword">import</span> com.atlassian.jira.bc.user.search.UserSearchService;
-<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.rest.UserSearchResource;
-<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.rest.UserSearchResourceModel;
+<span class="hljs-keyword">import</span> io.codeclou.kitchen.duty.rest.UserSearchResource;
+<span class="hljs-keyword">import</span> io.codeclou.kitchen.duty.rest.UserSearchResourceModel;
 <span class="hljs-keyword">import</span> org.junit.After;
 <span class="hljs-keyword">import</span> org.junit.Before;
 <span class="hljs-keyword">import</span> org.junit.Test;
@@ -1154,11 +1151,11 @@ public class UserSearchResourceTest {
 -------------------------------------------------------
  T E S T S
 -------------------------------------------------------
-Running ut.com.comsysto.kitchen.duty.MyComponentUnitTest
+Running ut.io.codeclou.kitchen.duty.MyComponentUnitTest
 Tests run: <span class="hljs-number">1</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>, Time elapsed: <span class="hljs-number">0.051</span> sec
-Running ut.com.comsysto.kitchen.duty.rest.UserSearchResourceTest
+Running ut.io.codeclou.kitchen.duty.rest.UserSearchResourceTest
 Tests run: <span class="hljs-number">1</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>, Time elapsed: <span class="hljs-number">0.148</span> sec
-Running ut.com.comsysto.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest
+Running ut.io.codeclou.kitchen.duty.webwork.KitchenDutyPlanningWebworkActionTest
 Tests run: <span class="hljs-number">1</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>, Time elapsed: <span class="hljs-number">0</span> sec
 
 Results :
@@ -1192,15 +1189,15 @@ Tests run: <span class="hljs-number">3</span>, Failures: <span class="hljs-numbe
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/test/java/it/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/test/java/it/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/test/java/it/com/comsysto/kitchen/duty/rest/">.../</span>UserSearchResourceFuncTest.java
+                                                                title="src/test/java/it/com/codeclou/kitchen/duty/rest/">.../</span>UserSearchResourceFuncTest.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/test/java/it/com/comsysto/kitchen/duty/rest/UserSearchResourceFuncTest.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-02-kitchen-duty-plugin/src/test/java/it/com/codeclou/kitchen/duty/rest/UserSearchResourceFuncTest.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1208,7 +1205,7 @@ Tests run: <span class="hljs-number">3</span>, Failures: <span class="hljs-numbe
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package it.com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package it.io.codeclou.kitchen.duty.rest;
 
 import org.apache.wink.client.ClientConfig;
 import org.apache.wink.client.Resource;
@@ -1286,7 +1283,7 @@ public class UserSearchResourceFuncTest {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> it.com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> it.io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> org.apache.wink.client.ClientConfig;
 <span class="hljs-keyword">import</span> org.apache.wink.client.Resource;
@@ -1433,9 +1430,9 @@ public class UserSearchResourceFuncTest {
 -------------------------------------------------------
  T E S T S
 -------------------------------------------------------
-Running it.com.comsysto.kitchen.duty.MyComponentWiredTest
+Running it.io.codeclou.kitchen.duty.MyComponentWiredTest
 Tests run: <span class="hljs-number">1</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>, Time elapsed: <span class="hljs-number">1.248</span> sec
-Running it.com.comsysto.kitchen.duty.rest.UserSearchResourceFuncTest
+Running it.io.codeclou.kitchen.duty.rest.UserSearchResourceFuncTest
 Tests run: <span class="hljs-number">2</span>, Failures: <span class="hljs-number">0</span>, Errors: <span class="hljs-number">0</span>, Skipped: <span class="hljs-number">0</span>, Time elapsed: <span class="hljs-number">1.018</span> sec
 
 Results :
@@ -1496,11 +1493,11 @@ Tests run: <span class="hljs-number">3</span>, Failures: <span class="hljs-numbe
                 <strong>You have completed Step 2.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
-                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin">
-                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin
+                <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin">
+                    https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-02-kitchen-duty-plugin
                 </a>
                 <!--<br>
-                Or view the diff from Step 1 to Step 2 here: <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a>-->
+                Or view the diff from Step 1 to Step 2 here: <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/commit/32094a91a93b9e05c839975df3ce8aa104c94bb1">32094a9</a>-->
             </div>
         </div>
 
@@ -1543,9 +1540,9 @@ Tests run: <span class="hljs-number">3</span>, Failures: <span class="hljs-numbe
 <div class="cs-footer">
     <div class="cs-legal-box">
         <a href="/kitchen-duty-plugin-for-atlassian-jira/author-and-license/">Author &middot; License &middot; Trademarks</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/impressum/">Impressum &middot; Imprint</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/datenschutz/">Datenschutz &middot; Privacy</a>
-        <a class="d-none d-sm-inline btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
+        <a target="_blank" href="https://codeclou.io/legal/impressum-en/">Impressum &middot; Imprint</a>
+        <a target="_blank" href="https://codeclou.io/legal/datenschutz-en/">Datenschutz &middot; Privacy</a>
+        <a class="d-none d-sm-inline btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
             star on GitHub
         </a>
     </div>

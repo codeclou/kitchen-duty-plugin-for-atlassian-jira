@@ -6,20 +6,20 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     
     
-    <title>Kitchen Duty Overview Page Implementation ~ Overview Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by Comsysto Reply</title>
-    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian JIRA® by Comsysto Reply">
+    <title>Kitchen Duty Overview Page Implementation ~ Overview Page | Plugin Development Tutorial for Atlassian JIRA® | Kitchen Duty Plugin by codeclou UG</title>
+    <meta description="An interactive step-by-step tutorial on how to write Plugins for Atlassian Jira by codeclou UG">
     <meta name="robots" content="noindex, nofollow">
 
 
     
-    <meta property="og:title" content="Kitchen Duty Plugin for Atlassian JIRA® by Comsysto Reply" />
-    <meta property="og:image" content="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-plugin--social.jpg" />
-    <meta property="og:description" content="An interactive tutorial on how to write Plugins for Atlassian JIRA® by Comsysto Reply" />
+    <meta property="og:title" content="Kitchen Duty Plugin for Atlassian Jira by codeclou UG" />
+    <meta property="og:image" content="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/images/kitchen-duty-plugin--social.jpg" />
+    <meta property="og:description" content="An interactive tutorial on how to write Plugins for Atlassian Jira by codeclou UG" />
 
     
-    <link rel="canonical" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/10-step-06-overview-page--implementation/" />
+    <link rel="canonical" href="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/tutorial/10-step-06-overview-page--implementation/" />
 
-    <link rel="alternate" type="application/rss+xml" title="Kitchen Duty Plugin News" href="https://comsysto.github.io/kitchen-duty-plugin-for-atlassian-jira/rss_feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Kitchen Duty Plugin News" href="https://codeclou.github.io/kitchen-duty-plugin-for-atlassian-jira/rss_feed.xml" />
 
 
 
@@ -72,9 +72,6 @@
                 <span class="cs-news-right">news</span>
             </a>
             -->
-        </div>
-        <div class="col-md-4  d-none d-sm-block cs-page-header-cs-logo text-right cs-page-header--right-fix">
-            <a href="https://comsystoreply.de" target="_blank"><img src="/kitchen-duty-plugin-for-atlassian-jira/images/comsysto-logo.png" alt="Comsysto Reply" style="width:150px; margin-top:-20px;"/></a>
         </div>
     </div>
 </div>
@@ -234,15 +231,15 @@
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>BaseResource.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>BaseResource.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/BaseResource.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/BaseResource.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -250,7 +247,7 @@
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import com.atlassian.activeobjects.external.ActiveObjects;
 import com.atlassian.sal.api.user.UserProfile;
@@ -304,7 +301,7 @@ public class BaseResource {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
 <span class="hljs-keyword">import</span> com.atlassian.sal.api.user.UserProfile;
@@ -373,15 +370,15 @@ public class BaseResource {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>RestError.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>RestError.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/RestError.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/RestError.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -389,7 +386,7 @@ public class BaseResource {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -447,7 +444,7 @@ public class RestError {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessType;
 <span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessorType;
@@ -512,15 +509,15 @@ public class RestError {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>KitchenDutyPlanningResource.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/KitchenDutyPlanningResource.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -528,7 +525,7 @@ public class RestError {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 ...
 
@@ -629,7 +626,7 @@ public class KitchenDutyPlanningResource extends BaseResource {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 ...
 
@@ -764,15 +761,15 @@ public class KitchenDutyPlanningResource extends BaseResource {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/impl/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/impl/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/impl/">.../</span>MyPluginComponentImpl.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/impl/">.../</span>MyPluginComponentImpl.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/impl/MyPluginComponentImpl.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -780,7 +777,7 @@ public class KitchenDutyPlanningResource extends BaseResource {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.impl;
+        data-clipboard-text="package io.codeclou.kitchen.duty.impl;
 
 ...
 
@@ -795,7 +792,7 @@ public class MyPluginComponentImpl implements MyPluginComponent {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.impl;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.impl;
 
 ...
 
@@ -838,15 +835,15 @@ public class MyPluginComponentImpl implements MyPluginComponent {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/ao/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/ao/">.../</span>KitchenDutyActiveObjectHelper.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/ao/">.../</span>KitchenDutyActiveObjectHelper.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/ao/KitchenDutyActiveObjectHelper.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/ao/KitchenDutyActiveObjectHelper.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -854,7 +851,7 @@ public class MyPluginComponentImpl implements MyPluginComponent {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.ao;
+        data-clipboard-text="package io.codeclou.kitchen.duty.ao;
 
 ...
 import java.util.ArrayList;
@@ -903,7 +900,7 @@ public class KitchenDutyActiveObjectHelper {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.ao;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.ao;
 
 ...
 <span class="hljs-keyword">import</span> java.util.ArrayList;
@@ -1042,15 +1039,15 @@ public class KitchenDutyActiveObjectHelper {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyOverviewPageResource.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>KitchenDutyOverviewPageResource.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyOverviewPageResource.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/KitchenDutyOverviewPageResource.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1058,14 +1055,14 @@ public class KitchenDutyActiveObjectHelper {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import com.atlassian.activeobjects.external.ActiveObjects;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import com.atlassian.sal.api.user.UserManager;
-import com.comsysto.kitchen.duty.ao.KitchenDutyActiveObjectHelper;
-import com.comsysto.kitchen.duty.ao.User;
-import com.comsysto.kitchen.duty.ao.Week;
+import io.codeclou.kitchen.duty.ao.KitchenDutyActiveObjectHelper;
+import io.codeclou.kitchen.duty.ao.User;
+import io.codeclou.kitchen.duty.ao.Week;
 
 ...
 import java.util.ArrayList;
@@ -1121,14 +1118,14 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
 <span class="hljs-keyword">import</span> com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 <span class="hljs-keyword">import</span> com.atlassian.sal.api.user.UserManager;
-<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.ao.KitchenDutyActiveObjectHelper;
-<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.ao.User;
-<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.ao.Week;
+<span class="hljs-keyword">import</span> io.codeclou.kitchen.duty.ao.KitchenDutyActiveObjectHelper;
+<span class="hljs-keyword">import</span> io.codeclou.kitchen.duty.ao.User;
+<span class="hljs-keyword">import</span> io.codeclou.kitchen.duty.ao.Week;
 
 ...
 <span class="hljs-keyword">import</span> java.util.ArrayList;
@@ -1223,15 +1220,15 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>KitchenDutyOverviewPageMonthDutyModel.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>KitchenDutyOverviewPageMonthDutyModel.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/KitchenDutyOverviewPageMonthDutyModel.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/KitchenDutyOverviewPageMonthDutyModel.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1239,7 +1236,7 @@ public class KitchenDutyOverviewPageResource extends BaseResource {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -1308,7 +1305,7 @@ public class KitchenDutyOverviewPageMonthDutyModel {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessType;
 <span class="hljs-keyword">import</span> javax.xml.bind.annotation.XmlAccessorType;
@@ -1385,15 +1382,15 @@ public class KitchenDutyOverviewPageMonthDutyModel {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/rest/">.../</span>BaseResource.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/rest/">.../</span>BaseResource.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/rest/BaseResource.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/rest/BaseResource.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1401,7 +1398,7 @@ public class KitchenDutyOverviewPageMonthDutyModel {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package io.codeclou.kitchen.duty.rest;
 
 import com.atlassian.activeobjects.external.ActiveObjects;
 import com.atlassian.sal.api.user.UserProfile;
@@ -1462,7 +1459,7 @@ public class BaseResource {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.rest;
 
 <span class="hljs-keyword">import</span> com.atlassian.activeobjects.external.ActiveObjects;
 <span class="hljs-keyword">import</span> com.atlassian.sal.api.user.UserProfile;
@@ -1553,15 +1550,15 @@ public class BaseResource {
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/test/java/ut/com/comsysto/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/test/java/ut/com/codeclou/kitchen/duty/rest/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/test/java/ut/com/comsysto/kitchen/duty/rest/">.../</span>BaseResourceTest.java
+                                                                title="src/test/java/ut/com/codeclou/kitchen/duty/rest/">.../</span>BaseResourceTest.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/test/java/ut/com/comsysto/kitchen/duty/rest/BaseResourceTest.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/test/java/ut/com/codeclou/kitchen/duty/rest/BaseResourceTest.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1569,9 +1566,9 @@ public class BaseResource {
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package ut.com.comsysto.kitchen.duty.rest;
+        data-clipboard-text="package ut.io.codeclou.kitchen.duty.rest;
 
-import com.comsysto.kitchen.duty.rest.BaseResource;
+import io.codeclou.kitchen.duty.rest.BaseResource;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -1670,9 +1667,9 @@ public class BaseResourceTest {
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> ut.com.comsysto.kitchen.duty.rest;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> ut.io.codeclou.kitchen.duty.rest;
 
-<span class="hljs-keyword">import</span> com.comsysto.kitchen.duty.rest.BaseResource;
+<span class="hljs-keyword">import</span> io.codeclou.kitchen.duty.rest.BaseResource;
 <span class="hljs-keyword">import</span> org.junit.Test;
 
 <span class="hljs-keyword">import</span> java.time.LocalDate;
@@ -1881,7 +1878,7 @@ public class BaseResourceTest {
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/atlassian-plugin.xml" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -1931,7 +1928,7 @@ public class BaseResourceTest {
       key=&quot;kitchen-duty-overview-page-webwork-module.description&quot;
     &gt;The Kitchen Duty Overview Page Webwork Module Plugin&lt;/description&gt;
     &lt;actions&gt;
-      &lt;action name=&quot;com.comsysto.kitchen.duty.webwork.KitchenDutyOverviewPageWebworkAction&quot;
+      &lt;action name=&quot;io.codeclou.kitchen.duty.webwork.KitchenDutyOverviewPageWebworkAction&quot;
               alias=&quot;KitchenDutyOverviewPageWebworkAction&quot;&gt; 
         &lt;view
           name=&quot;kitchen-duty-overview-page-success&quot; 
@@ -1996,7 +1993,7 @@ public class BaseResourceTest {
       <span class="hljs-attribute">key</span>=<span class="hljs-value">"kitchen-duty-overview-page-webwork-module.description"</span>
     &gt;</span>The Kitchen Duty Overview Page Webwork Module Plugin<span class="hljs-tag">&lt;/<span class="hljs-title">description</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">actions</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-title">action</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"com.comsysto.kitchen.duty.webwork.KitchenDutyOverviewPageWebworkAction"</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">action</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"io.codeclou.kitchen.duty.webwork.KitchenDutyOverviewPageWebworkAction"</span>
               <span class="hljs-attribute">alias</span>=<span class="hljs-value">"KitchenDutyOverviewPageWebworkAction"</span>&gt;</span> <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="9"></span>
         <span class="hljs-tag">&lt;<span class="hljs-title">view</span>
           <span class="hljs-attribute">name</span>=<span class="hljs-value">"kitchen-duty-overview-page-success"</span> <span class="cs-source-point" data-cs-source-point-id="knjbihvutzczdgui" data-cs-source-point-number="10"></span>
@@ -2076,7 +2073,7 @@ public class BaseResourceTest {
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/kitchen-duty-plugin.properties" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -2112,15 +2109,15 @@ kitchen-duty-plugin.user.overview.page.web.item.name = Kitchen Duty</code></pre>
 <div class="cs-code-filename">
     <div class="cs-code-filename-inner">
         
-        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/comsysto/kitchen/duty/webwork/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
+        <span class="d-none d-lg-inline d-xl-inline">src/main/java/com/codeclou/kitchen/duty/webwork/</span><span class="d-none d-sm-inline d-lg-none d-xl-none"
                                                                 data-toggle="tooltip"
                                                                 data-placement="right"
-                                                                title="src/main/java/com/comsysto/kitchen/duty/webwork/">.../</span>KitchenDutyOverviewPageWebworkAction.java
+                                                                title="src/main/java/com/codeclou/kitchen/duty/webwork/">.../</span>KitchenDutyOverviewPageWebworkAction.java
         
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/comsysto/kitchen/duty/webwork/KitchenDutyOverviewPageWebworkAction.java" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/java/com/codeclou/kitchen/duty/webwork/KitchenDutyOverviewPageWebworkAction.java" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -2128,7 +2125,7 @@ kitchen-duty-plugin.user.overview.page.web.item.name = Kitchen Duty</code></pre>
         data-toggle="tooltip" data-placement="left"
         data-title-orig="Copy file content to clipboard"
         title="Copy file content to clipboard"
-        data-clipboard-text="package com.comsysto.kitchen.duty.webwork;
+        data-clipboard-text="package io.codeclou.kitchen.duty.webwork;
 
 import com.atlassian.jira.web.action.JiraWebActionSupport;
 import com.atlassian.webresource.api.assembler.PageBuilderService;
@@ -2149,8 +2146,8 @@ public class KitchenDutyOverviewPageWebworkAction extends JiraWebActionSupport
     @Override
     public String execute() throws Exception {
         pageBuilderService.assembler().resources()
-            .requireWebResource(&quot;com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources&quot;)
-            .requireWebResource(&quot;com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources--overview-page&quot;);
+            .requireWebResource(&quot;io.codeclou.kitchen-duty-plugin:kitchen-duty-plugin-resources&quot;)
+            .requireWebResource(&quot;io.codeclou.kitchen-duty-plugin:kitchen-duty-plugin-resources--overview-page&quot;);
 
         return &quot;kitchen-duty-overview-page-success&quot;;
     }
@@ -2162,7 +2159,7 @@ public class KitchenDutyOverviewPageWebworkAction extends JiraWebActionSupport
     </div>
 </div>
 
-<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> com.comsysto.kitchen.duty.webwork;
+<pre class="cs-code"><code class="hljs"><span class="hljs-keyword">package</span> io.codeclou.kitchen.duty.webwork;
 
 <span class="hljs-keyword">import</span> com.atlassian.jira.web.action.JiraWebActionSupport;
 <span class="hljs-keyword">import</span> com.atlassian.webresource.api.assembler.PageBuilderService;
@@ -2183,8 +2180,8 @@ public class KitchenDutyOverviewPageWebworkAction extends JiraWebActionSupport
     <span class="hljs-annotation">@Override</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">execute</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception </span>{
         pageBuilderService.assembler().resources()
-            .requireWebResource(<span class="hljs-string">"com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources"</span>)
-            .requireWebResource(<span class="hljs-string">"com.comsysto.kitchen-duty-plugin:kitchen-duty-plugin-resources--overview-page"</span>);
+            .requireWebResource(<span class="hljs-string">"io.codeclou.kitchen-duty-plugin:kitchen-duty-plugin-resources"</span>)
+            .requireWebResource(<span class="hljs-string">"io.codeclou.kitchen-duty-plugin:kitchen-duty-plugin-resources--overview-page"</span>);
 
         <span class="hljs-keyword">return</span> <span class="hljs-string">"kitchen-duty-overview-page-success"</span>;
     }
@@ -2215,7 +2212,7 @@ public class KitchenDutyOverviewPageWebworkAction extends JiraWebActionSupport
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-overview-page-webwork-module/kitchen-duty-overview-page-success.vm" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/templates/kitchen-duty-overview-page-webwork-module/kitchen-duty-overview-page-success.vm" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -2353,7 +2350,7 @@ public class KitchenDutyOverviewPageWebworkAction extends JiraWebActionSupport
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/templates-soy/kitchen-duty-overview.soy" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/templates-soy/kitchen-duty-overview.soy" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -2401,7 +2398,7 @@ public class KitchenDutyOverviewPageWebworkAction extends JiraWebActionSupport
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/js/kitchen-duty-plugin--overview-page-controller.js" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/js/kitchen-duty-plugin--overview-page-controller.js" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -2560,7 +2557,7 @@ public class KitchenDutyOverviewPageWebworkAction extends JiraWebActionSupport
     </div>
     <div class="cs-code-buttons">
         
-        <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/js/kitchen-duty-plugin.js" target="_blank"
+        <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/blob/master/step-06-kitchen-duty-plugin/src/main/resources/js/kitchen-duty-plugin.js" target="_blank"
         data-toggle="tooltip" data-placement="left" title="Open file on GitHub"
         class="cs-code-ghlink"><i class="fa fa-github"></i></a>
         
@@ -2648,8 +2645,8 @@ var showErrorFlag = function(message) {
                 <strong>You have completed Step 6.</strong> Good Job! You can check out this step's solution on GitHub
             </div>
             <div class="cs-tutorial-step-review__link">
-                <a href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-06-kitchen-duty-plugin">
-                    https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-06-kitchen-duty-plugin
+                <a href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-06-kitchen-duty-plugin">
+                    https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira/tree/master/step-06-kitchen-duty-plugin
                 </a>
             </div>
         </div>
@@ -2673,9 +2670,9 @@ var showErrorFlag = function(message) {
 <div class="cs-footer">
     <div class="cs-legal-box">
         <a href="/kitchen-duty-plugin-for-atlassian-jira/author-and-license/">Author &middot; License &middot; Trademarks</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/impressum/">Impressum &middot; Imprint</a>
-        <a target="_blank" href="https://legal.comsysto.com/comsysto.github.io/de/datenschutz/">Datenschutz &middot; Privacy</a>
-        <a class="d-none d-sm-inline btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/comsysto/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
+        <a target="_blank" href="https://codeclou.io/legal/impressum-en/">Impressum &middot; Imprint</a>
+        <a target="_blank" href="https://codeclou.io/legal/datenschutz-en/">Datenschutz &middot; Privacy</a>
+        <a class="d-none d-sm-inline btn-borderless cs-stars-on-github-give-star-button" href="https://github.com/codeclou/kitchen-duty-plugin-for-atlassian-jira" target="_blank">
             star on GitHub
         </a>
     </div>

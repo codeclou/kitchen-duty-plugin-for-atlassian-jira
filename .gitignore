@@ -1,0 +1,8 @@
+.xidea
+*.iml
+node_modules/
+*.log
+*.swp
+Users/
+build/
+.DS_Store
